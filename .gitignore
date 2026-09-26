@@ -17,24 +17,13 @@
 # ---------------------------------------------------------------------------
 
 # --- licensed microdata ---
-vasyr/
-STEP/
-PHL_2015_STEP-HH_v01_M_STATA8/
+microdata/
 
 # --- real respondent data (the 46-person pilot) ---
-livelihood.xlsx
-livelihood_clean.dta
-livelihood_clean_.xlsx
-livelihood_analysis_indices.dta
-pilot.pdf
+pilot/
 
 # --- literature: papers and their extractions ---
-Structural Transformation/
-multidimensional poverty/
-vulnerability-to-poverty/
-hces/
-*.bib
-Literature.xlsx
+literature/
 
 # --- generated datasets. The pipeline rebuilds all of these from source. ---
 *.dta
@@ -64,9 +53,4 @@ Thumbs.db
 *.lnk
 
 # --- downloaded journal article and literature note-extractions ---
-1-s2.0-*.pdf
-structural-transformation.txt
-vulnerability-to-poverty.txt
-multidimensional-poverty-and-sustainable-livelihoods.txt
-personal_notes_extract.txt
-survey_variable_mapping.xlsx
+# (the four lines above now cover everything that used to be listed here)

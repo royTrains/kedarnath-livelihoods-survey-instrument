@@ -8,7 +8,7 @@ comment on each block and the README. Output: vasyr_real_raw.csv (one row per ho
 import os, pandas as pd, numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RAW = os.path.abspath(os.path.join(HERE, "..", "..", "vasyr"))
+RAW = os.path.abspath(os.path.join(HERE, "..", "..", "microdata", "vasyr"))
 VD = os.path.join(RAW, "UNHCR_LBN_2025_VASYR_data_main_v2.1.csv")
 MD = os.path.join(RAW, "UNHCR_LBN_2025_VASYR_data_member_v2.1.csv")
 

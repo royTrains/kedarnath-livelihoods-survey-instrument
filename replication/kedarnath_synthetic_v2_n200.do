@@ -67,7 +67,7 @@ drop u0b
 *=============================================================================
 * OCCUPATION CATEGORY EXPANSION (13 categories, up from 10)
 *
-* Audit against the real 46-respondent pilot (livelihood_clean.dta,
+* Audit against the real 46-respondent pilot (pilot/livelihood_clean.dta,
 * respondent_category) showed three principal Yatra occupations missing from
 * the original 10-category list. All three are now generated, each fully
 * parameterized below (earning tier, employment status, route location,
