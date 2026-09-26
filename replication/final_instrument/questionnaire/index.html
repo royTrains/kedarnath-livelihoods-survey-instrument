@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Kedarnath Yatra Worker Survey</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F3864">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kedarnath Survey">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--ink:#16191d;--mut:#666e7a;--line:#d9dde3;--acc:#1f6feb;--warn:#b42318;--ok:#067647}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -30,6 +38,7 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;l
 footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:680px;margin:0 auto}
 footer button{flex:1}
 .mid{text-align:center;padding:40px 16px;color:var(--mut)}
+#upd{display:none;background:#fef0c7;border-bottom:1px solid #f5c344;color:#7a5b00;padding:9px 14px;font-size:14px;text-align:center}
 .big{font-size:20px;color:var(--ink);margin-bottom:8px}
 table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;border-bottom:1px solid var(--line)}
 </style></head>
@@ -41,6 +50,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;bord
   <button id="lang">EN</button>
   <button id="menu">☰</button>
 </header>
+<div id="upd"></div>
 <main id="app"></main>
 <footer id="nav" style="display:none">
   <button id="back">← <span data-t="back">पीछे</span></button>
@@ -215,6 +225,30 @@ document.getElementById("back").onclick = back;
 document.getElementById("menu").onclick = menu;
 document.getElementById("lang").onclick = () => { L = 1 - L; if (shown.length && idx < shown.length) render(); else menu() };
 window.addEventListener("beforeunload", e => { if (Object.keys(D).length > 2){ e.preventDefault(); e.returnValue = "" } });
+// ---- offline support. Without this the form must be fetched from the network every time it is
+// opened, which on this route means it does not open at all. The worker caches the whole app on
+// first visit; afterwards the tablet needs no connectivity to start an interview.
+//
+// Updates are deliberately NOT applied automatically: swapping the form out mid-interview would be
+// worse than running a version behind. A new build installs and waits, a banner appears, and it
+// takes effect the next time the form is fully closed and reopened.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.addEventListener("updatefound", () => {
+      const nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener("statechange", () => {
+        if (nw.state === "installed" && navigator.serviceWorker.controller) {
+          const b = document.getElementById("upd");
+          b.textContent = L ? "A new version of the form is ready. Close it completely and reopen."
+                             : "फ़ॉर्म का नया रूप तैयार है। इसे पूरी तरह बंद करके दोबारा खोलें।";
+          b.style.display = "block";
+        }
+      });
+    });
+  }).catch(() => {});   // an unsupported browser must still run the form, just without offline
+}
+
 const draft = load(DKEY, null);
 if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; idx = 0; render() }
 else menu();

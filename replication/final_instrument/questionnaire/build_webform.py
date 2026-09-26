@@ -119,6 +119,14 @@ HTML = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Kedarnath Yatra Worker Survey</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F3864">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kedarnath Survey">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--ink:#16191d;--mut:#666e7a;--line:#d9dde3;--acc:#1f6feb;--warn:#b42318;--ok:#067647}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -145,6 +153,7 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;l
 footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:680px;margin:0 auto}
 footer button{flex:1}
 .mid{text-align:center;padding:40px 16px;color:var(--mut)}
+#upd{display:none;background:#fef0c7;border-bottom:1px solid #f5c344;color:#7a5b00;padding:9px 14px;font-size:14px;text-align:center}
 .big{font-size:20px;color:var(--ink);margin-bottom:8px}
 table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;border-bottom:1px solid var(--line)}
 </style></head>
@@ -156,6 +165,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;bord
   <button id="lang">EN</button>
   <button id="menu">☰</button>
 </header>
+<div id="upd"></div>
 <main id="app"></main>
 <footer id="nav" style="display:none">
   <button id="back">← <span data-t="back">पीछे</span></button>
@@ -330,6 +340,30 @@ document.getElementById("back").onclick = back;
 document.getElementById("menu").onclick = menu;
 document.getElementById("lang").onclick = () => { L = 1 - L; if (shown.length && idx < shown.length) render(); else menu() };
 window.addEventListener("beforeunload", e => { if (Object.keys(D).length > 2){ e.preventDefault(); e.returnValue = "" } });
+// ---- offline support. Without this the form must be fetched from the network every time it is
+// opened, which on this route means it does not open at all. The worker caches the whole app on
+// first visit; afterwards the tablet needs no connectivity to start an interview.
+//
+// Updates are deliberately NOT applied automatically: swapping the form out mid-interview would be
+// worse than running a version behind. A new build installs and waits, a banner appears, and it
+// takes effect the next time the form is fully closed and reopened.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.addEventListener("updatefound", () => {
+      const nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener("statechange", () => {
+        if (nw.state === "installed" && navigator.serviceWorker.controller) {
+          const b = document.getElementById("upd");
+          b.textContent = L ? "A new version of the form is ready. Close it completely and reopen."
+                             : "फ़ॉर्म का नया रूप तैयार है। इसे पूरी तरह बंद करके दोबारा खोलें।";
+          b.style.display = "block";
+        }
+      });
+    });
+  }).catch(() => {});   // an unsupported browser must still run the form, just without offline
+}
+
 const draft = load(DKEY, null);
 if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; idx = 0; render() }
 else menu();
@@ -340,12 +374,86 @@ else menu();
 html = (HTML.replace("__CFG__", json.dumps(CFG, ensure_ascii=False, separators=(",", ":")))
             .replace("__CONS_HI__", json.dumps(CONSENT_HI, ensure_ascii=False))
             .replace("__CONS_EN__", json.dumps(CONSENT_EN, ensure_ascii=False)))
-open(OUT, "w", encoding="utf-8").write(html)
+import hashlib, struct, zlib
+
+
+def _png(size, rgb=(31, 56, 100)):
+    """A plain solid-colour icon, written without any image library so the build has no new
+    dependency. iOS wants a PNG for the home-screen icon; an SVG will not do."""
+    r, g, b = rgb
+    raw = b"".join(b"\x00" + bytes([r, g, b] * size) for _ in range(size))
+
+    def chunk(tag, data):
+        c = tag + data
+        return struct.pack(">I", len(data)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
+
+    return (b"\x89PNG\r\n\x1a\n"
+            + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 2, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(raw, 9))
+            + chunk(b"IEND", b""))
+
+
+MANIFEST = json.dumps({
+    "name": "Kedarnath Yatra Worker Survey",
+    "short_name": "Kedarnath Survey",
+    "start_url": ".",
+    "scope": ".",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#f6f7f9",
+    "theme_color": "#1F3864",
+    "lang": "hi",
+    "icons": [{"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+              {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}],
+}, ensure_ascii=False, indent=2)
+
+# The cache name carries a hash of the page itself, so a rebuild automatically invalidates the old
+# cache. Bumping it by hand -- and forgetting to -- is how enumerators end up on a stale form.
+_VER = hashlib.sha256(html.encode("utf-8")).hexdigest()[:12]
+SW = """const CACHE = "kedarnath-""" + _VER + """";
+const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+
+// Cache the whole app up front, so the FIRST offline open works rather than the second.
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  // deliberately no skipWaiting(): a new build must not replace the form mid-interview
+});
+
+self.addEventListener("activate", e => {
+  e.waitUntil(caches.keys().then(ks =>
+    Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))
+  ).then(() => self.clients.claim()));
+});
+
+// Cache first. The app is a single static page and the tablet is usually offline, so going to the
+// network first would just add a timeout to every load.
+self.addEventListener("fetch", e => {
+  if (e.request.method !== "GET" || new URL(e.request.url).origin !== self.location.origin) return;
+  e.respondWith(
+    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
+      const copy = res.clone();
+      caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
+      return res;
+    }).catch(() => caches.match("./index.html")))
+  );
+});
+"""
+
+
+def _emit(folder):
+    open(os.path.join(folder, "index.html"), "w", encoding="utf-8").write(html)
+    open(os.path.join(folder, "sw.js"), "w", encoding="utf-8").write(SW)
+    open(os.path.join(folder, "manifest.json"), "w", encoding="utf-8").write(MANIFEST)
+    open(os.path.join(folder, "icon-192.png"), "wb").write(_png(192))
+    open(os.path.join(folder, "icon-512.png"), "wb").write(_png(512))
+
+
+_emit(HERE)
 print(OUT)
 # also drop a copy at repo-root docs/, which is what GitHub Pages serves. Keeping the copy in the
 # build means the hosted form cannot fall behind the dictionary the way a hand-copied file would.
 _docs = os.path.abspath(os.path.join(HERE, "..", "..", "..", "docs"))
 if os.path.isdir(_docs):
-    open(os.path.join(_docs, "index.html"), "w", encoding="utf-8").write(html)
-    print(os.path.join(_docs, "index.html"))
+    _emit(_docs)
+    print(os.path.join(_docs, "index.html") + "  (+ sw.js, manifest.json, icons)")
 print(f"{len(questions)} questions, {len(export_cols)} export columns, {len(html)//1024} KB, zero external requests")
