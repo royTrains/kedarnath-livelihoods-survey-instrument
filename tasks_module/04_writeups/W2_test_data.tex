@@ -1,0 +1,131 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs,longtable,array,graphicx,enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\newcommand{\plainbox}[1]{\par\vspace{2pt}\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\par\vspace{2pt}}
+\begin{document}
+{\Large\textbf{Tasks Module, Part 2: A Test Dataset}}\par
+{\large How the made-up answers were built, and what they can and cannot tell us}\par\vspace{4pt}\hrule\vspace{8pt}
+
+\section*{1. Why we made a test dataset}
+We have not run the survey yet. Before we do, we want to know that the answers to the task questions
+can be turned into useful results. So we made up answers for 200 imaginary workers and ran the
+analysis on them. This is the same idea as the earlier test data for the poverty work.
+
+\plainbox{\textbf{Important.} Every pattern in this data comes from a rule we wrote down. Nothing in it is a finding
+about real workers. It tests the \emph{questions and the method}, not the world.}
+
+\section*{2. What we started from}
+We reused the imaginary workers already made for the poverty work: 200 people, filled by fixed quotas for each job.
+After the same drop-out as before, 104 remain (the ones that would be ``interviewed''). We kept their
+job, off-season work, age, schooling, place of origin, phone and training. The task answers were then made to fit those facts.
+
+{\small
+\begin{longtable}{lrr}
+\toprule
+\textbf{Job} & \textbf{Full pool} & \textbf{After drop-out} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Job} & \textbf{Full pool} & \textbf{After drop-out} \\
+\midrule
+\endhead
+Pony worker & 22 & 5 \\
+Shop owner & 20 & 11 \\
+Shopkeeper & 20 & 14 \\
+Wage labourer & 20 & 11 \\
+Hotel/lodging worker & 18 & 15 \\
+Porter & 18 & 10 \\
+Hotel/lodging owner & 18 & 7 \\
+Dhaba/food-stall owner & 12 & 6 \\
+Driver & 12 & 7 \\
+Other & 12 & 4 \\
+Pony business & 12 & 5 \\
+Palki & 12 & 6 \\
+Guide & 4 & 3 \\
+\textbf{All} & \textbf{200} & \textbf{104} \\
+\bottomrule
+\end{longtable}
+}
+
+\section*{3. How the answers were made}
+\textbf{Step 1. Who does which task, by job.} For each of the 13 jobs we sorted the 27 tasks into four levels:
+\emph{core} tasks (a worker does it regularly with chance 90 in 100), \emph{common} tasks (55 in 100),
+\emph{occasional} tasks (20 in 100) and \emph{rare} tasks (3 in 100).
+The core tasks come from the wording of the job in India's National Classification of Occupations (NCO 2015).
+Where NCO has no entry (palki and dandi bearers) they are our judgement, and the last column of the table in section 4 says so.
+
+\textbf{Step 2. People differ.} Some people simply do more of everything. More years in the work adds a little.
+More schooling adds a little to tasks that use records and judgement.
+
+\textbf{Step 3. Work done before elsewhere (answer 2).} The chance starts low (6 in 100).
+It rises with off-season work: farming raises animal care and carrying; wage labour raises building and loading;
+petty trade raises selling and cash. A past job in a different trade brings in that trade's tasks. Older workers have a little more.
+
+\textbf{Step 4. Main task.} It is the job's usual main task, if the person does it regularly.
+Otherwise it is the person's most typical regular task.
+
+\textbf{Step 5. Job conditions and skills.} Made from the person's job, schooling, place of origin, phone and training.
+For example, someone who supervises others regularly must report at least one person directed.
+
+\section*{4. The core tasks we gave each job}
+{\footnotesize
+\begin{longtable}{p{2.7cm}p{5.6cm}p{6.5cm}}
+\toprule
+\textbf{Job} & \textbf{Core tasks} & \textbf{Where it comes from} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Job} & \textbf{Core tasks} & \textbf{Where it comes from} \\
+\midrule
+\endhead
+Pony worker & 5 lead or control pack animals; 3 load, unload, stack, count goods; 6 feed or care for animals & NCO 9332.0400 Pack Animal Driver: loads and unloads animals, leads them, feeds them, cleans stables. \\
+Pony business & 5 lead or control pack animals; 14 sell goods or services; 15 bargain over prices or fares; 16 handle cash and payments; 26 supervise or hire others & NCO 9332.0400 plus owner tasks (selling rides, cash, hiring handlers) from NCO 1120.2000 retail proprietor logic. \\
+Porter & 1 carry loads on foot; 3 load, unload, stack, count goods & NCO 9621.9900 luggage porters and 9333.0100 loader and unloader. \\
+Palki & 2 carry a passenger; 1 carry loads on foot & *No NCO code. Judgement: carries passengers and loads; needs union check. \\
+Shopkeeper & 14 sell goods or services; 4 pack or tie goods; 20 clean rooms or public areas & NCO 5223.0100 Shop Assistant: measures and packs goods, delivers, keeps shop tidy, sells. \\
+Shop owner & 14 sell goods or services; 15 bargain over prices or fares; 16 handle cash and payments; 17 buy stock or arrange supplies; 25 keep records or accounts & NCO 1120.2000 Working Proprietor, Retail Trade: buys merchandise and sells it for profit. \\
+Hotel/lodging worker & 19 serve guests; 20 clean rooms or public areas & NCO 5131.0200 Steward Hotel, 5151.0800 Room Bearer, 9112.9900 hotel cleaners. \\
+Hotel/lodging owner & 14 sell goods or services; 16 handle cash and payments; 17 buy stock or arrange supplies; 25 keep records or accounts; 26 supervise or hire others & NCO 5151.0600 Hotel and Restaurant Keeper: buys supplies, appoints staff, serves guests, collects money. \\
+Wage labourer & 1 carry loads on foot; 3 load, unload, stack, count goods; 11 build or construct & NCO 9313.9900 Building Construction Labourers: simple routine tasks in construction. \\
+Other & none (mixed group) & Mixed group; no single NCO code. \\
+Driver & 7 drive a motor vehicle; 16 handle cash and payments & NCO 8322.0501 Light Motor Vehicle Driver: drives safely on an assigned route; fares from NCO cashier logic. \\
+Dhaba/food-stall owner & 14 sell goods or services; 16 handle cash and payments; 17 buy stock or arrange supplies; 18 cook or prepare food or drink & NCO 5212.9900 Street Food Vendors (Dhabawala) and 5151.0600 Hotel and Restaurant Keeper. \\
+Guide & 21 guide or explain to visitors & NCO 5113.0200 Tourist Guide: guides visitors, explains sites, answers questions, may assist shopping. \\
+\bottomrule
+\end{longtable}
+}
+
+\section*{5. Checks on the made-up data}
+We ran 11 checks. All 11 passed. The checks catch answers that could not happen in real life.
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item All 27 task answers are 1, 2 or 3 with no missing.
+\item Every worker has at least one regular task.
+\item Main task is a task coded 1.
+\item People directed (t2\_07) is at least 1 exactly when 'supervise or hire' (t1\_26) is coded 1.
+\item Trips per day is asked only when a carrying or animal task is coded 1.
+\item Course type recorded exactly when a course was taken.
+\item Digital payments imply a smartphone and internet.
+\item Read/write in a language implies speaking it.
+\item Writing at work implies more than chance of reading (no writer without reader more than 12\%).
+\item Palki bearers do the 'carry a passenger' task regularly (most of them).
+\item Drivers hold a car licence (most of them).
+\end{itemize}
+The same checks can be run on the real survey data as a first quality test.
+
+\section*{6. What the test data can and cannot show}
+\textbf{It can show} whether the answers fit together, whether the analysis code runs, and what kind of result each method gives.
+\textbf{It cannot show} what Kedarnath workers really do. Every job profile is our assumption, and the sample is small
+(104 people). Two results that look different in this data may not differ in real life.
+When real answers arrive, the code is run again on them without change.
+
+\section*{7. Files}
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item \texttt{02\_data/generate\_task\_data.py}: the code that makes the data.
+\item \texttt{02\_data/tasks\_synth\_full.csv} and \texttt{tasks\_synth\_fielded.csv} (also \texttt{.dta} for Stata).
+\item \texttt{02\_data/occupation\_profiles.csv}: the levels given to each job.
+\end{itemize}
+\end{document}

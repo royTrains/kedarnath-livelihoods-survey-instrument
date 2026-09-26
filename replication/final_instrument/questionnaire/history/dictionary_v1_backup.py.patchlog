@@ -1,0 +1,68 @@
+"""One-off: turns dictionary v1 into v2 (monthly calendar, Apablaza questions, food split, no licences)."""
+import re
+s = open("dictionary.py", encoding="utf-8").read()
+lines = s.split("\n")
+
+def drop(names):
+    global lines
+    out = []
+    for ln in lines:
+        m = re.match(r'^R\("[A-Z]", "([a-z0-9_]+)"', ln)
+        if m and m.group(1) in names:
+            continue
+        out.append(ln)
+    lines = out
+
+drop({"yatra_months", "yatra_start_month", "yatra_end_month", "offseason_primary", "offseason_months_worked", "inc_offseason_pm",
+      "cons_food_30d", "oope_amount", "pension_coverage", "wants_more_work", "written_contract", "work_registered", "hazard_exposed",
+      "injury_work_12m", "safety_equipment", "lic_twowheeler", "lic_car", "lic_heavy", "permit_guide", "cert_iti", "cert_security"})
+s = "\n".join(lines)
+
+# A: children under 15
+s = s.replace('R("A", "n_children_6_14"',
+              'R("A", "n_children_u15", "Household children under 15", "How many of them are children under 15?", "Count of children under 15; allows an adult-equivalent sensitivity check on per-capita consumption.", "count", source="Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023)")\nR("A", "n_children_6_14"', 1)
+
+# B: sources
+s = s.replace('source="Chaudhuri et al. 2002 sensitivity covariate; Apablaza et al. 2026 stability domain")',
+              'source="Chaudhuri et al. 2002 sensitivity covariate; Apablaza et al. 2026 Q10 (tenure in this job)")')
+s = s.replace('source="Apablaza et al. 2026: hours (access and conditions domains)")',
+              'source="Apablaza et al. 2026 Q13 (asked as hours a day and days a week, multiplied later)")')
+
+# C: calendar replaces inc_yatra_pm
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+cal = []
+for i, mn in enumerate(MONTHS, 1):
+    cal.append(f'R("C", "status_m{i}", "Main activity in {mn}", "In {mn}, what was your main work or activity? Card. (Fill the Yatra months first, then the others.)", "Main activity in {mn} of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")')
+for i, mn in enumerate(MONTHS, 1):
+    cal.append(f'R("C", "income_m{i}", "Earnings in {mn} (Rs)", "How much did you earn from all your work in {mn}, after costs? (Rs)", "Net earnings in {mn}. Filled by the tablet as 0 when status_m{i} is No paid work.", "money", skip="Automatic 0 if status_m{i} = 8 (no paid work)", source="Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure")')
+s = re.sub(r'R\("C", "inc_yatra_pm".*\n', "\n".join(cal) + "\n", s, count=1)
+
+# E: split food
+s = s.replace('R("E", "cons_fuel_30d"',
+'''R("E", "cons_food_bought_30d", "Food bought for cooking at home, last 30 days (Rs)", "In the last 30 days, how much did your household spend on food it BOUGHT to cook and eat at home: cereals, pulses, vegetables, milk, oil, sugar, tea, spices, snacks? (Rs)", "Purchased food. " + E_NOTE, "money", source="Eze and Iheonu 2025 (purchased food); HCES/NSS item groups")
+R("E", "cons_food_own_30d", "Home-grown, gifted or in-kind food eaten, last 30 days (Rs)", "In the last 30 days, what was the value at market price of food your household ate that was grown or produced at home, or received as a gift or in kind? (Rs, 0 if none)", "Non-purchased food. " + E_NOTE, "money", source="Calvo and Dercon 2007; Eze and Iheonu 2025 (non-purchased food)")
+R("E", "cons_food_out_30d", "Meals and snacks eaten outside or given by employer, last 30 days (Rs)", "In the last 30 days, how much did your household spend on meals, tea and snacks eaten outside the home? Include meals an employer gave free, at their market value. (Rs)", "Meals outside the home, including in-kind meals from an employer. " + E_NOTE, "money", source="Eze and Iheonu 2025 (meals consumed outside the home)")
+R("E", "cons_fuel_30d"''', 1)
+s = s.replace('"Annual medical spending as reported in the consumption list."',
+              '"Out-of-pocket medical spending for the year. This is the only medical-spending question, and it also serves as the out-of-pocket health measure."')
+
+# K: replace block
+i0 = s.index("# ------------------------------------------------------------------ K  job quality")
+i1 = s.index("# ------------------------------------------------------------------ L  tasks")
+K = open("blockK.txt", encoding="utf-8").read()
+s = s[:i0] + K + s[i1:]
+
+# L: driving experience items replace licences
+s = s.replace('R("L", "read_at_work"',
+'''R("L", "drove_twowheeler", "Has driven a motorcycle or scooter (licence or not)", "Have you ever driven a motorcycle or scooter, with or without a licence?", "Factual driving experience by vehicle class.", "bin", "yn", skip="Ask only if tk_drive is 1 or 2", source="Level ladder without licences: people drive without holding a licence")
+R("L", "drove_car", "Has driven a car or jeep (licence or not)", "... a car or jeep?", "Factual driving experience by vehicle class.", "bin", "yn", skip="Ask only if tk_drive is 1 or 2", source="Level ladder without licences")
+R("L", "drove_heavy", "Has driven a truck or bus (licence or not)", "... a truck or bus?", "Factual driving experience by vehicle class.", "bin", "yn", skip="Ask only if tk_drive is 1 or 2", source="Level ladder without licences")
+R("L", "read_at_work"''', 1)
+
+# constructed section: replace whole
+j0 = s.index("# ------------------------------------------------------------------ CONSTRUCTED")
+j1 = s.index("# ------------------------------------------------------------------ SYNTHETIC-ONLY")
+CONS = open("blockX.txt", encoding="utf-8").read()
+s = s[:j0] + CONS + s[j1:]
+open("dictionary.py", "w", encoding="utf-8").write(s)
+print("dictionary v2 written")

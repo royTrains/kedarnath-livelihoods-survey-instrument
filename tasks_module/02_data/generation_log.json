@@ -1,0 +1,57 @@
+{
+ "seed": 20260921,
+ "n_full": 200,
+ "n_fielded": 104,
+ "level_p": {
+  "core": 0.9,
+  "common": 0.55,
+  "occasional": 0.2,
+  "rare": 0.03
+ },
+ "checks": [
+  [
+   "all 27 task answers are 1, 2 or 3 with no missing",
+   true
+  ],
+  [
+   "every worker has at least one regular task",
+   true
+  ],
+  [
+   "main task is a task coded 1",
+   true
+  ],
+  [
+   "people directed (t2_07) is at least 1 exactly when 'supervise or hire' (t1_26) is coded 1",
+   true
+  ],
+  [
+   "trips per day is asked only when a carrying or animal task is coded 1",
+   true
+  ],
+  [
+   "course type recorded exactly when a course was taken",
+   true
+  ],
+  [
+   "digital payments imply a smartphone and internet",
+   true
+  ],
+  [
+   "read/write in a language implies speaking it",
+   true
+  ],
+  [
+   "writing at work implies more than chance of reading (no writer without reader more than 12%)",
+   true
+  ],
+  [
+   "palki bearers do the 'carry a passenger' task regularly (most of them)",
+   true
+  ],
+  [
+   "drivers hold a car licence (most of them)",
+   true
+  ]
+ ]
+}

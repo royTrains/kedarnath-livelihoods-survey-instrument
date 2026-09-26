@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------------------
+# What must never leave this machine.
+#
+# This repo holds the INSTRUMENT (questionnaire source, build scripts, do-files,
+# checks). It does not hold data or literature. Three reasons, in order of how
+# badly each would go wrong:
+#
+#   1. Licensed microdata. VASyR (UNHCR), STEP (World Bank) and the Philippines
+#      STEP household file are redistributable only under their own terms, which
+#      a GitHub repo does not satisfy.
+#   2. Real respondent data. The 46-person pilot is field data about identifiable
+#      people in a small population; a private repo is not a safeguard.
+#   3. Copyrighted papers. ~220 MB of PDFs and their text extractions.
+#
+# Anything genuinely public (HCES government material) is excluded too, simply
+# because it is large and re-downloadable.
+# ---------------------------------------------------------------------------
+
+# --- licensed microdata ---
+vasyr/
+STEP/
+PHL_2015_STEP-HH_v01_M_STATA8/
+
+# --- real respondent data (the 46-person pilot) ---
+livelihood.xlsx
+livelihood_clean.dta
+livelihood_clean_.xlsx
+livelihood_analysis_indices.dta
+pilot.pdf
+
+# --- literature: papers and their extractions ---
+Structural Transformation/
+multidimensional poverty/
+vulnerability-to-poverty/
+hces/
+*.bib
+Literature.xlsx
+
+# --- generated datasets. The pipeline rebuilds all of these from source. ---
+*.dta
+*.csv
+*.log
+*.smcl
+*.rtf
+replication/final_instrument/data/
+replication/*.dta
+replication/*.log
+
+# --- build artefacts ---
+__pycache__/
+*.pyc
+*.aux
+*.out
+*.toc
+*.synctex.gz
+~$*
+*.tmp
+
+# --- local editor / OS noise ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.lnk
+
+# --- downloaded journal article and literature note-extractions ---
+1-s2.0-*.pdf
+structural-transformation.txt
+vulnerability-to-poverty.txt
+multidimensional-poverty-and-sustainable-livelihoods.txt
+personal_notes_extract.txt
+survey_variable_mapping.xlsx

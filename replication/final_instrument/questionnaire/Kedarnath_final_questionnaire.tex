@@ -1,0 +1,777 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.75in]{geometry}
+\usepackage{booktabs,longtable,array,enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\newcommand{\plainbox}[1]{\par\vspace{2pt}\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\par\vspace{2pt}}
+\begin{document}
+
+{\Large\textbf{Kedarnath Yatra Workers Survey: Final Questionnaire and Variable List}}\par
+{\large Version 2, worked example. Read-aloud interview, tablet-based, one visit, 45 minutes at most}\par\vspace{2pt}\hrule\vspace{6pt}
+
+\plainbox{\textbf{What this is.} The final list of questions and variables for the survey of Yatra workers. The main aim is to measure
+\textbf{vulnerability to poverty} (VEP and multidimensional poverty). A short employment-quality block and a short tasks block are added.
+The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{198 asked questions}, 9 recorded automatically or by the enumerator,
+and 123 variables built afterwards in Stata. The companion file \texttt{variable\_dictionary.csv} lists everything in one table.}
+
+\section*{1. Rules the questions follow}
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item \textbf{No rating questions.} Every answer is a fact: yes or no, a count, an amount, or a choice from a card. Nobody is asked to score anything on a scale.
+\item \textbf{Aggregate household questions}, no household roster. The respondent is the worker. Consumption is for the household's usual place of living.
+\item \textbf{Codes.} 98 = prefers not to say (schooling, ropeway view). 97 = don't know (job-quality questions). Blank = the question was skipped by a rule shown in the table.
+\item \textbf{Recall.} 30 days for frequent spending, 12 months for infrequent spending, health, income and shocks, 15 days for recent illness.
+\item Questions are read aloud in Hindi, Garhwali or Nepali. Cards are used for long answer lists.
+\end{itemize}
+
+\section*{2. Time budget}
+Interview length is NOT estimated here. The module list below gives item counts only; the pretest measures real durations from the tablet's own start and end timestamps.
+{\small
+\begin{longtable}{llrr}
+\toprule
+\textbf{Module} & \textbf{Name} & \textbf{Items} & \textbf{Minutes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Module} & \textbf{Name} & \textbf{Items} & \textbf{Minutes} \\
+\midrule
+\endhead
+P & Cover page, consent and paradata & 9 \\
+A & Respondent and household & 17 \\
+B & Work and work history & 18 \\
+C & Monthly calendar of work and income; remittances & 32 \\
+D & Migration & 6 \\
+E & Household consumption & 28 \\
+F & Housing, amenities and assets & 28 \\
+G & Finance, insurance and schemes & 15 \\
+H & Health & 9 \\
+I & Food security, shocks and coping & 12 \\
+J & Ropeway & 2 \\
+K & Job quality (Apablaza et al. 2026 questions) & 14 \\
+L & Tasks and skills (short block) & 17 \\
+ & \textbf{Total} & \textbf{207} \\
+\bottomrule
+\end{longtable}
+}
+
+Interview length is measured from the tablet's own start and end timestamps at the pretest; no estimate is claimed here.
+With 4 enumerators at 5 to 8 interviews a day, one round of about 10 days gives roughly 200 to 320 interviews.
+
+\section*{3. Consent script (read before Module A)}
+\textit{``We are doing a study on the livelihoods of people who work on the Yatra route. It takes about 40 minutes. You can stop at any time and you can skip any question. Nothing you say will be linked to your name.
+Do you agree to take part?''} Record consent (variable \texttt{consent}); stop the interview if the answer is no.
+
+\subsection*{Module P: Cover page, consent and paradata}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+P1 & Assigned by the tablet. & Automatic / enumerator & \texttt{resp\_id}\newline Source: Design \\
+P2 & Which enumerator is doing this interview? (Select your own name before you approach anyone.) & Automatic / enumerator & \texttt{enum\_id}\newline Source: Design \\
+P3 & Recorded automatically. & Automatic / enumerator & \texttt{interview\_date}\newline Source: Design \\
+P4 & Enumerator records the language used. & Automatic / enumerator & \texttt{interview\_lang}\newline Source: Design \\
+P5 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lat}\newline Source: Design \\
+P6 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lon}\newline Source: Design \\
+P7 & Read the consent script. Do you agree to take part? (1 yes, 0 no; stop if no) & Automatic / enumerator & \texttt{consent}\newline Source: Design \\
+P8 & Recorded automatically (start to end). & Automatic / enumerator & \texttt{interview\_duration\_min}\newline Source: Design \\
+P9 & Recorded automatically (module timestamps). & Automatic / enumerator & \texttt{dur\_tasks\_min}\newline Source: Design \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module A: Respondent and household}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+A1 & How old are you? (completed years) & Number & \texttt{age}\newline Source: Standard; sensitivity covariate in the VEP model (Azeem et al. 2016 structure) \\
+A2 & Record sex; ask if unsure: are you male or female? & 0 Male; 1 Female & \texttt{female}\newline Source: Standard household-survey item \\
+A3 & Who is the head of your household -- is it you, or someone else? If someone else, how are they related to you? & 1 Self (respondent is the head); 2 Husband; 3 Wife; 4 Father; 5 Mother; 6 Son; 7 Daughter; 8 Brother; 9 Sister; 10 Other male relative; 11 Other female relative; 12 Other, non-relative (male); 13 Other, non-relative (female) & \texttt{hoh\_relation}\newline Source: Standard household-survey item \\
+A4 & What is your native language, the language you first learned at home? & 1 Garhwali; 2 Kumaoni; 3 Hindi; 4 Nepali; 5 Bhojpuri; 6 Assamese; 7 Bengali; 8 Bodo; 9 Dogri; 10 Gujarati; 11 Kannada; 12 Kashmiri; 13 Konkani; 14 Maithili; 15 Malayalam; 16 Manipuri (Meitei); 17 Marathi; 18 Odia; 19 Punjabi; 20 Sanskrit; 21 Santali; 22 Sindhi; 23 Tamil; 24 Telugu; 25 Urdu; 96 Other Indian language; 97 Other / foreign language & \texttt{native\_language}\newline Source: Project design (language proxy for regional/socioeconomic origin; avoids a sensitive caste question and covers out-of-country migrants) \\
+A5 & Which language is it? Write down exactly what they say. &  & \texttt{native\_language\_other}\newline \textit{Skip: Ask only if native\_language is 96 (other Indian language) or 97 (other / foreign language)}\newline Source: Project design (the language item stands in for caste; an uncoded 'other' is a real loss) \\
+A6 & Are you currently married, never married, or widowed/divorced/separated? & 1 Currently married; 2 Never married; 3 Widowed/divorced/separated & \texttt{marital\_status}\newline Source: Standard household-survey item \\
+A7 & Do you know exactly how many years of schooling you completed, counting from class 1? & 1 Yes, 0 No & \texttt{knows\_years\_schooling}\newline Source: Standard household-survey item \\
+A8 & How many years of schooling did you complete in total? (0 if none) & Whole number & \texttt{years\_schooling}\newline \textit{Skip: Ask only if knows\_years\_schooling = 1}\newline Source: NITI Aayog National MPI (years of schooling); Chaudhuri et al. 2002 covariate \\
+A9 & Which is closest: no formal education; some schooling but did not finish primary; finished primary but not secondary; or finished secondary or higher? & 1 No formal education; 2 Some schooling, did not complete primary; 3 Completed primary but not secondary; 4 Completed secondary or higher; 98 Prefer not to say & \texttt{education\_level\_cat}\newline \textit{Skip: Ask only if knows\_years\_schooling = 0}\newline Source: NITI Aayog National MPI (years of schooling); Chaudhuri et al. 2002 covariate \\
+A10 & How many members live in your household, including you? & Whole number & \texttt{hhsize}\newline Source: Chaudhuri et al. 2002; used to get per-capita consumption \\
+A11 & Counting everyone in your household aged 10 or above, has at least one of them finished six years of schooling or more? & 1 Yes, 0 No & \texttt{any\_member\_6yr\_schooling}\newline Source: NITI Aayog National MPI, Years of Schooling (weight 1/6) \\
+A12 & Is your family nuclear -- just you, your spouse and unmarried children -- or joint, living with parents, married siblings or other extended family? (Say single-member if you live alone.) & 1 Nuclear (you, spouse and unmarried children only); 2 Joint (living with parents, married siblings or other extended family); 3 Single-member household & \texttt{family\_structure}\newline Source: Standard household-survey item \\
+A13 & How many of them, including you, earn money? & Whole number & \texttt{n\_earners}\newline Source: Dependency measure used in VEP studies (Azeem et al. 2016) \\
+A14 & Among those who earn money, are you the main income earner in your household? & 1 Yes, 0 No & \texttt{main\_income\_earner}\newline \textit{Skip: Ask only if n\_earners > 1 (if the respondent is the only earner, this is automatic)}\newline Source: Apablaza et al. 2026, Appendix 2 Q4 (adapted to a single-respondent report: 'who is the main contributor' becomes 'are you the main contributor') \\
+A15 & How many of them are children under 15? & Whole number & \texttt{n\_children\_u15}\newline Source: Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023) \\
+A16 & How many of them are children aged 6 to 14? & Whole number & \texttt{n\_children\_6\_14}\newline Source: NITI Aayog National MPI school-attendance indicator \\
+A17 & How many of these children do not go to school now? & Whole number & \texttt{n\_children\_out\_school}\newline \textit{Skip: Ask only if n\_children\_6\_14 > 0}\newline Source: NITI Aayog National MPI school-attendance indicator \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module B: Work and work history}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+B1 & What is your main work during the Yatra season? Ask what they do and code the closest group; do not read the list aloud unless needed. & 1 Pony/mule worker (works the animals, does not own them); 2 Pony/mule owner (owns the animals); 3 Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi); 4 Palki / dandi bearer (carries a person on a palanquin, as part of a team); 5 Dhaba, tea stall or food stall WORKER (prepared food or tea); 6 Dhaba, tea stall or food stall OWNER (prepared food or tea); 7 Shop WORKER (goods: prasad, puja items, clothes, general store); 8 Shop OWNER (goods, not prepared food); 9 Hotel / lodge WORKER; 10 Hotel / lodge OWNER; 11 Driver (any motor vehicle); 12 Guide; 13 Wage labourer (construction, loading, odd jobs); 14 Other & \texttt{occupation}\newline Source: Project quota design, mapped to NCO-2015 families \\
+B2 & In your own words, what exactly is your main work here? Write down what they say -- what they actually do, and who for. Do not tick a box for this one. &  & \texttt{occupation\_detail}\newline Source: Project design (coarse quota group + verbatim detail, coded to NCO-2015 in the office) \\
+B3 & In this main work, are you: working on your own account without hired workers; running a business with hired workers; a regular monthly wage-earner; or a daily/casual wage-earner? & 1 Own-account (self-employed, no hired workers); 2 Employer/business owner (self-employed); 3 Regular wage or salary; 4 Casual wage labour & \texttt{employment\_type}\newline Source: PLFS / NSS employment status classification \\
+B4 & Besides your main work, how many OTHER paid activities or income-generating activities do you have? (0 if none. For example, a shop owner who also rents out a pony and drives in the off-season would say 2.) & Whole number & \texttt{n\_other\_activities}\newline Source: Project design (multiple job-holding, common in the Yatra economy) \\
+B5 & Which ones are they? Check every one that applies. Ask and code the closest group for each; do not read the list aloud unless needed. & 1 Pony/mule worker (works the animals, does not own them); 2 Pony/mule owner (owns the animals); 3 Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi); 4 Palki / dandi bearer (carries a person on a palanquin, as part of a team); 5 Dhaba, tea stall or food stall WORKER (prepared food or tea); 6 Dhaba, tea stall or food stall OWNER (prepared food or tea); 7 Shop WORKER (goods: prasad, puja items, clothes, general store); 8 Shop OWNER (goods, not prepared food); 9 Hotel / lodge WORKER; 10 Hotel / lodge OWNER; 11 Driver (any motor vehicle); 12 Guide; 13 Wage labourer (construction, loading, odd jobs); 14 Other & \texttt{other\_activity\_types}\newline \textit{Skip: Ask only if n\_other\_activities > 0}\newline Source: Project design (multiple job-holding, common in the Yatra economy) \\
+B6 & Taking all of that other work together, about how much do you usually earn from it in a month? (Rs) & Rupees (whole number) & \texttt{other\_activity\_income\_pm}\newline \textit{Skip: Ask only if n\_other\_activities > 0}\newline Source: Project design (multiple job-holding) \\
+B7 & How many Yatra seasons have you worked in this kind of work? & Whole number & \texttt{years\_in\_yatra\_work}\newline Source: Chaudhuri et al. 2002 sensitivity covariate; Apablaza et al. 2026 Q10 (tenure in this job) \\
+B8 & In the Yatra season, on a normal working day, how many hours do you work in total, across all your work? & Whole number & \texttt{hours\_day\_yatra}\newline Source: Apablaza et al. 2026 Q13 (decomposed into hours/day x days/week rather than asked as one weekly figure, for ease of recall) \\
+B9 & How many days a week do you usually work in the season? & Whole number & \texttt{days\_week\_yatra}\newline Source: Apablaza et al. 2026 Q13 (decomposed into hours/day x days/week rather than asked as one weekly figure, for ease of recall) \\
+B10 & In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total? & Whole number & \texttt{hours\_day\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season (decomposed as hours/day x days/week, as in the Yatra-season pair) \\
+B11 & In those months, how many days a week do you usually work? & Whole number & \texttt{days\_week\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season \\
+B12 & In the last ten years, did you change your main kind of work? & 1 Yes, 0 No & \texttt{prev\_occ\_change}\newline Source: Occupational mobility check; job-history item \\
+B13 & What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list. &  & \texttt{prev\_occ}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Gathmann and Schonberg 2010 (observed moves are systematically shorter than random moves -- the validation test for a task-distance measure); coded to NCO-2015 in the office \\
+B14 & If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples. &  & \texttt{target\_occ}\newline Source: Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office \\
+B15 & What was the main reason you changed? & 1 Better income; 2 Lost the previous work; 3 Family or seasonal reasons; 4 Moved to this area; 5 Other & \texttt{prev\_occ\_reason}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Job-history item \\
+B16 & Apart from school and college, have you ever completed any training course or apprenticeship? & 1 Yes, 0 No & \texttt{training\_received}\newline Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate \\
+B17 & What kind of course or training was it? & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other & \texttt{training\_type}\newline \textit{Skip: Ask only if training\_received = 1}\newline Source: STEP module 2 \\
+B18 & What was it? Write what they say. &  & \texttt{training\_type\_other}\newline \textit{Skip: Ask only if training\_type = 9 (Other); may be left blank}\newline Source: STEP module 2 \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module C: Monthly calendar of work and income; remittances}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+C1 & In January, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m1}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C2 & In February, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m2}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C3 & In March, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m3}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C4 & In April, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m4}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C5 & In May, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m5}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C6 & In June, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m6}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C7 & In July, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m7}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C8 & In August, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m8}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C9 & In September, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m9}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C10 & In October, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m10}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C11 & In November, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m11}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C12 & In December, what was your main work or activity? (Fill the Yatra months first, then the others.) & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work & \texttt{status\_m12}\newline Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month) \\
+C13 & Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year? & 1 Yes, 0 No & \texttt{knows\_monthly\_income}\newline Source: Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings) \\
+C14 & How much did you earn from all your work in January, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m1}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m1 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C15 & How much did you earn from all your work in February, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m2}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m2 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C16 & How much did you earn from all your work in March, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m3}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m3 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C17 & How much did you earn from all your work in April, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m4}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m4 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C18 & How much did you earn from all your work in May, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m5}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m5 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C19 & How much did you earn from all your work in June, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m6}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m6 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C20 & How much did you earn from all your work in July, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m7}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m7 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C21 & How much did you earn from all your work in August, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m8}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m8 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C22 & How much did you earn from all your work in September, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m9}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m9 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C23 & How much did you earn from all your work in October, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m10}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m10 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C24 & How much did you earn from all your work in November, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m11}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m11 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C25 & How much did you earn from all your work in December, after costs? (Rs) & Rupees (whole number) & \texttt{income\_m12}\newline \textit{Skip: Ask only if knows\_monthly\_income = 1; automatic 0 if status\_m12 = 8 (no paid work)}\newline Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure \\
+C26 & Thinking of the whole past year, about how much did you earn in total from all your work, after costs? (Rs) & Rupees (whole number) & \texttt{income\_annual\_total}\newline \textit{Skip: Ask only if knows\_monthly\_income = 0}\newline Source: Apablaza et al. 2026 Q15 (fallback when monthly earnings are not known), adapted to an annual total for a seasonal workforce \\
+C27 & Out of every 100 rupees you earned in the whole year, how many came from your Yatra work? (The rest is counted as coming from your other work.) & Whole number & \texttt{pct\_income\_yatra}\newline \textit{Skip: Ask only if knows\_monthly\_income = 0}\newline Source: Project design (the Yatra / non-Yatra split needed to reweight an annual total onto the work calendar) \\
+C28 & In a normal month during the Yatra season, how much money do you usually send to family or others living elsewhere? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_out\_yatra\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
+C29 & In a normal month when the Yatra is closed, how much do you usually send? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_out\_offseason\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
+C30 & How do you usually send it? & 1 Bank transfer; 2 UPI or phone payment; 3 Money order or post office; 4 Sent with someone going home; 5 Carried it myself; 6 Other & \texttt{remit\_mode}\newline \textit{Skip: Ask only if remit\_out\_yatra\_pm > 0 or remit\_out\_offseason\_pm > 0}\newline Source: Project design (remittance channel as a financial-inclusion and cost measure) \\
+C31 & In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_in\_yatra\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
+C32 & In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_in\_offseason\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module D: Migration}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+D1 & Where is your permanent home? & 1 Local (same district); 2 Other Uttarakhand district; 3 Other Indian state; 4 Nepal & \texttt{origin}\newline Source: NSS migration classification \\
+D2 & Which state is your permanent home in? (If it is outside India, say so.) & 1 Andhra Pradesh; 2 Arunachal Pradesh; 3 Assam; 4 Bihar; 5 Chhattisgarh; 6 Goa; 7 Gujarat; 8 Haryana; 9 Himachal Pradesh; 10 Jharkhand; 11 Karnataka; 12 Kerala; 13 Madhya Pradesh; 14 Maharashtra; 15 Manipur; 16 Meghalaya; 17 Mizoram; 18 Nagaland; 19 Odisha; 20 Punjab; 21 Rajasthan; 22 Sikkim; 23 Tamil Nadu; 24 Telangana; 25 Tripura; 26 Uttar Pradesh; 27 Uttarakhand; 28 West Bengal; 29 Andaman and Nicobar Islands; 30 Chandigarh; 31 Dadra and Nagar Haveli and Daman and Diu; 32 Delhi; 33 Jammu and Kashmir; 34 Ladakh; 35 Lakshadweep; 36 Puducherry; 99 Outside India & \texttt{home\_state}\newline Source: Standard state/UT classification; needed to apply the right poverty line per respondent \\
+D3 & Is that home in a village, a small town, a larger town, or a city? & 1 Village (gram panchayat); 2 Small town / nagar panchayat; 3 Town / nagar palika; 4 City / municipal corporation & \texttt{home\_admin\_level}\newline Source: Standard administrative classification; rural/urban poverty lines (Sethu et al. 2024) \\
+D4 & Apart from coming here for the Yatra season, is the place where you usually live for most of the year different from your family's native/home place? & 1 Yes, 0 No & \texttt{usual\_residence\_differs}\newline \textit{Skip: Ask only if origin is not Local (same district)}\newline Source: Project design (residence-vs-native-place distinction, distinct from the NSS short-term-migrant item below) \\
+D5 & Who mainly helped you get this work, or arranged it for you? & 1 A family member already working here; 2 A friend or someone from the village; 3 A thekedar or contractor I now work for; 4 An agent or middleman who placed me (usually for a fee); 5 No one; I found it myself; 6 The employer called me directly; 7 Someone else & \texttt{migration\_referral}\newline \textit{Skip: Ask only if origin is not Local (same district)}\newline Source: Project design (referral channel as a proxy for social capital and for placement debt) \\
+D6 & Who was it? Write what they say. &  & \texttt{migration\_referral\_other}\newline \textit{Skip: Ask only if migration\_referral = 7 (Other); may be left blank}\newline Source: Standard household-survey item \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module E: Household consumption}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+E1 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on cereals (rice, wheat, other grains), pulses, sugar and salt, bought or from your own stock? (Rs) & Rupees (whole number) & \texttt{cons\_staples\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 5.1-5.3 (30-day); IHDS-II Income and Social Capital Questionnaire, Q14 14.1-14.6 (30-day, same items) \\
+E2 & In a normal month when the Yatra is closed, how much does your household spend on cereals (rice, wheat, other grains), pulses, sugar and salt, bought or from your own stock? (Rs) & Rupees (whole number) & \texttt{cons\_staples\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 5.1-5.3 (30-day); IHDS-II Income and Social Capital Questionnaire, Q14 14.1-14.6 (30-day, same items) \\
+E3 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on milk and milk products, vegetables, fruit, egg/fish/meat, cooking oil, spices, and tea or coffee, bought or from your own stock? (Rs) & Rupees (whole number) & \texttt{cons\_perishables\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 6.1-6.8 (7-day actual recall in HCES; asked here as a usual monthly figure instead, for the reason above) \\
+E4 & In a normal month when the Yatra is closed, how much does your household spend on milk and milk products, vegetables, fruit, egg/fish/meat, cooking oil, spices, and tea or coffee, bought or from your own stock? (Rs) & Rupees (whole number) & \texttt{cons\_perishables\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 6.1-6.8 (7-day actual recall in HCES; asked here as a usual monthly figure instead, for the reason above) \\
+E5 & If you (and anyone staying with you here) had not grown, raised or been given any of your food, about how much would it have cost to buy in a normal month during the Yatra season? (Rs, 0 if you buy everything) & Rupees (whole number) & \texttt{cons\_food\_own\_yatra\_pm}\newline Source: Calvo and Dercon 2007; Eze and Iheonu 2025 (non-purchased food, aggregate approach) \\
+E6 & If your household had not grown, raised or been given any of your food, about how much would it have cost to buy in a normal month when the Yatra is closed? (Rs, 0 if you buy everything) & Rupees (whole number) & \texttt{cons\_food\_own\_offseason\_pm}\newline Source: Calvo and Dercon 2007; Eze and Iheonu 2025 (non-purchased food, aggregate approach) \\
+E7 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on meals, tea and snacks eaten outside the home, including any an employer gave free, at their market value? (Rs) & Rupees (whole number) & \texttt{cons\_food\_out\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 7.1 'served processed food' (7-day in HCES; usual monthly here) \\
+E8 & In a normal month when the Yatra is closed, how much does your household spend on meals, tea and snacks eaten outside the home, including any an employer gave free, at their market value? (Rs) & Rupees (whole number) & \texttt{cons\_food\_out\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 7.1 'served processed food' (7-day in HCES; usual monthly here) \\
+E9 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on fuel and light: cooking fuel, firewood, electricity, kerosene, candles? (Rs) & Rupees (whole number) & \texttt{cons\_fuel\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 8.1 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.21-14.22. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E10 & In a normal month when the Yatra is closed, how much does your household spend on fuel and light: cooking fuel, firewood, electricity, kerosene, candles? (Rs) & Rupees (whole number) & \texttt{cons\_fuel\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 8.1 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.21-14.22. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E11 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on soap, toiletries, cleaning goods and other small household items? (Rs) & Rupees (whole number) & \texttt{cons\_routine\_misc\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 9.1-9.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.25-14.27. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E12 & In a normal month when the Yatra is closed, how much does your household spend on soap, toiletries, cleaning goods and other small household items? (Rs) & Rupees (whole number) & \texttt{cons\_routine\_misc\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 9.1-9.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.25-14.27. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E13 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on local transport (bus, shared jeep, auto) and phone or internet charges? (Rs) & Rupees (whole number) & \texttt{cons\_transport\_comm\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 11.1-11.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.24/14.28. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E14 & In a normal month when the Yatra is closed, how much does your household spend on local transport (bus, shared jeep, auto) and phone or internet charges? (Rs) & Rupees (whole number) & \texttt{cons\_transport\_comm\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 11.1-11.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.24/14.28. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E15 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on rent for the home (0 if owned, and 0 for any period spent living for free)? (Rs) & Rupees (whole number) & \texttt{cons\_rent\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 11.4 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.30. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E16 & In a normal month when the Yatra is closed, how much does your household spend on rent for the home (0 if owned, and 0 for any period spent living for free)? (Rs) & Rupees (whole number) & \texttt{cons\_rent\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 11.4 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.30. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier) \\
+E17 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on medicine, doctor's or clinic fees and tests, not counting a hospital stay? (Rs) & Rupees (whole number) & \texttt{cons\_med\_nonhosp\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 10.3 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.33 (30-day, out-patient) \\
+E18 & In a normal month when the Yatra is closed, how much does your household spend on medicine, doctor's or clinic fees and tests, not counting a hospital stay? (Rs) & Rupees (whole number) & \texttt{cons\_med\_nonhosp\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 10.3 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.33 (30-day, out-patient) \\
+E19 & While you are here for the season, do you cook your own meals, or do you buy them? & 1 Cooks their own; 2 Buys them; 3 Some of each & \texttt{cooks\_own\_meals\_here}\newline Source: Project design (migrant worksite subsistence) \\
+E20 & On a normal working day here, about how much do you spend on your own food and tea altogether? (Rs) & Rupees (whole number) & \texttt{meal\_spend\_day\_self}\newline \textit{Skip: Ask only if cooks\_own\_meals\_here is 2 (buys) or 3 (some of each)}\newline Source: Project design (migrant worksite subsistence) \\
+E21 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on biscuits, namkeen, chips, packaged snacks, cold drinks or bottled water? (Rs) & Rupees (whole number) & \texttt{cons\_packaged\_food\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 7.2 (7-day in HCES; usual monthly here, as for every other seasonal item) \\
+E22 & In a normal month when the Yatra is closed, how much does your household spend on biscuits, namkeen, chips, packaged snacks, cold drinks or bottled water? (Rs) & Rupees (whole number) & \texttt{cons\_packaged\_food\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 7.2 (7-day in HCES; usual monthly here, as for every other seasonal item) \\
+E23 & In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on pan, gutka, bidi, cigarettes, tobacco or alcohol? (Rs) & Rupees (whole number) & \texttt{cons\_pan\_tobacco\_yatra\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 12.1-12.3 (7-day in HCES; usual monthly here, and combined into one figure) \\
+E24 & In a normal month when the Yatra is closed, how much does your household spend on pan, gutka, bidi, cigarettes, tobacco or alcohol? (Rs) & Rupees (whole number) & \texttt{cons\_pan\_tobacco\_offseason\_pm}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 12.1-12.3 (7-day in HCES; usual monthly here, and combined into one figure) \\
+E25 & In the last 12 months, how much did your household spend on clothes and footwear? (Rs) & Rupees (whole number) & \texttt{cons\_clothing\_12m}\newline Source: HCES 2022-23, MoSPI Appendix A, Sections 13.1-13.2 (365-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.38-14.39 (365-day). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 instead uses a 6-month recall for clothing (items 401-441); we follow the two India sources, since one of them (HCES) underlies our poverty line \\
+E26 & In the last 12 months, how much on education: fees, books, uniforms, tuition? (Rs) & Rupees (whole number) & \texttt{cons\_education\_12m}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 10.1 (365-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.35-14.37 (365-day, same items). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 asks school fees inside its education/roster module, per child, not as a household total, so it is not directly comparable \\
+E27 & In the last 12 months, how much did your household pay for any hospital admission or stay? (Rs, 0 if none) & Rupees (whole number) & \texttt{cons\_medical\_hosp\_12m}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 10.2 (365-day, hospitalisation). IHDS-II Income and Social Capital Questionnaire, Q14 14.34 (365-day, in-patient). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 instead uses one combined 6-month medical item (less detail); we follow the matching HCES/IHDS split \\
+E28 & In the last 12 months, how much on durable goods: furniture, utensils, appliances, phone, bicycle or motorcycle parts? (Rs) & Rupees (whole number) & \texttt{cons\_durables\_12m}\newline Source: HCES 2022-23, MoSPI Appendix A, Section 14 (365-day, 10 sub-groups). IHDS-II Income and Social Capital Questionnaire, Q14 14.40-14.48 (365-day). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (12-month tier: durables, appliances, building materials). All three agree on the 12-month recall; insurance premiums, which IHDS (14.50) and the Nigeria survey (items 510-513) count here, are excluded, following HCES and standard national-accounts practice (insurance is a financial item, not consumption) -- premiums are covered instead by the insurance items in Module G \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module F: Housing, amenities and assets}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+F1 & What is the main material of the floor at your usual home? & 1 Mud/kaccha; 2 Cement/mud-cement; 3 Tile/mosaic/marble & \texttt{floor\_material}\newline Source: NITI Aayog National MPI housing indicator \\
+F2 & What is the main material of the roof at your usual home? & 1 Thatch/wood/mud; 2 Tin/GI sheet; 3 Concrete/RCC & \texttt{roof\_material}\newline Source: NITI Aayog National MPI housing indicator \\
+F3 & What are the walls of your usual home mainly made of? & 1 Mud, thatch, bamboo or other natural material; 2 Unburnt brick, wood or tin; 3 Burnt brick, cement, concrete or stone & \texttt{wall\_material}\newline Source: NITI Aayog National MPI housing indicator (wall limb) \\
+F4 & Would you describe your usual home as kaccha (mud/thatch, temporary), semi-pucca (part-concrete) or pucca (solid, permanent)? & 1 Kaccha; 2 Semi-pucca; 3 Pucca & \texttt{house\_type}\newline Source: NITI Aayog National MPI housing indicator \\
+F5 & Does your usual home have an electricity connection? & 1 Yes, 0 No & \texttt{electricity}\newline Source: NITI Aayog National MPI \\
+F6 & What kind of toilet does your household use at your usual home? & 1 No toilet / open defecation; 2 Pit latrine without slab or open pit; 3 Improved toilet, but shared with other households; 4 Improved toilet, used only by this household & \texttt{toilet\_type}\newline Source: NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not) \\
+F7 & What is your main source of drinking water at your usual home? & 1 Piped into the house or yard; 2 Public tap or standpipe; 3 Handpump, tubewell or borewell; 4 Protected well or protected spring; 5 Rainwater collection; 6 Bottled, packaged or community RO; 7 Unprotected well or unprotected spring; 8 River, stream, pond or canal; 9 Tanker truck or cart with drum & \texttt{drinking\_water}\newline Source: NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy) \\
+F8 & Is that water available at the house itself, or does someone have to go and fetch it? & 1 Yes, 0 No & \texttt{water\_on\_premises}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
+F9 & How long does it take to go there, get the water and come back? (minutes, round trip) & Whole number & \texttt{water\_fetch\_minutes}\newline \textit{Skip: Ask only if water\_on\_premises = 0}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
+F10 & Who in the household usually goes to fetch it? & 1 An adult woman; 2 An adult man; 3 A girl under 15; 4 A boy under 15; 5 It varies / more than one person & \texttt{water\_fetched\_by}\newline \textit{Skip: Ask only if water\_on\_premises = 0}\newline Source: Project design (intra-household burden of water collection; DHS/NFHS ask the same item) \\
+F11 & What does your household mainly use to cook at your usual home? & 1 LPG or cylinder gas; 2 Piped natural gas; 3 Electricity; 4 Biogas (gobar gas plant); 5 Kerosene; 6 Firewood; 7 Dung cakes (gobar); 8 Crop residue, straw or shrubs; 9 Charcoal; 10 Coal or lignite & \texttt{cooking\_fuel}\newline Source: NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels) \\
+F12 & Does your household own: a television? & 1 Yes, 0 No & \texttt{owns\_tv}\newline Source: NITI Aayog National MPI assets indicator \\
+F13 & ... a radio? & 1 Yes, 0 No & \texttt{owns\_radio}\newline Source: NITI Aayog National MPI assets indicator \\
+F14 & ... a bicycle? & 1 Yes, 0 No & \texttt{owns\_bicycle}\newline Source: NITI Aayog National MPI assets indicator \\
+F15 & ... a motorcycle or scooter? & 1 Yes, 0 No & \texttt{owns\_motorcycle}\newline Source: NITI Aayog National MPI assets indicator \\
+F16 & ... a car, jeep or truck? & 1 Yes, 0 No & \texttt{owns\_car}\newline Source: NITI Aayog National MPI assets indicator (car or truck limb) \\
+F17 & ... a telephone of any kind, mobile or landline? & 1 Yes, 0 No & \texttt{owns\_phone}\newline Source: NITI Aayog National MPI assets indicator \\
+F18 & ... a computer or laptop? & 1 Yes, 0 No & \texttt{owns\_computer}\newline Source: NITI Aayog National MPI assets indicator \\
+F19 & ... a cart pulled by an animal? & 1 Yes, 0 No & \texttt{owns\_animal\_cart}\newline Source: NITI Aayog National MPI assets indicator \\
+F20 & ... a refrigerator? & 1 Yes, 0 No & \texttt{owns\_fridge}\newline Source: NITI Aayog National MPI assets indicator \\
+F21 & How much CULTIVABLE land does your household own or cultivate, in acres? Do not count the land the house stands on. (0 if none) & Number & \texttt{land\_cultivable\_acres}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F22 & Does your household own any cows or buffaloes? & 1 Yes, 0 No & \texttt{owns\_cow\_buffalo}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F23 & Does your household own any goats or sheep? & 1 Yes, 0 No & \texttt{owns\_goat\_sheep}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F24 & Does your household own any ponies or mules? & 1 Yes, 0 No & \texttt{owns\_pony\_mule}\newline Source: Project design (pilot livelihood survey) \\
+F25 & Does your household own a shop or stall that you use to earn? & 1 Yes, 0 No & \texttt{owns\_shop\_stall}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F26 & Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)? & 1 Yes, 0 No & \texttt{owns\_work\_vehicle}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F27 & Does your household own equipment or tools that you use to earn? & 1 Yes, 0 No & \texttt{owns\_work\_equipment}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F28 & What are they? Write what they say. Leave blank if they cannot say. &  & \texttt{work\_equipment\_detail}\newline \textit{Skip: Ask only if owns\_work\_equipment = 1; may be left blank}\newline Source: Standard household-survey item \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module G: Finance, insurance and schemes}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+G1 & Does anyone in your household have a bank account or a post office account? & 1 Yes, 0 No & \texttt{has\_bank\_account}\newline Source: NITI Aayog National MPI bank-account indicator; VEP adaptive-capacity covariate \\
+G2 & Is any of these a Jan Dhan account? & 1 Yes, 0 No & \texttt{has\_jandhan\_account}\newline \textit{Skip: Ask only if has\_bank\_account = 1}\newline Source: Standard household-survey item \\
+G3 & In the last 12 months, did you or anyone in your household borrow money? & 1 Yes, 0 No & \texttt{took\_loan\_12m}\newline Source: VEP adaptive-capacity covariate \\
+G4 & Who was the main lender? & 1 Nationalised or public-sector bank; 2 Private bank; 3 Cooperative bank or RRB; 4 Microfinance institution or SHG; 5 Moneylender; 6 Relative or friend; 7 Employer or contractor (advance); 8 Other & \texttt{credit\_source}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: VEP adaptive-capacity covariate (lender type) \\
+G5 & How much do you still owe on it altogether? (Rs) & Rupees (whole number) & \texttt{loan\_amount}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty) \\
+G6 & On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known) & Number & \texttt{loan\_interest\_per100\_pm}\newline \textit{Skip: Ask only if took\_loan\_12m = 1; may be left blank}\newline Source: Project design (informal-credit pricing as locally quoted) \\
+G7 & Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business? & 1 Yes, 0 No & \texttt{loan\_against\_asset}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability) \\
+G8 & How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none) & Whole number & \texttt{n\_health\_insured}\newline Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023 \\
+G9 & How many people in your household have life insurance? (0 if none) & Whole number & \texttt{n\_life\_insured}\newline Source: Standard household-survey item \\
+G10 & Is your crop insured? & 1 Yes, 0 No & \texttt{has\_crop\_insurance}\newline \textit{Skip: Ask only if land\_cultivable\_acres > 0}\newline Source: Standard household-survey item \\
+G11 & In the last 12 months, did your household receive benefits from any government scheme (for example ration, pension, cash transfer)? & 1 Yes, 0 No & \texttt{govt\_scheme\_beneficiary}\newline Source: Standard household-survey item \\
+G12 & Which ones? Write what they say. If they cannot name it, leave this blank and move on. &  & \texttt{govt\_scheme\_which}\newline \textit{Skip: Ask only if govt\_scheme\_beneficiary = 1; may be left blank}\newline Source: Standard household-survey item \\
+G13 & Do you own a smartphone? & 1 Yes, 0 No & \texttt{smartphone\_owned}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
+G14 & Do you ever use UPI or another way of paying by phone? & 1 Yes, 0 No & \texttt{uses\_digital\_payment}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
+G15 & How many people in your household can make a payment by phone themselves, without help? (0 if none) & Whole number & \texttt{n\_can\_transact\_online}\newline Source: Project design (intra-household financial capability) \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module H: Health}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+H1 & In the last 15 days, was anyone in your household ill? & 1 Yes, 0 No & \texttt{morbidity\_15d}\newline Source: NSS health module (15-day recall) \\
+H2 & How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else? & 1 Used savings; 2 Borrowed money; 3 Sold or pawned assets; 4 Cut consumption; 5 Help from relatives/community; 6 Did nothing/other & \texttt{morbidity\_coping\_15d}\newline \textit{Skip: Ask only if morbidity\_15d = 1}\newline Source: Project design (a reported illness with no cost/coping follow-up said nothing about its burden) \\
+H3 & About how much did the household spend on this in the last 15 days (medicine, doctor or clinic fees, travel for care)? (Rs) & Rupees (whole number) & \texttt{morbidity\_cost\_15d}\newline \textit{Skip: Ask only if morbidity\_15d = 1}\newline Source: Project design \\
+H4 & In the last 12 months, was anyone in your household admitted to hospital overnight? & 1 Yes, 0 No & \texttt{hospitalization\_365d}\newline Source: NSS health module (365-day recall) \\
+H5 & In the last 3 months, was there a time when someone in your household needed medical care but could not get it? & 1 Yes, 0 No & \texttt{health\_access\_barrier\_3m}\newline Source: VASyR 2025 barriers\_health\_case\_access\_phc\_m (primary-care access barriers); Lyons et al. 2023 Table 2 indicator 2 'healthcare access' \\
+H6 & In the last five years, has any child or young person under 18 in your household died? & 1 Yes, 0 No & \texttt{child\_death\_5y}\newline Source: NITI Aayog National MPI, Child and Adolescent Mortality (weight 1/12) \\
+H7 & In the last five years, did any woman in your household give birth? & 1 Yes, 0 No & \texttt{birth\_last\_5y}\newline Source: NITI Aayog National MPI, Maternal Health (weight 1/12) \\
+H8 & For the most recent birth, did she have at least four check-ups before the delivery? & 0 No; 1 Yes; 97 Don't know & \texttt{anc\_4\_visits}\newline \textit{Skip: Ask only if birth\_last\_5y = 1}\newline Source: NITI Aayog National MPI, Maternal Health (antenatal care limb) \\
+H9 & Was that delivery done with the help of a doctor, nurse or trained midwife? & 0 No; 1 Yes; 97 Don't know & \texttt{skilled\_birth\_attendant}\newline \textit{Skip: Ask only if birth\_last\_5y = 1}\newline Source: NITI Aayog National MPI, Maternal Health (assisted delivery limb) \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module I: Food security, shocks and coping}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+I1 & In the last 12 months, did any of these happen to your household? Check every one that applies. & 1 Serious illness or death of an earning member; 2 Crop failure or livestock loss; 3 Damage from a natural disaster (flood, landslide, fire); 4 Loss of business, goods or assets; 5 Road or bridge blocked, route closed; 6 Yatra stopped early or badly disrupted; 7 Sharp fall in customers or prices; 8 Lost the work or the work stopped & \texttt{distress\_event\_last365d}\newline Source: VEP exposure covariate (Azeem et al. 2016); shock inventory following Gunther and Harttgen 2009, via Fujii 2016 section 4 \\
+I2 & How did your household manage? Check every one they used. & 1 Used savings; 2 Borrowed money; 3 Sold or pawned assets; 4 Cut consumption; 5 Help from relatives/community; 6 Did nothing/other & \texttt{shock\_coping}\newline \textit{Skip: Ask only if any shock was reported}\newline Source: Coping strategies in VEP studies; Carter and Zimmerman 2000 on asset versus consumption smoothing \\
+I3 & In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days) & Whole number & \texttt{cope\_less\_pref\_food\_yatra\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I4 & In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days) & Whole number & \texttt{cope\_less\_pref\_food\_offseason\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I5 & In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days) & Whole number & \texttt{cope\_borrow\_food\_yatra\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I6 & In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days) & Whole number & \texttt{cope\_borrow\_food\_offseason\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I7 & In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days) & Whole number & \texttt{cope\_reduce\_meals\_yatra\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I8 & In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days) & Whole number & \texttt{cope\_reduce\_meals\_offseason\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I9 & In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days) & Whole number & \texttt{cope\_reduce\_portion\_yatra\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I10 & In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days) & Whole number & \texttt{cope\_reduce\_portion\_offseason\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I11 & In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days) & Whole number & \texttt{cope\_restrict\_adult\_yatra\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+I12 & In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days) & Whole number & \texttt{cope\_restrict\_adult\_offseason\_wk}\newline Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7), not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in practice, so little interview time is saved by simplifying it. \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module J: Ropeway}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+J1 & A ropeway is proposed between Gaurikund and Kedarnath. Are you in favour, neutral, or against? & 1 Support; 2 Neutral; 3 Oppose; 98 Don't know / prefer not to say & \texttt{ropeway\_stance}\newline Source: Project design \\
+J2 & Is your main Yatra work carrying, transporting or guiding people or goods on the Gaurikund to Kedarnath trek? & 1 Yes, 0 No & \texttt{trek\_dependent}\newline Source: Project design (see tasks\_module W4: exposure must be asked directly) \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module K: Job quality (Apablaza et al. 2026 questions)}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+K1 & Which best describes your situation during the last month: you work for pay full-time; you work for pay part-time or do occasional jobs; you study and work; you only study; you are only being trained for work; you are retired or pensioned; you do unpaid household tasks or care for others; you are unemployed and actively looking for work; you are sick or disabled and cannot work; or none of these? & 1 Works for pay full-time; 2 Works for pay part-time or occasional jobs; 3 Studies and works; 4 Only studies; 5 Being trained for work only; 6 Retired or pensioned; 7 Unpaid household tasks or caring for others; 8 Unemployed, actively seeking work; 9 Sick or disabled, cannot work; 10 Neither studying, working nor seeking work; 97 Does not know & \texttt{job\_situation}\newline Source: Apablaza et al. 2026, Appendix 2 Q5 (all eleven categories, with its own three-way routing) \\
+K2 & In your current work, are you: an employee of a private company; an employee of the public sector or government; a member of the armed forces or law enforcement; an employer or business owner who hires others; working alone with no employees; an unpaid family worker; or a domestic service worker? & 1 Employee, private company; 2 Employee, public sector/government; 3 Armed forces or law enforcement; 4 Employer/business owner (hires others); 5 Works alone, no employees; 6 Unpaid family worker; 7 Domestic service worker & \texttt{employer\_type}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q8 \\
+K3 & Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term? & 1 Permanent; 2 Seasonal or temporary; 3 Occasional or casual; 4 On probation; 5 Fixed-term & \texttt{job\_permanence}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q9 \\
+K4 & Do you have a signed contract? Yes, signed; yes but not yet signed; no contract. & 1 Yes, signed; 2 Yes, but not yet signed; 3 No contract & \texttt{contract\_status}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working); and employment\_type is 3 or 4 (wage workers) -- self-employed skip to the next question}\newline Source: Apablaza et al. 2026, Appendix 2 Q11 \\
+K5 & Is your workplace or business registered, for example with a taxpayer or GST number, a shop or trade licence, the Yatra registration, or a union? & 1 Yes, 0 No & \texttt{workplace\_registered}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q12 (widened to local registrations) \\
+K6 & Do you contribute to any pension system? Yes, the employer deducts it; yes, voluntarily; no. & 1 Yes, employer deducts it; 2 Yes, contributes voluntarily; 3 No & \texttt{pension\_contrib}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q16 \\
+K7 & Do you have health insurance through your work? Yes; only private or other insurance; none; don't know. & 1 Yes, through work; 2 Only private or other insurance; 3 None; 4 Don't know & \texttt{work\_health\_ins}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q17 \\
+K8 & Do you have the right to paid holiday, sick or maternity leave? & 0 No; 1 Yes; 97 Don't know & \texttt{leave\_rights}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q18 \\
+K9 & Have you ever been physically injured at your workplace? & 0 No; 1 Yes; 97 Don't know & \texttt{injured\_ever}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q19 \\
+K10 & In the last 12 months, was anyone physically injured or killed at your workplace because of work? & 0 No; 1 Yes; 97 Don't know & \texttt{workplace\_injury\_12m}\newline \textit{Skip: Ask only if job\_situation is 1, 2 or 3 (currently working)}\newline Source: Apablaza et al. 2026, Appendix 2 Q20 \\
+K11 & Would you like to work more hours than you do? & 0 No; 1 Yes; 97 Don't know & \texttt{wants\_more\_work}\newline \textit{Skip: Ask if job\_situation is 1 to 7 (Apablaza routes codes 4-7 straight to this question)}\newline Source: Apablaza et al. 2026, Appendix 2 Q21 \\
+K12 & How many more hours a week would you like to work? & Whole number & \texttt{more\_hours\_week}\newline \textit{Skip: Ask if wants\_more\_work = 1, or if job\_situation = 8 (Apablaza routes the unemployed-and-seeking category here directly)}\newline Source: Apablaza et al. 2026, Appendix 2 Q22 \\
+K13 & Across the months in the calendar when you had no paid work, roughly how many weeks in total did you spend looking for work? & Whole number & \texttt{weeks\_looked\_for\_work}\newline \textit{Skip: Ask if any month in the calendar is 'No paid work', or if job\_situation = 8}\newline Source: Apablaza et al. 2026, Appendix 2 Q23 (duration in weeks, tied to the calendar instead of a single point in time) \\
+K14 & Was your current work the first paid job you ever had? & 0 No; 1 Yes; 97 Don't know & \texttt{first\_job\_ever}\newline Source: Apablaza et al. 2026, Appendix 2 Q24 \\
+\bottomrule
+\end{longtable}
+}
+\subsection*{Module L: Tasks and skills (short block)}
+{\scriptsize
+\begin{longtable}{p{0.8cm}p{6.4cm}p{3.6cm}p{5.8cm}}
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
+\midrule
+\endhead
+L1 & Do you load, unload, stack or count goods? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_load}\newline Source: Gathmann and Schonberg 2010; NCO 9333.0100 loader \\
+L2 & Do you drive a motor vehicle? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_drive}\newline Source: Spitz-Oener 2006 / STEP; NCO 8322.0100 \\
+L3 & Do you operate an engine or machine? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_engine}\newline Source: Gathmann and Schonberg 2010; NCO 8343.1700 ropeway operator \\
+L4 & Do you do electrical or wiring work? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_electric}\newline Source: Spitz-Oener 2006; NCO 7411.0301 wireman \\
+L5 & Do you check equipment or the route for safety? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_safety}\newline Source: Gathmann and Schonberg 2010; NCO 8343.1700 \\
+L6 & Do you sell goods or services? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_sell}\newline Source: Gathmann and Schonberg 2010; NCO 5223.0200 \\
+L7 & Do you handle cash and payments? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_cash}\newline Source: Autor and Handel 2013; NCO 5131.0401 \\
+L8 & Do you cook or prepare food or drink? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_cook}\newline Source: NCO 5120.0300 cook \\
+L9 & Do you serve guests or customers? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_serve}\newline Source: NCO 5131.0401 waiter; Pal et al. 2026 \\
+L10 & Do you clean rooms or public areas? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_clean}\newline Source: NCO 5151.0202 room attendant; Autor-Levy-Murnane 2003 (janitorial) \\
+L11 & Do you guide or explain things to visitors? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_guide}\newline Source: Gathmann and Schonberg 2010; NCO 5113.0200 \\
+L12 & Do you coordinate work by phone, radio or signals? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never) & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done & \texttt{tk\_coord}\newline Source: NCO 8343.1700 ropeway operator \\
+L13 & Have you ever driven a motorcycle or scooter, with or without a licence? & 1 Yes, 0 No & \texttt{drove\_twowheeler}\newline \textit{Skip: Ask only if tk\_drive is 1 or 2}\newline Source: Level ladder without licences: people drive without holding a licence \\
+L14 & ... a car or jeep? & 1 Yes, 0 No & \texttt{drove\_car}\newline \textit{Skip: Ask only if tk\_drive is 1 or 2}\newline Source: Level ladder without licences \\
+L15 & ... a truck or bus? & 1 Yes, 0 No & \texttt{drove\_heavy}\newline \textit{Skip: Ask only if tk\_drive is 1 or 2}\newline Source: Level ladder without licences \\
+L16 & In your work, do you read anything (notes, rate lists, tickets, messages)? & 1 Yes, 0 No & \texttt{read\_at\_work}\newline Source: STEP module 6A \\
+L17 & In your work, do you work out prices or costs? & 1 Yes, 0 No & \texttt{calc\_at\_work}\newline Source: STEP module 6A \\
+\bottomrule
+\end{longtable}
+}
+
+\section*{4. Variables built afterwards (not asked)}
+All of these are computed in Stata (\texttt{do/02\_build\_final\_dataset.do}) from the asked answers, so the analysis starts from raw answers and every step can be checked.
+{\scriptsize
+\begin{longtable}{p{3.3cm}p{7.6cm}p{5.7cm}}
+\toprule
+\textbf{Variable} & \textbf{Meaning} & \textbf{How it is made} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Variable} & \textbf{Meaning} & \textbf{How it is made} \\
+\midrule
+\endhead
+\texttt{education\_years} & The direct year count (years\_schooling) when the respondent knew it; otherwise the midpoint of the fallback bracket (education\_level\_cat: 0/2/7/11 for no-formal/some-primary/primary-complete/secondary-plus); missing if the respondent preferred not to say. & years\_schooling if knows\_years\_schooling==1, else bracket midpoint from education\_level\_cat \\
+\texttt{hoh\_female} & Derived from the gendered relationship categories: husband/father/son/brother/other-male imply a male head, wife/mother/daughter/sister/other-female a female head, and when the respondent IS the head it is their own sex. Replaces a separate male/female question. & from hoh\_relation; = female if hoh\_relation==1 \\
+\texttt{home\_rural\_urban} & Derived from home\_admin\_level: a gram-panchayat village is rural, everything above it urban. This is what selects the rural or urban poverty line for this respondent. & 1 if home\_admin\_level==1, else 2 \\
+\texttt{credit\_institutional} & 1 if the household borrowed in the last 12 months from a bank, cooperative, RRB, microfinance institution or SHG (credit\_source 1-4); 0 otherwise, INCLUDING households that did not borrow at all. Defined for every respondent on purpose: credit\_source itself is now gated behind took\_loan\_12m, so using it directly as a VEP covariate would drop every non-borrower from the regression. & took\_loan\_12m==1 \& inrange(credit\_source,1,4) \\
+\texttt{credit\_informal} & 1 if the household borrowed from a moneylender, relative, friend, employer or contractor (credit\_source 5-8); 0 otherwise, including non-borrowers. Separated from institutional credit because the two have opposite signs for vulnerability. & took\_loan\_12m==1 \& inrange(credit\_source,5,8) \\
+\texttt{migrant} & 1 if origin is not Local (same district). & origin > 1 \\
+\texttt{health\_access\_tier} & Remoteness of the interview site along the route, derived from the interview GPS rather than from an enumerator-coded cluster: the route runs from the road-head and its hospital up to the shrine, so position along it is what determines how reachable care is. Latitude bands (research team's route crosswalk): below 30.58 Good, 30.58 to 30.66 Moderate, 30.66 and above Poor. Bands, not coordinates, enter the analysis, so the exported data still carries no named site. & from gps\_lat: 3 if <30.58; 2 if 30.58-30.66; 1 if >=30.66 \\
+\texttt{health\_access\_deprived} & 1 if the site tier is Poor, or Moderate and nobody in the household has health cover. health\_insurance\_covered was REMOVED: it asked whether "your household" is covered, which for a split migrant household -- the worker here, the family elsewhere -- does not name a group the respondent can answer for. n\_health\_insured, a count of covered members, replaces it and is strictly more informative. This variable is also no longer part of the MPI: the health dimension now uses NITI's own mortality and maternal indicators, so this is kept only as a VEP exposure covariate. & tier==1 | (tier==2 \& n\_health\_insured==0) \\
+\texttt{yatra\_months} & Count of calendar months with status 1 (Yatra work). & count of status\_m1-status\_m12 == 1 \\
+\texttt{yatra\_start\_month} & First calendar month coded Yatra work. & first m with status\_m == 1 \\
+\texttt{yatra\_end\_month} & Last calendar month coded Yatra work. & last m with status\_m == 1 \\
+\texttt{offseason\_months\_worked} & Months coded 2 to 7 (any paid activity other than Yatra work). & count of status\_m in 2..7 \\
+\texttt{months\_no\_work} & Months coded 8. & count of status\_m == 8 \\
+\texttt{offseason\_primary} & The activity that fills most of the non-Yatra months (ties go to the lower code; all months idle gives 8). & modal status\_m among months where status\_m != 1 \\
+\texttt{income\_from\_fallback} & 1 if the respondent could not give month-by-month earnings and was routed to income\_annual\_total + pct\_income\_yatra instead. Carry this into every VEP regression as a robustness split: fallback respondents have a flatter within-season earnings profile by construction (see income\_seasonality\_cv), so their estimated variance is not measured the same way as everyone else's. & knows\_monthly\_income == 0 \\
+\texttt{yatra\_income} & Calendar path: sum of monthly earnings in the months coded Yatra work. Fallback path: the annual total times the respondent's own Yatra share. & knows\_monthly\_income==1: sum income\_m if status\_m==1; else income\_annual\_total * pct\_income\_yatra/100 \\
+\texttt{non\_yatra\_income} & Calendar path: sum of monthly earnings in the other months. Fallback path: the annual total times the remaining share. & knows\_monthly\_income==1: sum income\_m if status\_m!=1; else income\_annual\_total * (100-pct\_income\_yatra)/100 \\
+\texttt{income\_pm\_yatra\_eq} & Yatra earnings spread evenly across the months the calendar codes as Yatra work. Defined for fallback respondents only; for calendar respondents the actual monthly figures are used instead. & yatra\_income / yatra\_months if income\_from\_fallback==1 \\
+\texttt{income\_pm\_other\_eq} & Non-Yatra earnings spread evenly across the remaining months. Defined for fallback respondents only. & non\_yatra\_income / (12 - yatra\_months) if income\_from\_fallback==1 \\
+\texttt{remittance\_outward\_annual} & Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount. & yatra\_months*remit\_out\_yatra\_pm + (12-yatra\_months)*remit\_out\_offseason\_pm \\
+\texttt{remittance\_inward\_annual} & Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount. & yatra\_months*remit\_in\_yatra\_pm + (12-yatra\_months)*remit\_in\_offseason\_pm \\
+\texttt{total\_annual\_income} & Work income plus inward remittances. Outward remittances are not subtracted. & yatra\_income + non\_yatra\_income + remittance\_inward\_annual \\
+\texttt{yatra\_income\_share} & Yatra income divided by total annual income (an Exposure covariate in the VEP model). & yatra\_income / total\_annual\_income \\
+\texttt{income\_seasonality\_cv} & Calendar path: coefficient of variation across the twelve reported monthly earnings (n-1 divisor). Fallback path: the same CV computed on a two-level series -- income\_pm\_yatra\_eq in each Yatra month, income\_pm\_other\_eq in each other month -- so the variable is never missing and no respondent silently drops out of the FGLS for want of it. IMPORTANT: the fallback series has no within-season variation by construction, so its CV captures only the between-season swing and is a LOWER BOUND on true seasonality. Always run the VEP arms with income\_from\_fallback interacted or split; do not treat the two paths as the same measurement. & calendar: rowsd(income\_m1..12)/rowmean(income\_m1..12); fallback: CV of the two-level series built from income\_pm\_yatra\_eq and income\_pm\_other\_eq over yatra\_months and 12-yatra\_months \\
+\texttt{cons\_staples\_pm} & Staples spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_staples\_yatra\_pm + (12-yatra\_months)*cons\_staples\_offseason\_pm)/12 \\
+\texttt{cons\_perishables\_pm} & Perishables spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_perishables\_yatra\_pm + (12-yatra\_months)*cons\_perishables\_offseason\_pm)/12 \\
+\texttt{cons\_food\_own\_pm} & Home-grown/gifted food spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_food\_own\_yatra\_pm + (12-yatra\_months)*cons\_food\_own\_offseason\_pm)/12 \\
+\texttt{cons\_food\_out\_pm} & Food eaten outside spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_food\_out\_yatra\_pm + (12-yatra\_months)*cons\_food\_out\_offseason\_pm)/12 \\
+\texttt{cons\_fuel\_pm} & Fuel and light spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_fuel\_yatra\_pm + (12-yatra\_months)*cons\_fuel\_offseason\_pm)/12 \\
+\texttt{cons\_routine\_misc\_pm} & Toiletries/consumables spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_routine\_misc\_yatra\_pm + (12-yatra\_months)*cons\_routine\_misc\_offseason\_pm)/12 \\
+\texttt{cons\_transport\_comm\_pm} & Transport/communication spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_transport\_comm\_yatra\_pm + (12-yatra\_months)*cons\_transport\_comm\_offseason\_pm)/12 \\
+\texttt{cons\_rent\_pm} & Rent spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_rent\_yatra\_pm + (12-yatra\_months)*cons\_rent\_offseason\_pm)/12 \\
+\texttt{cons\_med\_nonhosp\_pm} & Medical, non-hospital spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_med\_nonhosp\_yatra\_pm + (12-yatra\_months)*cons\_med\_nonhosp\_offseason\_pm)/12 \\
+\texttt{cons\_packaged\_food\_pm} & Packaged snacks and drinks spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_packaged\_food\_yatra\_pm + (12-yatra\_months)*cons\_packaged\_food\_offseason\_pm)/12 \\
+\texttt{cons\_pan\_tobacco\_pm} & Pan, tobacco and intoxicants spending, weighted by the length of the Yatra season and the rest of the year. & (yatra\_months*cons\_pan\_tobacco\_yatra\_pm + (12-yatra\_months)*cons\_pan\_tobacco\_offseason\_pm)/12 \\
+\texttt{cons\_food\_pm} & Staples + perishables + home-grown/gifted + eaten outside + packaged snacks and drinks, each already weighted by season. Packaged food is inside HCES's own food block (Section 7), so it belongs here; pan, tobacco and intoxicants are a separate MPCE category in HCES and are added to total\_cons\_pm instead. & cons\_staples\_pm + cons\_perishables\_pm + cons\_food\_own\_pm + cons\_food\_out\_pm + cons\_packaged\_food\_pm \\
+\texttt{cons\_clothing\_12m\_pm} & Annual figure divided by 12, rounded. & round(cons\_clothing\_12m/12) \\
+\texttt{cons\_education\_12m\_pm} & Annual figure divided by 12, rounded. & round(cons\_education\_12m/12) \\
+\texttt{cons\_medical\_12m} & Non-hospitalisation (annual-average month x 12) + hospitalisation (12-month). & cons\_med\_nonhosp\_pm*12 + cons\_medical\_hosp\_12m \\
+\texttt{cons\_medical\_12m\_pm} & Non-hospitalisation (already an annual-average month) + hospitalisation divided by 12, rounded. & cons\_med\_nonhosp\_pm + round(cons\_medical\_hosp\_12m/12) \\
+\texttt{cons\_durables\_12m\_pm} & Annual figure divided by 12, rounded. & round(cons\_durables\_12m/12) \\
+\texttt{total\_cons\_pm} & Food (annual-average month above) + fuel + toiletries + transport/communication + rent (each annual-average) + the four monthly-equivalent annual items. This is a true annual-average monthly figure, not a single-season snapshot. & food\_pm (now incl. packaged) + pan\_tobacco\_pm + fuel\_pm + routine\_misc\_pm + transport\_comm\_pm + rent\_pm + clothing\_pm + education\_pm + medical\_pm + durables\_pm \\
+\texttt{cons\_pc\_pm} & Household consumption per month divided by household size, rounded. This is the VEP outcome (its log). & round(total\_cons\_pm / hhsize) \\
+\texttt{cons\_pc\_pm\_narrow} & Only the non-lumpy items (food incl. packaged, pan/tobacco, fuel, toiletries, transport/communication, rent), each already an annual-average month, per person. Leaves out the annual items, as in Dercon and Krishnan 2000. For robustness of the variance model; not comparable with the poverty line. & (food\_pm + pan\_tobacco\_pm + fuel\_pm + routine\_misc\_pm + transport\_comm\_pm + rent\_pm) / hhsize \\
+\texttt{cons\_pc\_ae\_pm} & Household consumption divided by (adults + 0.5 x children under 15), where adults = household size minus children under 15. One simple scale; the choice of scale is a sensitivity check. & total\_cons\_pm / (hhsize - n\_children\_u15 + 0.5*n\_children\_u15) \\
+\texttt{poverty\_line} & Sethu, Surya and Ruthu (2024) construct TWO lines for 2022-23 by the Rangarajan method: Rs 2,515 per capita per month rural and Rs 3,639 urban. Which applies is decided by home\_rural\_urban -- the respondent's USUAL place of residence, not the Yatra worksite. Until this variable existed the build applied the rural line to everyone, which measured urban-resident workers against a line 31 percent too low and understated their poverty. & 2515 if home\_rural\_urban==1, else 3639 \\
+\texttt{poor} & 1 if per-capita monthly consumption is below the rural or urban line that applies to this respondent. & cons\_pc\_pm < poverty\_line \\
+\texttt{poor\_sensitivity\_cpi} & 1 if below the Rangarajan and Dev 2024 CPI-adjusted line; robustness only. & cons\_pc\_pm < 1850 \\
+\texttt{durables\_count} & Legacy six-item count kept only so earlier outputs stay reproducible. DO NOT use for the MPI: the asset indicator is mpi\_asset\_deprived, which applies NITI's actual rule to its actual eight-item list. & owns\_tv + owns\_radio + owns\_bicycle + owns\_motorcycle + owns\_car + owns\_fridge \\
+\texttt{productive\_assets\_count} & Sum of the six productive-asset binaries (livestock, pony/mule, shop/stall, work vehicle, work equipment). & owns\_cow\_buffalo + owns\_goat\_sheep + owns\_pony\_mule + owns\_shop\_stall + owns\_work\_vehicle + owns\_work\_equipment \\
+\texttt{water\_deprived} & NITI rule, BOTH limbs: deprived if the source is unimproved (codes 7-9), OR the source is improved but the round trip to fetch it takes over 30 minutes. The second limb could not be evaluated at all before water\_on\_premises and water\_fetch\_minutes existed. & inrange(drinking\_water,7,9) | (water\_on\_premises==0 \& water\_fetch\_minutes>30) \\
+\texttt{cooking\_fuel\_deprived} & NITI rule: deprived if the household cooks with firewood, dung, crop residue/shrubs, charcoal or coal (codes 6-10). Kerosene (5) is NOT counted, because NITI's own list does not name it; the global MPI does count it, so this is a documented departure and the raw fuel code is retained so either rule can be applied later. & inlist(cooking\_fuel,6,7,8,9,10) \\
+\texttt{mpi\_asset\_count} & Radio, TV, telephone, computer, animal cart, bicycle, motorbike, refrigerator -- NITI's own list. Car or truck is NOT in this count; it is a separate limb of the indicator. & owns\_radio + owns\_tv + owns\_phone + owns\_computer + owns\_animal\_cart + owns\_bicycle + owns\_motorcycle + owns\_fridge \\
+\texttt{mpi\_asset\_deprived} & NITI rule exactly: deprived if the household does not own MORE THAN ONE of the eight small assets AND does not own a car or truck. The previous version summed six assets into a plain count, which is not NITI's rule and is not comparable to any published National MPI figure. & mpi\_asset\_count <= 1 \& owns\_car == 0 \\
+\texttt{child\_school\_dep} & 1 if any child aged 6 to 14 is not attending school; missing if no such child. & n\_children\_out\_school > 0 if n\_children\_6\_14 > 0 \\
+\texttt{shock\_1} & 1 if 'Serious illness or death of an earning member' was ticked. & distress\_event\_last365d contains 1 \\
+\texttt{shock\_2} & 1 if 'Crop failure or livestock loss' was ticked. & distress\_event\_last365d contains 2 \\
+\texttt{shock\_3} & 1 if 'Damage from a natural disaster (flood, landslide, fire)' was ticked. & distress\_event\_last365d contains 3 \\
+\texttt{shock\_4} & 1 if 'Loss of business, goods or assets' was ticked. & distress\_event\_last365d contains 4 \\
+\texttt{shock\_5} & 1 if 'Road or bridge blocked, route closed' was ticked. & distress\_event\_last365d contains 5 \\
+\texttt{shock\_6} & 1 if 'Yatra stopped early or badly disrupted' was ticked. & distress\_event\_last365d contains 6 \\
+\texttt{shock\_7} & 1 if 'Sharp fall in customers or prices' was ticked. & distress\_event\_last365d contains 7 \\
+\texttt{shock\_8} & 1 if 'Lost the work or the work stopped' was ticked. & distress\_event\_last365d contains 8 \\
+\texttt{cope\_1} & 1 if 'Used savings' was ticked. & shock\_coping contains 1 \\
+\texttt{cope\_2} & 1 if 'Borrowed money' was ticked. & shock\_coping contains 2 \\
+\texttt{cope\_3} & 1 if 'Sold or pawned assets' was ticked. & shock\_coping contains 3 \\
+\texttt{cope\_4} & 1 if 'Cut consumption' was ticked. & shock\_coping contains 4 \\
+\texttt{cope\_5} & 1 if 'Help from relatives/community' was ticked. & shock\_coping contains 5 \\
+\texttt{cope\_6} & 1 if 'Did nothing/other' was ticked. & shock\_coping contains 6 \\
+\texttt{shock\_count} & Count of shock types ticked. The old single-answer item could only ever be 0 or 1. & sum of shock\_1..8 \\
+\texttt{shock\_any} & 1 if any shock was ticked. & shock\_count > 0 \\
+\texttt{shock\_covariate} & 1 if any of: natural disaster, road or bridge blocked, Yatra stopped or disrupted, sharp fall in customers or prices (codes 3, 5, 6, 7). These hit the whole route at once, so they are the shocks a ropeway -- or a flood year -- delivers to everyone simultaneously. Separating them from idiosyncratic shocks is what makes the covariate/idiosyncratic variance decomposition identifiable. & any of shock\_3 shock\_5 shock\_6 shock\_7 \\
+\texttt{shock\_idiosyncratic} & 1 if any of: illness or death of an earning member, crop or livestock loss, loss of business or assets, lost the work (codes 1, 2, 4, 8). These hit one household at a time. & any of shock\_1 shock\_2 shock\_4 shock\_8 \\
+\texttt{coped\_sold\_assets} & 1 if selling or pawning assets was among the responses. Kept as its own variable because the asset-smoothing test compares it directly against cutting consumption, and the two are no longer mutually exclusive. & cope\_3 \\
+\texttt{coped\_cut\_consumption} & 1 if cutting consumption was among the responses. See coped\_sold\_assets -- a household doing BOTH, or cutting consumption precisely in order to avoid selling, is the case the single-answer item could not represent. & cope\_4 \\
+\texttt{mpi\_mortality\_dep} & NITI: a child or adolescent under 18 died in the household in the last five years. & child\_death\_5y == 1 \\
+\texttt{mpi\_maternal\_dep} & NITI: a woman who gave birth in the last five years did not have at least four antenatal visits for the most recent birth, OR was not assisted by trained personnel at that birth. Households with no birth in the window are NOT deprived, per NITI's own treatment. & birth\_last\_5y==1 \& (anc\_4\_visits!=1 | skilled\_birth\_attendant!=1) \\
+\texttt{mpi\_schooling\_dep} & NITI: not even one household member aged 10 or older has completed six years of schooling. & any\_member\_6yr\_schooling == 0 \\
+\texttt{mpi\_attendance\_dep} & NITI: any school-aged child is not attending school up to the age at which they would complete class 8. Not deprived where the household has no child in that range. & n\_children\_out\_school > 0 if n\_children\_6\_14 > 0 \\
+\texttt{mpi\_housing\_dep} & NITI: the floor is natural material, OR the roof OR the wall is rudimentary. All three limbs are now collected; the wall limb was previously missing entirely. & floor\_material==1 | roof\_material==1 | wall\_material==1 \\
+\texttt{mpi\_sanitation\_dep} & NITI: unimproved or no facility, OR improved but shared with other households. & inlist(toilet\_type,1,2,3) \\
+\texttt{mpi\_electricity\_dep} & NITI: the household has no electricity. & electricity == 0 \\
+\texttt{mpi\_bank\_dep} & NITI: no household member has a bank account or a post office account. & has\_bank\_account == 0 \\
+\texttt{mpi\_score} & Weighted sum of the ten collected indicators. Nutrition (1/6) cannot be collected without anthropometry, so the remaining weights are scaled up proportionally to sum to 1. REPORT THIS AS AN ADAPTATION, never as the National MPI -- and state which indicator is absent. & (1/12*mortality + 1/12*maternal + 1/6*schooling + 1/6*attendance + 1/21*(fuel+sanitation+water+electricity+housing+assets+bank)) / (1 - 1/6) \\
+\texttt{mpi\_poor} & Alkire-Foster identification at the standard k = 33.3 percent cutoff. & mpi\_score >= 1/3 \\
+\texttt{rcsi\_yatra\_wk} & Weighted sum of the five Yatra-season food-coping day-counts, standard WFP weights (1,2,1,1,3). & cope\_less\_pref\_food\_yatra\_wk + 2*cope\_borrow\_food\_yatra\_wk + cope\_reduce\_meals\_yatra\_wk + cope\_reduce\_portion\_yatra\_wk + 3*cope\_restrict\_adult\_yatra\_wk \\
+\texttt{rcsi\_offseason\_wk} & Weighted sum of the five off-season food-coping day-counts, standard WFP weights (1,2,1,1,3). & cope\_less\_pref\_food\_offseason\_wk + 2*cope\_borrow\_food\_offseason\_wk + cope\_reduce\_meals\_offseason\_wk + cope\_reduce\_portion\_offseason\_wk + 3*cope\_restrict\_adult\_offseason\_wk \\
+\texttt{rcsi\_score} & Yatra-season and off-season weekly rCSI, weighted by the length of each season from the work calendar -- the same weighting already used for income and consumption. & (yatra\_months*rcsi\_yatra\_wk + (12-yatra\_months)*rcsi\_offseason\_wk)/12 \\
+\texttt{food\_coping\_deprived} & 1 if annual-average rCSI exceeds 20, the cutoff used by Lyons et al. 2023 (from VASyR). & rcsi\_score > 20 \\
+\texttt{hours\_week\_yatra} & Hours per day times days per week. & hours\_day\_yatra * days\_week\_yatra \\
+\texttt{hours\_week\_offseason} & Hours per day times days per week, off-season. Missing for respondents with no off-season paid work at all. & hours\_day\_offseason * days\_week\_offseason \\
+\texttt{hours\_week\_annual} & Yatra-season and off-season weekly hours, weighted by how many months of each the calendar records. Averaged over WORKED months only, so idle months do not drag the figure to zero -- idleness is measured by months\_no\_work, and counting it here too would penalise it twice. & (yatra\_months*hours\_week\_yatra + offseason\_months\_worked*hours\_week\_offseason) / (yatra\_months + offseason\_months\_worked) \\
+\texttt{work\_income\_pm} & (Yatra income + other work income) divided by 12. & (yatra\_income + non\_yatra\_income)/12 \\
+\texttt{emp\_dep\_access} & 1 if idle more than 6 months and spent any weeks looking for work, or wants more work while working under 20 hours a week in EITHER season. The under-20 limb previously tested Yatra-season hours only, where this workforce runs 60-90 hours a week, so it could never fire and the indicator collapsed onto its other limb. & (months\_no\_work>6 \& weeks\_looked\_for\_work>0) | (wants\_more\_work==1 \& (hours\_week\_yatra<20 | hours\_week\_offseason<20)) \\
+\texttt{emp\_dep\_comp} & 1 if average monthly work income is below 67 percent of the sample median (the fallback threshold in Table 3). & work\_income\_pm < 0.67 * median(work\_income\_pm) \\
+\texttt{emp\_dep\_sec} & 1 if a wage worker has no signed contract, or a self-employed worker's business is not registered. & wage: contract\_status != 1; self-employed: workplace\_registered == 0 \\
+\texttt{emp\_dep\_stab} & Apablaza Table 3 sets TWO tenure thresholds -- wage workers deprived under 6 months, self-employed under 12 months -- where this file previously applied a single under-1-year rule to everyone, which marked wage workers with 6 to 12 months of tenure as deprived when Table 3 would not. Tenure here is counted in Yatra SEASONS, and one season is roughly six months of work, so the two thresholds map cleanly onto under 1 season for wage workers and under 2 for the self-employed. The casual-job limb is an ADDITION to Table 3, whose fallback (temporary/casual) is meant for use only when tenure is unavailable; it is kept because occasional work is a real instability here, but note it covers code 3 only -- code 2 (seasonal) would mark almost this entire sample deprived and would measure the season, not the job. & wage (employment\_type 3/4): years\_in\_yatra\_work < 1; self-employed (1/2): < 2; OR job\_permanence == 3 \\
+\texttt{emp\_dep\_cond} & 1 if someone was injured or killed at the workplace in the last 12 months, or the worker has neither work health insurance nor a pension. & workplace\_injury\_12m==1 | (work\_health\_ins==3 \& pension\_contrib==3) \\
+\texttt{emp\_dep\_count} & Number of the five employment indicators in which the worker is deprived. & sum of the five emp\_dep\_ indicators \\
+\texttt{emp\_dep\_score} & Count divided by 5. & emp\_dep\_count / 5 \\
+\texttt{emp\_poor\_k2} & 1 if two or more indicators; k = 2 of 5 is the project's choice, to be varied in robustness. & emp\_dep\_count >= 2 \\
+\texttt{tk\_regular\_n} & Count of task answers equal to 1. & count of tk\_* == 1 \\
+\texttt{tk\_prior\_n} & Count of task answers equal to 2. & count of tk\_* == 2 \\
+\texttt{other\_act\_1} & 1 if 'Pony/mule worker (works the animals, does not own them)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 1 \\
+\texttt{other\_act\_2} & 1 if 'Pony/mule owner (owns the animals)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 2 \\
+\texttt{other\_act\_3} & 1 if 'Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 3 \\
+\texttt{other\_act\_4} & 1 if 'Palki / dandi bearer (carries a person on a palanquin, as part of a team)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 4 \\
+\texttt{other\_act\_5} & 1 if 'Dhaba, tea stall or food stall WORKER (prepared food or tea)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 5 \\
+\texttt{other\_act\_6} & 1 if 'Dhaba, tea stall or food stall OWNER (prepared food or tea)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 6 \\
+\texttt{other\_act\_7} & 1 if 'Shop WORKER (goods: prasad, puja items, clothes, general store)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 7 \\
+\texttt{other\_act\_8} & 1 if 'Shop OWNER (goods, not prepared food)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 8 \\
+\texttt{other\_act\_9} & 1 if 'Hotel / lodge WORKER' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 9 \\
+\texttt{other\_act\_10} & 1 if 'Hotel / lodge OWNER' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 10 \\
+\texttt{other\_act\_11} & 1 if 'Driver (any motor vehicle)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 11 \\
+\texttt{other\_act\_12} & 1 if 'Guide' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 12 \\
+\texttt{other\_act\_13} & 1 if 'Wage labourer (construction, loading, odd jobs)' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 13 \\
+\texttt{other\_act\_14} & 1 if 'Other' was ticked in the check-all list of other paid activities. & other\_activity\_types contains 14 \\
+\texttt{n\_other\_act\_checked} & Count of the boxes ticked in the check-all list. Compared against the respondent's own count (n\_other\_activities); a mismatch is a data-quality flag, not a silent loss. & sum of other\_act\_1..13 \\
+\texttt{other\_act\_mismatch} & 1 if the number of activities ticked does not equal the number the respondent said they had. Expected to be small; if it is not, the item needs rewording before scale-up. & n\_other\_act\_checked != n\_other\_activities \\
+\texttt{best\_alt\_occupation} & Of the 13 occupations, the one (other than the respondent's own) whose task profile is closest to the respondent's. Worker's own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) -- prior capability outside the current job is exactly what a transfer question is about. Destination profiles are the occupation-level share of workers doing each task (Gathmann and Schonberg's q\_oj). & argmax over j != own occupation of cosine(worker profile, q\_j) \\
+\texttt{task\_cover\_best} & Coverage: of the tasks that alternative occupation requires, the share this worker can already perform. Ormiston's t\_ji direction -- can the worker step in? & sum(q\_best * worker) / sum(q\_best) \\
+\texttt{task\_retain\_best} & Retention: of the tasks this worker can perform, the share that alternative occupation would actually use. Ormiston's t\_ij direction -- how much of their skill survives the move? & sum(q\_best * worker) / sum(worker) \\
+\texttt{skill\_move\_type} & Direction of the move implied by the coverage/retention pair, both split at 0.5: high-high lateral (move needs little retraining); low coverage but high retention means the destination needs skills the worker lacks while their own still count, i.e. UPSKILLING; high coverage but low retention means the worker has more than the destination uses and much of it goes idle, i.e. DOWNSKILLING; low-low means the skill sets barely overlap, i.e. RESKILLING. Worker's own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) -- prior capability outside the current job is exactly what a transfer question is about. Destination profiles are the occupation-level share of workers doing each task (Gathmann and Schonberg's q\_oj). & from (task\_cover\_best, task\_retain\_best), each split at 0.5 \\
+\bottomrule
+\end{longtable}
+}
+
+\section*{5. Apablaza et al. (2026) questions: what we asked, changed or dropped}
+Module K uses the questions in Appendix 2 of the paper. Their own skip logic is kept: wage workers only for the contract and leave questions; extra hours only if the worker wants more work; the search question only if some month had no work.
+The paper asks every household member aged 5 or more. We ask the respondent only (no household roster), so an employment index for the whole household cannot be built.
+{\scriptsize
+\begin{longtable}{p{5cm}p{4.6cm}p{6.7cm}}
+\toprule
+\textbf{Apablaza question} & \textbf{Our variable} & \textbf{Note} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Apablaza question} & \textbf{Our variable} & \textbf{Note} \\
+\midrule
+\endhead
+Q1 household size; Q2 sex, age & \texttt{hhsize, female, age} & Module A \\
+Q3 disability & \texttt{not asked} & Respondents are working; not needed for the five domains \\
+Q4 birthplace, main earner & \texttt{origin, n\_earners} & Modules A and D \\
+Q5 situation last month & \texttt{job\_situation} & Shortened to categories that fit a working respondent \\
+Q6 occupation (open) & \texttt{occupation} & Card with 13 groups (the quota variable), not an open answer \\
+Q7 activity of the workplace & \texttt{not asked} & Implied by the occupation group \\
+Q8 status in the job & \texttt{employment\_type} & PLFS four-way status instead of the paper's seven categories \\
+Q9 permanent / seasonal / casual & \texttt{job\_permanence} & Probation and fixed-term merged \\
+Q10 years in this job & \texttt{years\_in\_yatra\_work} & Whole years, so a test for under 6 months is not possible \\
+Q11 signed contract & \texttt{contract\_status} & Wage workers only \\
+Q12 registered workplace & \texttt{workplace\_registered} & Widened to local registrations (union, Yatra registration, trade licence, GST) \\
+Q13 hours in a normal week & \texttt{hours\_day\_yatra, days\_week\_yatra} & Two easier questions, multiplied afterwards \\
+Q14 monthly earnings & \texttt{income\_m1 to income\_m12} & Asked month by month (section 6) \\
+Q15 earnings range if unknown & \texttt{not asked} & Amounts are asked for every month, so no range is needed \\
+Q16 pension & \texttt{pension\_contrib} & As in the paper \\
+Q17 health insurance through work & \texttt{work\_health\_ins} & As in the paper \\
+Q18 leave rights & \texttt{leave\_rights} & Wage workers only \\
+Q19 ever injured; Q20 injury or death at workplace, last 12 months & \texttt{injured\_ever, workplace\_injury\_12m} & The paper's evidence on hazards \\
+Q21 wants more work; Q22 how many hours & \texttt{wants\_more\_work, more\_hours\_week} & As in the paper \\
+Q23 weeks looking for work & \texttt{looked\_for\_work\_idle} & Tied to the months with no work in the calendar \\
+Q24 first job; Q25 why lost the last job & \texttt{not asked} & Apply to the unemployed only; prev\_occ\_reason covers job changes \\
+\bottomrule
+\end{longtable}
+}
+
+The five deprivation indicators (access, compensation, security, stability, working conditions) are built from these raw answers in Stata, using the thresholds in Table 3 of the paper.
+Where the paper gives a choice, the fallback is used for pay (67 percent of the median) because the international-dollar version needs a conversion factor we have not verified.
+
+\section*{6. What changed from the earlier draft, and why}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+\item \textbf{The 12-month calendar is back.} The worker gives the main activity for each month and the earnings for each month with work. Earnings are asked month by month, so that a single typical figure is not rounded (heaping) and monthly earnings are not guessed from an annual total.
+Because it is the original design, the constructed income, the months of work and the seasonality measure now reproduce the earlier pipeline exactly. Months with no work are filled with 0 by the tablet, so the calendar costs about 4.5 minutes.
+\item \textbf{Licences and certificates are gone.} People drive, wire and guide without holding a licence, so holding one says little about what they can do. The block asks what people do (the three-answer grid) and adds three factual driving questions, asked only of those who have driven: motorcycle, car, truck or bus, with or without a licence. Entry papers can be studied in the second paper if needed.
+\item \textbf{The consumption module now asks a Yatra-season figure AND an off-season figure for every routine item} (9 pairs: staples, perishables, home-grown/gifted food, eating out, fuel, toiletries, transport/communication, rent, non-hospital medical), instead of one ``last 30 days'' figure. Workers here are migrants: fieldwork happens during the Yatra season, so a single recent-recall question would describe only the season the interview happens to fall in, not the whole year. The item groupings and which items get a long (365-day) recall instead still follow HCES 2022-23, IHDS-II and the Nigeria GHS-Panel (read directly; see section 8).
+\item \textbf{Remittances are split the same way} (Module C): a usual monthly amount sent and received, for the Yatra season and for the off-season, instead of one annual figure.
+\item \textbf{The annual welfare measure is now a genuine annual average}, not an on-season snapshot: each seasonal item is weighted by the number of Yatra-season months and off-season months from the work calendar, exactly as income already was. In the test data this moves \texttt{cons\_pc\_pm} down and the poverty rate up, because the earlier design implicitly treated on-season spending as if it held all year; see the note in \texttt{checks/check\_report.txt}.
+\item \textbf{Two new consumption variables for robustness:} a narrow measure (30-day items only, as in Dercon and Krishnan 2000) and a per-adult-equivalent measure (needs the count of children under 15, now asked).
+\item \textbf{Four opinion questions on a 1 to 5 scale were removed}, in line with the no-rating rule. Only the three-way ropeway view remains.
+\item \textbf{Dropped for length:} remittance frequency and \texttt{prev\_offseason\_work}. The season start, end and length, and the main off-season activity, are now built from the calendar instead of being asked.
+\item \textbf{Added:} sex, native language, earners, children under 15 and school-age children, the way the household coped with a shock, direct exposure to the trek, and the Apablaza questions.
+\item \textbf{Food security and disability are new} (Modules H and I): a long-term illness/disability flag and an unmet-healthcare-need question (VASyR 2025 / Washington Group short set), plus the standard WFP reduced Coping Strategy Index. This was a genuine gap: a vulnerability-to-poverty instrument with no food-security module. Modelled on the VASyR/Lyons, Kass-Hanna and Montoya Castano (2023) multidimensional livelihood index, read directly (see \texttt{replication/vasyr\_example/}); a full dietary-diversity count was left out to stay inside the 45-minute limit.
+\item \textbf{The rCSI is a Yatra-season/off-season pair, like the consumption module}: the first version asked each of the five WFP coping items once, over ``the last 7 days'' -- fieldwork happens during the Yatra season, so that could only describe on-site coping at the work site, not the household's usual pattern (which may look different off-season, with different members present). Each item is now asked as a usual-week day-count for each season, combined into an annual-average rCSI the same way income and consumption already are.
+\item \textbf{Household-head and family-structure items are new} (Module A): relationship to the household head and the head's sex (auto-filled with the respondent's own sex when they are the head), and whether the family is nuclear, joint or single-member. \texttt{hhsize} is now asked as household membership directly (``how many members live in your household'') rather than through a shared-kitchen framing.
+\item \textbf{A direct residence-migration question is new} (Module D): apart from the seasonal Yatra-work absence, whether the respondent's usual place of residence for most of the year differs from their family's native/home place -- distinct from \texttt{origin} (where they are originally from) and from the NSS short-term-migrant item (a specific 15-day-to-6-month absence threshold). Asked only of non-local-origin respondents.
+\item \textbf{The interview site is no longer named.} \texttt{location\_cluster} now has generic labels (Cluster 1-4) instead of the actual place names: enumerators read the site off a printed crosswalk card kept by the research team, not a name on the tablet, so no exported record carries a named interview site. The underlying codes and the health-access-tier logic built from them are unchanged. On the Kobo build (\texttt{questionnaire/build\_xlsform.py}), the enumerator-name question is dropped the same way -- each enumerator has their own Kobo login, which records who submitted automatically -- and GPS is captured silently in the background the moment consent is given, with no on-screen question.
+\item \textbf{Tasks block: 12 tasks} (from 27), the ones the provisional destination jobs need most. They fully cover 7 of the 13 destination jobs. The task-transfer paper will need a longer list and employer information.
+\item \textbf{Field team is 4 enumerators} in the worked example (the earlier file used 6).
+\end{itemize}
+
+\section*{7. Points still open}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+\item \textbf{Timing is untested.} The 12-month calendar and the 25-question Apablaza set are the two blocks most likely to run over their estimate. Time them in the pretest.
+\item \textbf{The working-conditions indicator is high in the test data} (62 in 100 deprived). It is driven by the social-protection route: almost nobody has a pension and most have no health insurance through work. That may well be true of Yatra workers, but check it against the pilot before treating it as a finding.
+The cut-off of 2 of 5 gives 66 in 100 employment-poor; a cut-off of 3 gives 28.
+\item \textbf{Tenure is asked in whole years,} so the paper's under-6-month test for wage workers is not possible; casual jobs supply the variation instead.
+\item \textbf{Real quotas.} Occupation quotas must be reset against a real enumeration before fieldwork.
+\end{itemize}
+
+\section*{8. The consumption module, read against the three source questionnaires}
+Most of the vulnerability-to-poverty papers in the project folder use an existing national survey and report only how consumption was totalled, not the question list itself.
+So the three questionnaires were read directly: \textbf{HCES 2022-23} (MoSPI, Appendix A: the source of our poverty line), \textbf{IHDS-II} (the Income and Social Capital Questionnaire, question 14), and the \textbf{Nigeria GHS-Panel} (Wave 3 Household Questionnaire, Sections 10B and 11, the survey behind Eze and Iheonu 2025).
+\subsection*{8.1 What each source does}
+{\scriptsize
+\begin{longtable}{p{3.6cm}p{13.6cm}}
+\toprule
+\textbf{Source} & \textbf{Recall design} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Source} & \textbf{Recall design} \\
+\midrule
+\endhead
+HCES 2022-23 (India) & A 'modified mixed reference period': 30 days for cereals, pulses, sugar and salt (Sections 5.1-5.3); 7 days for milk, vegetables, fruit, meat/fish/egg, oil, spices and processed food eaten out (Sections 6-7); 30 days for fuel, toiletries, conveyance, phone and rent (Sections 8-11); 365 days for clothing, footwear, education, hospitalisation and durables (Sections 10, 13-14); 30 days for non-hospitalisation medical (Section 10.3). Insurance is not part of consumption. \\
+IHDS-II (India) & A flatter design: 30 days for all 33 food and routine items together (questions 14.1-14.33, including phone, transport and non-hospitalisation medical); 365 days for 19 further items (14.34-14.52: hospitalisation, education, clothing, footwear, durables, and also insurance premiums and vacations, which it counts as consumption). \\
+Nigeria GHS-Panel Wave 3 & Four recall tiers: 7 days for food and a short non-food list (tobacco, newspapers, transport); 30 days for fuel, electricity, toiletries, phone/internet, rent; 6 months for clothing, footwear and small household items (shorter than the two India surveys); 12 months for durables, insurance and ceremonies. \\
+\bottomrule
+\end{longtable}
+}
+
+\subsection*{8.2 Where the three sources agree, and where they do not}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+\item \textbf{All three agree on 30 days} for fuel and light, toiletries and household consumables, transport and phone charges, and rent.
+\item \textbf{All three agree on 12 months} for durable goods (furniture, utensils, appliances).
+\item \textbf{HCES and IHDS-II agree exactly} on splitting medical spending into non-hospitalisation (30 days) and hospitalisation (365 days), and on 365 days for clothing, footwear and education. The Nigeria survey instead asks one combined 6-month medical item, and 6 months (not 12) for clothing.
+\item \textbf{HCES and IHDS-II disagree on food.} HCES uses 7 days for perishables (milk, vegetables, fruit, meat, oil, spices) to limit recall decay on frequent purchases; IHDS-II asks the same items at 30 days, in one simpler module. The Nigeria survey uses 7 days for all food.
+\item \textbf{Only IHDS-II and the Nigeria survey treat insurance premiums as consumption.} HCES does not, which matches standard national-accounts practice (insurance is a financial item). We follow HCES: our insurance question sits in Module G, not in the consumption total.
+\item \textbf{HCES and IHDS-II record the source of each food item} (purchased, home-grown, gift) as a column against every single item. That needs far more interview time than we have, so, following Calvo and Dercon (2007) and Eze and Iheonu (2025), home-grown and gifted food is asked as one aggregate question instead.
+\end{itemize}
+\subsection*{8.3 Our final choice, and why}
+We follow \textbf{HCES 2022-23} for which items get a short recall and which get a 365-day recall (staples, fuel, toiletries, transport, rent and non-hospital medical at a routine recall; clothing, education, hospital and durables at 365 days), because HCES is also the source of our poverty line (Sethu et al. 2024). Within the routine group we do not copy HCES's actual-recall design (its 7-day window for perishables, versus 30 days for staples): our workers are migrants, so the bigger source of error is location and season, not recall decay on one item. Every routine item is instead asked as a usual monthly amount, once for the Yatra season and once for the off-season (section 6), which a single actual-recall question cannot give. Every item in Module E of this questionnaire (section 3) carries its exact source citation.
+\subsection*{8.4 Other papers in the folder}
+{\scriptsize
+\begin{longtable}{p{3.6cm}p{7.6cm}p{5.1cm}}
+\toprule
+\textbf{Source} & \textbf{Consumption measure} & \textbf{Use in our list} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Source} & \textbf{Consumption measure} & \textbf{Use in our list} \\
+\midrule
+\endhead
+Calvo and Dercon 2007 (Ethiopia) & Total value of food and non-food consumption, from purchases, own harvest and gifts. & Source for asking home-grown and gifted food as one aggregate question. \\
+Dercon and Krishnan 2000 (Ethiopia) & Monthly consumption: food plus a deliberately narrow non-food list, to avoid seasonal swings from large expenditures. & Source of the narrow (30-day only) consumption measure kept as a robustness check. \\
+Azeem et al. 2016 (Punjab, MICS) & Quantities of foods consumed and monetary non-food spending, valued at weekly prices. & We ask values, not quantities, to keep the interview short. \\
+Azeem et al. 2018 (Pakistan); Awuni et al. 2023 (Ghana) & Food intake converted to an adult-equivalent basis (Claro et al. 2010 scale). & Source of the adult-equivalent consumption measure kept as a robustness check; needs the count of children under 15. \\
+Lyons et al. 2023 (VASyR, Lebanon) & A short expenditure module (food total, rent, water, income) run at national scale. & Shows a short module of this kind can work in the field. \\
+Khosla and Jena 2022; Jha et al. 2018 (rural India, using IHDS/NSS) & Monthly per capita consumption expenditure; item list not given in the paper (the source survey was read directly instead). & Confirms the outcome variable is per-capita monthly consumption. \\
+Ding 2022; Wei et al. 2023; Ceesay and Morelli 2026 & Income-based, or income and consumption used interchangeably, in small samples. & Not comparable; we keep consumption, not income, as the welfare measure. \\
+Zheng and Ma 2023 (China, CLES) & Ten food groups counted over the reference week, for dietary diversity, not value. & Not used; our aim is a value-based poverty line, not a diet-diversity score. \\
+\bottomrule
+\end{longtable}
+}
+
+\section*{9. Code lists}
+{\scriptsize
+\begin{longtable}{p{2cm}p{14cm}}
+\toprule
+\textbf{List} & \textbf{Codes} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{List} & \textbf{Codes} \\
+\midrule
+\endhead
+\texttt{yn} & 0 No; 1 Yes \\
+\texttt{sex} & 0 Male; 1 Female \\
+\texttt{lang} & 1 Hindi; 2 Garhwali; 3 Nepali \\
+\texttt{enum} & 1 Raman; 2 Rishit; 3 Tanmay; 4 Anuj \\
+\texttt{nativelang} & 1 Garhwali; 2 Kumaoni; 3 Hindi; 4 Nepali; 5 Bhojpuri; 6 Assamese; 7 Bengali; 8 Bodo; 9 Dogri; 10 Gujarati; 11 Kannada; 12 Kashmiri; 13 Konkani; 14 Maithili; 15 Malayalam; 16 Manipuri (Meitei); 17 Marathi; 18 Odia; 19 Punjabi; 20 Sanskrit; 21 Santali; 22 Sindhi; 23 Tamil; 24 Telugu; 25 Urdu; 96 Other Indian language; 97 Other / foreign language \\
+\texttt{state} & 1 Andhra Pradesh; 2 Arunachal Pradesh; 3 Assam; 4 Bihar; 5 Chhattisgarh; 6 Goa; 7 Gujarat; 8 Haryana; 9 Himachal Pradesh; 10 Jharkhand; 11 Karnataka; 12 Kerala; 13 Madhya Pradesh; 14 Maharashtra; 15 Manipur; 16 Meghalaya; 17 Mizoram; 18 Nagaland; 19 Odisha; 20 Punjab; 21 Rajasthan; 22 Sikkim; 23 Tamil Nadu; 24 Telangana; 25 Tripura; 26 Uttar Pradesh; 27 Uttarakhand; 28 West Bengal; 29 Andaman and Nicobar Islands; 30 Chandigarh; 31 Dadra and Nagar Haveli and Daman and Diu; 32 Delhi; 33 Jammu and Kashmir; 34 Ladakh; 35 Lakshadweep; 36 Puducherry; 99 Outside India \\
+\texttt{ruralurban} & 1 Village (rural); 2 Town or city (urban) \\
+\texttt{meals} & 1 Cooks their own; 2 Buys them; 3 Some of each \\
+\texttt{hohrel} & 1 Self (respondent is the head); 2 Husband; 3 Wife; 4 Father; 5 Mother; 6 Son; 7 Daughter; 8 Brother; 9 Sister; 10 Other male relative; 11 Other female relative; 12 Other, non-relative (male); 13 Other, non-relative (female) \\
+\texttt{famstruct} & 1 Nuclear (you, spouse and unmarried children only); 2 Joint (living with parents, married siblings or other extended family); 3 Single-member household \\
+\texttt{marital} & 1 Currently married; 2 Never married; 3 Widowed/divorced/separated \\
+\texttt{edu2} & 1 No formal education; 2 Some schooling, did not complete primary; 3 Completed primary but not secondary; 4 Completed secondary or higher; 98 Prefer not to say \\
+\texttt{occ} & 1 Pony/mule worker (works the animals, does not own them); 2 Pony/mule owner (owns the animals); 3 Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi); 4 Palki / dandi bearer (carries a person on a palanquin, as part of a team); 5 Dhaba, tea stall or food stall WORKER (prepared food or tea); 6 Dhaba, tea stall or food stall OWNER (prepared food or tea); 7 Shop WORKER (goods: prasad, puja items, clothes, general store); 8 Shop OWNER (goods, not prepared food); 9 Hotel / lodge WORKER; 10 Hotel / lodge OWNER; 11 Driver (any motor vehicle); 12 Guide; 13 Wage labourer (construction, loading, odd jobs); 14 Other \\
+\texttt{emptype} & 1 Own-account (self-employed, no hired workers); 2 Employer/business owner (self-employed); 3 Regular wage or salary; 4 Casual wage labour \\
+\texttt{emptype2} & 1 Employee, private company; 2 Employee, public sector/government; 3 Armed forces or law enforcement; 4 Employer/business owner (hires others); 5 Works alone, no employees; 6 Unpaid family worker; 7 Domestic service worker \\
+\texttt{month} & 1 January; 2 February; 3 March; 4 April; 5 May; 6 June; 7 July; 8 August; 9 September; 10 October; 11 November; 12 December \\
+\texttt{prevreason} & 1 Better income; 2 Lost the previous work; 3 Family or seasonal reasons; 4 Moved to this area; 5 Other \\
+\texttt{trtype} & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other \\
+\texttt{origin} & 1 Local (same district); 2 Other Uttarakhand district; 3 Other Indian state; 4 Nepal \\
+\texttt{referral} & 1 A family member already working here; 2 A friend or someone from the village; 3 A thekedar or contractor I now work for; 4 An agent or middleman who placed me (usually for a fee); 5 No one; I found it myself; 6 The employer called me directly; 7 Someone else \\
+\texttt{floor} & 1 Mud/kaccha; 2 Cement/mud-cement; 3 Tile/mosaic/marble \\
+\texttt{roof} & 1 Thatch/wood/mud; 2 Tin/GI sheet; 3 Concrete/RCC \\
+\texttt{house} & 1 Kaccha; 2 Semi-pucca; 3 Pucca \\
+\texttt{wall} & 1 Mud, thatch, bamboo or other natural material; 2 Unburnt brick, wood or tin; 3 Burnt brick, cement, concrete or stone \\
+\texttt{toilet} & 1 No toilet / open defecation; 2 Pit latrine without slab or open pit; 3 Improved toilet, but shared with other households; 4 Improved toilet, used only by this household \\
+\texttt{water} & 1 Piped into the house or yard; 2 Public tap or standpipe; 3 Handpump, tubewell or borewell; 4 Protected well or protected spring; 5 Rainwater collection; 6 Bottled, packaged or community RO; 7 Unprotected well or unprotected spring; 8 River, stream, pond or canal; 9 Tanker truck or cart with drum \\
+\texttt{fuel} & 1 LPG or cylinder gas; 2 Piped natural gas; 3 Electricity; 4 Biogas (gobar gas plant); 5 Kerosene; 6 Firewood; 7 Dung cakes (gobar); 8 Crop residue, straw or shrubs; 9 Charcoal; 10 Coal or lignite \\
+\texttt{fetcher} & 1 An adult woman; 2 An adult man; 3 A girl under 15; 4 A boy under 15; 5 It varies / more than one person \\
+\texttt{adminlevel} & 1 Village (gram panchayat); 2 Small town / nagar panchayat; 3 Town / nagar palika; 4 City / municipal corporation \\
+\texttt{remitmode} & 1 Bank transfer; 2 UPI or phone payment; 3 Money order or post office; 4 Sent with someone going home; 5 Carried it myself; 6 Other \\
+\texttt{credit} & 1 Nationalised or public-sector bank; 2 Private bank; 3 Cooperative bank or RRB; 4 Microfinance institution or SHG; 5 Moneylender; 6 Relative or friend; 7 Employer or contractor (advance); 8 Other \\
+\texttt{distress} & 1 Serious illness or death of an earning member; 2 Crop failure or livestock loss; 3 Damage from a natural disaster (flood, landslide, fire); 4 Loss of business, goods or assets; 5 Road or bridge blocked, route closed; 6 Yatra stopped early or badly disrupted; 7 Sharp fall in customers or prices; 8 Lost the work or the work stopped \\
+\texttt{coping} & 1 Used savings; 2 Borrowed money; 3 Sold or pawned assets; 4 Cut consumption; 5 Help from relatives/community; 6 Did nothing/other \\
+\texttt{stance} & 1 Support; 2 Neutral; 3 Oppose; 98 Don't know / prefer not to say \\
+\texttt{task3} & 1 Yes, regularly in my main Yatra work; 2 Not in my main work, but done before elsewhere; 3 Never done \\
+\texttt{tier} & 1 Poor; 2 Moderate; 3 Good \\
+\texttt{activity} & 1 Yatra work (main occupation); 2 Agriculture; 3 Animal husbandry; 4 Wage labour elsewhere; 5 Migrated for work; 6 Petty trade/other; 7 Salaried job; 8 No paid work \\
+\texttt{yndk} & 0 No; 1 Yes; 97 Don't know \\
+\texttt{jobsit} & 1 Works for pay full-time; 2 Works for pay part-time or occasional jobs; 3 Studies and works; 4 Only studies; 5 Being trained for work only; 6 Retired or pensioned; 7 Unpaid household tasks or caring for others; 8 Unemployed, actively seeking work; 9 Sick or disabled, cannot work; 10 Neither studying, working nor seeking work; 97 Does not know \\
+\texttt{jobperm} & 1 Permanent; 2 Seasonal or temporary; 3 Occasional or casual; 4 On probation; 5 Fixed-term \\
+\texttt{contract} & 1 Yes, signed; 2 Yes, but not yet signed; 3 No contract \\
+\texttt{pension} & 1 Yes, employer deducts it; 2 Yes, contributes voluntarily; 3 No \\
+\texttt{workins} & 1 Yes, through work; 2 Only private or other insurance; 3 None; 4 Don't know \\
+\texttt{movetype} & 1 Lateral (little retraining needed); 2 Upskilling (destination needs skills the worker lacks); 3 Reskilling (skill sets barely overlap); 4 Downskilling (worker's skills would go unused) \\
+\bottomrule
+\end{longtable}
+}
+\end{document}

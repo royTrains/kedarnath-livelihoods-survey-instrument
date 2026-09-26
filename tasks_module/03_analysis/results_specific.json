@@ -1,0 +1,1004 @@
+{
+ "n": 104,
+ "gate_share": {
+  "RW1": 1.0,
+  "RW2": 0.09615384615384616,
+  "RW3": 0.09615384615384616,
+  "RW4": 1.0,
+  "RW5": 1.0,
+  "SEC": 0.028846153846153848,
+  "HOS1": 1.0,
+  "HOS2": 1.0,
+  "HOS3": 1.0,
+  "TRA": 0.17307692307692307,
+  "SHP": 1.0,
+  "GDE": 0.028846153846153848,
+  "CON": 1.0
+ },
+ "E_base": 26,
+ "E_main": 23,
+ "E_any": 66,
+ "E_base_by_job": {
+  "Porter": 10,
+  "Palki": 6,
+  "Pony business": 5,
+  "Pony worker": 5
+ },
+ "E_main_by_job": {
+  "Porter": 9,
+  "Palki": 6,
+  "Pony business": 4,
+  "Pony worker": 3,
+  "Wage labourer": 1
+ },
+ "E_any_by_job": {
+  "Shopkeeper": 11,
+  "Wage labourer": 11,
+  "Porter": 9,
+  "Hotel/lodging worker": 8,
+  "Palki": 6,
+  "Pony business": 4,
+  "Hotel/lodging owner": 3,
+  "Pony worker": 3,
+  "Shop owner": 3,
+  "Dhaba/food-stall owner": 3,
+  "Driver": 3,
+  "Other": 2
+ },
+ "weights_range": [
+  0.624,
+  2.288
+ ],
+ "elig_rows": [
+  {
+   "id": "RW1",
+   "family": "Ropeway",
+   "title": "Aerial ropeway operator",
+   "n_required": 3,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.19230769230769232,
+   "strict_gate": 0.19230769230769232,
+   "broad_no_gate": 0.23076923076923078,
+   "broad_gate": 0.23076923076923078
+  },
+  {
+   "id": "RW2",
+   "family": "Ropeway",
+   "title": "Electrician / wireman (ropeway plant)",
+   "n_required": 2,
+   "gate_share_all": 0.09615384615384616,
+   "strict_no_gate": 0.038461538461538464,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.07692307692307693,
+   "broad_gate": 0.0
+  },
+  {
+   "id": "RW3",
+   "family": "Ropeway",
+   "title": "Mechanic / fitter (ropeway plant)",
+   "n_required": 2,
+   "gate_share_all": 0.09615384615384616,
+   "strict_no_gate": 0.0,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.0,
+   "broad_gate": 0.0
+  },
+  {
+   "id": "RW4",
+   "family": "Ropeway",
+   "title": "Station loading and crowd attendant",
+   "n_required": 3,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.4230769230769231,
+   "strict_gate": 0.4230769230769231,
+   "broad_no_gate": 0.46153846153846156,
+   "broad_gate": 0.46153846153846156
+  },
+  {
+   "id": "RW5",
+   "family": "Ropeway",
+   "title": "Ticket and information counter clerk",
+   "n_required": 3,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.38461538461538464,
+   "strict_gate": 0.38461538461538464,
+   "broad_no_gate": 0.38461538461538464,
+   "broad_gate": 0.38461538461538464
+  },
+  {
+   "id": "SEC",
+   "family": "Other",
+   "title": "Security guard / gateman",
+   "n_required": 3,
+   "gate_share_all": 0.028846153846153848,
+   "strict_no_gate": 0.2692307692307692,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.3076923076923077,
+   "broad_gate": 0.0
+  },
+  {
+   "id": "HOS1",
+   "family": "Hospitality",
+   "title": "Room attendant / housekeeping",
+   "n_required": 1,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.4230769230769231,
+   "strict_gate": 0.4230769230769231,
+   "broad_no_gate": 0.4230769230769231,
+   "broad_gate": 0.4230769230769231
+  },
+  {
+   "id": "HOS2",
+   "family": "Hospitality",
+   "title": "Waiter / food and beverage steward",
+   "n_required": 2,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.0,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.0,
+   "broad_gate": 0.0
+  },
+  {
+   "id": "HOS3",
+   "family": "Hospitality",
+   "title": "Cook",
+   "n_required": 1,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.0,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.038461538461538464,
+   "broad_gate": 0.038461538461538464
+  },
+  {
+   "id": "TRA",
+   "family": "Transport",
+   "title": "Light motor vehicle (car) driver",
+   "n_required": 3,
+   "gate_share_all": 0.17307692307692307,
+   "strict_no_gate": 0.5,
+   "strict_gate": 0.11538461538461539,
+   "broad_no_gate": 0.5384615384615384,
+   "broad_gate": 0.11538461538461539
+  },
+  {
+   "id": "SHP",
+   "family": "Station shop",
+   "title": "Shop assistant",
+   "n_required": 2,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.2692307692307692,
+   "strict_gate": 0.2692307692307692,
+   "broad_no_gate": 0.3076923076923077,
+   "broad_gate": 0.3076923076923077
+  },
+  {
+   "id": "GDE",
+   "family": "Guiding",
+   "title": "Tourist guide",
+   "n_required": 1,
+   "gate_share_all": 0.028846153846153848,
+   "strict_no_gate": 0.34615384615384615,
+   "strict_gate": 0.0,
+   "broad_no_gate": 0.38461538461538464,
+   "broad_gate": 0.0
+  },
+  {
+   "id": "CON",
+   "family": "Other",
+   "title": "Construction labourer (build phase)",
+   "n_required": 3,
+   "gate_share_all": 1.0,
+   "strict_no_gate": 0.3076923076923077,
+   "strict_gate": 0.3076923076923077,
+   "broad_no_gate": 0.38461538461538464,
+   "broad_gate": 0.38461538461538464
+  }
+ ],
+ "no_option_strict": 0.19230769230769232,
+ "no_option_broad": 0.15384615384615385,
+ "no_option_broad_w": 0.15625,
+ "n_options_broad_mean": 2.3461538461538463,
+ "no_option_by_job": {
+  "Palki": 0.16666666666666666,
+  "Pony business": 0.0,
+  "Pony worker": 0.2,
+  "Porter": 0.2
+ },
+ "mean_D": 2.230769230769231,
+ "mean_O": 7.4326923076923075,
+ "share_pairs_redundancy_high": 0.9940828402366864,
+ "share_pairs_shortage_high": 0.727810650887574,
+ "types_all_pairs": {
+  "close match": 0.005917159763313609,
+  "downskill (surplus skills)": 0.26627218934911245,
+  "upskill (tasks to add)": 0.0,
+  "reskill (start over)": 0.727810650887574
+ },
+ "types_best": {
+  "close match": 0.0,
+  "downskill (surplus skills)": 0.8846153846153846,
+  "upskill (tasks to add)": 0.0,
+  "reskill (start over)": 0.11538461538461539
+ },
+ "types_by_job": [
+  {
+   "row_0": "Palki",
+   "close match": 0.0,
+   "downskill (surplus skills)": 1.0,
+   "upskill (tasks to add)": 0.0,
+   "reskill (start over)": 0.0
+  },
+  {
+   "row_0": "Pony business",
+   "close match": 0.0,
+   "downskill (surplus skills)": 1.0,
+   "upskill (tasks to add)": 0.0,
+   "reskill (start over)": 0.0
+  },
+  {
+   "row_0": "Pony worker",
+   "close match": 0.0,
+   "downskill (surplus skills)": 0.8,
+   "upskill (tasks to add)": 0.0,
+   "reskill (start over)": 0.2
+  },
+  {
+   "row_0": "Porter",
+   "close match": 0.0,
+   "downskill (surplus skills)": 0.8,
+   "upskill (tasks to add)": 0.0,
+   "reskill (start over)": 0.2
+  }
+ ],
+ "best_dest_counts": {
+  "HOS1": 6,
+  "SHP": 5,
+  "GDE": 4,
+  "RW4": 4,
+  "TRA": 2,
+  "RW1": 2,
+  "HOS2": 1,
+  "RW2": 1,
+  "RW5": 1
+ },
+ "agree_shortage_cosine": 0.6153846153846154,
+ "agree_shortage_jaccard": 0.6153846153846154,
+ "agree_cosine_jaccard": 1.0,
+ "scenarios": [
+  {
+   "vacancies_per_100_exposed": 25,
+   "mix": "equal",
+   "E": 26.0,
+   "V": 6.0,
+   "displaced_min": 20.0,
+   "displaced_skill_best": 23.0,
+   "displaced_skill_lottery": 23.0,
+   "displaced_min_per100": 76.9,
+   "displaced_skill_best_per100": 88.5,
+   "displaced_skill_lottery_per100": 88.5
+  },
+  {
+   "vacancies_per_100_exposed": 25,
+   "mix": "technical-heavy",
+   "E": 26.0,
+   "V": 6.0,
+   "displaced_min": 20.0,
+   "displaced_skill_best": 23.0,
+   "displaced_skill_lottery": 23.0,
+   "displaced_min_per100": 76.9,
+   "displaced_skill_best_per100": 88.5,
+   "displaced_skill_lottery_per100": 88.5
+  },
+  {
+   "vacancies_per_100_exposed": 25,
+   "mix": "service-heavy",
+   "E": 26.0,
+   "V": 6.0,
+   "displaced_min": 20.0,
+   "displaced_skill_best": 22.0,
+   "displaced_skill_lottery": 22.116666666666667,
+   "displaced_min_per100": 76.9,
+   "displaced_skill_best_per100": 84.6,
+   "displaced_skill_lottery_per100": 85.1
+  },
+  {
+   "vacancies_per_100_exposed": 50,
+   "mix": "equal",
+   "E": 26.0,
+   "V": 13.0,
+   "displaced_min": 13.0,
+   "displaced_skill_best": 18.0,
+   "displaced_skill_lottery": 18.259999999999998,
+   "displaced_min_per100": 50.0,
+   "displaced_skill_best_per100": 69.2,
+   "displaced_skill_lottery_per100": 70.2
+  },
+  {
+   "vacancies_per_100_exposed": 50,
+   "mix": "technical-heavy",
+   "E": 26.0,
+   "V": 13.0,
+   "displaced_min": 13.0,
+   "displaced_skill_best": 19.0,
+   "displaced_skill_lottery": 19.003333333333334,
+   "displaced_min_per100": 50.0,
+   "displaced_skill_best_per100": 73.1,
+   "displaced_skill_lottery_per100": 73.1
+  },
+  {
+   "vacancies_per_100_exposed": 50,
+   "mix": "service-heavy",
+   "E": 26.0,
+   "V": 13.0,
+   "displaced_min": 13.0,
+   "displaced_skill_best": 19.0,
+   "displaced_skill_lottery": 19.263333333333335,
+   "displaced_min_per100": 50.0,
+   "displaced_skill_best_per100": 73.1,
+   "displaced_skill_lottery_per100": 74.1
+  },
+  {
+   "vacancies_per_100_exposed": 100,
+   "mix": "equal",
+   "E": 26.0,
+   "V": 26.0,
+   "displaced_min": 0.0,
+   "displaced_skill_best": 11.0,
+   "displaced_skill_lottery": 12.143333333333333,
+   "displaced_min_per100": 0.0,
+   "displaced_skill_best_per100": 42.3,
+   "displaced_skill_lottery_per100": 46.7
+  },
+  {
+   "vacancies_per_100_exposed": 100,
+   "mix": "technical-heavy",
+   "E": 26.0,
+   "V": 26.0,
+   "displaced_min": 0.0,
+   "displaced_skill_best": 12.0,
+   "displaced_skill_lottery": 13.23,
+   "displaced_min_per100": 0.0,
+   "displaced_skill_best_per100": 46.2,
+   "displaced_skill_lottery_per100": 50.9
+  },
+  {
+   "vacancies_per_100_exposed": 100,
+   "mix": "service-heavy",
+   "E": 26.0,
+   "V": 26.0,
+   "displaced_min": 0.0,
+   "displaced_skill_best": 11.0,
+   "displaced_skill_lottery": 11.62,
+   "displaced_min_per100": 0.0,
+   "displaced_skill_best_per100": 42.3,
+   "displaced_skill_lottery_per100": 44.7
+  }
+ ],
+ "curve_x": [
+  0.0,
+  10.0,
+  20.0,
+  30.000000000000004,
+  40.0,
+  50.0,
+  60.00000000000001,
+  70.0,
+  80.0,
+  90.0,
+  100.0,
+  110.00000000000001,
+  120.00000000000001,
+  130.0,
+  140.0,
+  150.0
+ ],
+ "curve": {
+  "min": [
+   100.0,
+   88.46153846153847,
+   80.76923076923077,
+   69.23076923076923,
+   61.53846153846154,
+   50.0,
+   38.46153846153846,
+   30.76923076923077,
+   19.23076923076923,
+   11.538461538461538,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "best": [
+   100.0,
+   96.15384615384616,
+   88.46153846153847,
+   84.61538461538461,
+   76.92307692307692,
+   69.23076923076923,
+   65.38461538461539,
+   57.69230769230769,
+   53.84615384615385,
+   50.0,
+   42.30769230769231,
+   38.46153846153846,
+   30.76923076923077,
+   26.923076923076923,
+   23.076923076923077,
+   15.384615384615385
+  ],
+  "lottery": [
+   100.0,
+   96.15384615384616,
+   88.46153846153847,
+   84.61538461538461,
+   77.52564102564102,
+   70.38461538461539,
+   66.74358974358974,
+   59.52564102564103,
+   55.73076923076923,
+   53.35897435897436,
+   46.69230769230769,
+   43.94871794871794,
+   38.02564102564102,
+   34.294871794871796,
+   34.42307692307692,
+   28.423076923076923
+  ]
+ },
+ "floor_no_option": 15.384615384615385,
+ "sens": [
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": true,
+   "E": 26,
+   "no_option": 42.3,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 84.6
+  },
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": false,
+   "E": 26,
+   "no_option": 19.2,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 73.1
+  },
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": true,
+   "E": 26,
+   "no_option": 19.2,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 73.1
+  },
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": false,
+   "E": 26,
+   "no_option": 15.4,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 61.5
+  },
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": true,
+   "E": 26,
+   "no_option": 3.8,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 69.2
+  },
+  {
+   "exposure": "title",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": false,
+   "E": 26,
+   "no_option": 3.8,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 53.8
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": true,
+   "E": 26,
+   "no_option": 38.5,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 76.9
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": false,
+   "E": 26,
+   "no_option": 19.2,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 65.4
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": true,
+   "E": 26,
+   "no_option": 15.4,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 69.2
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": false,
+   "E": 26,
+   "no_option": 11.5,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 57.7
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": true,
+   "E": 26,
+   "no_option": 0.0,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 65.4
+  },
+  {
+   "exposure": "title",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": false,
+   "E": 26,
+   "no_option": 0.0,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 50.0
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": true,
+   "E": 23,
+   "no_option": 43.5,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 82.6
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": false,
+   "E": 23,
+   "no_option": 21.7,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 69.6
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": true,
+   "E": 23,
+   "no_option": 21.7,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 73.9
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": false,
+   "E": 23,
+   "no_option": 17.4,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 60.9
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": true,
+   "E": 23,
+   "no_option": 4.3,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 69.6
+  },
+  {
+   "exposure": "main task",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": false,
+   "E": 23,
+   "no_option": 4.3,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 52.2
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": true,
+   "E": 23,
+   "no_option": 39.1,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 73.9
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": false,
+   "E": 23,
+   "no_option": 21.7,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 60.9
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": true,
+   "E": 23,
+   "no_option": 17.4,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 69.6
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": false,
+   "E": 23,
+   "no_option": 13.0,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 56.5
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": true,
+   "E": 23,
+   "no_option": 0.0,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 65.2
+  },
+  {
+   "exposure": "main task",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": false,
+   "E": 23,
+   "no_option": 0.0,
+   "displaced_min": 47.8,
+   "displaced_skill_best": 47.8
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": true,
+   "E": 66,
+   "no_option": 19.7,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 72.7
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.0,
+   "gates": false,
+   "E": 66,
+   "no_option": 10.6,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 62.1
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": true,
+   "E": 66,
+   "no_option": 10.6,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 66.7
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.3,
+   "gates": false,
+   "E": 66,
+   "no_option": 9.1,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 53.0
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": true,
+   "E": 66,
+   "no_option": 1.5,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 63.6
+  },
+  {
+   "exposure": "any carrying",
+   "view": "strict",
+   "cut": 0.5,
+   "gates": false,
+   "E": 66,
+   "no_option": 1.5,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 50.0
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": true,
+   "E": 66,
+   "no_option": 16.7,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 69.7
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.0,
+   "gates": false,
+   "E": 66,
+   "no_option": 9.1,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 51.5
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": true,
+   "E": 66,
+   "no_option": 7.6,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 65.2
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.3,
+   "gates": false,
+   "E": 66,
+   "no_option": 6.1,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 50.0
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": true,
+   "E": 66,
+   "no_option": 0.0,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 60.6
+  },
+  {
+   "exposure": "any carrying",
+   "view": "broad",
+   "cut": 0.5,
+   "gates": false,
+   "E": 66,
+   "no_option": 0.0,
+   "displaced_min": 50.0,
+   "displaced_skill_best": 50.0
+  }
+ ],
+ "sens_optional": {
+  "no_option": 34.61538461538461,
+  "displaced_skill_best": 65.38461538461539
+ },
+ "sens_rw1_cert": {
+  "no_option": 15.384615384615385,
+  "displaced_skill_best": 69.23076923076923
+ },
+ "boot": {
+  "no_option": [
+   3.8461538461538463,
+   15.384615384615385,
+   30.76923076923077
+  ],
+  "best": [
+   69.23076923076923,
+   69.23076923076923,
+   73.07692307692308
+  ]
+ },
+ "boot_n": 1000,
+ "base": {
+  "E": 26,
+  "V": 13,
+  "min_per100": 50.0,
+  "best_per100": 69.23076923076923,
+  "lottery_per100": 70.52564102564102,
+  "no_option": 15.384615384615385
+ },
+ "dest": [
+  {
+   "id": "RW1",
+   "family": "Ropeway",
+   "title": "Aerial ropeway operator",
+   "source": "NCO 8343.1700",
+   "required": "8;12;24",
+   "optional": "9;25",
+   "gate": "",
+   "gate_note": "No licence or level given in NCO; a technical certificate is likely (sensitivity)"
+  },
+  {
+   "id": "RW2",
+   "family": "Ropeway",
+   "title": "Electrician / wireman (ropeway plant)",
+   "source": "NCO 7411.0301 (QP ELE/Q7302, NSQF 3)",
+   "required": "10;12",
+   "optional": "9",
+   "gate": "t3_15_iti",
+   "gate_note": "ITI or NSQF-3 electrical certificate"
+  },
+  {
+   "id": "RW3",
+   "family": "Ropeway",
+   "title": "Mechanic / fitter (ropeway plant)",
+   "source": "NCO 7231.0500 (nearest entry)",
+   "required": "8;9",
+   "optional": "12",
+   "gate": "t3_15_iti",
+   "gate_note": "ITI or technical certificate (assumed)"
+  },
+  {
+   "id": "RW4",
+   "family": "Ropeway",
+   "title": "Station loading and crowd attendant",
+   "source": "NCO 9333 loader + 8343.1700 attendant; judgement",
+   "required": "3;23;24",
+   "optional": "1",
+   "gate": "",
+   "gate_note": "None"
+  },
+  {
+   "id": "RW5",
+   "family": "Ropeway",
+   "title": "Ticket and information counter clerk",
+   "source": "NCO 4224.0100 / 4221 (nearest); judgement",
+   "required": "16;25;21",
+   "optional": "24",
+   "gate": "",
+   "gate_note": "None"
+  },
+  {
+   "id": "SEC",
+   "family": "Other",
+   "title": "Security guard / gateman",
+   "source": "NCO 5414 Gateman/Unarmed Security Guard (QP SKS/Q0101, NSQF 4)",
+   "required": "23;21;25",
+   "optional": "",
+   "gate": "t3_15_security",
+   "gate_note": "NSQF-4 guard certificate"
+  },
+  {
+   "id": "HOS1",
+   "family": "Hospitality",
+   "title": "Room attendant / housekeeping",
+   "source": "NCO 5151.0202",
+   "required": "20",
+   "optional": "19;3",
+   "gate": "",
+   "gate_note": "None"
+  },
+  {
+   "id": "HOS2",
+   "family": "Hospitality",
+   "title": "Waiter / food and beverage steward",
+   "source": "NCO 5131.0401 (NSQF 3, training-linked)",
+   "required": "19;16",
+   "optional": "18",
+   "gate": "",
+   "gate_note": "None (course is common but not required)"
+  },
+  {
+   "id": "HOS3",
+   "family": "Hospitality",
+   "title": "Cook",
+   "source": "NCO 5120.0300 / 5122",
+   "required": "18",
+   "optional": "20;26",
+   "gate": "",
+   "gate_note": "None"
+  },
+  {
+   "id": "TRA",
+   "family": "Transport",
+   "title": "Light motor vehicle (car) driver",
+   "source": "NCO 8322.0100",
+   "required": "7;12;16",
+   "optional": "24",
+   "gate": "t3_15_car",
+   "gate_note": "Car (LMV) licence"
+  },
+  {
+   "id": "SHP",
+   "family": "Station shop",
+   "title": "Shop assistant",
+   "source": "NCO 5223.0200",
+   "required": "14;4",
+   "optional": "15;16;20",
+   "gate": "",
+   "gate_note": "None"
+  },
+  {
+   "id": "GDE",
+   "family": "Guiding",
+   "title": "Tourist guide",
+   "source": "NCO 5113.0200",
+   "required": "21",
+   "optional": "14;22;13",
+   "gate": "t3_15_guide",
+   "gate_note": "Guide or trekking permit (assumed; not in NCO)"
+  },
+  {
+   "id": "CON",
+   "family": "Other",
+   "title": "Construction labourer (build phase)",
+   "source": "NCO 9313.9900",
+   "required": "11;1;3",
+   "optional": "",
+   "gate": "",
+   "gate_note": "None"
+  }
+ ],
+ "labels": {
+  "1": "Carry loads on foot",
+  "2": "Carry a passenger",
+  "3": "Load, unload, stack, count goods",
+  "4": "Pack or tie goods",
+  "5": "Lead or control pack animals",
+  "6": "Feed or care for animals",
+  "7": "Drive a motor vehicle",
+  "8": "Operate an engine or machine",
+  "9": "Repair by hand",
+  "10": "Electrical or wiring work",
+  "11": "Build or construct",
+  "12": "Check equipment for safety",
+  "13": "Judge if weather or route is safe",
+  "14": "Sell goods or services",
+  "15": "Bargain over prices or fares",
+  "16": "Handle cash and payments",
+  "17": "Buy stock or arrange supplies",
+  "18": "Cook or prepare food or drink",
+  "19": "Serve guests",
+  "20": "Clean rooms or public areas",
+  "21": "Guide or explain to visitors",
+  "22": "First aid or help the sick",
+  "23": "Keep order or watch property",
+  "24": "Coordinate by phone, radio, signals",
+  "25": "Keep records or accounts",
+  "26": "Supervise or hire others",
+  "27": "Teach or train others"
+ }
+}

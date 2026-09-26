@@ -1,0 +1,664 @@
+{
+ "n": 104,
+ "n_jobs": 13,
+ "counts": {
+  "regular_mean": 7.4326923076923075,
+  "regular_sd": 2.9088563230743745,
+  "before_mean": 1.9326923076923077,
+  "any_mean": 9.365384615384615,
+  "share_any_before": 0.7884615384615384,
+  "regular_min": 2,
+  "regular_max": 16
+ },
+ "task_prev": {
+  "t1_01": 0.5384615384615384,
+  "t1_02": 0.10576923076923077,
+  "t1_03": 0.375,
+  "t1_04": 0.4519230769230769,
+  "t1_05": 0.11538461538461539,
+  "t1_06": 0.11538461538461539,
+  "t1_07": 0.1346153846153846,
+  "t1_08": 0.08653846153846154,
+  "t1_09": 0.16346153846153846,
+  "t1_10": 0.08653846153846154,
+  "t1_11": 0.1346153846153846,
+  "t1_12": 0.17307692307692307,
+  "t1_13": 0.19230769230769232,
+  "t1_14": 0.5576923076923077,
+  "t1_15": 0.5288461538461539,
+  "t1_16": 0.5865384615384616,
+  "t1_17": 0.33653846153846156,
+  "t1_18": 0.20192307692307693,
+  "t1_19": 0.22115384615384615,
+  "t1_20": 0.5769230769230769,
+  "t1_21": 0.27884615384615385,
+  "t1_22": 0.14423076923076922,
+  "t1_23": 0.15384615384615385,
+  "t1_24": 0.40384615384615385,
+  "t1_25": 0.41346153846153844,
+  "t1_26": 0.25961538461538464,
+  "t1_27": 0.09615384615384616
+ },
+ "task_prev_top": [
+  [
+   "t1_16",
+   "Handle cash and payments",
+   0.5865384615384616
+  ],
+  [
+   "t1_20",
+   "Clean rooms or public areas",
+   0.5769230769230769
+  ],
+  [
+   "t1_14",
+   "Sell goods or services",
+   0.5576923076923077
+  ],
+  [
+   "t1_01",
+   "Carry loads on foot",
+   0.5384615384615384
+  ],
+  [
+   "t1_15",
+   "Bargain over prices or fares",
+   0.5288461538461539
+  ]
+ ],
+ "task_prev_bottom": [
+  [
+   "t1_08",
+   "Operate an engine or machine",
+   0.08653846153846154
+  ],
+  [
+   "t1_10",
+   "Electrical or wiring work",
+   0.08653846153846154
+  ],
+  [
+   "t1_27",
+   "Teach or train others",
+   0.09615384615384616
+  ],
+  [
+   "t1_02",
+   "Carry a passenger",
+   0.10576923076923077
+  ],
+  [
+   "t1_05",
+   "Lead or control pack animals",
+   0.11538461538461539
+  ]
+ ],
+ "task_eta": {
+  "t1_01": 0.38244305297876724,
+  "t1_02": 0.5469229369522624,
+  "t1_03": 0.40082140082140083,
+  "t1_04": 0.2842667597426835,
+  "t1_05": 0.4356389986824769,
+  "t1_06": 0.4053798858146684,
+  "t1_07": 0.539671545385831,
+  "t1_08": 0.1488539530644794,
+  "t1_09": 0.3790117928048961,
+  "t1_10": 0.20072099440520494,
+  "t1_11": 0.5235745207173779,
+  "t1_12": 0.3937783147085473,
+  "t1_13": 0.478258091115234,
+  "t1_14": 0.4487717180370854,
+  "t1_15": 0.3023232055514059,
+  "t1_16": 0.32688092184851636,
+  "t1_17": 0.6495582264526363,
+  "t1_18": 0.4248697945771956,
+  "t1_19": 0.6313203347019771,
+  "t1_20": 0.20504394595303688,
+  "t1_21": 0.2163749813404986,
+  "t1_22": 0.2654895666131621,
+  "t1_23": 0.2733864620228257,
+  "t1_24": 0.2596065992379356,
+  "t1_25": 0.3650111484652087,
+  "t1_26": 0.6130174138832147,
+  "t1_27": 0.19473519388413008
+ },
+ "group3_overall": {
+  "analytical": 0.17680467235755687,
+  "manual": 0.5076598348232962,
+  "interactive": 0.3155354928191466
+ },
+ "class5_overall": {
+  "non-routine manual": 0.3746730566442104,
+  "routine manual": 0.13298677817908583,
+  "routine cognitive": 0.1532283821947282,
+  "non-routine analytic": 0.023576290162828632,
+  "non-routine interactive": 0.3155354928191466
+ },
+ "nearest": [
+  [
+   "Dhaba/food-stall owner",
+   "Hotel/lodging owner",
+   0.874734796723937,
+   "Wage labourer",
+   0.28375217691958277
+  ],
+  [
+   "Driver",
+   "Palki",
+   0.6372262151810493,
+   "Wage labourer",
+   0.39322508801367334
+  ],
+  [
+   "Guide",
+   "Dhaba/food-stall owner",
+   0.6571028138320721,
+   "Wage labourer",
+   0.0893427112364829
+  ],
+  [
+   "Hotel/lodging owner",
+   "Dhaba/food-stall owner",
+   0.874734796723937,
+   "Wage labourer",
+   0.24142865611338274
+  ],
+  [
+   "Hotel/lodging worker",
+   "Hotel/lodging owner",
+   0.7035232899735328,
+   "Wage labourer",
+   0.4384491900296911
+  ],
+  [
+   "Other",
+   "Shopkeeper",
+   0.8997273710659118,
+   "Palki",
+   0.4446030417176544
+  ],
+  [
+   "Palki",
+   "Porter",
+   0.684136289671152,
+   "Wage labourer",
+   0.24574702804484871
+  ],
+  [
+   "Pony business",
+   "Shop owner",
+   0.8350543126816394,
+   "Wage labourer",
+   0.32731388294374447
+  ],
+  [
+   "Pony worker",
+   "Pony business",
+   0.781941560535795,
+   "Guide",
+   0.3735141394929232
+  ],
+  [
+   "Porter",
+   "Shopkeeper",
+   0.7591807161440887,
+   "Guide",
+   0.4027491732477227
+  ],
+  [
+   "Shop owner",
+   "Hotel/lodging owner",
+   0.8719306039714839,
+   "Wage labourer",
+   0.2586467632663284
+  ],
+  [
+   "Shopkeeper",
+   "Other",
+   0.8997273710659118,
+   "Guide",
+   0.4560262017731333
+  ],
+  [
+   "Wage labourer",
+   "Porter",
+   0.6484597134749391,
+   "Guide",
+   0.0893427112364829
+  ]
+ ],
+ "job_sim_mean": 0.5736681543489255,
+ "cluster_cut": 0.5,
+ "clusters": {
+  "1": [
+   "Dhaba/food-stall owner",
+   "Driver",
+   "Guide",
+   "Hotel/lodging owner",
+   "Hotel/lodging worker",
+   "Other",
+   "Palki",
+   "Pony business",
+   "Pony worker",
+   "Porter",
+   "Shop owner",
+   "Shopkeeper"
+  ],
+  "2": [
+   "Wage labourer"
+  ]
+ },
+ "cluster_cut2": 0.3,
+ "clusters2": {
+  "1": [
+   "Palki"
+  ],
+  "2": [
+   "Porter"
+  ],
+  "3": [
+   "Driver"
+  ],
+  "4": [
+   "Pony business",
+   "Pony worker"
+  ],
+  "5": [
+   "Dhaba/food-stall owner",
+   "Hotel/lodging owner",
+   "Other",
+   "Shop owner",
+   "Shopkeeper"
+  ],
+  "6": [
+   "Hotel/lodging worker"
+  ],
+  "7": [
+   "Guide"
+  ],
+  "8": [
+   "Wage labourer"
+  ]
+ },
+ "r2": {
+  "r2": 0.382969875229453,
+  "r2_adj": 0.3016032653696007,
+  "null_mean": 0.11658830458048595,
+  "null_p95": 0.13438964649285212,
+  "p": 0.0004997501249375312,
+  "n_perm": 2000
+ },
+ "pair_cos": {
+  "same": 0.5617493180090614,
+  "diff": 0.3446588215208552
+ },
+ "own_closest": 0.625,
+ "own_rank_median": 1.0,
+ "fit_to_own_job_mean": 0.7028955212823991,
+ "hidden": {
+  "share_new_to_job": 0.7213930348258707,
+  "total_code2": 201,
+  "mean_gain_closest_other": 0.009578442890330097,
+  "share_gain_positive": 0.34615384615384615,
+  "share_switch_nearest": 0.2692307692307692
+ },
+ "c1_rows": [
+  {
+   "occupation": "Pony business",
+   "n": 5,
+   "regular_mean": 10.6,
+   "regular_min": 7,
+   "regular_max": 16,
+   "before_mean": 1.4,
+   "any_mean": 12.0
+  },
+  {
+   "occupation": "Hotel/lodging owner",
+   "n": 7,
+   "regular_mean": 10.0,
+   "regular_min": 6,
+   "regular_max": 14,
+   "before_mean": 2.0,
+   "any_mean": 12.0
+  },
+  {
+   "occupation": "Shop owner",
+   "n": 11,
+   "regular_mean": 8.36,
+   "regular_min": 4,
+   "regular_max": 11,
+   "before_mean": 1.73,
+   "any_mean": 10.09
+  },
+  {
+   "occupation": "Dhaba/food-stall owner",
+   "n": 6,
+   "regular_mean": 8.33,
+   "regular_min": 3,
+   "regular_max": 13,
+   "before_mean": 1.33,
+   "any_mean": 9.67
+  },
+  {
+   "occupation": "Driver",
+   "n": 7,
+   "regular_mean": 8.14,
+   "regular_min": 3,
+   "regular_max": 13,
+   "before_mean": 2.71,
+   "any_mean": 10.86
+  },
+  {
+   "occupation": "Shopkeeper",
+   "n": 14,
+   "regular_mean": 7.43,
+   "regular_min": 4,
+   "regular_max": 10,
+   "before_mean": 2.14,
+   "any_mean": 9.57
+  },
+  {
+   "occupation": "Pony worker",
+   "n": 5,
+   "regular_mean": 7.4,
+   "regular_min": 5,
+   "regular_max": 10,
+   "before_mean": 0.4,
+   "any_mean": 7.8
+  },
+  {
+   "occupation": "Palki",
+   "n": 6,
+   "regular_mean": 7.17,
+   "regular_min": 3,
+   "regular_max": 11,
+   "before_mean": 0.67,
+   "any_mean": 7.83
+  },
+  {
+   "occupation": "Porter",
+   "n": 10,
+   "regular_mean": 6.9,
+   "regular_min": 2,
+   "regular_max": 12,
+   "before_mean": 1.2,
+   "any_mean": 8.1
+  },
+  {
+   "occupation": "Hotel/lodging worker",
+   "n": 15,
+   "regular_mean": 6.8,
+   "regular_min": 4,
+   "regular_max": 12,
+   "before_mean": 2.73,
+   "any_mean": 9.53
+  },
+  {
+   "occupation": "Guide",
+   "n": 3,
+   "regular_mean": 5.67,
+   "regular_min": 2,
+   "regular_max": 8,
+   "before_mean": 1.67,
+   "any_mean": 7.33
+  },
+  {
+   "occupation": "Wage labourer",
+   "n": 11,
+   "regular_mean": 5.64,
+   "regular_min": 3,
+   "regular_max": 8,
+   "before_mean": 3.09,
+   "any_mean": 8.73
+  },
+  {
+   "occupation": "Other",
+   "n": 4,
+   "regular_mean": 4.25,
+   "regular_min": 3,
+   "regular_max": 7,
+   "before_mean": 1.5,
+   "any_mean": 5.75
+  }
+ ],
+ "t33_rows": [
+  {
+   "occupation": "Pony business",
+   "analytical": 0.235,
+   "manual": 0.324,
+   "interactive": 0.441
+  },
+  {
+   "occupation": "Hotel/lodging owner",
+   "analytical": 0.189,
+   "manual": 0.31,
+   "interactive": 0.501
+  },
+  {
+   "occupation": "Shop owner",
+   "analytical": 0.194,
+   "manual": 0.268,
+   "interactive": 0.538
+  },
+  {
+   "occupation": "Dhaba/food-stall owner",
+   "analytical": 0.196,
+   "manual": 0.359,
+   "interactive": 0.446
+  },
+  {
+   "occupation": "Driver",
+   "analytical": 0.351,
+   "manual": 0.48,
+   "interactive": 0.169
+  },
+  {
+   "occupation": "Shopkeeper",
+   "analytical": 0.145,
+   "manual": 0.464,
+   "interactive": 0.391
+  },
+  {
+   "occupation": "Pony worker",
+   "analytical": 0.189,
+   "manual": 0.596,
+   "interactive": 0.214
+  },
+  {
+   "occupation": "Palki",
+   "analytical": 0.25,
+   "manual": 0.436,
+   "interactive": 0.314
+  },
+  {
+   "occupation": "Porter",
+   "analytical": 0.197,
+   "manual": 0.64,
+   "interactive": 0.163
+  },
+  {
+   "occupation": "Hotel/lodging worker",
+   "analytical": 0.162,
+   "manual": 0.611,
+   "interactive": 0.227
+  },
+  {
+   "occupation": "Guide",
+   "analytical": 0.125,
+   "manual": 0.185,
+   "interactive": 0.69
+  },
+  {
+   "occupation": "Wage labourer",
+   "analytical": 0.013,
+   "manual": 0.969,
+   "interactive": 0.018
+  },
+  {
+   "occupation": "Other",
+   "analytical": 0.182,
+   "manual": 0.42,
+   "interactive": 0.399
+  }
+ ],
+ "t5_rows": [
+  {
+   "occupation": "Pony business",
+   "count": 5,
+   "mean": 0.78,
+   "min": 0.55
+  },
+  {
+   "occupation": "Hotel/lodging owner",
+   "count": 7,
+   "mean": 0.82,
+   "min": 0.73
+  },
+  {
+   "occupation": "Shop owner",
+   "count": 11,
+   "mean": 0.75,
+   "min": 0.58
+  },
+  {
+   "occupation": "Dhaba/food-stall owner",
+   "count": 6,
+   "mean": 0.69,
+   "min": 0.46
+  },
+  {
+   "occupation": "Driver",
+   "count": 7,
+   "mean": 0.73,
+   "min": 0.5
+  },
+  {
+   "occupation": "Shopkeeper",
+   "count": 14,
+   "mean": 0.76,
+   "min": 0.61
+  },
+  {
+   "occupation": "Pony worker",
+   "count": 5,
+   "mean": 0.63,
+   "min": 0.49
+  },
+  {
+   "occupation": "Palki",
+   "count": 6,
+   "mean": 0.68,
+   "min": 0.5
+  },
+  {
+   "occupation": "Porter",
+   "count": 10,
+   "mean": 0.67,
+   "min": 0.4
+  },
+  {
+   "occupation": "Hotel/lodging worker",
+   "count": 15,
+   "mean": 0.69,
+   "min": 0.53
+  },
+  {
+   "occupation": "Guide",
+   "count": 3,
+   "mean": 0.46,
+   "min": 0.29
+  },
+  {
+   "occupation": "Wage labourer",
+   "count": 11,
+   "mean": 0.76,
+   "min": 0.59
+  },
+  {
+   "occupation": "Other",
+   "count": 4,
+   "mean": 0.35,
+   "min": 0.25
+  }
+ ],
+ "h_rows": [
+  {
+   "offseason_primary": "Animal husbandry",
+   "n": 7,
+   "before_mean": 3.29,
+   "share_any": 1.0,
+   "regular_mean": 5.86
+  },
+  {
+   "offseason_primary": "Wage labour elsewhere",
+   "n": 20,
+   "before_mean": 2.4,
+   "share_any": 0.9,
+   "regular_mean": 8.2
+  },
+  {
+   "offseason_primary": "Agriculture",
+   "n": 29,
+   "before_mean": 2.31,
+   "share_any": 0.9,
+   "regular_mean": 7.24
+  },
+  {
+   "offseason_primary": "Migrated for work",
+   "n": 7,
+   "before_mean": 2.29,
+   "share_any": 1.0,
+   "regular_mean": 7.57
+  },
+  {
+   "offseason_primary": "Salaried job",
+   "n": 3,
+   "before_mean": 2.0,
+   "share_any": 0.33,
+   "regular_mean": 5.33
+  },
+  {
+   "offseason_primary": "Petty trade/other",
+   "n": 7,
+   "before_mean": 1.43,
+   "share_any": 0.86,
+   "regular_mean": 7.14
+  },
+  {
+   "offseason_primary": "No other work",
+   "n": 31,
+   "before_mean": 1.0,
+   "share_any": 0.55,
+   "regular_mean": 7.71
+  }
+ ],
+ "labels": {
+  "t1_01": "Carry loads on foot",
+  "t1_02": "Carry a passenger",
+  "t1_03": "Load, unload, stack, count goods",
+  "t1_04": "Pack or tie goods",
+  "t1_05": "Lead or control pack animals",
+  "t1_06": "Feed or care for animals",
+  "t1_07": "Drive a motor vehicle",
+  "t1_08": "Operate an engine or machine",
+  "t1_09": "Repair by hand",
+  "t1_10": "Electrical or wiring work",
+  "t1_11": "Build or construct",
+  "t1_12": "Check equipment for safety",
+  "t1_13": "Judge if weather or route is safe",
+  "t1_14": "Sell goods or services",
+  "t1_15": "Bargain over prices or fares",
+  "t1_16": "Handle cash and payments",
+  "t1_17": "Buy stock or arrange supplies",
+  "t1_18": "Cook or prepare food or drink",
+  "t1_19": "Serve guests",
+  "t1_20": "Clean rooms or public areas",
+  "t1_21": "Guide or explain to visitors",
+  "t1_22": "First aid or help the sick",
+  "t1_23": "Keep order or watch property",
+  "t1_24": "Coordinate by phone, radio, signals",
+  "t1_25": "Keep records or accounts",
+  "t1_26": "Supervise or hire others",
+  "t1_27": "Teach or train others"
+ }
+}
