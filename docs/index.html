@@ -72,6 +72,11 @@ let L = 0;                                  // 0 = Hindi, 1 = English
 const t = k => T[k][L];
 const KEY = "kedarnath_v1", DKEY = "kedarnath_draft";
 let D = {}, idx = 0, shown = [];
+// Which screen is showing. The language toggle used to INFER this from idx, which got it
+// wrong twice: after a refused consent idx is still inside the question list, so switching
+// language dropped the enumerator back into an interview that had already been saved and
+// closed; and on the completion screen it jumped to the menu instead of re-rendering.
+let screen = "menu", lastRefused = false;
 
 // ---- storage. Every write is wrapped: a private window or a full disk must not throw mid-interview.
 function load(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } }
@@ -108,6 +113,7 @@ function render(){
   const app = document.getElementById("app");
   rebuild();
   if (idx >= shown.length) return finish();
+  screen = "q";
   const q = shown[idx], mod = CFG.mods.find(m => m.c === q.m);
   const prevMod = idx > 0 ? shown[idx-1].m : null;
   let h = "";
@@ -166,13 +172,22 @@ function finish(refused){
   D.__exported = false;
   const rows = all(); rows.push(D); save(KEY, rows);
   localStorage.removeItem(DKEY);
+  D = {};
+  lastRefused = !!refused;
+  showDone();
+}
+
+// Kept separate from finish() so the language toggle can redraw this screen without re-saving the
+// interview -- switching language must never write a second copy of the same record.
+function showDone(){
+  screen = "done";
   document.getElementById("nav").style.display = "none";
   document.getElementById("app").innerHTML =
-    "<div class=mid><div class=big>" + (refused ? t("stop") : t("done")) + "</div>" +
+    "<div class=mid><div class=big>" + (lastRefused ? t("stop") : t("done")) + "</div>" +
     "<p>" + pending() + " " + t("pend") + "</p>" +
     "<p><button class=p onclick='start()'>" + t("start") + "</button></p>" +
     "<p><button onclick='exportCsv()'>" + t("exp") + "</button></p></div>";
-  D = {}; paint();
+  paint();
 }
 
 function start(){
@@ -205,6 +220,7 @@ function exportCsv(){
   rows.forEach(r => r.__exported = true); save(KEY, rows); paint();
 }
 function menu(){
+  screen = "menu";
   const rows = all();
   document.getElementById("nav").style.display = "none";
   document.getElementById("app").innerHTML = "<div class=card><table>" +
@@ -223,7 +239,12 @@ function clearExported(){
 document.getElementById("next").onclick = next;
 document.getElementById("back").onclick = back;
 document.getElementById("menu").onclick = menu;
-document.getElementById("lang").onclick = () => { L = 1 - L; if (shown.length && idx < shown.length) render(); else menu() };
+document.getElementById("lang").onclick = () => {
+  L = 1 - L;
+  if (screen === "q") render();
+  else if (screen === "done") showDone();
+  else menu();
+};
 window.addEventListener("beforeunload", e => { if (Object.keys(D).length > 2){ e.preventDefault(); e.returnValue = "" } });
 // ---- offline support. Without this the form must be fetched from the network every time it is
 // opened, which on this route means it does not open at all. The worker caches the whole app on
