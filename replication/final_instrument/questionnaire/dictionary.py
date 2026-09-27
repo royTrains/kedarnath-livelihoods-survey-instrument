@@ -56,6 +56,10 @@ LSETS = {
               99: "Outside India"},
     "ruralurban": {1: "Village (rural)", 2: "Town or city (urban)"},
     "meals": {1: "Cooks their own", 2: "Buys them", 3: "Some of each"},
+    # A two-way CHOICE, not a yes/no. Codes keep 1 = month-by-month and 0 = annual total so every
+    # downstream ==1 / ==0 test still holds; only the labels change, because "No / Yes" is not an
+    # answer to "month by month, or one total?".
+    "recall": {1: "Month by month", 0: "One total for the whole year"},
     "hohrel": {1: "Self (respondent is the head)", 2: "Husband", 3: "Wife", 4: "Father", 5: "Mother",
                6: "Son", 7: "Daughter", 8: "Brother", 9: "Sister", 10: "Other male relative",
                11: "Other female relative", 12: "Other, non-relative (male)",
@@ -280,7 +284,7 @@ R("C", "status_m12", "Main activity in December", "In December, what was your ma
 # Q14 -- changed from her monthly range to an annual total because the work here is seasonal: a
 # season's takings are a real, memorable quantity, while an "average month" is an abstraction the
 # respondent would have to compute.
-R("C", "knows_monthly_income", "Can recall earnings month by month", "Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?", "Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail.", "bin", "yn", source="Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)")
+R("C", "knows_monthly_income", "Can recall earnings month by month", "Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?", "Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a yes/no, so the options read \"No / Yes\" against a question asking which of two things is easier.", "cat", "recall", source="Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)")
 MONTHS = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"]
 for _i, _mo in enumerate(MONTHS, start=1):

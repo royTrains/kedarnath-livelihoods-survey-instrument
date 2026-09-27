@@ -28,6 +28,7 @@ label define occ 1 "Pony/mule worker (works the animals, does not own them)" 2 "
 label define origin 1 "Local (same district)" 2 "Other Uttarakhand district" 3 "Other Indian state" 4 "Nepal", replace
 label define pension 1 "Yes, employer deducts it" 2 "Yes, contributes voluntarily" 3 "No", replace
 label define prevreason 1 "Better income" 2 "Lost the previous work" 3 "Family or seasonal reasons" 4 "Moved to this area" 5 "Other", replace
+label define recall 1 "Month by month" 0 "One total for the whole year", replace
 label define referral 1 "A family member already working here" 2 "A friend or someone from the village" 3 "A thekedar or contractor I now work for" 4 "An agent or middleman who placed me (usually for a fee)" 5 "No one; I found it myself" 6 "The employer called me directly" 7 "Someone else", replace
 label define remitmode 1 "Bank transfer" 2 "UPI or phone payment" 3 "Money order or post office" 4 "Sent with someone going home" 5 "Carried it myself" 6 "Other", replace
 label define roof 1 "Thatch/wood/mud" 2 "Tin/GI sheet" 3 "Concrete/RCC", replace
@@ -130,7 +131,7 @@ label values status_m11 activity
 label variable status_m12 "Main activity in December"
 label values status_m12 activity
 label variable knows_monthly_income "Can recall earnings month by month"
-label values knows_monthly_income yn
+label values knows_monthly_income recall
 label variable income_m1 "Earnings in January (Rs)"
 label variable income_m2 "Earnings in February (Rs)"
 label variable income_m3 "Earnings in March (Rs)"
@@ -812,7 +813,8 @@ notes status_m12: Meaning: Main activity in December of the past year; code 1 is
 notes status_m12: Question: In December, what was your main work or activity? (Fill the Yatra months first, then the others.)
 notes status_m12: Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)
 notes knows_monthly_income: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail.
+notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a
+notes knows_monthly_income: Meaning (cont.): yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
 notes knows_monthly_income: Question: Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
 notes knows_monthly_income: Source: Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)
 notes income_m1: Module C - Monthly calendar of work and income; remittances; origin: asked

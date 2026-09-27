@@ -250,7 +250,7 @@ Next I would like to go through the whole year, month by month. Take your time.
 
 **48.** Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
 
-> **ENUMERATOR:** Options: 0 No · 1 Yes
+> **ENUMERATOR:** Options: 1 Month by month · 0 One total for the whole year
 
 **49.** How much did you earn from all your work in January, after costs? (Rs)
 

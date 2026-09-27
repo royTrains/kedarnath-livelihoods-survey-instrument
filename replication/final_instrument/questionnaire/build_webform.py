@@ -192,6 +192,12 @@ let D = {}, idx = 0, shown = [];
 // language dropped the enumerator back into an interview that had already been saved and
 // closed; and on the completion screen it jumped to the menu instead of re-rendering.
 let screen = "menu", lastRefused = false;
+// Position is tracked by question NAME, never by index. shown[] is rebuilt from the relevance
+// rules on every render, so answering a gate question changes its length and every index after
+// that point silently refers to a different question -- which looked, from the field, like typed
+// answers disappearing. `cur` survives that; an index cannot.
+let cur = null;
+function posOf(name){ const i = shown.findIndex(q => q.n === name); return i < 0 ? 0 : i }
 
 // ---- storage. Every write is wrapped: a private window or a full disk must not throw mid-interview.
 function load(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } }
@@ -227,9 +233,14 @@ function rebuild(){ shown = CFG.q.filter(visible) }
 function render(){
   const app = document.getElementById("app");
   rebuild();
+  if (!shown.length) return finish();
+  // resolve the remembered question; if it has just been hidden by its own gate, fall through to
+  // the next still-visible question rather than losing the enumerator's place entirely
+  idx = cur === null ? 0 : posOf(cur);
   if (idx >= shown.length) return finish();
   screen = "q";
   const q = shown[idx], mod = CFG.mods.find(m => m.c === q.m);
+  cur = q.n;
   const prevMod = idx > 0 ? shown[idx-1].m : null;
   let h = "";
   if (mod && q.m !== prevMod) h += "<h2>" + (L ? mod.en : mod.hi) + "</h2>";
@@ -262,7 +273,9 @@ function render(){
     } else if (el.type === "radio"){ D[q.n] = el.value } else { D[q.n] = el.value }
     save(DKEY, D);
     app.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
-    if (el.type === "radio") setTimeout(next, 120);          // radios advance on their own
+    // NO auto-advance. It used to fire 120 ms after any radio was touched, which meant a question
+    // could not be revisited and corrected without being thrown forward again, and the timer was
+    // never cancelled -- so it could fire after the enumerator had already pressed Back.
   }));
   paint();
 }
@@ -278,9 +291,20 @@ function next(){
   const q = shown[idx], e = validate(q);
   if (e){ const el = document.getElementById("err"); if (el) el.textContent = e; return }
   if (q.n === "consent" && String(D.consent) === "0"){ return finish(true) }
-  idx++; render();
+  // recompute AFTER the answer, because the answer may have opened or closed later questions
+  rebuild();
+  const here = posOf(q.n);
+  if (here + 1 >= shown.length){ cur = null; return finish() }
+  cur = shown[here + 1].n;
+  render();
 }
-function back(){ if (idx > 0){ idx--; render() } }
+function back(){
+  rebuild();
+  const here = posOf(cur);
+  if (here <= 0) return;
+  cur = shown[here - 1].n;
+  render();
+}
 
 function finish(refused){
   D.__end = new Date().toISOString();
@@ -312,7 +336,7 @@ function start(){
     p => { D.gps_lat = p.coords.latitude.toFixed(5); D.gps_lon = p.coords.longitude.toFixed(5); save(DKEY, D) },
     () => {}, {timeout: 20000, enableHighAccuracy: true});
   D.interview_date = new Date().toISOString().slice(0,10);
-  idx = 0; save(DKEY, D); render();
+  idx = 0; cur = null; save(DKEY, D); render();
 }
 
 // ---- export: exactly the raw_asked.csv column order the Stata build reads
@@ -386,7 +410,7 @@ if ("serviceWorker" in navigator) {
 }
 
 const draft = load(DKEY, null);
-if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; idx = 0; render() }
+if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; idx = 0; cur = null; render() }
 else menu();
 </script>
 </body></html>
