@@ -375,6 +375,15 @@ season_pair("cons_transport_comm", transport_yatra, cash_f, rnd=5)
 season_pair("cons_rent", d.cons_rent_30d.values.astype(float), rent_f)
 season_pair("cons_med_nonhosp", med_nonhosp_yatra, cash_f)
 
+# most migrant households DO spend differently across the two seasons; the gate exists for the
+# minority who do not, and the take-up rate is exactly what the pilot needs to check
+_differs = (rng.random(n) < 0.82).astype(int)
+o["spend_differs_by_season"] = _differs
+for _c in ["staples","perishables","food_own","food_out","packaged_food","pan_tobacco","fuel",
+           "routine_misc","transport_comm","rent","med_nonhosp"]:
+    _col = f"cons_{_c}_offseason_pm"
+    if _col in o: o[_col] = np.where(_differs == 1, o[_col].values, np.nan)
+
 # ---- F ------------------------------------------------------------------------
 o["floor_material"] = code(d.floor_material, {"Mud": 1, "Cement": 2, "Tile": 3})
 o["roof_material"] = code(d.roof_material, {"Thatch": 1, "Tin": 2, "Concrete": 3})
@@ -460,9 +469,15 @@ o["loan_amount"] = np.where(_old_cred > 0, _amt, np.nan)
 # rupees per 100 per month: institutional roughly 1, moneylenders 3-6
 _rate = np.where(_old_cred == 1, rng.normal(1.0, 0.3, n), rng.normal(4.2, 1.4, n)).clip(0, 12)
 _knows_rate = rng.random(n) < 0.82
-o["loan_interest_per100_pm"] = np.where((_old_cred > 0) & _knows_rate, np.round(_rate, 1), np.nan)
-o["loan_against_asset"] = np.where(_old_cred > 0,
-                                   (rng.random(n) < np.where(_old_cred == 2, .38, .52)).astype(float), np.nan)
+# interest is not universal -- borrowing from relatives is often interest-free, which is why
+# the rate question is gated rather than asking everyone to enter 0
+_pays = np.where(_old_cred > 0, (rng.random(n) < np.where(_old_cred == 2, .82, .97)).astype(float), np.nan)
+o["pays_interest"] = _pays
+o["loan_interest_per100_pm"] = np.where((np.nan_to_num(_pays) == 1) & _knows_rate, np.round(_rate, 1), np.nan)
+_secured = np.where(_old_cred > 0, (rng.random(n) < np.where(_old_cred == 2, .38, .52)).astype(float), np.nan)
+o["loan_against_asset"] = _secured
+# what was pledged: jewellery and animals dominate for informal lenders, business stock for formal
+o["loan_collateral"] = [int(rng.choice([1,2,3,4,5,6,7], p=[.34,.14,.20,.10,.14,.04,.04])) if v == 1 else np.nan for v in np.nan_to_num(_secured)]
 
 # ---- insurance as COUNTS, not a single categorical ---------------------------------------------
 _ins_old = code(d.insurance_coverage, {"None": 0, "Health": 1, "Life": 2, "Crop": 3, "Multiple": 4})
@@ -617,11 +632,11 @@ o["workplace_injury_12m"] = np.where(working, np.where(rng.random(n) < .02, 97, 
 wants = np.where(tail, np.where(rng.random(n) < .02, 97, (rng.random(n) < expit(-1.8 + 0.30 * months_no_work)).astype(int)), np.nan)
 o["wants_more_work"] = wants
 HR = [5, 8, 10, 10, 12, 15, 20, 20, 21, 28, 30, 35, 40]
-o["more_hours_week"] = [rng.choice(HR) if (w == 1 or sk) else np.nan for w, sk in zip(wants, seeking)]
+o["more_hours_day"] = [int(rng.choice([1,2,2,3,3,4,5])) if (w == 1 or sk) else np.nan for w, sk in zip(wants, seeking)]
 # weeks spent looking for work across idle months (Apablaza's own unit, Q23), not a plain yes/no --
 # search intensity scales with whether the worker wanted more work, over the idle months in the calendar
 search_intensity = np.where(wants == 1, rng.uniform(0.3, 0.8, n), rng.uniform(0.0, 0.3, n))
-o["weeks_looked_for_work"] = np.where((months_no_work > 0) | seeking, np.round(months_no_work * 4.33 * search_intensity), np.nan)
+o["months_looked_for_work"] = np.where((months_no_work > 0) | seeking, np.round(months_no_work * search_intensity), np.nan)
 # first job ever: less likely the longer someone has worked in the Yatra economy
 p_first = np.clip(0.35 - 0.03 * d.years_in_yatra_work.values, 0.02, 0.35)
 o["first_job_ever"] = np.where(rng.random(n) < 0.02, 97, (rng.random(n) < p_first).astype(int))

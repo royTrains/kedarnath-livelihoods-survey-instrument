@@ -177,6 +177,20 @@ gen double _fbss = yatra_months*(cond(missing(income_pm_yatra_eq),0,income_pm_ya
 replace income_seasonality_cv = sqrt(_fbss/11)/_fbmean if income_from_fallback==1 & _fbmean>0
 drop _fbmean _fbss
 
+*-----------------------------------------------------------------------------
+* SEASONAL GATE. Households that said their spending does not differ between
+* the seasons were not asked the off-season figures at all; the Yatra-season
+* figure is carried across for them. Done BEFORE any season weighting, so
+* everything downstream sees a complete pair either way.
+* WATCH THIS SHARE: a gate that saves nine questions is attractive to a tired
+* respondent, and over-use would pull measured consumption toward the
+* Yatra-season level, which runs about a third higher.
+*-----------------------------------------------------------------------------
+foreach v in staples perishables food_own food_out packaged_food pan_tobacco fuel ///
+             routine_misc transport_comm rent med_nonhosp {
+    replace cons_`v'_offseason_pm = cons_`v'_yatra_pm if spend_differs_by_season==0
+}
+
 * ---- consumption (Chaudhuri welfare measure), narrow and adult-equivalent versions ----
 * Workers are migrants, so a module fielded during the Yatra season cannot stand for the whole year.
 * Every seasonal item (9 pairs in Module E) is asked as a usual monthly amount for the Yatra season
@@ -307,7 +321,7 @@ gen double work_income_pm = (yatra_income + non_yatra_income)/12
 quietly summarize work_income_pm, detail
 local med = r(p50)
 * access: unemployed >6 months (and spent time searching) OR under 20 h/week and wanting more
-gen byte emp_dep_access = (months_no_work>6 & weeks_looked_for_work>0) | (wants_more_work==1 & hours_week_yatra<20)
+gen byte emp_dep_access = (months_no_work>6 & months_looked_for_work>0) | (wants_more_work==1 & hours_week_yatra<20)
 * compensation: fallback threshold (67% of the sample median)
 gen byte emp_dep_comp   = (work_income_pm < 0.67*`med') if !missing(work_income_pm)
 * security: wage workers = no signed contract; self-employed = business not registered
@@ -430,9 +444,11 @@ foreach v in employer_type workplace_registered pension_contrib work_health_ins 
 * respondents an underemployment question exists to reach.
 assert missing(wants_more_work) == (k_tail!=1)
 assert missing(job_permanence)    == (k_working!=1)
-* more_hours_week also fires for code 8 (unemployed and seeking), which Apablaza routes here directly
-assert missing(more_hours_week)   == !(wants_more_work==1 | k_seeking==1)
-assert missing(weeks_looked_for_work) == !(months_no_work>0 | k_seeking==1)
+* more_hours_day also fires for code 8 (unemployed and seeking), which Apablaza routes here directly
+assert missing(more_hours_day)   == !(wants_more_work==1 | k_seeking==1)
+assert (loan_collateral==.) == !(loan_against_asset==1)
+assert (pays_interest==.)   == (took_loan_12m==0)
+assert missing(months_looked_for_work) == !(months_no_work>0 | k_seeking==1)
 * prev_occ is free text now, so "missing" means an empty string, not a system missing
 assert (prev_occ=="")             == (prev_occ_change!=1)
 assert inrange(home_admin_level,1,4)

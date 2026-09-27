@@ -114,9 +114,15 @@ CONSENT_HI = ("हम यात्रा मार्ग पर काम कर
               "उससे आपके काम या किसी सरकारी सुविधा पर कोई असर नहीं पड़ेगा।")
 
 HTML = """<!doctype html>
-<html lang="hi">
+<html lang="hi" translate="no">
 <head>
 <meta charset="utf-8">
+<!-- Stop the browser offering to translate. A Hindi form auto-translated to English turns
+     "पक्का" (permanent) into "Sure!" and "जमा पैसे से" (used savings) into "from the deposited
+     money" -- the reviewer then critiques wording that was never in the instrument. All three
+     signals are needed: Chrome honours the meta, Safari and Edge honour the attribute, and the
+     class covers dynamically inserted text. -->
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Kedarnath Yatra Worker Survey</title>
 <link rel="manifest" href="manifest.json">
@@ -157,7 +163,7 @@ footer button{flex:1}
 .big{font-size:20px;color:var(--ink);margin-bottom:8px}
 table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;border-bottom:1px solid var(--line)}
 </style></head>
-<body>
+<body class="notranslate" translate="no">
 <header>
   <b id="ttl">केदारनाथ सर्वेक्षण</b>
   <span id="pend">0</span>
