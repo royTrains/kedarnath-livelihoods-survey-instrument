@@ -27,7 +27,6 @@ MODULES = [  # code, title
 LSETS = {
     "yn": {0: "No", 1: "Yes"},
     "sex": {0: "Male", 1: "Female"},
-    "lang": {1: "Hindi", 2: "Garhwali", 3: "Nepali"},
     "enum": {1: "Raman", 2: "Rishit", 3: "Tanmay", 4: "Anuj"},
     # "cluster" removed 2026-09-24: the enumerator-coded route cluster duplicated what the silently
     # captured GPS already records. health_access_tier is now derived from the GPS instead (see below),
@@ -198,7 +197,6 @@ R("P", "interview_date", "Interview date", "Recorded automatically.", "Date of i
 # one of four route clusters, which the silently captured GPS below already records more precisely.
 # health_access_tier is now derived from gps_lat in Stata. Net effect: one fewer action per interview,
 # a continuous rather than categorical location input, and no named site in the exported data either way.
-R("P", "interview_lang", "Language of interview", "Enumerator records the language used.", "Language in which the interview was carried out.", "cat", "lang", origin="paradata", source="Design")
 R("P", "gps_lat", "GPS latitude of interview", "Recorded automatically.", "Latitude of the interview location.", "num", origin="paradata", source="Design")
 R("P", "gps_lon", "GPS longitude of interview", "Recorded automatically.", "Longitude of the interview location.", "num", origin="paradata", source="Design")
 R("P", "consent", "Respondent gave informed consent", "Read the consent script. Do you agree to take part? (1 yes, 0 no; stop if no)", "Consent given after the script was read.", "bin", "yn", origin="paradata", source="Design")

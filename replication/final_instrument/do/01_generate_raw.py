@@ -40,7 +40,6 @@ for e in (1, 2, 3, 4):
 o["interview_date"] = (pd.Timestamp("2026-06-15") + pd.to_timedelta(day, unit="D")).strftime("%Y-%m-%d")
 # location_cluster dropped 2026-09-24: the GPS below already carries the site, and health_access_tier
 # is now banded from gps_lat in Stata rather than from a hand-coded cluster.
-o["interview_lang"] = code(d.interview_lang, {"Hindi": 1, "Garhwali": 2, "Nepali": 3})
 o["gps_lat"] = d.gps_lat.round(5); o["gps_lon"] = d.gps_lon.round(5)
 o["consent"] = 1
 

@@ -12,7 +12,7 @@
 
 \plainbox{\textbf{What this is.} The final list of questions and variables for the survey of Yatra workers. The main aim is to measure
 \textbf{vulnerability to poverty} (VEP and multidimensional poverty). A short employment-quality block and a short tasks block are added.
-The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{198 asked questions}, 9 recorded automatically or by the enumerator,
+The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{198 asked questions}, 8 recorded automatically or by the enumerator,
 and 123 variables built afterwards in Stata. The companion file \texttt{variable\_dictionary.csv} lists everything in one table.}
 
 \section*{1. Rules the questions follow}
@@ -36,7 +36,7 @@ Interview length is NOT estimated here. The module list below gives item counts 
 \textbf{Module} & \textbf{Name} & \textbf{Items} & \textbf{Minutes} \\
 \midrule
 \endhead
-P & Cover page, consent and paradata & 9 \\
+P & Cover page, consent and paradata & 8 \\
 A & Respondent and household & 17 \\
 B & Work and work history & 18 \\
 C & Monthly calendar of work and income; remittances & 32 \\
@@ -49,7 +49,7 @@ I & Food security, shocks and coping & 12 \\
 J & Ropeway & 2 \\
 K & Job quality (Apablaza et al. 2026 questions) & 14 \\
 L & Tasks and skills (short block) & 17 \\
- & \textbf{Total} & \textbf{207} \\
+ & \textbf{Total} & \textbf{206} \\
 \bottomrule
 \end{longtable}
 }
@@ -75,12 +75,11 @@ Do you agree to take part?''} Record consent (variable \texttt{consent}); stop t
 P1 & Assigned by the tablet. & Automatic / enumerator & \texttt{resp\_id}\newline Source: Design \\
 P2 & Which enumerator is doing this interview? (Select your own name before you approach anyone.) & Automatic / enumerator & \texttt{enum\_id}\newline Source: Design \\
 P3 & Recorded automatically. & Automatic / enumerator & \texttt{interview\_date}\newline Source: Design \\
-P4 & Enumerator records the language used. & Automatic / enumerator & \texttt{interview\_lang}\newline Source: Design \\
-P5 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lat}\newline Source: Design \\
-P6 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lon}\newline Source: Design \\
-P7 & Read the consent script. Do you agree to take part? (1 yes, 0 no; stop if no) & Automatic / enumerator & \texttt{consent}\newline Source: Design \\
-P8 & Recorded automatically (start to end). & Automatic / enumerator & \texttt{interview\_duration\_min}\newline Source: Design \\
-P9 & Recorded automatically (module timestamps). & Automatic / enumerator & \texttt{dur\_tasks\_min}\newline Source: Design \\
+P4 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lat}\newline Source: Design \\
+P5 & Recorded automatically. & Automatic / enumerator & \texttt{gps\_lon}\newline Source: Design \\
+P6 & Read the consent script. Do you agree to take part? (1 yes, 0 no; stop if no) & Automatic / enumerator & \texttt{consent}\newline Source: Design \\
+P7 & Recorded automatically (start to end). & Automatic / enumerator & \texttt{interview\_duration\_min}\newline Source: Design \\
+P8 & Recorded automatically (module timestamps). & Automatic / enumerator & \texttt{dur\_tasks\_min}\newline Source: Design \\
 \bottomrule
 \end{longtable}
 }
@@ -729,7 +728,6 @@ Zheng and Ma 2023 (China, CLES) & Ten food groups counted over the reference wee
 \endhead
 \texttt{yn} & 0 No; 1 Yes \\
 \texttt{sex} & 0 Male; 1 Female \\
-\texttt{lang} & 1 Hindi; 2 Garhwali; 3 Nepali \\
 \texttt{enum} & 1 Raman; 2 Rishit; 3 Tanmay; 4 Anuj \\
 \texttt{nativelang} & 1 Garhwali; 2 Kumaoni; 3 Hindi; 4 Nepali; 5 Bhojpuri; 6 Assamese; 7 Bengali; 8 Bodo; 9 Dogri; 10 Gujarati; 11 Kannada; 12 Kashmiri; 13 Konkani; 14 Maithili; 15 Malayalam; 16 Manipuri (Meitei); 17 Marathi; 18 Odia; 19 Punjabi; 20 Sanskrit; 21 Santali; 22 Sindhi; 23 Tamil; 24 Telugu; 25 Urdu; 96 Other Indian language; 97 Other / foreign language \\
 \texttt{state} & 1 Andhra Pradesh; 2 Arunachal Pradesh; 3 Assam; 4 Bihar; 5 Chhattisgarh; 6 Goa; 7 Gujarat; 8 Haryana; 9 Himachal Pradesh; 10 Jharkhand; 11 Karnataka; 12 Kerala; 13 Madhya Pradesh; 14 Maharashtra; 15 Manipur; 16 Meghalaya; 17 Mizoram; 18 Nagaland; 19 Odisha; 20 Punjab; 21 Rajasthan; 22 Sikkim; 23 Tamil Nadu; 24 Telangana; 25 Tripura; 26 Uttar Pradesh; 27 Uttarakhand; 28 West Bengal; 29 Andaman and Nicobar Islands; 30 Chandigarh; 31 Dadra and Nagar Haveli and Daman and Diu; 32 Delhi; 33 Jammu and Kashmir; 34 Ladakh; 35 Lakshadweep; 36 Puducherry; 99 Outside India \\
