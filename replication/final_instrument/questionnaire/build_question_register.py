@@ -20,7 +20,7 @@ from openpyxl.utils import get_column_letter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES
+from dictionary import ROWS, LSETS, MODULES, INTROS
 from translations_hi import HI, HI_LSETS
 
 XELATEX = "xelatex"
@@ -137,6 +137,11 @@ for code, title in MODULES:
         continue
     tex += ("\\noindent{\\large\\bfseries\\color{hdr} Module " + esc(code) + " --- " + esc(title) +
             "}\\quad{\\small(" + str(len(rows)) + " questions)}\\\\[3pt]\n")
+    # The read-aloud introduction is part of what gets administered, so it belongs in the register
+    # of what gets administered -- a reviewer reading only this document should see the framing the
+    # respondent heard, not just the questions.
+    if code in INTROS:
+        tex += "{\\small\\itshape Read aloud before this module: " + esc(INTROS[code]) + "}\\\\[5pt]\n"
     tex += (r"\begin{longtable}{@{}p{0.5cm}p{3.3cm}p{1.7cm}p{7.3cm}p{5.6cm}p{5.4cm}@{}}" "\n"
             r"\toprule \footnotesize\textbf{\#} & \footnotesize\textbf{Variable} & "
             r"\footnotesize\textbf{Type} & \footnotesize\textbf{Question (English / Hindi)} & "

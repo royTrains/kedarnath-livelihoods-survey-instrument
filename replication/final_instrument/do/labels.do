@@ -2,8 +2,9 @@
 * Applies value labels, variable labels, notes and variable order to the final dataset.
 
 label define activity 1 "Yatra work (main occupation)" 2 "Farming (crops)" 3 "Livestock (animals)" 4 "Wage labour, staying at home" 5 "Went away from home for work" 6 "Own small shop, stall or trade" 7 "Salaried job" 8 "No paid work", replace
-label define adminlevel 1 "Village (gram panchayat)" 2 "Town" 3 "City", replace
+label define closurebase 1 "We live here all year; nobody moves when the Yatra closes" 2 "The whole household moves to the home place when the Yatra closes" 3 "I go back to the home place when the Yatra closes; my household lives there all year" 4 "I stay on here when the Yatra closes; my household lives at the home place all year", replace
 label define collat 1 "Jewellery or ornaments" 2 "Land" 3 "Animals" 4 "A vehicle" 5 "Shop stock or business goods" 6 "House or building" 7 "Something else", replace
+label define comereason 1 "No work at home" 2 "Pay is better here" 3 "Family or people from my village were already here" 4 "Land at home is too little to live on" 5 "Debt to repay" 6 "A contractor or agent brought me" 7 "Married into / moved with family" 8 "Some other reason", replace
 label define contract 1 "Yes, signed" 2 "Yes, but not yet signed" 3 "No contract", replace
 label define coping 1 "Used savings" 2 "Borrowed money" 3 "Sold or pawned assets" 4 "Cut consumption" 5 "Help from relatives/community" 6 "Did nothing/other", replace
 label define credit 1 "Nationalised or public-sector bank" 2 "Private bank" 3 "Cooperative bank or RRB" 4 "Microfinance institution or SHG" 5 "Moneylender" 6 "Relative or friend" 7 "Employer or contractor (advance)" 8 "Other", replace
@@ -22,13 +23,14 @@ label define jobperm 1 "Permanent" 2 "Seasonal or temporary" 3 "Occasional or ca
 label define jobsit 1 "Works for pay full-time" 2 "Works for pay part-time or occasional jobs" 3 "Studies and works" 4 "Only studies" 5 "Being trained for work only" 6 "Retired or pensioned" 7 "Unpaid household tasks or caring for others" 8 "Unemployed, actively seeking work" 9 "Sick or disabled, cannot work" 10 "Neither studying, working nor seeking work" 97 "Does not know", replace
 label define marital 1 "Currently married" 2 "Never married" 3 "Widowed/divorced/separated", replace
 label define meals 1 "Cooks their own" 2 "Buys them" 3 "Some of each", replace
+label define mloc 1 "Here, on the Yatra route" 2 "At the home place" 3 "Somewhere else, for work" 4 "Somewhere else, not for work", replace
 label define month 1 "January" 2 "February" 3 "March" 4 "April" 5 "May" 6 "June" 7 "July" 8 "August" 9 "September" 10 "October" 11 "November" 12 "December", replace
 label define movetype 1 "Lateral (little retraining needed)" 2 "Upskilling (destination needs skills the worker lacks)" 3 "Reskilling (skill sets barely overlap)" 4 "Downskilling (worker's skills would go unused)", replace
 label define nativelang 1 "Garhwali" 2 "Kumaoni" 3 "Hindi" 4 "Nepali" 5 "Bhojpuri" 6 "Assamese" 7 "Bengali" 8 "Bodo" 9 "Dogri" 10 "Gujarati" 11 "Kannada" 12 "Kashmiri" 13 "Konkani" 14 "Maithili" 15 "Malayalam" 16 "Manipuri (Meitei)" 17 "Marathi" 18 "Odia" 19 "Punjabi" 20 "Sanskrit" 21 "Santali" 22 "Sindhi" 23 "Tamil" 24 "Telugu" 25 "Urdu" 96 "Other Indian language" 97 "Other / foreign language", replace
 label define occ 1 "Pony/mule worker (works the animals, does not own them)" 2 "Pony/mule owner (owns the animals)" 3 "Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)" 4 "Palki / dandi bearer (carries a person on a palanquin, as part of a team)" 5 "Dhaba, tea stall or food stall WORKER (prepared food or tea)" 6 "Dhaba, tea stall or food stall OWNER (prepared food or tea)" 7 "Shop WORKER (goods: prasad, puja items, clothes, general store)" 8 "Shop OWNER (goods, not prepared food)" 9 "Hotel / lodge WORKER" 10 "Hotel / lodge OWNER" 11 "Driver (any motor vehicle)" 12 "Guide" 13 "Wage labourer (construction, loading, odd jobs)" 14 "Other", replace
 label define origin 1 "Local (same district)" 2 "Other Uttarakhand district" 3 "Other Indian state" 4 "Nepal", replace
 label define pension 1 "Yes, employer deducts it" 2 "Yes, contributes voluntarily" 3 "No", replace
-label define prevreason 1 "Better income" 2 "Lost the previous work" 3 "Family or seasonal reasons" 4 "Moved to this area" 5 "Other", replace
+label define prevreason 1 "Better income" 2 "Lost the previous work" 3 "Work ended with the season" 4 "Family reasons" 5 "Health or injury" 6 "Other", replace
 label define recall 1 "Month by month" 0 "One total for the whole year", replace
 label define referral 1 "A family member already working here" 2 "A friend or someone from the village" 3 "A thekedar or contractor I now work for" 4 "An agent or middleman who placed me (usually for a fee)" 5 "No one; I found it myself" 6 "The employer called me directly" 7 "Someone else", replace
 label define remitmode 1 "Bank transfer" 2 "UPI or phone payment" 3 "Money order or post office" 4 "Sent with someone going home" 5 "Carried it myself" 6 "Other", replace
@@ -129,6 +131,30 @@ label variable status_m11 "Main activity in November"
 label values status_m11 activity
 label variable status_m12 "Main activity in December"
 label values status_m12 activity
+label variable loc_m1 "Where living in January"
+label values loc_m1 mloc
+label variable loc_m2 "Where living in February"
+label values loc_m2 mloc
+label variable loc_m3 "Where living in March"
+label values loc_m3 mloc
+label variable loc_m4 "Where living in April"
+label values loc_m4 mloc
+label variable loc_m5 "Where living in May"
+label values loc_m5 mloc
+label variable loc_m6 "Where living in June"
+label values loc_m6 mloc
+label variable loc_m7 "Where living in July"
+label values loc_m7 mloc
+label variable loc_m8 "Where living in August"
+label values loc_m8 mloc
+label variable loc_m9 "Where living in September"
+label values loc_m9 mloc
+label variable loc_m10 "Where living in October"
+label values loc_m10 mloc
+label variable loc_m11 "Where living in November"
+label values loc_m11 mloc
+label variable loc_m12 "Where living in December"
+label values loc_m12 mloc
 label variable knows_monthly_income "Can recall earnings month by month"
 label values knows_monthly_income recall
 label variable income_m1 "Earnings in January (Rs)"
@@ -157,10 +183,21 @@ label variable origin "Place of permanent home"
 label values origin origin
 label variable home_state "State or union territory of the permanent home"
 label values home_state state
-label variable home_admin_level "Administrative level of the usual home"
-label values home_admin_level adminlevel
-label variable usual_residence_differs "Usual place of residence differs from home/native place"
-label values usual_residence_differs yn
+label variable home_rural_urban "Usual home is in a village (1) or a town/city (2)"
+label values home_rural_urban ruralurban
+label variable closure_base "Where the household is when the Yatra closes"
+label values closure_base closurebase
+label variable years_coming_here "Years the respondent has been coming here for the season"
+label variable came_here_reason "Main reason for first coming here to work"
+label values came_here_reason comereason
+label variable worked_away_in_closure "Worked away from both bases during the last closure"
+label values worked_away_in_closure yn
+label variable closure_work_detail "Where, and what work, during the closure (verbatim, optional)"
+label variable worked_other_places "Has gone elsewhere for work before coming here"
+label values worked_other_places yn
+label variable other_places_detail "Where, and what work (verbatim, optional)"
+label variable would_move_for_work "Would go away for work in the coming year if this ended"
+label values would_move_for_work yndk
 label variable migration_referral "Who arranged or helped get this work"
 label values migration_referral referral
 label variable migration_referral_other "Who helped, if not on the list (verbatim, optional)"
@@ -372,8 +409,15 @@ label values calc_at_work yn
 label variable education_years "Years of schooling completed"
 label variable hoh_female "Sex of the household head"
 label values hoh_female sex
-label variable home_rural_urban "Usual home is rural (1) or urban (2)"
-label values home_rural_urban ruralurban
+label variable months_here "Months living on the Yatra route in the past year"
+label variable months_home_base "Months living at the home place in the past year"
+label variable months_third_place "Months living away from both bases for work"
+label variable closure_labour_migrant "Sold labour away from both bases during the closure"
+label values closure_labour_migrant yn
+label variable stays_all_year "Does not move at all when the Yatra closes"
+label values stays_all_year yn
+label variable split_household "Respondent and household are in different places during the season"
+label values split_household yn
 label variable credit_institutional "Borrowed from an institutional lender"
 label values credit_institutional yn
 label variable credit_informal "Borrowed from an informal lender"
@@ -688,7 +732,7 @@ notes occupation_detail: Source: Project design (coarse quota group + verbatim d
 notes employment_type: Module B - Work and work history; origin: asked
 notes employment_type: Meaning: PLFS-style status: own-account, employer, regular wage, casual wage.
 notes employment_type: Question: In this main work, are you: working on your own account without hired workers; running a business with hired workers; a regular monthly wage-earner; or a daily/casual wage-earner?
-notes employment_type: Source: PLFS / NSS employment status classification
+notes employment_type: Source: PLFS / NSS employment status classification [source not held by this project; citation unverified as of 2026-09-28]
 notes n_other_activities: Module B - Work and work history; origin: asked
 notes n_other_activities: Meaning: Count of additional income-generating activities. Multiple work-holding, asked as a count first and then as a check-all list. The previous version allowed ONE other activity, which undercounts by construction: a shop owner who
 notes n_other_activities: Meaning (cont.): also rents out a pony and drives in the off-season has three, and only one was recorded. The count is asked before the list so it can be checked against the number of boxes ticked -- a mismatch is a data-quality flag, not a silent
@@ -807,6 +851,66 @@ notes status_m12: Module C - Monthly calendar of work and income; remittances; o
 notes status_m12: Meaning: Main activity in December of the past year; code 1 is the Yatra work named in B1.
 notes status_m12: Question: In December, what was your main work or activity? (Fill the Yatra months first, then the others.)
 notes status_m12: Source: Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)
+notes loc_m1: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m1: Meaning: Where the respondent was living in January, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m1: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m1: Question: And in January, where were you living?
+notes loc_m1: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m2: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m2: Meaning: Where the respondent was living in February, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m2: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m2: Question: And in February, where were you living?
+notes loc_m2: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m3: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m3: Meaning: Where the respondent was living in March, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m3: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m3: Question: And in March, where were you living?
+notes loc_m3: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m4: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m4: Meaning: Where the respondent was living in April, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m4: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m4: Question: And in April, where were you living?
+notes loc_m4: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m5: Meaning: Where the respondent was living in May, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour migration
+notes loc_m5: Meaning (cont.): that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m5: Question: And in May, where were you living?
+notes loc_m5: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m6: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m6: Meaning: Where the respondent was living in June, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m6: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m6: Question: And in June, where were you living?
+notes loc_m6: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m7: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m7: Meaning: Where the respondent was living in July, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m7: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m7: Question: And in July, where were you living?
+notes loc_m7: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m8: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m8: Meaning: Where the respondent was living in August, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m8: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m8: Question: And in August, where were you living?
+notes loc_m8: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m9: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m9: Meaning: Where the respondent was living in September, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m9: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m9: Question: And in September, where were you living?
+notes loc_m9: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m10: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m10: Meaning: Where the respondent was living in October, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m10: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m10: Question: And in October, where were you living?
+notes loc_m10: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m11: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m11: Meaning: Where the respondent was living in November, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m11: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m11: Question: And in November, where were you living?
+notes loc_m11: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
+notes loc_m12: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes loc_m12: Meaning: Where the respondent was living in December, asked alongside the activity row and on the same screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a third place for work (the off-season labour
+notes loc_m12: Meaning (cont.): migration that is the real mobility variable in this population), 4 a third place for any other reason.
+notes loc_m12: Question: And in December, where were you living?
+notes loc_m12: Source: Project design (measured seasonal base; replaces the assumed Yatra/off-season split)
 notes knows_monthly_income: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a
 notes knows_monthly_income: Meaning (cont.): yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
@@ -887,12 +991,12 @@ notes remit_out_yatra_pm: Module C - Monthly calendar of work and income; remitt
 notes remit_out_yatra_pm: Meaning: Outward remittances, Yatra-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_out_yatra_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_out_yatra_pm: Question: In a normal month during the Yatra season, how much money do you usually send to family or others living elsewhere? (Rs, 0 if none)
-notes remit_out_yatra_pm: Source: NSS 64th Round practice (amount); frequency dropped for length
+notes remit_out_yatra_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
 notes remit_out_offseason_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes remit_out_offseason_pm: Meaning: Outward remittances, off-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_out_offseason_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_out_offseason_pm: Question: In a normal month when the Yatra is closed, how much do you usually send? (Rs, 0 if none)
-notes remit_out_offseason_pm: Source: NSS 64th Round practice (amount); frequency dropped for length
+notes remit_out_offseason_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
 notes remit_mode: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes remit_mode: Meaning: Channel, not just amount. Bank and UPI transfers are near-costless and traceable; money orders and hand-carrying cost a fee, a trip, or both, and hand-carrying ties the transfer to someone physically travelling. Two households
 notes remit_mode: Meaning (cont.): sending the same rupees are not equally well served.
@@ -903,12 +1007,12 @@ notes remit_in_yatra_pm: Module C - Monthly calendar of work and income; remitta
 notes remit_in_yatra_pm: Meaning: Inward remittances, Yatra-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_in_yatra_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_in_yatra_pm: Question: In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none)
-notes remit_in_yatra_pm: Source: NSS 64th Round practice (amount); frequency dropped for length
+notes remit_in_yatra_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
 notes remit_in_offseason_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes remit_in_offseason_pm: Meaning: Inward remittances, off-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_in_offseason_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_in_offseason_pm: Question: In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none)
-notes remit_in_offseason_pm: Source: NSS 64th Round practice (amount); frequency dropped for length
+notes remit_in_offseason_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
 notes hours_day_offseason: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes hours_day_offseason: Meaning: Apablaza's access-deprivation test has an under-20-hours-a-week limb, but asking hours only for the Yatra season made that limb unfireable: in season this workforce runs 60-90 hours a week, so nobody ever cleared it and the whole
 notes hours_day_offseason: Meaning (cont.): indicator collapsed onto the months-without-work limb. Off-season hours are where marginal, part-week work actually shows up for a seasonal workforce.
@@ -922,30 +1026,72 @@ notes days_week_offseason: Question: In those months, how many days a week do yo
 notes days_week_offseason: Skip rule: Ask only if any month in the calendar is other paid work (status 2 to 7)
 notes days_week_offseason: Source: Apablaza et al. 2026 Q13, asked a second time for the off-season
 notes origin: Module D - Migration; origin: asked
-notes origin: Meaning: Origin of the respondent.
+notes origin: Meaning: Origin of the respondent, as four buckets. Note what it does NOT measure: the pilot found 11 of 20 seasonal movers inside this same district, so this is a distance variable, not a mobility one. closure_base and the Module C
+notes origin: Meaning (cont.): location row carry mobility.
 notes origin: Question: Where is your permanent home?
-notes origin: Source: NSS migration classification
+notes origin: Source: Project design (distance bucket); NOT an NSS classification -- the earlier citation to one was withdrawn 2026-09-28, no NSS schedule is held by this project
 notes home_state: Module D - Migration; origin: asked
 notes home_state: Meaning: State/UT of the permanent home, or outside India. Finer than origin's four buckets: a state is what a respondent can actually name, and it is the level at which India sets its rural and urban poverty lines. Nepali workers code to
 notes home_state: Meaning (cont.): 'Outside India'.
 notes home_state: Question: Which state is your permanent home in? (If it is outside India, say so.)
 notes home_state: Source: Standard state/UT classification; needed to apply the right poverty line per respondent
-notes home_admin_level: Module D - Migration; origin: asked
-notes home_admin_level: Meaning: Administrative tier of the usual place of residence, replacing the plain rural/urban binary. Four buckets (local / other Uttarakhand district / other state / Nepal) cannot carry migration fixed effects; a village-to-city gradient
-notes home_admin_level: Meaning (cont.): can, and it still yields the rural/urban split the poverty line needs -- home_rural_urban is now derived from this rather than asked, so this costs no extra question.
-notes home_admin_level: Question: Is that home in a village, a town, or a city?
-notes home_admin_level: Source: Standard administrative classification; rural/urban poverty lines (Sethu et al. 2024)
-notes usual_residence_differs: Module D - Migration; origin: asked
-notes usual_residence_differs: Meaning: Direct migrant flag: distinguishes workers settled away from their native place year-round from those who return home every off-season. Separate from the seasonal Yatra-work absence asked next.
-notes usual_residence_differs: Question: Apart from coming here for the Yatra season, is the place where you usually live for most of the year different from your family's native/home place?
-notes usual_residence_differs: Skip rule: Ask only if origin is not Local (same district)
-notes usual_residence_differs: Source: Project design (residence-vs-native-place distinction, distinct from the NSS short-term-migrant item below)
+notes home_rural_urban: Module D - Migration; origin: asked
+notes home_rural_urban: Meaning: Rural/urban status of the permanent home, asked directly as the binary the poverty line actually needs. Replaces home_admin_level, a three-way village/town/city item that asked the respondent to perform a Census classification
+notes home_rural_urban: Meaning (cont.): they have no way of making, and then selected a Rs 2,515 or Rs 3,639 line off the answer. Also stops being a constructed variable: it was derived from home_admin_level, which meant a 45% swing in the threshold rested on a
+notes home_rural_urban: Meaning (cont.): derivation from a subjective tier.
+notes home_rural_urban: Question: Is that home in a village, or in a town or city?
+notes home_rural_urban: Source: Rural and urban poverty lines (Sethu et al. 2024)
+notes closure_base: Module D - Migration; origin: asked
+notes closure_base: Meaning: The mobility regime, and the single most load-bearing fact in the instrument: Modules C, E and I all ask their questions twice on the assumption that the respondent is somewhere else once the Yatra shuts. Codes separate the
+notes closure_base: Meaning (cont.): household from the respondent because the pilot found both -- 3 of 46 respondents worked here with their family living elsewhere -- and because Module E's Yatra-season wording ('you and anyone staying with you here') is written
+notes closure_base: Meaning (cont.): for exactly that case and until now had nothing to key off. Replaces migration_pattern, migrates_with_family and the older usual_residence_differs, which between them asked a worse version of this three times.
+notes closure_base: Question: When the Yatra closes for the season, what happens -- do you and your household stay here, or go to your home place?
+notes closure_base: Source: Project design, categories from the pilot's own residency_pattern distribution (n=46)
+notes years_coming_here: Module D - Migration; origin: asked
+notes years_coming_here: Meaning: Duration of the relationship with this worksite, which years_in_yatra_work does not give: that counts seasons in the CURRENT kind of work, so a porter who spent six years portering and then four running a stall reads as four. A
+notes years_coming_here: Meaning (cont.): first-year worker has neither the network nor the savings of a fifteen-year one, and that is an exposure term the VEP model wants.
+notes years_coming_here: Question: How many years have you been coming here for the Yatra season?
+notes years_coming_here: Skip rule: Ask only if closure_base is not 1 (does not live here all year)
+notes years_coming_here: Source: Project design (duration of the seasonal relationship)
+notes came_here_reason: Module D - Migration; origin: asked
+notes came_here_reason: Meaning: Push or pull, kept separate from prev_occ_reason, which is about changing WORK -- the old combined item gave a migrant who took a new job on arrival two true answers. Someone driven here by debt or by land too small to live on is
+notes came_here_reason: Meaning (cont.): in a different position from someone drawn by better pay, at identical current earnings.
+notes came_here_reason: Question: What was the main reason you first came here to work?
+notes came_here_reason: Skip rule: Ask only if origin is not Local (same district)
+notes came_here_reason: Source: Project design (push/pull as a vulnerability covariate)
+notes worked_away_in_closure: Module D - Migration; origin: asked
+notes worked_away_in_closure: Meaning: Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the cross-check on the calendar's location row: this should agree with loc_m* code 3 appearing in at least one month, and a disagreement is
+notes worked_away_in_closure: Meaning (cont.): a data-quality flag neither item could raise alone.
+notes worked_away_in_closure: Question: Last year, in the months when the Yatra was closed, did you go somewhere else for work?
+notes worked_away_in_closure: Source: Project design (off-season labour migration; cross-checks the Module C location row)
+notes closure_work_detail: Module D - Migration; origin: asked
+notes closure_work_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail, target_occ and other_places_detail, so the off-season destination occupation enters the same classification as everything else and can be
+notes closure_work_detail: Meaning (cont.): given a task vector.
+notes closure_work_detail: Question: Where did you go, and what work did you do there? Write what they say.
+notes closure_work_detail: Skip rule: Ask only if worked_away_in_closure = 1; may be left blank
+notes closure_work_detail: Source: Project design; coded to NCO-2015 in the office
+notes worked_other_places: Module D - Migration; origin: asked
+notes worked_other_places: Meaning: Prior mobility, over the whole working life rather than the last closure. A worker who has already moved between labour markets has revealed he can, which is exactly what the transferability analysis is trying to establish from
+notes worked_other_places: Meaning (cont.): task data alone. Ungated: it was previously asked only of non-local respondents, which assumed a local worker has no mobility history -- the pilot's 22 of 45 who had worked in another occupation says otherwise.
+notes worked_other_places: Question: Before you started coming here, had you gone anywhere else for work?
+notes worked_other_places: Source: Project design (revealed mobility, for the transferability paper)
+notes other_places_detail: Module D - Migration; origin: asked
+notes other_places_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail and target_occ, so a prior destination enters the same occupational classification as everything else.
+notes other_places_detail: Question: Where did you go, and what work did you do? Write what they say.
+notes other_places_detail: Skip rule: Ask only if worked_other_places = 1; may be left blank
+notes other_places_detail: Source: Project design; coded to NCO-2015 in the office
+notes would_move_for_work: Module D - Migration; origin: asked
+notes would_move_for_work: Meaning: Stated mobility, which is the constraint the task-distance measure cannot see: a worker whose skills fit a destination perfectly but who will not leave is structurally displaced just the same. Pairs with target_occ -- that asks
+notes would_move_for_work: Meaning (cont.): WHAT they would do, this asks whether they would move to do it -- and is read against worked_away_in_closure, the revealed version. Given a concrete horizon ('in the coming year') rather than left as an open hypothetical,
+notes would_move_for_work: Meaning (cont.): following the VASyR 2025 practice of horizoning intention items; an unbounded 'would you ever' is answered on disposition rather than on circumstance.
+notes would_move_for_work: Question: If this work here ended, would you go away from your home place to look for work in the coming year?
+notes would_move_for_work: Source: Project design; horizoned intention item after VASyR 2025 (move_accom_yesno, asked over a stated 6-month horizon)
 notes migration_referral: Module D - Migration; origin: asked
 notes migration_referral: Meaning: The old list mixed two different things -- who TOLD you about the work and who EMPLOYS or places you -- and put a thekedar and an agent in one box although they are different relationships: a thekedar is who you work for, an agent
 notes migration_referral: Meaning (cont.): is a middleman who places you and is usually paid for it. Splitting them is the point: an agent-placed worker has a debt or fee relationship an informally referred worker does not. 'Political or community leader' is dropped; it
-notes migration_referral: Meaning (cont.): was an analyst's category, not one a respondent would recognise as describing how they got their job.
+notes migration_referral: Meaning (cont.): was an analyst's category, not one a respondent would recognise as describing how they got their job. Ungated as of 2026-09-28: it used to be asked only of non-local respondents, but who placed you is a question about the
+notes migration_referral: Meaning (cont.): employment relationship, not about migration -- a local worker placed by an agent carries the same fee or debt relationship a Nepali one does, and gating it on a district boundary meant we could never see that.
 notes migration_referral: Question: Who mainly helped you get this work, or arranged it for you?
-notes migration_referral: Skip rule: Ask only if origin is not Local (same district)
 notes migration_referral: Source: Project design (referral channel as a proxy for social capital and for placement debt)
 notes migration_referral_other: Module D - Migration; origin: asked
 notes migration_referral_other: Meaning: Free text, NOT required, for referral channels the seven codes do not hold. The item is a proxy for social and political capital in getting access to work here, so a channel we failed to anticipate is exactly the one worth
@@ -1395,7 +1541,7 @@ notes n_can_transact_online: Source: Project design (intra-household financial c
 notes morbidity_15d: Module H - Health; origin: asked
 notes morbidity_15d: Meaning: Illness in the last 15 days.
 notes morbidity_15d: Question: In the last 15 days, was anyone in your household ill?
-notes morbidity_15d: Source: NSS health module (15-day recall)
+notes morbidity_15d: Source: NSS health module (15-day recall) [source not held by this project; citation unverified as of 2026-09-28]
 notes morbidity_coping_15d: Module H - Health; origin: asked
 notes morbidity_coping_15d: Meaning: Coping response to the illness reported above; same coping list as the Module I shock question.
 notes morbidity_coping_15d: Question: How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else?
@@ -1409,7 +1555,7 @@ notes morbidity_cost_15d: Source: Project design
 notes hospitalization_365d: Module H - Health; origin: asked
 notes hospitalization_365d: Meaning: Hospital admission.
 notes hospitalization_365d: Question: In the last 12 months, was anyone in your household admitted to hospital overnight?
-notes hospitalization_365d: Source: NSS health module (365-day recall)
+notes hospitalization_365d: Source: NSS health module (365-day recall) [source not held by this project; citation unverified as of 2026-09-28]
 notes health_access_barrier_3m: Module H - Health; origin: asked
 notes health_access_barrier_3m: Meaning: Healthcare-access barrier (unmet need), distinct from having insurance cover.
 notes health_access_barrier_3m: Question: In the last 3 months, was there a time when someone in your household needed medical care but could not get it?
@@ -1714,10 +1860,35 @@ notes hoh_female: Meaning: Derived from the gendered relationship categories: hu
 notes hoh_female: Meaning (cont.): a separate male/female question.
 notes hoh_female: Formula: from hoh_relation; = female if hoh_relation==1
 notes hoh_female: Source: Constructed
-notes home_rural_urban: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes home_rural_urban: Meaning: Derived from home_admin_level: a gram-panchayat village is rural, everything above it urban. This is what selects the rural or urban poverty line for this respondent.
-notes home_rural_urban: Formula: 1 if home_admin_level==1, else 2
-notes home_rural_urban: Source: Rural/urban poverty lines (Sethu et al. 2024)
+notes months_here: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes months_here: Meaning: Count of calendar months with loc code 1. This is the measured length of the respondent's own season, replacing a constant season length applied to everyone, and it is what the mid-month Yatra-start problem resolves to: each
+notes months_here: Meaning (cont.): respondent's boundary is wherever their own row turns over.
+notes months_here: Formula: count of loc_m1-loc_m12 == 1
+notes months_here: Source: Project design (measured from the Module C location row)
+notes months_home_base: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes months_home_base: Meaning: Count of calendar months with loc code 2.
+notes months_home_base: Formula: count of loc_m1-loc_m12 == 2
+notes months_home_base: Source: Project design (measured from the Module C location row)
+notes months_third_place: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes months_third_place: Meaning: Count of calendar months with loc code 3 -- off-season labour migration, measured rather than stated. The stated counterpart is worked_away_in_closure in Module D; the two should agree, and where they do not that is a data-quality
+notes months_third_place: Meaning (cont.): flag neither could raise alone.
+notes months_third_place: Formula: count of loc_m1-loc_m12 == 3
+notes months_third_place: Source: Project design (measured from the Module C location row)
+notes closure_labour_migrant: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes closure_labour_migrant: Meaning: 1 if the respondent either reported working away during the closure (worked_away_in_closure) or has at least one calendar month coded 'somewhere else, for work'. This is type B in the closure-regime typology and the mobility
+notes closure_labour_migrant: Meaning (cont.): variable that actually carries information in this population, in place of a migrant dummy built on district boundaries -- which the pilot shows would classify 11 of 20 seasonal movers as non-movers.
+notes closure_labour_migrant: Formula: worked_away_in_closure==1 | months_third_place>0
+notes closure_labour_migrant: Source: Project design (off-season labour migration)
+notes stays_all_year: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes stays_all_year: Meaning: 1 if closure_base = 1. The case the two-season design of this instrument does NOT fit: for these respondents the Yatra-season and off-season consumption questions describe the same place, and the pair should be checked for a
+notes stays_all_year: Meaning (cont.): suspiciously high identical-answer rate at the pilot.
+notes stays_all_year: Formula: closure_base==1
+notes stays_all_year: Source: Project design (assumption check on the two-season recall design)
+notes split_household: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes split_household: Meaning: 1 if closure_base is 3 or 4 -- the household lives at the home place all year while the respondent is here for the season. This is the case Module E's Yatra-season wording ('you and anyone staying with you here') was written for,
+notes split_household: Meaning (cont.): and until this item existed there was no way to tell which respondents it applied to.
+notes split_household: Formula: inlist(closure_base,3,4)
+notes split_household: Source: Project design (split-household measurement, underpinning Module E)
 notes credit_institutional: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes credit_institutional: Meaning: 1 if the household borrowed in the last 12 months from a bank, cooperative, RRB, microfinance institution or SHG (credit_source 1-4); 0 otherwise, INCLUDING households that did not borrow at all. Defined for every respondent on
 notes credit_institutional: Meaning (cont.): purpose: credit_source itself is now gated behind took_loan_12m, so using it directly as a VEP covariate would drop every non-borrower from the regression.
@@ -1792,11 +1963,11 @@ notes income_pm_other_eq: Source: Constructed
 notes remittance_outward_annual: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes remittance_outward_annual: Meaning: Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount.
 notes remittance_outward_annual: Formula: yatra_months*remit_out_yatra_pm + (12-yatra_months)*remit_out_offseason_pm
-notes remittance_outward_annual: Source: NSS 64th Round practice, applied to the calendar
+notes remittance_outward_annual: Source: NSS 64th Round practice, applied to the calendar [source not held by this project; citation unverified as of 2026-09-28]
 notes remittance_inward_annual: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes remittance_inward_annual: Meaning: Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount.
 notes remittance_inward_annual: Formula: yatra_months*remit_in_yatra_pm + (12-yatra_months)*remit_in_offseason_pm
-notes remittance_inward_annual: Source: NSS 64th Round practice, applied to the calendar
+notes remittance_inward_annual: Source: NSS 64th Round practice, applied to the calendar [source not held by this project; citation unverified as of 2026-09-28]
 notes total_annual_income: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes total_annual_income: Meaning: Work income plus inward remittances. Outward remittances are not subtracted.
 notes total_annual_income: Formula: yatra_income + non_yatra_income + remittance_inward_annual
@@ -2252,7 +2423,7 @@ capture notes retained: Module Z - Synthetic-design variables (not collected); o
 capture notes retained: Meaning: 1 if the synthetic respondent stayed in the fielded sample.
 capture notes retained: Source: Synthetic design
 
-order resp_id enum_id interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u15 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received training_type training_type_other status_m1 status_m2 status_m3 status_m4 status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 knows_monthly_income income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_admin_level usual_residence_differs migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cooks_own_meals_here meal_spend_day_self cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material house_type electricity toilet_type drinking_water water_on_premises water_fetch_minutes water_fetched_by cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account has_jandhan_account took_loan_12m credit_source loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_scheme_beneficiary govt_scheme_which smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation employer_type job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female home_rural_urban credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
+order resp_id enum_id interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u15 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received training_type training_type_other status_m1 status_m2 status_m3 status_m4 status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 loc_m1 loc_m2 loc_m3 loc_m4 loc_m5 loc_m6 loc_m7 loc_m8 loc_m9 loc_m10 loc_m11 loc_m12 knows_monthly_income income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban closure_base years_coming_here came_here_reason worked_away_in_closure closure_work_detail worked_other_places other_places_detail would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cooks_own_meals_here meal_spend_day_self cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material house_type electricity toilet_type drinking_water water_on_premises water_fetch_minutes water_fetched_by cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account has_jandhan_account took_loan_12m credit_source loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_scheme_beneficiary govt_scheme_which smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation employer_type job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here months_home_base months_third_place closure_labour_migrant stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
 capture order dropout_prob, last
 capture order dropout_score, last
 capture order flagged_contradiction, last

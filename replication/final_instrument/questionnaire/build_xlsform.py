@@ -36,8 +36,12 @@ import openpyxl
 HERE = os.path.dirname(os.path.abspath(__file__))
 import sys
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES
-from translations_hi import HI, HI_LSETS
+from dictionary import ROWS, LSETS, MODULES, INTROS
+from translations_hi import HI, HI_LSETS, INTROS_HI
+
+# The module introduction notes are looked up by row name like any other label, so register their
+# Hindi under the same key the note row will carry.
+HI.update({f"intro_{_c}": _t for _c, _t in INTROS_HI.items()})
 
 OUT = os.path.join(HERE, "Kedarnath_final_kobo.xlsx")
 
@@ -70,7 +74,6 @@ RELEVANT = {
     "training_type": "${training_received} = 1",
     "years_schooling": "${knows_years_schooling} = 1",
     "education_level_cat": "${knows_years_schooling} = 0",
-    "migration_referral": "${origin} != 1",
     "employer_type": K_WORKING,
     "job_permanence": K_WORKING,
     "contract_status": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
@@ -90,7 +93,13 @@ RELEVANT = {
     "drove_heavy": "${tk_drive} = 1 or ${tk_drive} = 2",
     "morbidity_coping_15d": "${morbidity_15d} = 1",
     "morbidity_cost_15d": "${morbidity_15d} = 1",
-    "usual_residence_differs": "${origin} != 1",
+    # Module D. NOT gated on origin: the pilot found 11 of 20 seasonal movers inside this district,
+    # so an origin gate would skip most of the people who move. Only the two genuinely
+    # origin-specific items (why you first came) and the two verbatim follow-ups are gated.
+    "years_coming_here": "${closure_base} != 1",
+    "came_here_reason": "${origin} != 1",
+    "closure_work_detail": "${worked_away_in_closure} = 1",
+    "other_places_detail": "${worked_other_places} = 1",
     "native_language_other": "${native_language} = 96 or ${native_language} = 97",
     "has_jandhan_account": "${has_bank_account} = 1",
     "credit_source": "${took_loan_12m} = 1",
@@ -230,6 +239,12 @@ for mod in modules_in_order:
     if not mod_rows:
         continue
     add("begin_group", f"grp_{mod}", f"Module {mod}: {MODULE_TITLE[mod]}")
+    # Read-aloud introduction, as an unrequired note ahead of the module's first question. A note
+    # carries no value into the export, so this adds a screen the enumerator reads and nothing to
+    # the data. It is not marked required: a note cannot be, and forcing a tap here would only add
+    # one per module for no record of anything.
+    if mod in INTROS:
+        add("note", f"intro_{mod}", INTROS[mod])
     for r in mod_rows:
         name = r["name"]
         type_ = xlsform_type(r)

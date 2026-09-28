@@ -12,39 +12,17 @@ indented so they are visually impossible to confuse with the spoken text.
 import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES
-from translations_hi import HI, HI_LSETS
+from dictionary import ROWS, LSETS, MODULES, INTROS
+from translations_hi import HI, HI_LSETS, INTROS_HI
 
 # Natural joins between modules -- the sentence that carries the respondent from one topic to the
 # next. Without these a read-aloud interview lurches between subjects and feels like an interrogation.
-BRIDGE_EN = {
-    "A": "First, a few things about you and the people you live with.",
-    "B": "Now I want to ask about your work here during the Yatra season.",
-    "C": "Next I would like to go through the whole year, month by month. Take your time.",
-    "D": "Now a few questions about where your home is.",
-    "E": "The next part is about what your household usually spends. Rough amounts are fine — nobody expects exact figures.",
-    "F": "Now about the house you usually live in, and things your household owns.",
-    "G": "A few short questions about banking, loans and schemes.",
-    "H": "Now about health in your household.",
-    "I": "The next few questions are about food, and about difficult times.",
-    "J": "Now I want to ask what you think about the proposed ropeway.",
-    "K": "A few questions about the conditions of your work.",
-    "L": "Last part. I will read out some kinds of work, and you tell me whether you do them.",
-}
-BRIDGE_HI = {
-    "A": "सबसे पहले, आपके और आपके घर के लोगों के बारे में कुछ बातें।",
-    "B": "अब मैं यात्रा के मौसम में आपके काम के बारे में पूछूँगा/पूछूँगी।",
-    "C": "अब मैं पूरे साल के बारे में, एक-एक महीने करके पूछूँगा/पूछूँगी। आराम से सोचकर बताइए।",
-    "D": "अब कुछ सवाल कि आपका घर कहाँ है।",
-    "E": "अगला हिस्सा आपके घर के ख़र्च के बारे में है। अंदाज़ा बता दीजिए, बिल्कुल सही आँकड़े की ज़रूरत नहीं है।",
-    "F": "अब उस घर के बारे में जहाँ आप आम तौर पर रहते हैं, और घर के सामान के बारे में।",
-    "G": "बैंक, उधार और सरकारी योजनाओं पर कुछ छोटे सवाल।",
-    "H": "अब आपके घर में सेहत के बारे में।",
-    "I": "अगले कुछ सवाल खाने के बारे में हैं, और मुश्किल वक़्त के बारे में।",
-    "J": "अब मैं जानना चाहूँगा/चाहूँगी कि प्रस्तावित रोपवे के बारे में आप क्या सोचते हैं।",
-    "K": "आपके काम के हालात पर कुछ सवाल।",
-    "L": "आख़िरी हिस्सा। मैं कुछ तरह के काम बताऊँगा/बताऊँगी, आप बताइए कि आप वे करते हैं या नहीं।",
-}
+# The per-module read-aloud introductions used to live here as BRIDGE_EN / BRIDGE_HI, visible only
+# in the interview scripts. They are now dictionary.INTROS and translations_hi.INTROS_HI, so the same
+# sentence the enumerator reads off the tablet is the one printed in the script, the paper
+# questionnaire and the question register. Two copies of the same read-aloud text in two files is
+# exactly the kind of thing that drifts.
+BRIDGE_EN, BRIDGE_HI = INTROS, INTROS_HI
 
 MODTITLE_HI = {
     "P": "आवरण, सहमति और रिकॉर्ड", "A": "आप और आपका घर", "B": "काम और काम का इतिहास",

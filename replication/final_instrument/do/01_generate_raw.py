@@ -82,10 +82,9 @@ _m = orig == 3
 hstate[_m] = rng.choice(MIG_STATES[0], size=_m.sum(), p=MIG_STATES[1])
 hstate[orig == 4] = 99
 o["home_state"] = hstate
-# rural/urban of the USUAL home -- decides which poverty line applies to this respondent
-# administrative tier of the usual home; rural/urban is derived from it in Stata, not asked
-# three levels now -- nagar panchayat vs nagar palika is a distinction respondents cannot make
-o["home_admin_level"] = rng.choice([1, 2, 3], n, p=[.72, .19, .09])
+# rural/urban of the USUAL home -- decides which poverty line applies to this respondent, and now
+# ASKED rather than derived from a village/town/city tier the respondent could not reliably classify
+o["home_rural_urban"] = rng.choice([1, 2], n, p=[.81, .19])
 o["marital_status"] = code(d.marital_status, {"Currently": 1, "Never": 2, "Widowed": 3})
 # education: ask years directly; only respondents who can't recall an exact number get a fallback
 # bracket. true_years/prefer_not come straight from the old pool's own already-built education_years
@@ -290,17 +289,68 @@ o["remit_in_offseason_pm"] = remit_in_off_pm.astype(int)
 
 # ---- D ------------------------------------------------------------------------
 o["origin"] = orig
-# usual residence vs native place: only asked of non-local origin; most seasonal/circular
-# migrants go home off-season (usual residence = native place -> No), a minority have settled
-# elsewhere year-round (Yes)
-o["usual_residence_differs"] = np.where(orig > 1, (rng.random(n) < 0.22).astype(float), np.nan)
-# who helped/guided the move here, only for non-local origin (replaces the near-tautological
-# "why did you come here" -- migration_reason -- which would almost always just say "employment")
+# closure regime. Proportions follow the pilot's own residency_pattern (n=46): 23 year-round
+# resident, 20 seasonal migrant, 3 working here with family elsewhere. Deliberately NOT conditioned
+# on origin -- 11 of those 20 seasonal migrants were from this same district, so drawing the closure
+# regime from origin would rebuild exactly the error the module was rewritten to remove.
+o["closure_base"] = rng.choice([1, 2, 3, 4], n, p=[.48, .30, .15, .07])
+_moves = o["closure_base"].values != 1
+# years coming here: only for those who do not live here all year
+o["years_coming_here"] = np.where(
+    _moves, np.minimum(d.years_in_yatra_work.values + rng.poisson(2.0, n),
+                       (d.age.values - 14).clip(1)), np.nan)
+o["came_here_reason"] = np.where(orig > 1, rng.choice([1, 2, 3, 4, 5, 6, 7, 8], n,
+                                 p=[.34, .22, .15, .11, .06, .07, .03, .02]), np.nan)
+# ---- calendar location row (Module C), built from the activity row and the closure regime ------
+# A Yatra-work month is spent here by definition. What happens in the remaining months is exactly
+# what closure_base describes, so the two are generated together rather than independently -- an
+# independent draw would produce respondents who "go home at closure" while living here all twelve
+# months, which the form cannot produce and the Stata build would rightly reject.
+_loc = np.ones((n, 12), int)
+_away_month = np.zeros((n, 12), bool)
+for i in range(n):
+    for m in range(12):
+        if status[i, m] == 1:            # Yatra work: here, by definition
+            _loc[i, m] = 1
+        elif status[i, m] == 5:          # "went away from home for work" -> a third place
+            _loc[i, m] = 3
+            _away_month[i, m] = True
+        elif o["closure_base"].values[i] in (2, 3):
+            _loc[i, m] = 2               # went to the home place for the closure
+        else:
+            _loc[i, m] = 1               # stayed on here (closure_base 1 or 4)
+    # a minority take other-place work in a month that is otherwise coded at a base
+    if o["closure_base"].values[i] != 1 and rng.random() < .18:
+        _cand = [m for m in range(12) if status[i, m] in (2, 3, 4, 6, 7) and _loc[i, m] != 3]
+        if _cand:
+            _m = int(rng.choice(_cand)); _loc[i, _m] = 3; _away_month[i, _m] = True
+for m in range(12):
+    o[f"loc_m{m+1}"] = _loc[:, m]
+
+# off-season labour migration (type B), asked of everyone as a separate report from the calendar.
+# ~6% of respondents are given a deliberately inconsistent pair: the stated item and the location
+# row are two different questions answered minutes apart, real respondents will disagree with
+# themselves, and the Stata build's data-quality report needs something to actually catch.
+_away = _away_month.any(1).astype(int)
+_flip = rng.random(n) < .06
+_away = np.where(_flip, 1 - _away, _away)
+o["worked_away_in_closure"] = _away
+AWAY_PLACES = ["Delhi mein construction", "Dehradun mein hotel ka kaam", "Punjab mein kheti",
+               "Mumbai mein security guard", "Haridwar mein dukan par"]
+o["closure_work_detail"] = [str(rng.choice(AWAY_PLACES)) if v == 1 else "" for v in _away]
+o["worked_other_places"] = (rng.random(n) < 0.33).astype(int)
+OTHER_PLACES = ["Shimla mein dhaba", "Delhi mein factory", "Ludhiana mein mazdoori",
+                "Rishikesh mein raft ka kaam", "Nepal mein kheti"]
+o["other_places_detail"] = [str(rng.choice(OTHER_PLACES)) if v == 1 else ""
+                            for v in o["worked_other_places"].values]
+o["would_move_for_work"] = np.where(rng.random(n) < .04, 97, (rng.random(n) < .56).astype(int))
+# who placed the respondent in this work. Ungated as of 2026-09-28: it is a question about the
+# employment relationship, not about migration, so a local worker gets it too.
 REF_P = [.35, .30, .15, .05, .10, .03, .02]   # family / friend-villager / contractor / leader / self / employer / other
-o["migration_referral"] = np.where(orig > 1, rng.choice([1, 2, 3, 4, 5, 6, 7], size=n, p=REF_P), np.nan)
+o["migration_referral"] = rng.choice([1, 2, 3, 4, 5, 6, 7], size=n, p=REF_P)
 REF_OTHER = ["gaon ka pradhan", "mandir samiti ke through", "purane malik ne bheja",
              "sena ke dost ne bataya", "NGO wale ne"]
-o["migration_referral_other"] = [str(rng.choice(REF_OTHER)) if v == 7 else "" for v in o.migration_referral.values]
+o["migration_referral_other"] = [str(rng.choice(REF_OTHER)) if v == 7 else "" for v in np.nan_to_num(o.migration_referral.values)]
 # years_since_migration dropped: redundant with years_in_yatra_work for this study's purposes
 
 # ---- E: consumption, on/off-season pairs (workers are migrants; see dictionary.py Module E) -----

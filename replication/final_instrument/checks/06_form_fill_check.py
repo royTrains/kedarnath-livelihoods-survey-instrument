@@ -155,7 +155,11 @@ NEEDS = {
     "Shocks, coping and finance":
         ["shock_count", "shock_any", "shock_covariate", "shock_idiosyncratic",
          "coped_sold_assets", "coped_cut_consumption", "took_loan_12m", "n_health_insured",
-         "n_life_insured", "home_admin_level", "home_rural_urban", "cooks_own_meals_here"],
+         "n_life_insured", "home_rural_urban", "cooks_own_meals_here"],
+    "Mobility and the closure regime":
+        ["closure_base", "closure_labour_migrant", "stays_all_year", "split_household",
+         "months_here", "months_home_base", "months_third_place", "worked_away_in_closure",
+         "worked_other_places", "would_move_for_work", "migrant"],
 }
 # variables that are legitimately missing for most rows because they are skip-gated, with the
 # coverage each one should clear. child_school_dep is only defined for households that HAVE a child

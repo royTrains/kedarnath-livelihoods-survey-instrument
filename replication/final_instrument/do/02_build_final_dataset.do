@@ -91,10 +91,10 @@ replace hoh_female = 1 if inlist(hoh_relation,3,5,7,9,11,13)
 
 * migration and site
 gen byte migrant = (origin>1) if !missing(origin)
-* rural/urban is now DERIVED from the administrative tier rather than asked separately: a
-* gram-panchayat village is rural, everything above it urban. This is what picks the rural or
-* urban poverty line for this respondent.
-gen byte home_rural_urban = cond(home_admin_level==1, 1, 2)
+* home_rural_urban is ASKED now (Module D), not derived. It used to be built from home_admin_level,
+* a village/town/city tier -- which put the choice between the Rs 2,515 and Rs 3,639 poverty lines,
+* a 45% difference, behind a Census classification the respondent had no way of making.
+assert inrange(home_rural_urban,1,2)
 * credit_source is gated behind took_loan_12m, so it is MISSING for non-borrowers. These two are
 * defined for everyone, which is what the VEP regressions need -- using credit_source directly
 * would drop every non-borrowing household from the FGLS sample.
@@ -119,6 +119,13 @@ gen byte offseason_months_worked = 0
 gen byte months_no_work = 0
 gen byte yatra_start_month = .
 gen byte yatra_end_month   = .
+* ---- measured seasonal base, from the Module C location row ----
+* This is what replaces a season length assumed for everyone. Each respondent's own boundary is
+* wherever their location row turns over, which is also the answer to the mid-month Yatra-start
+* problem: we no longer need a single cut-off, because we no longer impose one.
+gen byte months_here        = 0
+gen byte months_home_base   = 0
+gen byte months_third_place = 0
 * Idle months: the form hides the earnings question when the month is coded "no paid work", so Kobo
 * returns an empty cell. Fill it with the zero it means BEFORE anything sums these columns --
 * otherwise a worker with any idle month gets a missing annual income instead of a correct one.
@@ -132,9 +139,25 @@ forvalues m = 1/12 {
     replace yatra_months            = yatra_months + 1            if status_m`m'==1
     replace offseason_months_worked = offseason_months_worked + 1 if inrange(status_m`m',2,7)
     replace months_no_work          = months_no_work + 1          if status_m`m'==8
+    replace months_here             = months_here + 1             if loc_m`m'==1
+    replace months_home_base        = months_home_base + 1        if loc_m`m'==2
+    replace months_third_place      = months_third_place + 1      if loc_m`m'==3
     replace yatra_income     = yatra_income + income_m`m'         if status_m`m'==1 & knows_monthly_income==1
     replace non_yatra_income = non_yatra_income + income_m`m'     if status_m`m'!=1 & knows_monthly_income==1
 }
+
+* Type B in the closure-regime typology: sold labour away from BOTH bases. Stated (Module D) or
+* revealed (the location row) -- either establishes it, because a respondent who names the place he
+* worked has told us as much as one whose calendar shows the month.
+gen byte closure_labour_migrant = (worked_away_in_closure==1 | months_third_place>0)
+gen byte stays_all_year   = (closure_base==1)
+gen byte split_household  = inlist(closure_base,3,4)
+* The two reports of the same fact should agree. Where they do not, that is a data-quality flag
+* neither item could raise alone -- it is counted in the report below, never asserted away.
+gen byte dq_closure_mismatch = (worked_away_in_closure==1) != (months_third_place>0)
+* The two-season design does not fit a respondent who never moves: for them the Yatra-season and
+* off-season questions describe the same place. Check the identical-answer rate at the pilot.
+label var stays_all_year "Does not move at all when the Yatra closes"
 
 *-----------------------------------------------------------------------------
 * ANNUAL-TOTAL FALLBACK (Apablaza Q15 route). Respondents who could not give
@@ -474,7 +497,6 @@ assert (pays_interest==.)   == (took_loan_12m==0)
 assert missing(months_looked_for_work) == !(months_no_work>0 | k_seeking==1)
 * prev_occ is free text now, so "missing" means an empty string, not a system missing
 assert (prev_occ=="")             == (prev_occ_change!=1)
-assert inrange(home_admin_level,1,3)
 assert inrange(toilet_type,1,4)
 assert inrange(wall_material,1,3)
 assert (anc_4_visits==.)            == (birth_last_5y==0)
@@ -505,8 +527,24 @@ assert missing(training_type)     == (training_received!=1)
 assert (shock_coping=="")         == (distress_event_last365d=="")
 assert missing(morbidity_coping_15d) == (morbidity_15d==0)
 assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
-assert missing(migration_referral) == (migrant!=1)
-assert missing(usual_residence_differs) == (migrant!=1)
+* migration_referral and worked_other_places are ungated now -- asked of everyone, including local
+* respondents, because who placed you in a job is not a question about migration.
+assert !missing(migration_referral)
+assert !missing(worked_other_places)
+assert !missing(closure_base) & inrange(closure_base,1,4)
+assert !missing(worked_away_in_closure)
+assert missing(years_coming_here) == (closure_base==1)
+assert missing(came_here_reason)  == (migrant!=1)
+assert (closure_work_detail=="") == !(worked_away_in_closure==1)
+assert (other_places_detail=="")  == !(worked_other_places==1)
+forvalues m = 1/12 {
+    assert inrange(loc_m`m',1,4)
+}
+* A Yatra-work month is spent on the Yatra route by definition. This one IS an assert rather than a
+* flag: the form cannot emit any other combination, so a violation means the export is wrong.
+forvalues m = 1/12 {
+    assert loc_m`m'==1 if status_m`m'==1
+}
 assert missing(years_schooling)   == (knows_years_schooling==0)
 assert missing(education_level_cat) == (knows_years_schooling==1)
 assert hoh_female==female if hoh_relation==1   // self-headed: head's sex is the respondent's own
@@ -587,7 +625,32 @@ if r(N) > 0 {
     quietly replace _dq_flag = 1 if (family_structure==3) != (hhsize==1)
     local dq_total = `dq_total' + r(N)
 }
+* The stated off-season migration item against the calendar's location row. Two reports of the same
+* fact, asked minutes apart; a real respondent can and will disagree with himself. Counted, never
+* asserted -- an assert here would halt the build on data the form is perfectly happy to emit.
+quietly count if dq_closure_mismatch==1
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- worked_away_in_closure disagrees with the calendar location row"
+    quietly replace _dq_flag = 1 if dq_closure_mismatch==1
+    local dq_total = `dq_total' + r(N)
+}
+* Someone who says they leave at closure but whose calendar never leaves the Yatra route. Not
+* impossible -- closure_base is what happens in a normal year, the calendar is last year -- but
+* worth querying, and worth watching as a share at the pilot.
+quietly count if inlist(closure_base,2,3) & months_home_base==0
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- reports going home at closure, but no month is coded at the home place"
+    quietly replace _dq_flag = 1 if inlist(closure_base,2,3) & months_home_base==0
+    local dq_total = `dq_total' + r(N)
+}
 di as result "  data-quality flags raised: `dq_total'"
+* Assumption check on the whole two-season design. Every consumption, remittance and coping item in
+* this instrument is asked twice on the premise that the respondent is somewhere else once the Yatra
+* shuts. Until the location row existed, nothing measured how often that premise holds.
+quietly count if stays_all_year==1
+di as result "  two-season design: " r(N) " of " _N " respondents never move at closure (their two seasonal answers describe the same place)"
+quietly count if closure_labour_migrant==1
+di as result "  off-season labour migration (type B): " r(N) " of " _N " respondents"
 label variable _dq_flag "Flagged by at least one data-quality check"
 rename _dq_flag dq_flag
 

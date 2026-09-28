@@ -50,15 +50,23 @@ use "data/kedarnath_final_n200_fielded.dta", clear
 *     a select_multiple now, so the old string test is not even type-valid.
 *   - LOCATION enters the model. Fujii (2016, section 2.2) closes his review
 *     of the empirical literature by naming education and location as the two
-*     covariates that emerge consistently; home_admin_level (village / small
-*     town / town / city) and health_access_tier (GPS-derived position along
-*     the route) are both collected and neither was previously used.
+*     covariates that emerge consistently; urban (rural/urban status of the
+*     home place) and health_access_tier (GPS-derived position along the
+*     route) are both collected and neither was previously used.
+*   - MOBILITY enters as closure_labour_migrant, not as migrant. The migrant
+*     dummy is a district boundary, and in this population the boundary is
+*     not where the mobility is: the pilot put 11 of 20 seasonal movers
+*     inside this same district, so migrant codes most movers as stayers.
+*     closure_labour_migrant is whether the respondent sold labour away from
+*     both bases during the closure -- the behaviour that actually separates
+*     a household with a winter income from one without. migrant is kept
+*     alongside it as a distance control, which is all it ever measured.
 *=============================================================================
 gen byte urban = (home_rural_urban==2)
 
 global X_adapt  education_years has_bank_account credit_institutional training_received smartphone_owned
 global X_sens   age hhsize i.employment_type years_in_yatra_work
-global X_expo   migrant shock_any yatra_income_share income_seasonality_cv i.health_access_tier i.home_admin_level trek_dependent
+global X_expo   migrant closure_labour_migrant stays_all_year shock_any yatra_income_share income_seasonality_cv i.health_access_tier urban trek_dependent
 global X        $X_adapt $X_sens $X_expo
 
 di as result "{hline 78}"

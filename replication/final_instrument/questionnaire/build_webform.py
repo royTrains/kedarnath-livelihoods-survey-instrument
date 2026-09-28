@@ -23,8 +23,8 @@ import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES
-from translations_hi import HI, HI_LSETS
+from dictionary import ROWS, LSETS, MODULES, INTROS
+from translations_hi import HI, HI_LSETS, INTROS_HI
 import build_xlsform as X
 
 OUT = os.path.join(HERE, "index.html")
@@ -111,7 +111,8 @@ for r in ROWS:
         q["cmsg_hi"] = X.CMSG_HI.get(r["name"], msg)
     questions.append(q)
 
-modules = [{"c": c, "en": t, "hi": MODTITLE_HI.get(c, t)} for c, t in MODULES]
+modules = [{"c": c, "en": t, "hi": MODTITLE_HI.get(c, t),
+            "ien": INTROS.get(c, ""), "ihi": INTROS_HI.get(c, "")} for c, t in MODULES]
 CFG = {"q": questions, "mods": modules, "cols": export_cols}
 
 CONSENT_EN = ("We are doing a study on the livelihoods of people who work on the Yatra route. Taking "
@@ -164,6 +165,11 @@ label.ch input{margin:3px 0 0}
 .err{color:var(--warn);font-size:14px;margin-top:7px}
 .opt{font-size:12px;color:var(--mut);margin-top:6px}
 h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+/* Read-aloud module introduction. Deliberately styled unlike a question card -- tinted, ruled down
+   the side, italic lead-in -- so an enumerator glancing at the screen can never mistake it for
+   something the respondent is meant to answer. */
+.intro{background:#eff5ff;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:12px 14px;margin:0 0 12px;font-size:15px}
+.intro .lead{display:block;font-size:12px;color:var(--acc);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
 footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:680px;margin:0 auto}
 footer button{flex:1}
 .mid{text-align:center;padding:40px 16px;color:var(--mut)}
@@ -195,7 +201,10 @@ const T = {
  cons:[__CONS_HI__,__CONS_EN__], consq:["क्या आप शामिल होना चाहते हैं?","Do you agree to take part?"],
  no:["नहीं","No"], yes:["हाँ","Yes"], stop:["धन्यवाद। साक्षात्कार यहीं समाप्त।","Thank you. Interview ends here."],
  clr:["निर्यात किए गए मिटाएँ","Clear exported"], cnt:["सहेजे गए साक्षात्कार","Saved interviews"],
- nodata:["अभी कोई साक्षात्कार सहेजा नहीं गया","No interviews saved yet"]
+ nodata:["अभी कोई साक्षात्कार सहेजा नहीं गया","No interviews saved yet"],
+ // Label on the module-introduction box. Addressed to the enumerator, not the respondent: it is an
+ // instruction to speak, which is why it is not in the respondent-facing Hindi of INTROS_HI itself.
+ readout:["पढ़कर सुनाएँ","Read aloud"]
 };
 let L = 0;                                  // 0 = Hindi, 1 = English
 const t = k => T[k][L];
@@ -260,7 +269,15 @@ function render(){
   cur = q.n;
   const prevMod = idx > 0 ? shown[idx-1].m : null;
   let h = "";
-  if (mod && q.m !== prevMod) h += "<h2>" + (L ? mod.en : mod.hi) + "</h2>";
+  if (mod && q.m !== prevMod){
+    h += "<h2>" + (L ? mod.en : mod.hi) + "</h2>";
+    // The module introduction rides on the first visible question of the module rather than sitting
+    // on a screen of its own. A separate screen would have cost twelve extra taps per interview and,
+    // worse, would have needed an entry in `shown` -- and navigation is keyed on question NAMES via
+    // posOf(), so a non-question entry would have broken back/next the moment a gate moved.
+    const intro = L ? mod.ien : mod.ihi;
+    if (intro) h += "<div class=intro><span class=lead>" + t("readout") + "</span>" + intro + "</div>";
+  }
   h += "<div class=card><div class=qn>" + (idx+1) + " / " + shown.length + "</div>";
   h += "<div class=qt>" + (L ? q.en : q.hi) + "</div>";
   const v = D[q.n] ?? "";

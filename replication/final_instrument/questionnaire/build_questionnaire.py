@@ -2,7 +2,7 @@
 import csv, os, sys
 import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from dictionary import ROWS, LSETS, MODULES, TASKS
+from dictionary import ROWS, LSETS, MODULES, TASKS, INTROS
 from latex_helpers import esc, compile_tex
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -98,6 +98,10 @@ for m in MODULES:
     code = m[0]
     rr = [r for r in ROWS if r["module"] == code and r["origin"] in ("asked", "paradata")]
     tex += "\\subsection*{Module " + code + ": " + esc(m[1]) + "}\n"
+    # Read-aloud introduction, set in a quote block so it is visibly not one of the numbered
+    # questions. On paper the distinction has to carry itself: there is no interface to enforce it.
+    if code in INTROS:
+        tex += "\\begin{quote}\\small\\textit{Read aloud: " + esc(INTROS[code]) + "}\\end{quote}\n"
     rows = []
     for i, r in enumerate(rr, 1):
         q = esc(r["question"])
