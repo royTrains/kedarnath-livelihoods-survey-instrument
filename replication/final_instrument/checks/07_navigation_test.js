@@ -35,7 +35,7 @@ console.log(`\n  form opens with ${total} visible questions\n`);
 // walk to the earnings gate, answering as we go
 // Answer whatever question we are on with the first value that actually passes its constraint --
 // a fixed dummy fails things like age (10-90) and days_week (1-7), and next() rightly refuses.
-const CANDIDATES = [1, 2, 5, 7, 12, 30, 100, 1000];
+const CANDIDATES = [0, 1, 2, 3, 5, 7, 12, 30, 100, 1000];
 function step(){
   const from = A.cur;
   for (const v of CANDIDATES){

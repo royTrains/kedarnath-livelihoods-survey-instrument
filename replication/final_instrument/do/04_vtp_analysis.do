@@ -285,10 +285,25 @@ di as result "{hline 78}"
 * because `vulnerable' is itself a threshold function of the same X -- inspect
 * e(sample) if Stata drops observations.
 *=============================================================================
-logit vulnerable $X, iterate(200)
-estimates store mon_logit
-logit mpi_vulnerable $X, iterate(200)
-estimates store mpi_logit
+* Wrapped in capture on purpose. A logit dies outright when its outcome does not vary, and an
+* outcome CAN legitimately be constant in a real sample -- every worker vulnerable in a bad year,
+* or none in a small pilot. Killing the whole analysis at its last step over that would mean losing
+* the FGLS results already estimated above, which is the wrong trade.
+foreach out in vulnerable mpi_vulnerable {
+    quietly summarize `out'
+    if r(sd) == 0 | r(N) == 0 {
+        di as error "  SKIPPED logit of `out': the outcome does not vary (mean " r(mean) ", N " r(N) ")"
+    }
+    else {
+        capture noisily logit `out' $X, iterate(200)
+        if _rc {
+            di as error "  logit of `out' did not converge (rc " _rc "); FGLS results above are unaffected"
+        }
+        else {
+            estimates store `out'_logit
+        }
+    }
+}
 
 capture which esttab
 if _rc==0 {

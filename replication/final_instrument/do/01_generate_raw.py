@@ -84,7 +84,8 @@ hstate[orig == 4] = 99
 o["home_state"] = hstate
 # rural/urban of the USUAL home -- decides which poverty line applies to this respondent
 # administrative tier of the usual home; rural/urban is derived from it in Stata, not asked
-o["home_admin_level"] = rng.choice([1, 2, 3, 4], n, p=[.72, .13, .09, .06])
+# three levels now -- nagar panchayat vs nagar palika is a distinction respondents cannot make
+o["home_admin_level"] = rng.choice([1, 2, 3], n, p=[.72, .19, .09])
 o["marital_status"] = code(d.marital_status, {"Currently": 1, "Never": 2, "Widowed": 3})
 # education: ask years directly; only respondents who can't recall an exact number get a fallback
 # bracket. true_years/prefer_not come straight from the old pool's own already-built education_years

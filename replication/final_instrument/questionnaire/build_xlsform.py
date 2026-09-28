@@ -140,9 +140,16 @@ CONSTRAINT = {
     "hours_day_offseason": (". >= 1 and . <= 18", "Hours a day must be between 1 and 18."),
     "days_week_offseason": (". >= 1 and . <= 7", "Days a week must be between 1 and 7."),
     "water_fetch_minutes": (". >= 0 and . <= 300", "Minutes must be between 0 and 300."),
-    "n_health_insured": (". >= 0 and . <= 30", "Cannot be more than the household has members."),
-    "n_life_insured": (". >= 0 and . <= 30", "Cannot be more than the household has members."),
-    "n_can_transact_online": (". >= 0 and . <= 30", "Cannot be more than the household has members."),
+    # Cross-field constraints. These were previously asserted only in the Stata build, which meant
+    # the build HALTED on data the form was perfectly happy to accept. Enforcing them at entry, where
+    # the enumerator can still ask again, is the right place.
+    "n_health_insured": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
+    "n_life_insured": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
+    "n_can_transact_online": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
+    "n_earners": (". >= 1 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
+    "n_children_u15": (". >= 0 and . <= ${hhsize} - 1", "Cannot be more than the household size minus the respondent."),
+    "n_children_6_14": (". >= 0 and . <= ${n_children_u15}", "Cannot be more than the number of children under 15."),
+    "n_children_out_school": (". >= 0 and . <= ${n_children_6_14}", "Cannot be more than the number of children aged 6 to 14."),
 }
 for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
            "cope_reduce_portion", "cope_restrict_adult"]:
@@ -157,9 +164,13 @@ CMSG_HI = {
     "pct_income_yatra": "हर 100 रुपये में से 0 से 100 के बीच होना चाहिए।",
     "n_other_activities": "0 से 6 के बीच होना चाहिए।",
     "water_fetch_minutes": "मिनट 0 से 300 के बीच होने चाहिए।",
-    "n_health_insured": "घर के सदस्यों से ज़्यादा नहीं हो सकता।",
-    "n_life_insured": "घर के सदस्यों से ज़्यादा नहीं हो सकता।",
-    "n_can_transact_online": "घर के सदस्यों से ज़्यादा नहीं हो सकता।",
+    "n_health_insured": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
+    "n_life_insured": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
+    "n_can_transact_online": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
+    "n_earners": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
+    "n_children_u15": "घर के लोगों में से आपको छोड़कर, उससे ज़्यादा नहीं हो सकता।",
+    "n_children_6_14": "15 साल से छोटे बच्चों से ज़्यादा नहीं हो सकता।",
+    "n_children_out_school": "6 से 14 साल के बच्चों से ज़्यादा नहीं हो सकता।",
     "days_week_offseason": "हफ़्ते के दिन 1 से 7 के बीच होने चाहिए।",
     "hours_day_offseason": "दिन के घंटे 1 से 18 के बीच होने चाहिए।",
 }

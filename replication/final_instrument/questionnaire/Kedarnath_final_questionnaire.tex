@@ -38,8 +38,8 @@ Interview length is NOT estimated here. The module list below gives item counts 
 \endhead
 P & Cover page, consent and paradata & 8 \\
 A & Respondent and household & 17 \\
-B & Work and work history & 18 \\
-C & Monthly calendar of work and income; remittances & 32 \\
+B & Work and work history & 16 \\
+C & Monthly calendar of work and income; remittances & 34 \\
 D & Migration & 6 \\
 E & Household consumption & 29 \\
 F & Housing, amenities and assets & 28 \\
@@ -134,15 +134,13 @@ B6 & Taking all of that other work together, about how much do you usually earn 
 B7 & How many Yatra seasons have you worked in this kind of work? & Whole number & \texttt{years\_in\_yatra\_work}\newline Source: Chaudhuri et al. 2002 sensitivity covariate; Apablaza et al. 2026 Q10 (tenure in this job) \\
 B8 & In the Yatra season, on a normal working day, how many hours do you work in total, across all your work? & Whole number & \texttt{hours\_day\_yatra}\newline Source: Apablaza et al. 2026 Q13 (decomposed into hours/day x days/week rather than asked as one weekly figure, for ease of recall) \\
 B9 & How many days a week do you usually work in the season? & Whole number & \texttt{days\_week\_yatra}\newline Source: Apablaza et al. 2026 Q13 (decomposed into hours/day x days/week rather than asked as one weekly figure, for ease of recall) \\
-B10 & In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total? & Whole number & \texttt{hours\_day\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season (decomposed as hours/day x days/week, as in the Yatra-season pair) \\
-B11 & In those months, how many days a week do you usually work? & Whole number & \texttt{days\_week\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season \\
-B12 & In the last ten years, did you change your main kind of work? & 1 Yes, 0 No & \texttt{prev\_occ\_change}\newline Source: Occupational mobility check; job-history item \\
-B13 & What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list. &  & \texttt{prev\_occ}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Gathmann and Schonberg 2010 (observed moves are systematically shorter than random moves -- the validation test for a task-distance measure); coded to NCO-2015 in the office \\
-B14 & If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples. &  & \texttt{target\_occ}\newline Source: Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office \\
-B15 & What was the main reason you changed? & 1 Better income; 2 Lost the previous work; 3 Family or seasonal reasons; 4 Moved to this area; 5 Other & \texttt{prev\_occ\_reason}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Job-history item \\
-B16 & Apart from school and college, have you ever completed any training course or apprenticeship? & 1 Yes, 0 No & \texttt{training\_received}\newline Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate \\
-B17 & What kind of course or training was it? & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other & \texttt{training\_type}\newline \textit{Skip: Ask only if training\_received = 1}\newline Source: STEP module 2 \\
-B18 & What was it? Write what they say. &  & \texttt{training\_type\_other}\newline \textit{Skip: Ask only if training\_type = 9 (Other); may be left blank}\newline Source: STEP module 2 \\
+B10 & In the last ten years, did you change your main kind of work? & 1 Yes, 0 No & \texttt{prev\_occ\_change}\newline Source: Occupational mobility check; job-history item \\
+B11 & What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list. &  & \texttt{prev\_occ}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Gathmann and Schonberg 2010 (observed moves are systematically shorter than random moves -- the validation test for a task-distance measure); coded to NCO-2015 in the office \\
+B12 & If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples. &  & \texttt{target\_occ}\newline Source: Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office \\
+B13 & What was the main reason you changed? & 1 Better income; 2 Lost the previous work; 3 Family or seasonal reasons; 4 Moved to this area; 5 Other & \texttt{prev\_occ\_reason}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Job-history item \\
+B14 & Apart from school and college, have you ever completed any training course or apprenticeship? & 1 Yes, 0 No & \texttt{training\_received}\newline Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate \\
+B15 & What kind of course or training was it? & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other & \texttt{training\_type}\newline \textit{Skip: Ask only if training\_received = 1}\newline Source: STEP module 2 \\
+B16 & What was it? Write what they say. &  & \texttt{training\_type\_other}\newline \textit{Skip: Ask only if training\_type = 9 (Other); may be left blank}\newline Source: STEP module 2 \\
 \bottomrule
 \end{longtable}
 }
@@ -189,6 +187,8 @@ C29 & In a normal month when the Yatra is closed, how much do you usually send? 
 C30 & How do you usually send it? & 1 Bank transfer; 2 UPI or phone payment; 3 Money order or post office; 4 Sent with someone going home; 5 Carried it myself; 6 Other & \texttt{remit\_mode}\newline \textit{Skip: Ask only if remit\_out\_yatra\_pm > 0 or remit\_out\_offseason\_pm > 0}\newline Source: Project design (remittance channel as a financial-inclusion and cost measure) \\
 C31 & In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_in\_yatra\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
 C32 & In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none) & Rupees (whole number) & \texttt{remit\_in\_offseason\_pm}\newline Source: NSS 64th Round practice (amount); frequency dropped for length \\
+C33 & In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total? & Whole number & \texttt{hours\_day\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season (decomposed as hours/day x days/week, as in the Yatra-season pair) \\
+C34 & In those months, how many days a week do you usually work? & Whole number & \texttt{days\_week\_offseason}\newline \textit{Skip: Ask only if any month in the calendar is other paid work (status 2 to 7)}\newline Source: Apablaza et al. 2026 Q13, asked a second time for the off-season \\
 \bottomrule
 \end{longtable}
 }
@@ -315,8 +315,8 @@ G4 & Who was the main lender? & 1 Nationalised or public-sector bank; 2 Private 
 G5 & How much of that loan is still left to repay? (Rs) & Rupees (whole number) & \texttt{loan\_amount}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty) \\
 G6 & Do you pay interest on it? & 1 Yes, 0 No & \texttt{pays\_interest}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Project design (informal lending is often interest-free) \\
 G7 & On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known) & Number & \texttt{loan\_interest\_per100\_pm}\newline \textit{Skip: Ask only if took\_loan\_12m = 1; may be left blank}\newline Source: Project design (informal-credit pricing as locally quoted) \\
-G8 & What did you have to give as security? & 1 Jewellery or ornaments; 2 Land; 3 Animals; 4 A vehicle; 5 Shop stock or business goods; 6 House or building; 7 Something else & \texttt{loan\_collateral}\newline \textit{Skip: Ask only if loan\_against\_asset = 1}\newline Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003 (asset-based coping) \\
-G9 & Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business? & 1 Yes, 0 No & \texttt{loan\_against\_asset}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability) \\
+G8 & Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business? & 1 Yes, 0 No & \texttt{loan\_against\_asset}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability) \\
+G9 & What did you have to give as security? & 1 Jewellery or ornaments; 2 Land; 3 Animals; 4 A vehicle; 5 Shop stock or business goods; 6 House or building; 7 Something else & \texttt{loan\_collateral}\newline \textit{Skip: Ask only if loan\_against\_asset = 1}\newline Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003 (asset-based coping) \\
 G10 & How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none) & Whole number & \texttt{n\_health\_insured}\newline Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023 \\
 G11 & How many people in your household have life insurance? (0 if none) & Whole number & \texttt{n\_life\_insured}\newline Source: Standard household-survey item \\
 G12 & Is your crop insured? & 1 Yes, 0 No & \texttt{has\_crop\_insurance}\newline \textit{Skip: Ask only if land\_cultivable\_acres > 0}\newline Source: Standard household-survey item \\

@@ -1,4 +1,4 @@
-Rows 200, variables 337; dictionary variables 337
+Rows 200, variables 338; dictionary variables 337
 Every dictionary variable is in the file, in dictionary order: False
 Variables without a label: []
 Value-label sets defined: 44 of 45 expected

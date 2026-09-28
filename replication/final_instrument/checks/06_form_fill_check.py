@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 import openpyxl
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'questionnaire'))
-from dictionary import LSETS
+from dictionary import LSETS, ROWS
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -98,6 +98,33 @@ for name, rel in rules.items():
         skipped_ok += 1
 if skipped_ok == checked and checked:
     ok(f"all {checked} gated variables match their own XLSForm relevance rule on all {len(sample)} submissions")
+
+# ---------------------------------------------------------------- (A2) rule ordering
+# A question whose relevance names a variable asked LATER can never be shown: at the moment the form
+# evaluates it, the gate is still unanswered. loan_collateral sat before loan_against_asset for
+# exactly this reason and was silently unreachable -- no skip-logic check caught it, because the
+# generator set both independently. Only a real end-to-end fill did.
+print("")
+print("(A2) RULE ORDERING -- is any gated question asked before its own gate?")
+print("")
+order = {}
+for _r in ROWS:
+    if _r["origin"] in ("asked", "paradata"):
+        order.setdefault(_r["name"], len(order))
+bad_order = 0
+for name, rel in rules.items():
+    if name not in order:
+        continue
+    for dep in set(re.findall(r"\$\{(\w+)\}", rel)):
+        # the hidden calculates are not questions, but they READ the calendar, so a question gated
+        # on one of them is really gated on status_m12 -- skipping them hid a real ordering bug
+        if dep.startswith("calc_"):
+            dep = "status_m12"
+        if dep in order and order[dep] > order[name]:
+            bad(f"{name} is gated on {dep}, which is asked LATER -- it can never appear")
+            bad_order += 1
+if not bad_order:
+    ok(f"every gated question is asked after the variable that gates it ({len(rules)} rules)")
 
 # ---------------------------------------------------------------- (B) analysis readiness
 print("\n(B) ANALYSIS READINESS -- does the instrument generate what each analysis consumes?\n")

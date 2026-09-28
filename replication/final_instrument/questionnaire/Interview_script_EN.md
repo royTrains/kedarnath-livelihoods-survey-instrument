@@ -147,46 +147,36 @@ Now I want to ask about your work here during the Yatra season.
 
 > **ENUMERATOR:** Record: whole number
 
-**27.** In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total?
-
-> **ENUMERATOR:** Ask only if: any month in the calendar is other paid work (status 2 to 7)  
-> Record: whole number
-
-**28.** In those months, how many days a week do you usually work?
-
-> **ENUMERATOR:** Ask only if: any month in the calendar is other paid work (status 2 to 7)  
-> Record: whole number
-
-**29.** In the last ten years, did you change your main kind of work?
+**27.** In the last ten years, did you change your main kind of work?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**30.** What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list.
+**28.** What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list.
 
 > **ENUMERATOR:** Ask only if: prev_occ_change = 1  
 > Record: write the answer in words, verbatim  
 > Write it in their words. If they name a place or an employer, write that too.
 
-**31.** If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples.
+**29.** If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples.
 
 > **ENUMERATOR:** Record: write the answer in words, verbatim  
 > Do not suggest anything. "Don't know" and "there is no other work for me" are real answers — write them down as said.
 
-**32.** What was the main reason you changed?
+**30.** What was the main reason you changed?
 
 > **ENUMERATOR:** Ask only if: prev_occ_change = 1  
 > Options: 1 Better income · 2 Lost the previous work · 3 Family or seasonal reasons · 4 Moved to this area · 5 Other
 
-**33.** Apart from school and college, have you ever completed any training course or apprenticeship?
+**31.** Apart from school and college, have you ever completed any training course or apprenticeship?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**34.** What kind of course or training was it?
+**32.** What kind of course or training was it?
 
 > **ENUMERATOR:** Ask only if: training_received = 1  
 > Options: 1 ITI or other trade course · 2 Hotel, catering or tourism · 3 Driving · 4 Mobile, computer or electrical repair · 5 Tailoring or handicraft · 6 Animal handling or veterinary · 7 Construction trade (mason, carpenter, plumber) · 8 Health or first aid · 9 Other
 
-**35.** What was it? Write what they say.
+**33.** What was it? Write what they say.
 
 > **ENUMERATOR:** Ask only if: training_type = 9 (Other); may be left blank  
 > Record: write the answer in words, verbatim
@@ -200,148 +190,158 @@ Now I want to ask about your work here during the Yatra season.
 
 Next I would like to go through the whole year, month by month. Take your time.
 
-**36.** In January, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**34.** In January, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**37.** In February, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**35.** In February, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**38.** In March, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**36.** In March, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**39.** In April, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**37.** In April, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**40.** In May, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**38.** In May, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**41.** In June, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**39.** In June, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**42.** In July, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**40.** In July, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**43.** In August, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**41.** In August, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**44.** In September, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**42.** In September, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**45.** In October, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**43.** In October, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**46.** In November, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**44.** In November, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**47.** In December, what was your main work or activity? (Fill the Yatra months first, then the others.)
+**45.** In December, what was your main work or activity? (Fill the Yatra months first, then the others.)
 
 > **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Wage labour, staying at home · 5 Went away from home for work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
-**48.** Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
+**46.** Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
 
 > **ENUMERATOR:** Options: 1 Month by month · 0 One total for the whole year
 
-**49.** How much did you earn from all your work in January, after costs? (Rs)
+**47.** How much did you earn from all your work in January, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m1 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**50.** How much did you earn from all your work in February, after costs? (Rs)
+**48.** How much did you earn from all your work in February, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m2 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**51.** How much did you earn from all your work in March, after costs? (Rs)
+**49.** How much did you earn from all your work in March, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m3 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**52.** How much did you earn from all your work in April, after costs? (Rs)
+**50.** How much did you earn from all your work in April, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m4 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**53.** How much did you earn from all your work in May, after costs? (Rs)
+**51.** How much did you earn from all your work in May, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m5 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**54.** How much did you earn from all your work in June, after costs? (Rs)
+**52.** How much did you earn from all your work in June, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m6 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**55.** How much did you earn from all your work in July, after costs? (Rs)
+**53.** How much did you earn from all your work in July, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m7 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**56.** How much did you earn from all your work in August, after costs? (Rs)
+**54.** How much did you earn from all your work in August, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m8 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**57.** How much did you earn from all your work in September, after costs? (Rs)
+**55.** How much did you earn from all your work in September, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m9 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**58.** How much did you earn from all your work in October, after costs? (Rs)
+**56.** How much did you earn from all your work in October, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m10 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**59.** How much did you earn from all your work in November, after costs? (Rs)
+**57.** How much did you earn from all your work in November, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m11 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**60.** How much did you earn from all your work in December, after costs? (Rs)
+**58.** How much did you earn from all your work in December, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 1; automatic 0 if status_m12 = 8 (no paid work)  
 > Record: amount in rupees, whole number
 
-**61.** Thinking of the whole past year, about how much did you earn in total from all your work, after costs? (Rs)
+**59.** Thinking of the whole past year, about how much did you earn in total from all your work, after costs? (Rs)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 0  
 > Record: amount in rupees, whole number
 
-**62.** Out of every 100 rupees you earned in the whole year, how many came from your Yatra work? (The rest is counted as coming from your other work.)
+**60.** Out of every 100 rupees you earned in the whole year, how many came from your Yatra work? (The rest is counted as coming from your other work.)
 
 > **ENUMERATOR:** Ask only if: knows_monthly_income = 0  
 > Record: whole number
 
-**63.** In a normal month during the Yatra season, how much money do you usually send to family or others living elsewhere? (Rs, 0 if none)
+**61.** In a normal month during the Yatra season, how much money do you usually send to family or others living elsewhere? (Rs, 0 if none)
 
 > **ENUMERATOR:** Record: amount in rupees, whole number
 
-**64.** In a normal month when the Yatra is closed, how much do you usually send? (Rs, 0 if none)
+**62.** In a normal month when the Yatra is closed, how much do you usually send? (Rs, 0 if none)
 
 > **ENUMERATOR:** Record: amount in rupees, whole number
 
-**65.** How do you usually send it?
+**63.** How do you usually send it?
 
 > **ENUMERATOR:** Ask only if: remit_out_yatra_pm > 0 or remit_out_offseason_pm > 0  
 > Options: 1 Bank transfer · 2 UPI or phone payment · 3 Money order or post office · 4 Sent with someone going home · 5 Carried it myself · 6 Other
 
-**66.** In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none)
+**64.** In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none)
 
 > **ENUMERATOR:** Record: amount in rupees, whole number
 
-**67.** In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none)
+**65.** In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none)
 
 > **ENUMERATOR:** Record: amount in rupees, whole number
+
+**66.** In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total?
+
+> **ENUMERATOR:** Ask only if: any month in the calendar is other paid work (status 2 to 7)  
+> Record: whole number
+
+**67.** In those months, how many days a week do you usually work?
+
+> **ENUMERATOR:** Ask only if: any month in the calendar is other paid work (status 2 to 7)  
+> Record: whole number
 
 > _Module C complete._
 
@@ -682,15 +682,15 @@ A few short questions about banking, loans and schemes.
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1; may be left blank  
 > Record: number
 
-**138.** What did you have to give as security?
-
-> **ENUMERATOR:** Ask only if: loan_against_asset = 1  
-> Options: 1 Jewellery or ornaments · 2 Land · 3 Animals · 4 A vehicle · 5 Shop stock or business goods · 6 House or building · 7 Something else
-
-**139.** Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business?
+**138.** Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business?
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1  
 > Options: 0 No · 1 Yes
+
+**139.** What did you have to give as security?
+
+> **ENUMERATOR:** Ask only if: loan_against_asset = 1  
+> Options: 1 Jewellery or ornaments · 2 Land · 3 Animals · 4 A vehicle · 5 Shop stock or business goods · 6 House or building · 7 Something else
 
 **140.** How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none)
 

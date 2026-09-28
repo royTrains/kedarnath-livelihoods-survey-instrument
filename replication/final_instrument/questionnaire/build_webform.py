@@ -61,8 +61,16 @@ def to_js(expr):
 
 
 def constraint_js(expr):
-    """'. >= 10 and . <= 90' -> 'x >= 10 && x <= 90'"""
-    return expr.replace(".", "x").replace(" and ", " && ").replace(" or ", " || ")
+    """'. >= 10 and . <= 90' -> 'x >= 10 && x <= 90'.
+
+    Must also resolve ${other_field}, because constraints now reference sibling answers -- a count of
+    insured members cannot exceed household size. Without this the expression reaches eval() with a
+    literal ${...} still in it, throws, and the throw is swallowed by validate()'s try/catch, so the
+    constraint silently does nothing. That is worse than never having added it: the form looks like
+    it is validating and is not."""
+    e = expr.replace("${", "@REF@").replace("}", "@END@")   # park refs before the dot substitution
+    e = e.replace(".", "x").replace(" and ", " && ").replace(" or ", " || ")
+    return e.replace("@REF@", "NUM('").replace("@END@", "')")
 
 
 # ---- build the question list, in form order ---------------------------------------------------
@@ -222,6 +230,9 @@ function paint(){
 
 // ---- the values a relevance expression can see
 const V = n => { const v = D[n]; return v === undefined || v === "" ? null : (isNaN(v) ? v : +v) };
+// A constraint that names another field needs that field as a NUMBER. An unanswered one must not
+// make the constraint fail -- treat it as no limit rather than as zero.
+const NUM = n => { const v = +D[n]; return isNaN(v) ? Infinity : v };
 const SEL = n => (D[n] || "").toString().trim() === "" ? [] : D[n].toString().trim().split(/\\s+/);
 function calc(){                            // the two hidden calculates the XLSForm also builds
   let nw = 0, ow = 0;

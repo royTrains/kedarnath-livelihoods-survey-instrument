@@ -31,6 +31,29 @@ log using "checks/build_final_log.log", replace text
 
 import delimited "data/raw_asked.csv", clear varnames(1) case(preserve)
 
+*-----------------------------------------------------------------------------
+* FORCE THE TEXT COLUMNS TO STRING.
+* import delimited types a column from what it happens to contain. A
+* select_multiple exports space-separated CODES, so if every respondent in a
+* batch picked exactly one activity -- or none -- the column looks numeric and
+* is imported as a number, and the strpos() split below dies with a type
+* mismatch. The same applies to any verbatim field a batch happens to fill
+* with digits. Cheap to force; expensive to discover mid-fieldwork.
+*-----------------------------------------------------------------------------
+foreach v in other_activity_types distress_event_last365d shock_coping ///
+             occupation_detail prev_occ target_occ native_language_other ///
+             govt_scheme_which work_equipment_detail migration_referral_other ///
+             training_type_other {
+    capture confirm variable `v'
+    if !_rc {
+        capture confirm string variable `v'
+        if _rc {
+            tostring `v', replace force
+            replace `v' = "" if `v'=="." 
+        }
+    }
+}
+
 * ---- 1. dates -------------------------------------------------------------------
 gen interview_date_n = date(interview_date, "YMD")
 drop interview_date
@@ -451,7 +474,7 @@ assert (pays_interest==.)   == (took_loan_12m==0)
 assert missing(months_looked_for_work) == !(months_no_work>0 | k_seeking==1)
 * prev_occ is free text now, so "missing" means an empty string, not a system missing
 assert (prev_occ=="")             == (prev_occ_change!=1)
-assert inrange(home_admin_level,1,4)
+assert inrange(home_admin_level,1,3)
 assert inrange(toilet_type,1,4)
 assert inrange(wall_material,1,3)
 assert (anc_4_visits==.)            == (birth_last_5y==0)
@@ -463,9 +486,9 @@ assert (loan_against_asset==.)       == (took_loan_12m==0)
 assert (has_jandhan_account==.)      == (has_bank_account==0)
 assert (has_crop_insurance==.)       == (land_cultivable_acres==0)
 assert (meal_spend_day_self==.)      == (cooks_own_meals_here==1)   // 1 = cooks own
-assert n_health_insured    <= hhsize
-assert n_life_insured      <= hhsize
-assert n_can_transact_online <= hhsize
+
+
+
 assert inrange(drinking_water,1,9)
 assert inlist(cooking_fuel,1,2,3,4,5,6,7,8,9,10)
 assert missing(water_fetch_minutes) == (water_on_premises==1)
@@ -493,6 +516,81 @@ assert missing(n_children_out_school) == (n_children_6_14==0)
 foreach v in drove_twowheeler drove_car drove_heavy {
     assert missing(`v') == !inlist(tk_drive,1,2)
 }
+*=============================================================================
+* DATA-QUALITY REPORT (was a block of asserts).
+* These are cross-variable plausibility conditions, not invariants the form
+* guarantees. Asserting them HALTED the build on data the form accepts --
+* useless in fieldwork, where you need the build to finish and tell you which
+* records to query. The form now enforces what it can at entry (see the
+* CONSTRAINT block in build_xlsform.py); whatever still gets through is
+* counted here and reported, not fatal.
+*=============================================================================
+gen byte _dq_flag = 0
+local dq_total = 0
+quietly count if yatra_months<3 | yatra_months>6
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- Yatra season outside the expected 3-6 months"
+    quietly replace _dq_flag = 1 if yatra_months<3 | yatra_months>6
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if yatra_end_month - yatra_start_month + 1 != yatra_months
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- Yatra months not a single unbroken block"
+    quietly replace _dq_flag = 1 if yatra_end_month - yatra_start_month + 1 != yatra_months
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_children_out_school > n_children_6_14 & !missing(n_children_out_school)
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- more out-of-school children than children aged 6-14"
+    quietly replace _dq_flag = 1 if n_children_out_school > n_children_6_14 & !missing(n_children_out_school)
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_children_6_14 > n_children_u15 | n_children_u15 > hhsize-1
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- child counts exceed their parent count"
+    quietly replace _dq_flag = 1 if n_children_6_14 > n_children_u15 | n_children_u15 > hhsize-1
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_earners < 1 | n_earners > hhsize
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- earners outside 1..household size"
+    quietly replace _dq_flag = 1 if n_earners < 1 | n_earners > hhsize
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_health_insured > hhsize
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- more health-insured members than household members"
+    quietly replace _dq_flag = 1 if n_health_insured > hhsize
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_life_insured > hhsize
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- more life-insured members than household members"
+    quietly replace _dq_flag = 1 if n_life_insured > hhsize
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if n_can_transact_online > hhsize
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- more digitally-capable members than household members"
+    quietly replace _dq_flag = 1 if n_can_transact_online > hhsize
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if family_structure==3 & hhsize!=1
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- single-member family structure but household size is not 1"
+    quietly replace _dq_flag = 1 if family_structure==3 & hhsize!=1
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if (family_structure==3) != (hhsize==1)
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- family structure and household size disagree"
+    quietly replace _dq_flag = 1 if (family_structure==3) != (hhsize==1)
+    local dq_total = `dq_total' + r(N)
+}
+di as result "  data-quality flags raised: `dq_total'"
+label variable _dq_flag "Flagged by at least one data-quality check"
+rename _dq_flag dq_flag
+
 * calendar logic
 * The "earnings are 0 exactly when the month was idle" rule only applies on the calendar path:
 * fallback respondents are never asked the monthly figures, so theirs are missing, not zero.
@@ -503,15 +601,19 @@ assert inrange(pct_income_yatra,0,100) if income_from_fallback==1
 assert !missing(income_seasonality_cv) | (yatra_income+non_yatra_income)==0
 forvalues m = 1/12 {
     assert inrange(status_m`m',1,8)
-    assert (income_m`m'==0) == (status_m`m'==8) if income_from_fallback==0
+    * ONE-directional on purpose. An idle month must report zero -- the form hides the question and
+    * the build fills it. The converse is NOT true: a worker can genuinely earn nothing in a month
+    * they worked (an unpaid stretch, a washed-out week), and asserting the biconditional would have
+    * failed on the first real respondent who reported it.
+    assert income_m`m'==0 if status_m`m'==8 & income_from_fallback==0
 }
-assert yatra_months>=3 & yatra_months<=6
-assert yatra_end_month - yatra_start_month + 1 == yatra_months
+
+
 assert yatra_months + offseason_months_worked + months_no_work == 12
 * logic
-assert n_children_out_school <= n_children_6_14 if !missing(n_children_out_school)
-assert n_children_6_14 <= n_children_u15 & n_children_u15 <= hhsize-1
-assert n_earners >= 1 & n_earners <= hhsize
+
+
+
 assert inrange(hours_day_yatra,1,18) & inrange(days_week_yatra,1,7)
 assert inrange(n_other_activities,0,6)
 assert inlist(job_permanence,1,2,3,4,5) if k_working==1
@@ -519,8 +621,8 @@ assert inlist(employer_type,1,2,3,4,5,6,7) if k_working==1
 foreach v in cope_less_pref_food cope_borrow_food cope_reduce_meals cope_reduce_portion cope_restrict_adult {
     assert inrange(`v'_yatra_wk,0,7) & inrange(`v'_offseason_wk,0,7)
 }
-assert inrange(family_structure,1,2) | hhsize==1   // single-member code (3) only valid when hhsize==1
-assert (family_structure==3) == (hhsize==1)
+
+
 assert inrange(rcsi_score,0,7+14+7+7+21)   // max possible: 7*(1+2+1+1+3)
 foreach v in injured_ever workplace_injury_12m wants_more_work {
     assert inlist(`v',0,1,97) if k_working==1
