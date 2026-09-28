@@ -175,7 +175,12 @@ Tracks the final questionnaire, variable dictionary and worked-example dataset i
       usual place of residence for most of the year differs from their family's native/home place, distinct
       from `origin` (where they're originally from) and the NSS short-term-migrant item (a specific 15-day-
       to-6-month threshold) — a genuine settled-elsewhere-vs-circular-migrant distinction the instrument
-      didn't have
+      didn't have.
+      **SUPERSEDED 2026-09-28.** The variable no longer exists. Its gate was the problem: the pilot puts
+      11 of 20 seasonal movers inside this same district, so gating on non-local origin skipped most of
+      the people who move. Replaced by `closure_base` (ungated) plus the `loc_m1..12` location row on the
+      monthly calendar — see Stage 13. The NSS reference above is also unsupported: this project holds
+      no NSS schedule, and every NSS citation in the instrument has since been withdrawn or flagged.
 - [x] 9.3 Added `hoh_relation` and `hoh_female` (Module A): respondent's relationship to the household head,
       and the head's sex — auto-filled with the respondent's own sex (`female`) when they are the head
       themselves, skip-gated in both the Stata build and the XLSForm, with an assert validating the auto-fill
@@ -306,3 +311,59 @@ Tracks the final questionnaire, variable dictionary and worked-example dataset i
 - [x] 10.4 Full pipeline rebuilt clean (Stata build, checks, PDF, XLSForm); XLSForm re-validated with pyxform
       (zero errors) and the compiled XML spot-checked directly for all three changes. No variable-count or
       time-budget change (paradata/labelling only) -- still 221 variables, 44.9 minutes
+
+## Stage 13 — Migration module replaced by a closure-regime block; read-aloud module intros (2026-09-28)
+- [x] 13.1 **Source audit first, and it came back empty.** Searched `literature/` (~90 papers, all with text
+      extractions) and `microdata/`: this project holds **no migration instrument** -- no NSS schedule, no
+      PLFS, no Census D-series, and nothing on migration measurement in any of the three `.bib` files. The
+      only mobility-measuring instrument held is VASyR 2025 (arrival dates, displacement, horizoned intention
+      to move), which is forced displacement. Consequence: four NSS citations were **withdrawn** from
+      `dictionary.py` (`origin`, and the two remittance pairs) and four more flagged
+      `[source not held by this project; citation unverified]`. Three of the withdrawn ones had been written
+      the previous day and were never verifiable
+- [x] 13.2 **The module was measuring the wrong thing.** Everything was gated on `origin != 1` (non-local),
+      but the pilot's own `residency_pattern x local` crosstab (n=46) puts **11 of the 20 seasonal migrants
+      inside this same district**. The gate therefore skipped most of the people who actually move --
+      including on `migration_pattern`, whose only purpose was to test whether people leave when the Yatra
+      closes. Seasonal movement here is mostly *local* movement, up-valley for the season and down-valley at
+      closure, and a migrant dummy built on district boundaries sees almost none of it
+- [x] 13.3 **Closure relocation is now the baseline regime.** `closure_base` (4 codes, ungated) replaces
+      `migration_pattern`, `migrates_with_family` and `usual_residence_differs`; its categories are the
+      pilot's own three residency types with the split-household case broken out by whether the respondent
+      himself returns (the pilot found 3 of 46 working here with family elsewhere -- the case Module E's
+      "you and anyone staying with you here" wording was written for, which until now had nothing to key off)
+- [x] 13.4 **`worked_away_in_closure` + `closure_work_detail`**: off-season labour migration, asked of
+      everyone, verbatim destination office-coded to NCO-2015. This is the mobility variable that actually
+      carries information in this population, and it is what `closure_labour_migrant` feeds into the VEP
+      model in `04_vtp_analysis.do`. `migrant` is kept alongside as a distance control, which is all it
+      ever measured
+- [x] 13.5 **`loc_m1..loc_m12`: a location row on the monthly calendar.** Turns the Yatra-season/off-season
+      split -- which every consumption, remittance and coping item in Modules C, E and I assumes -- from an
+      assumption into a per-respondent measurement, and settles the mid-month season-boundary problem,
+      because each respondent's boundary is now wherever their own row turns over instead of a constant we
+      impose. Derives `months_here`, `months_home_base`, `months_third_place`
+- [x] 13.6 **`home_admin_level` dropped**, `home_rural_urban` asked directly. The village/town/city tier
+      asked the respondent to perform a Census classification they have no way of making, and then picked
+      the Rs 2,515 or Rs 3,639 poverty line off the answer -- a 45% swing behind a subjective tier.
+      `migration_referral` and `worked_other_places` ungated: who placed you in a job is a question about
+      the employment relationship, not about migration
+- [x] 13.7 **Read-aloud module introductions** for all twelve modules, EN and HI, in `dictionary.INTROS` /
+      `translations_hi.INTROS_HI`. They reach the XLSForm (as `note` rows), the web form (a tinted
+      read-aloud box rendered with the module heading on its first *visible* question -- not a screen of its
+      own, which would have cost twelve taps and needed an entry in `shown`, and navigation is keyed on
+      question names via `posOf()`), both interview scripts, the paper questionnaire and the question
+      register. `build_scripts.py`'s `BRIDGE_EN`/`BRIDGE_HI` were a second, thinner copy of the same
+      read-aloud text in a second file; they now alias `INTROS` so the two cannot drift
+- [x] 13.8 **Two defects found and fixed in the post-build audit.** (a) `assert loc_m`m'==1 if
+      status_m`m'==1` was both unenforced by the form (no such constraint exists, so it would have halted
+      the build on data Kobo accepts -- the same failure this file already had to remove once) and
+      substantively wrong: a Guptkashi or Sonprayag worker commuting up the route daily does Yatra work
+      while living at the home place, and that is a true answer. Removed. (b) The activity row still carries
+      two codes that encode *location* -- 4 "wage labour, staying at home" and 5 "went away from home for
+      work" -- which can now contradict the location row; the impossible combinations are counted as
+      `dq_act_loc_conflict` rather than asserted. **The overlap itself is left for a decision** -- see
+      Open items
+- [x] 13.9 Verified: 77/77 skip rules agree with the XLSForm across 100 simulated submissions, rule ordering
+      clean, 7/7 navigation tests, 50/50 forms filled and exported end to end through the form's own code
+      with zero validation dead-ends, pyxform validates, Stata build and both analyses run clean, all eight
+      analysis-readiness groups pass. 361 dictionary rows / 220 asked

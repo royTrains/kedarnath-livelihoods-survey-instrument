@@ -324,6 +324,14 @@ for i in range(n):
         _cand = [m for m in range(12) if status[i, m] in (2, 3, 4, 6, 7) and _loc[i, m] != 3]
         if _cand:
             _m = int(rng.choice(_cand)); _loc[i, _m] = 3; _away_month[i, _m] = True
+# A few enumerator mis-taps, so the dq_act_loc_conflict check has something to catch. Activity code 5
+# ("went away from home for work") already encodes location, which is the overlap with this row; the
+# impossible pairing is code 5 sitting on a month coded at one of the two bases.
+for i in range(n):
+    if rng.random() < .03:
+        _c5 = [m for m in range(12) if status[i, m] == 5]
+        if _c5:
+            _loc[i, int(rng.choice(_c5))] = int(rng.choice([1, 2]))
 for m in range(12):
     o[f"loc_m{m+1}"] = _loc[:, m]
 

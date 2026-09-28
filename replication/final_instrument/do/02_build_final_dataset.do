@@ -159,6 +159,20 @@ gen byte dq_closure_mismatch = (worked_away_in_closure==1) != (months_third_plac
 * off-season questions describe the same place. Check the identical-answer rate at the pilot.
 label var stays_all_year "Does not move at all when the Yatra closes"
 
+* The activity row still carries two codes that encode LOCATION as well as activity -- 4 "wage
+* labour, staying at home" and 5 "went away from home for work". Since the location row now carries
+* location properly, those two can contradict it, and one combination is genuinely impossible
+* rather than merely unusual: code 5 says the respondent left home for work, so the month cannot
+* also be coded at a base. Counted, not asserted: the form does not stop an enumerator entering it.
+gen byte dq_act_loc_conflict = 0
+forvalues m = 1/12 {
+    quietly replace dq_act_loc_conflict = 1 if status_m`m'==5 & inlist(loc_m`m',1,2)
+    quietly replace dq_act_loc_conflict = 1 if status_m`m'==4 & loc_m`m'==3
+}
+* These two are built here rather than in dictionary.py, so labels.do does not label them.
+label var dq_closure_mismatch "Stated off-season migration disagrees with the calendar location row"
+label var dq_act_loc_conflict "Activity row and location row contradict in at least one month"
+
 *-----------------------------------------------------------------------------
 * ANNUAL-TOTAL FALLBACK (Apablaza Q15 route). Respondents who could not give
 * twelve monthly figures gave one annual total plus the share of it earned in
@@ -540,11 +554,15 @@ assert (other_places_detail=="")  == !(worked_other_places==1)
 forvalues m = 1/12 {
     assert inrange(loc_m`m',1,4)
 }
-* A Yatra-work month is spent on the Yatra route by definition. This one IS an assert rather than a
-* flag: the form cannot emit any other combination, so a violation means the export is wrong.
-forvalues m = 1/12 {
-    assert loc_m`m'==1 if status_m`m'==1
-}
+* There is deliberately NO assert tying loc_m to status_m. An earlier version of this file asserted
+* that a Yatra-work month must be coded "here on the Yatra route", on the reasoning that the form
+* cannot emit anything else. Both halves of that were wrong. The form carries no constraint linking
+* the two rows, so the assert would have halted the build on data Kobo accepts -- the same failure
+* this file already had to remove elsewhere. And the combination is not even an error: a worker from
+* Guptkashi or Sonprayag who commutes up the route daily is doing Yatra work while living at the home
+* place, which is status 1 with loc 2 and is a true answer. That is not a rare case; the pilot puts
+* most of the seasonal movement inside this district. Genuine contradictions between the two rows are
+* counted in the data-quality report below instead.
 assert missing(years_schooling)   == (knows_years_schooling==0)
 assert missing(education_level_cat) == (knows_years_schooling==1)
 assert hoh_female==female if hoh_relation==1   // self-headed: head's sex is the respondent's own
@@ -632,6 +650,12 @@ quietly count if dq_closure_mismatch==1
 if r(N) > 0 {
     di as error "  DATA QUALITY: " r(N) " record(s) -- worked_away_in_closure disagrees with the calendar location row"
     quietly replace _dq_flag = 1 if dq_closure_mismatch==1
+    local dq_total = `dq_total' + r(N)
+}
+quietly count if dq_act_loc_conflict==1
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- activity row and location row contradict (went away for work, but the month is coded at a base)"
+    quietly replace _dq_flag = 1 if dq_act_loc_conflict==1
     local dq_total = `dq_total' + r(N)
 }
 * Someone who says they leave at closure but whose calendar never leaves the Yatra route. Not

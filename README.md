@@ -26,7 +26,7 @@ drivers and guides, most of them seasonal migrants.
 
 | Path | What it is |
 |---|---|
-| `questionnaire/dictionary.py` | **The single source of truth.** Every variable: module, wording, type, value labels, skip rule, and the source it comes from. Read this before changing anything. |
+| `questionnaire/dictionary.py` | **The single source of truth.** Every variable: module, wording, type, value labels, skip rule, and the source it comes from. Also `INTROS`, the read-aloud introduction the enumerator gives before each module. Read this before changing anything. |
 | `questionnaire/translations_hi.py` | Hindi for every question and every choice, at roughly a class-5 reading level. |
 | `questionnaire/build_*.py` | Six builders, all reading `dictionary.py`, so the outputs cannot drift apart. |
 | `do/01_generate_raw.py` | Synthetic raw answers, as numeric codes — a worked example, not data. |
@@ -36,6 +36,8 @@ drivers and guides, most of them seasonal migrants.
 | `do/04_vtp_analysis.do` | Monetary and multidimensional VEP. |
 | `checks/05_checks.py` | Independent Python re-check of the Stata output. |
 | `checks/06_form_fill_check.py` | Fills the form 100 times, tests the skip logic against the XLSForm, and checks each analysis has what it needs. |
+| `checks/07_navigation_test.js` / `08_fill_and_export_test.js` | Drive the web form's own navigation and export code: gate/back behaviour, then 50 full interviews to CSV. |
+| `checks/09_asserts_vs_form.py` | Runs the Stata build's cross-variable asserts against that 50-form CSV. The synthetic generator makes consistent records, so only this catches an assert the form can actually violate — which halts the build on real field data. |
 
 ### The six outputs, all from one dictionary
 
@@ -62,12 +64,21 @@ python questionnaire/build_webform.py
 python questionnaire/build_questionnaire.py
 python questionnaire/build_scripts.py
 python questionnaire/build_question_register.py
+
+# then drive the built web form itself, and test the build's asserts against what it produces
+node   checks/07_navigation_test.js questionnaire/index.html
+node   checks/08_fill_and_export_test.js questionnaire/index.html /tmp/form_export.csv
+python checks/09_asserts_vs_form.py /tmp/form_export.csv
 ```
 
-Two traps worth knowing. `build_xlsform.py` keeps its skip rules in a **hand-built `RELEVANT` dict** —
+Three traps worth knowing. `build_xlsform.py` keeps its skip rules in a **hand-built `RELEVANT` dict** —
 it does not parse `dictionary.py`'s `skip` text, so a skip-logic change must be made in both places
-(`06_form_fill_check.py` will catch it if you forget). And `build_question_register.py` needs
-**XeLaTeX**, not pdflatex, because it prints Hindi.
+(`06_form_fill_check.py` will catch it if you forget). `build_question_register.py` needs
+**XeLaTeX**, not pdflatex, because it prints Hindi. And **never add a cross-variable `assert` to
+`02_build_final_dataset.do` without a matching form constraint** — the synthetic generator makes
+internally consistent records, so such an assert passes every other check here and then halts the
+build on the first real export. `09_asserts_vs_form.py` is what catches it; if the form cannot
+enforce the rule, make it a data-quality flag instead.
 
 ## What is not in git
 
