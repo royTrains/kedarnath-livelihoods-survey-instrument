@@ -12,8 +12,8 @@ indented so they are visually impossible to confuse with the spoken text.
 import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS
-from translations_hi import HI, HI_LSETS, INTROS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
 
 # Natural joins between modules -- the sentence that carries the respondent from one topic to the
 # next. Without these a read-aloud interview lurches between subjects and feels like an interrogation.
@@ -151,6 +151,12 @@ def build(lang):
             if r["name"] in IMPORTANT:
                 out.append("> ⚠️ **" + ("IMPORTANT" if lang == "en" else "ज़रूरी") + "** — " +
                            IMPORTANT[r["name"]][0 if lang == "en" else 1] + "\n")
+            # HINTS is how to CODE the answer; PROBE below is what to SAY next. Both are enumerator
+            # text, neither is read to the respondent, and they are kept apart because they are
+            # needed at different moments.
+            hint = (HINTS if lang == "en" else HINTS_HI).get(r["name"])
+            if hint:
+                notes.append(("How to code" if lang == "en" else "कैसे दर्ज करें") + ": " + hint)
             probe = (PROBE_EN if lang == "en" else PROBE_HI).get(r["name"])
             if probe:
                 notes.append(probe)

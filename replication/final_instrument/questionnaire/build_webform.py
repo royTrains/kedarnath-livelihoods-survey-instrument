@@ -23,8 +23,8 @@ import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS
-from translations_hi import HI, HI_LSETS, INTROS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
 import build_xlsform as X
 
 OUT = os.path.join(HERE, "index.html")
@@ -99,6 +99,9 @@ for r in ROWS:
         "en": r["question"], "hi": HI.get(r["name"], r["question"]),
         "opt": "may be left blank" in r["skip"],
     }
+    if r["name"] in HINTS:
+        q["hn"] = HINTS[r["name"]]
+        q["hnh"] = HINTS_HI.get(r["name"], HINTS[r["name"]])
     if r["lset"]:
         src, hsrc = LSETS[r["lset"]], HI_LSETS.get(r["lset"], {})
         q["c"] = [[k, str(v), str(hsrc.get(k, v))] for k, v in src.items()]
@@ -174,6 +177,11 @@ label.ch.on{border-color:var(--acc);background:#eff5ff}
 label.ch input{margin:3px 0 0}
 .err{color:var(--warn);font-size:14px;margin-top:7px}
 .opt{font-size:12px;color:var(--mut);margin-top:6px}
+/* Enumerator hint: how to CODE this question, never read to the respondent. Amber and rule-marked so
+   it is visibly a different kind of thing from the question above it and from the read-aloud intro,
+   which is blue. Three kinds of text on one screen need three unmistakable looks. */
+.hint{background:#fff8e6;border-left:4px solid #b78103;border-radius:0 6px 6px 0;padding:9px 11px;margin:0 0 11px;font-size:13.5px;color:#5c4708}
+.hint b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;color:#8a6200}
 h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
 /* Read-aloud module introduction. Deliberately styled unlike a question card -- tinted, ruled down
    the side, italic lead-in -- so an enumerator glancing at the screen can never mistake it for
@@ -215,7 +223,9 @@ const T = {
  nodata:["अभी कोई साक्षात्कार सहेजा नहीं गया","No interviews saved yet"],
  // Label on the module-introduction box. Addressed to the enumerator, not the respondent: it is an
  // instruction to speak, which is why it is not in the respondent-facing Hindi of INTROS_HI itself.
- readout:["पढ़कर सुनाएँ","Read aloud"]
+ readout:["पढ़कर सुनाएँ","Read aloud"],
+ // Label on the enumerator hint. Says plainly that this one is not for the respondent.
+ foryou:["सर्वेक्षक के लिए — पढ़कर न सुनाएँ","For the enumerator — do not read out"]
 };
 let L = 0;                                  // 0 = Hindi, 1 = English
 const t = k => T[k][L];
@@ -291,6 +301,7 @@ function render(){
   }
   h += "<div class=card><div class=qn>" + (idx+1) + " / " + shown.length + "</div>";
   h += "<div class=qt>" + (L ? q.en : q.hi) + "</div>";
+  if (q.hn) h += "<div class=hint><b>" + t("foryou") + "</b>" + (L ? q.hn : q.hnh) + "</div>";
   const v = D[q.n] ?? "";
   if (q.t === "one" || q.t === "multi"){
     const cur = q.t === "multi" ? SEL(q.n) : [String(v)];

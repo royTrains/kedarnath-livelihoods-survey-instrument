@@ -949,7 +949,8 @@ Now a set of questions about the conditions of your work -- hours, pay, contract
 **192.** Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
-> Options: 1 Permanent · 2 Seasonal or temporary · 3 Occasional or casual · 4 On probation · 5 Fixed-term
+> Options: 1 Permanent · 2 Seasonal or temporary · 3 Occasional or casual · 4 On probation · 5 Fixed-term  
+> How to code: Both will sound seasonal here -- the Yatra closes for everyone. Ask about WITHIN the season. One employer keeps them on for a stretch = Seasonal or temporary. They take work day by day from whoever offers it = Occasional or casual. Self-employed: answer for how their own work runs. On probation and Fixed-term are rare here; do not reach for them.
 
 **193.** Do you have a signed contract? Yes, signed; yes but not yet signed; no contract.
 

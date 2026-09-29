@@ -52,6 +52,23 @@ INTROS = {
          "or wrong answer -- we are trying to understand what skills the work here actually uses.",
 }
 
+# Enumerator hints: shown on the tablet UNDER the question, printed in the scripts and on the paper
+# form. These are NOT read to the respondent -- they are the definition the enumerator needs at the
+# moment of coding, for the handful of items where two options are genuinely easy to confuse and the
+# confusion changes a result. Distinct from build_scripts.PROBE, which is what to SAY next on an
+# open-ended item; a hint is how to CODE. Keep them short: a hint nobody reads is worse than none.
+HINTS = {
+    # emp_dep_stab counts code 3 (occasional/casual) as unstable and code 2 (seasonal) as not, so
+    # confusing the two moves the employment-deprivation rate directly. And the default error here is
+    # predictable: on this route every job is seasonal in the ordinary sense, because the Yatra
+    # closes, so both enumerator and respondent will reach for code 2 unless told otherwise.
+    "job_permanence":
+        "Both will sound seasonal here -- the Yatra closes for everyone. Ask about WITHIN the season. "
+        "One employer keeps them on for a stretch = Seasonal or temporary. They take work day by day "
+        "from whoever offers it = Occasional or casual. Self-employed: answer for how their own work "
+        "runs. On probation and Fixed-term are rare here; do not reach for them.",
+}
+
 LSETS = {
     "yn": {0: "No", 1: "Yes"},
     "sex": {0: "Male", 1: "Female"},

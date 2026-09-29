@@ -2,7 +2,7 @@
 import csv, os, sys
 import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from dictionary import ROWS, LSETS, MODULES, TASKS, INTROS
+from dictionary import ROWS, LSETS, MODULES, TASKS, INTROS, HINTS
 from latex_helpers import esc, compile_tex
 
 HERE = os.path.dirname(os.path.abspath(__file__))

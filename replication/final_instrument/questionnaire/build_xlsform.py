@@ -36,8 +36,8 @@ import openpyxl
 HERE = os.path.dirname(os.path.abspath(__file__))
 import sys
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS
-from translations_hi import HI, HI_LSETS, INTROS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
 
 # The module introduction notes are looked up by row name like any other label, so register their
 # Hindi under the same key the note row will carry.
@@ -265,7 +265,11 @@ add("end_group", "", "")
 wb = openpyxl.Workbook()
 ws_survey = wb.active
 ws_survey.title = "survey"
-ws_survey.append(["type", "name", "label::English (en)", "label::हिन्दी (hi)", "required",
+# hint:: is the standard XLSForm column for text shown under the question and never read out. It is
+# where an enumerator instruction belongs -- putting it in the label would have the enumerator read
+# coding guidance aloud to the respondent.
+ws_survey.append(["type", "name", "label::English (en)", "label::हिन्दी (hi)",
+                  "hint::English (en)", "hint::हिन्दी (hi)", "required",
                   "relevant", "constraint", "constraint_message::English (en)", "constraint_message::हिन्दी (hi)",
                   "calculation", "trigger"])
 _missing_hi = []
@@ -278,7 +282,9 @@ for row in survey_rows:
                                 "background-geopoint") and name:
         _missing_hi.append(name)
     r3 = list(row[3:])
-    ws_survey.append([type_, name, label, hi or label] + r3[:3] + [r3[3], CMSG_HI.get(name, r3[3])] + r3[4:])
+    ws_survey.append([type_, name, label, hi or label,
+                      HINTS.get(name, ""), HINTS_HI.get(name, HINTS.get(name, ""))]
+                     + r3[:3] + [r3[3], CMSG_HI.get(name, r3[3])] + r3[4:])
 
 ws_choices = wb.create_sheet("choices")
 ws_choices.append(["list_name", "name", "label::English (en)", "label::हिन्दी (hi)"])
