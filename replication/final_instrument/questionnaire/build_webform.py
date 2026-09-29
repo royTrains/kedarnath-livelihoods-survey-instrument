@@ -113,7 +113,17 @@ for r in ROWS:
 
 modules = [{"c": c, "en": t, "hi": MODTITLE_HI.get(c, t),
             "ien": INTROS.get(c, ""), "ihi": INTROS_HI.get(c, "")} for c, t in MODULES]
-CFG = {"q": questions, "mods": modules, "cols": export_cols}
+# Code -> label, for the readable export. Built for EVERY exported column that carries a value
+# label, including the paradata ones that never appear on screen as questions (enum_id), which is
+# why this is keyed off ROWS/export_cols rather than off `questions`.
+LABS = {}
+for r in ROWS:
+    if r["origin"] not in ("asked", "paradata") or not r["lset"]:
+        continue
+    _hs = HI_LSETS.get(r["lset"], {})
+    LABS[r["name"]] = {str(k): {"e": str(v), "h": str(_hs.get(k, v))} for k, v in LSETS[r["lset"]].items()}
+
+CFG = {"q": questions, "mods": modules, "cols": export_cols, "labs": LABS}
 
 CONSENT_EN = ("We are doing a study on the livelihoods of people who work on the Yatra route. Taking "
               "part is your choice, you can stop at any time, and you can skip any question. Nothing "
@@ -195,7 +205,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;bord
 const CFG = __CFG__;
 const T = {
  back:["पीछे","Back"], next:["आगे","Next"], start:["नया साक्षात्कार शुरू करें","Start new interview"],
- exp:["सब निर्यात करें (CSV)","Export all (CSV)"], pend:["भेजे नहीं गए","not exported"],
+ exp:["सब निर्यात करें — कोड (CSV)","Export all — codes (CSV)"],
+ expl:["सब निर्यात करें — जवाब शब्दों में (CSV)","Export all — answers in words (CSV)"], pend:["भेजे नहीं गए","not exported"],
  done:["साक्षात्कार पूरा हुआ","Interview complete"], save:["सहेजें और समाप्त करें","Save and finish"],
  req:["यह सवाल ज़रूरी है","This question is required"], opt:["यह छोड़ा जा सकता है","May be left blank"],
  cons:[__CONS_HI__,__CONS_EN__], consq:["क्या आप शामिल होना चाहते हैं?","Do you agree to take part?"],
@@ -359,7 +370,8 @@ function showDone(){
     "<div class=mid><div class=big>" + (lastRefused ? t("stop") : t("done")) + "</div>" +
     "<p>" + pending() + " " + t("pend") + "</p>" +
     "<p><button class=p onclick='start()'>" + t("start") + "</button></p>" +
-    "<p><button onclick='exportCsv()'>" + t("exp") + "</button></p></div>";
+    "<p><button onclick='exportCsv()'>" + t("exp") + "</button></p>" +
+    "<p><button onclick='exportCsv(1)'>" + t("expl") + "</button></p></div>";
   paint();
 }
 
@@ -376,21 +388,37 @@ function start(){
 // ---- export: exactly the raw_asked.csv column order the Stata build reads
 function csvCell(s){ s = s === undefined || s === null ? "" : String(s);
   return /[",\\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s }
-function exportCsv(){
+// Code -> the option text that was actually chosen. Multi-selects are stored as space-separated
+// codes, so each one is mapped and the labels rejoined with "; " -- a semicolon, not a comma, so a
+// labelled multi-select never needs quoting and can never be mistaken for a column break.
+function labelOf(col, v){
+  const m = CFG.labs[col];
+  if (!m || v === undefined || v === null || String(v).trim() === "") return v;
+  return String(v).trim().split(/\\s+/).map(x => (m[x] ? (L ? m[x].e : m[x].h) : x)).join("; ");
+}
+// labelled falsy -> the numeric codes the Stata build reads. labelled truthy -> what the respondent
+// actually chose. Same rows, same column order; only coded columns differ, and numbers, dates and
+// verbatim text are identical either way.
+function exportCsv(labelled){
   const rows = all();
   if (!rows.length) return alert(t("nodata"));
   const cols = CFG.cols;
   let out = cols.join(",") + "\\n";
   rows.forEach((r,i) => {
     r.resp_id = r.resp_id || (Date.now() + "" + i).slice(-9);
-    out += cols.map(c => csvCell(r[c])).join(",") + "\\n";
+    out += cols.map(c => csvCell(labelled ? labelOf(c, r[c]) : r[c])).join(",") + "\\n";
   });
   const blob = new Blob(["\\ufeff" + out], {type:"text/csv;charset=utf-8"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "kedarnath_" + new Date().toISOString().slice(0,10) + "_" + rows.length + ".csv";
+  a.download = "kedarnath_" + new Date().toISOString().slice(0,10) + "_" + rows.length +
+               (labelled ? (L ? "_labels_en" : "_labels_hi") : "") + ".csv";
   a.click();
-  rows.forEach(r => r.__exported = true); save(KEY, rows); paint();
+  // Only the coded export marks records as delivered. Taking a readable copy to check the day's work
+  // must not make the interviews look already handed over -- clearExported() deletes on that flag,
+  // and losing interviews to a reading convenience would be the worst trade in this whole form.
+  if (!labelled){ rows.forEach(r => r.__exported = true); save(KEY, rows) }
+  paint();
 }
 function menu(){
   screen = "menu";
@@ -401,6 +429,7 @@ function menu(){
     "<tr><td>" + t("pend") + "</td><td align=right><b>" + pending() + "</b></td></tr></table></div>" +
     "<div class=card><p><button class=p style=width:100% onclick='start()'>" + t("start") + "</button></p>" +
     "<p><button style=width:100% onclick='exportCsv()'>" + t("exp") + "</button></p>" +
+    "<p><button style=width:100% onclick='exportCsv(1)'>" + t("expl") + "</button></p>" +
     "<p><button style=width:100% onclick='clearExported()'>" + t("clr") + "</button></p></div>";
   paint();
 }

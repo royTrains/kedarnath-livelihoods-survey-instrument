@@ -74,4 +74,50 @@ A.exportCsv();
 if (!CSV) { console.error("  exportCsv produced nothing"); process.exit(1) }
 fs.writeFileSync(process.argv[3], CSV, "utf8");
 const lines = CSV.replace(/^\ufeff/,"").trim().split("\n");
-console.log(`  CSV written: ${lines.length-1} data rows x ${lines[0].split(",").length} columns`);
+console.log(`  CSV written: ${lines.length-1} data rows x ${lines[0].split(",").length} columns  (codes)`);
+
+// ---- the same rows again, with the chosen option written out in words ------------------------
+// Same column order, same row order; only coded columns differ. Written next to the coded file with
+// a _labels suffix so the two can be diffed, which is what proves the mapping is a pure relabelling
+// and not a different extract.
+A.exportCsv(1);
+const LAB = CSV;
+const labPath = process.argv[3].replace(/\.csv$/i, "") + "_labels.csv";
+fs.writeFileSync(labPath, LAB, "utf8");
+const cl = lines[0].split(",");
+const ll = LAB.replace(/^\ufeff/,"").trim().split("\n");
+console.log(`  CSV written: ${ll.length-1} data rows x ${ll[0].split(",").length} columns  (labels)  -> ${labPath}`);
+
+let bad = [];
+if (ll[0] !== lines[0]) bad.push("header row differs between the two exports");
+if (ll.length !== lines.length) bad.push("row count differs between the two exports");
+// every coded column must have changed from a bare number to text somewhere in the file, and every
+// uncoded column must be byte-identical -- that is exactly what "only relabelled" means
+const coded = new Set(Object.keys(A.CFG.labs));
+// A real CSV field splitter is needed here, not a regex: several option labels contain a comma
+// ("Wage labour, staying at home"), so csvCell quotes them and the labelled file has quoted fields
+// exactly where the coded file does not. Splitting on bare commas misaligns every later column and
+// reports the whole row as changed.
+function splitCsv(row){
+  const out = []; let cur = "", q = false;
+  for (let i = 0; i < row.length; i++){
+    const ch = row[i];
+    if (q){
+      if (ch === '"' && row[i+1] === '"'){ cur += '"'; i++ }
+      else if (ch === '"') q = false;
+      else cur += ch;
+    } else if (ch === '"') q = true;
+    else if (ch === ","){ out.push(cur); cur = "" }
+    else cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+const C1 = lines.slice(1).map(splitCsv), L1 = ll.slice(1).map(splitCsv);
+cl.forEach((name, j) => {
+  const same = C1.every((r, i) => r[j] === L1[i][j]);
+  if (!coded.has(name) && !same) bad.push(`uncoded column changed: ${name}`);
+  if (coded.has(name) && same && C1.some(r => r[j] !== "")) bad.push(`coded column not relabelled: ${name}`);
+});
+if (bad.length){ console.error("  LABEL EXPORT FAILED:\n   " + bad.slice(0,8).join("\n   ")); process.exit(1) }
+console.log(`  labels check: ${coded.size} coded columns relabelled, ${cl.length - coded.size} left byte-identical`);
