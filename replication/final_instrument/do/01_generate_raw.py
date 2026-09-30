@@ -213,11 +213,16 @@ TT_OTHER = ["yoga sikhaya", "photography ka course", "band party mein baja"]
 o["training_type_other"] = [str(rng.choice(TT_OTHER)) if v == 9 else "" for v in np.nan_to_num(o.training_type.values)]
 
 # ---- C: monthly calendar (kept exactly from the earlier file) -----------------------------
-ACT = {"Yatra work": 1, "Agriculture": 2, "Animal husbandry": 3, "Wage labour elsewhere": 4, "Migrated for work": 5,
+# "Migrated for work" now maps to 4 (casual wage labour), not 5: code 5 is Construction work since the
+# activity list stopped encoding location. A share of casual-wage months is then reassigned to 5 below,
+# so the new code is populated -- construction is the commonest off-season destination work here.
+ACT = {"Yatra work": 1, "Agriculture": 2, "Animal husbandry": 3, "Wage labour elsewhere": 4, "Migrated for work": 4,
        "Petty trade/other": 6, "Salaried job": 7, "No work": 8}
 status = np.zeros((n, 12), int)
 for m in range(12):
     status[:, m] = [ACT[v] for v in d[f"status_m{m+1}"].astype(str)]
+    _to_constr = (status[:, m] == 4) & (rng.random(n) < 0.34)
+    status[_to_constr, m] = 5
     o[f"status_m{m+1}"] = status[:, m]
 inc = d[[f"income_m{m}" for m in range(1, 13)]].values.astype(float)
 months_no_work = (status == 8).sum(1)
@@ -293,56 +298,38 @@ o["origin"] = orig
 # resident, 20 seasonal migrant, 3 working here with family elsewhere. Deliberately NOT conditioned
 # on origin -- 11 of those 20 seasonal migrants were from this same district, so drawing the closure
 # regime from origin would rebuild exactly the error the module was rewritten to remove.
-o["closure_base"] = rng.choice([1, 2, 3, 4], n, p=[.48, .30, .15, .07])
-_moves = o["closure_base"].values != 1
-# years coming here: only for those who do not live here all year
+# closure regime, as the two plain binaries that replaced the four-way closure_base. Proportions
+# follow the pilot's own residency_pattern (n=46): 23 year-round resident, 20 seasonal migrant, 3
+# working here with family elsewhere. Deliberately NOT conditioned on origin -- 11 of those 20
+# seasonal migrants were from this same district, so drawing the regime from origin would rebuild
+# exactly the error the module was rewritten to remove.
+o["resp_returns_at_closure"] = (rng.random(n) < 0.52).astype(int)
+_moves = o["resp_returns_at_closure"].values == 1
+o["hh_at_home_place"] = (rng.random(n) < 0.26).astype(int)
+_split = o["hh_at_home_place"].values == 1
+# how many people the on-site figure covers, asked only of split households. Usually the respondent
+# alone or with one or two others; never more than the household.
+o["n_here_season"] = np.where(_split, np.minimum(1 + rng.poisson(0.7, n), d.hhsize.values), np.nan)
+
+# the absence spell, which replaced twelve loc_m items. The Yatra closes in November and reopens in
+# April or May, so the spell straddles the new year and returned < left is the NORMAL case.
+_left = np.where(_moves, rng.choice([11, 12, 1], n, p=[.62, .26, .12]), np.nan)
+_back = np.where(_moves, rng.choice([3, 4, 5, 6], n, p=[.10, .44, .34, .12]), np.nan)
+o["left_here_month"] = _left
+o["returned_here_month"] = _back
+# months in the spell, wrapping the year the same way Stata does
+_span = np.where(_moves, np.mod(_back - _left, 12), 0)
+_away = np.where(_moves, (rng.random(n) < .34).astype(int), (rng.random(n) < .06).astype(int))
+o["worked_away_in_closure"] = _away
+# months of that absence spent working elsewhere rather than at the home place; never more than the
+# spell itself, which is the one cross-field rule the form enforces here
+o["months_away_for_work"] = np.where(_away == 1,
+                                     np.maximum(1, np.minimum(_span, rng.poisson(2.2, n) + 1)), np.nan)
 o["years_coming_here"] = np.where(
     _moves, np.minimum(d.years_in_yatra_work.values + rng.poisson(2.0, n),
                        (d.age.values - 14).clip(1)), np.nan)
 o["came_here_reason"] = np.where(orig > 1, rng.choice([1, 2, 3, 4, 5, 6, 7, 8], n,
                                  p=[.34, .22, .15, .11, .06, .07, .03, .02]), np.nan)
-# ---- calendar location row (Module C), built from the activity row and the closure regime ------
-# A Yatra-work month is spent here by definition. What happens in the remaining months is exactly
-# what closure_base describes, so the two are generated together rather than independently -- an
-# independent draw would produce respondents who "go home at closure" while living here all twelve
-# months, which the form cannot produce and the Stata build would rightly reject.
-_loc = np.ones((n, 12), int)
-_away_month = np.zeros((n, 12), bool)
-for i in range(n):
-    for m in range(12):
-        if status[i, m] == 1:            # Yatra work: here, by definition
-            _loc[i, m] = 1
-        elif status[i, m] == 5:          # "went away from home for work" -> a third place
-            _loc[i, m] = 3
-            _away_month[i, m] = True
-        elif o["closure_base"].values[i] in (2, 3):
-            _loc[i, m] = 2               # went to the home place for the closure
-        else:
-            _loc[i, m] = 1               # stayed on here (closure_base 1 or 4)
-    # a minority take other-place work in a month that is otherwise coded at a base
-    if o["closure_base"].values[i] != 1 and rng.random() < .18:
-        _cand = [m for m in range(12) if status[i, m] in (2, 3, 4, 6, 7) and _loc[i, m] != 3]
-        if _cand:
-            _m = int(rng.choice(_cand)); _loc[i, _m] = 3; _away_month[i, _m] = True
-# A few enumerator mis-taps, so the dq_act_loc_conflict check has something to catch. Activity code 5
-# ("went away from home for work") already encodes location, which is the overlap with this row; the
-# impossible pairing is code 5 sitting on a month coded at one of the two bases.
-for i in range(n):
-    if rng.random() < .03:
-        _c5 = [m for m in range(12) if status[i, m] == 5]
-        if _c5:
-            _loc[i, int(rng.choice(_c5))] = int(rng.choice([1, 2]))
-for m in range(12):
-    o[f"loc_m{m+1}"] = _loc[:, m]
-
-# off-season labour migration (type B), asked of everyone as a separate report from the calendar.
-# ~6% of respondents are given a deliberately inconsistent pair: the stated item and the location
-# row are two different questions answered minutes apart, real respondents will disagree with
-# themselves, and the Stata build's data-quality report needs something to actually catch.
-_away = _away_month.any(1).astype(int)
-_flip = rng.random(n) < .06
-_away = np.where(_flip, 1 - _away, _away)
-o["worked_away_in_closure"] = _away
 AWAY_PLACES = ["Delhi mein construction", "Dehradun mein hotel ka kaam", "Punjab mein kheti",
                "Mumbai mein security guard", "Haridwar mein dukan par"]
 o["closure_work_detail"] = [str(rng.choice(AWAY_PLACES)) if v == 1 else "" for v in _away]
@@ -393,14 +380,14 @@ o["cons_medical_hosp_12m"] = med_hosp.astype(int)
 # into cons_pc_pm, which stays household consumption per capita.
 _p_cook = np.where(np.isin(occ, [6, 8, 10]), .72, np.where(np.isin(occ, [1, 2, 3, 4]), .28, .46))
 _cooks = (rng.random(n) < _p_cook).astype(int)
-# three-way now: cooks / buys / some of each. "Some of each" is the common real pattern --
-# tea and roti in the morning, a bought meal at midday.
-o["cooks_own_meals_here"] = np.where(_cooks == 1, 1, rng.choice([2, 3], n, p=[.62, .38]))
-o["meal_spend_day_self"] = np.where(o.cooks_own_meals_here.values != 1, (np.round(rng.normal(185, 55, n) / 5) * 5).clip(40, 600), np.nan)
+# cooks_own_meals_here and meal_spend_day_self are gone from the instrument (2026-09-30): the spend
+# item never entered any consumption aggregate and duplicated cons_food_out_yatra_pm, and the cooks
+# item existed only to gate it. _cooks survives here because packaged-food spending below genuinely
+# does depend on whether someone is buying their food on the route.
 # HCES S7.2 packaged processed food and S12 pan/tobacco/intoxicants -- both inside the total-MPCE
 # concept the poverty line is calibrated on, both previously missing from the aggregate. Packaged
 # snacks skew toward workers buying food on the route; pan/tobacco skews male and manual.
-_pk_y = np.round(rng.gamma(2.0, 130, n) * np.where(o.cooks_own_meals_here.values != 1, 1.35, 1.0) / 10) * 10
+_pk_y = np.round(rng.gamma(2.0, 130, n) * np.where(_cooks == 0, 1.35, 1.0) / 10) * 10
 o["cons_packaged_food_yatra_pm"] = _pk_y.astype(int)
 o["cons_packaged_food_offseason_pm"] = np.round(_pk_y * rng.normal(0.72, 0.10, n) / 10).clip(0) * 10
 _uses = (rng.random(n) < np.where(o.female.values == 1, .18, .62))
@@ -550,11 +537,20 @@ _has_land = d.land_acres.values > 0
 o["has_crop_insurance"] = np.where(_has_land,
                                    ((np.isin(_ins_old, [3, 4])) & (rng.random(n) < .7)).astype(float), np.nan)
 
-SCHEMES = ["ration card", "ujjwala", "vidhwa pension", "PM Kisan", "ayushman card",
-           "mnrega ka kaam", "old age pension", "", "awas yojana", ""]
-o["govt_scheme_which"] = [str(rng.choice(SCHEMES)) if v == 1 else ""
-                          for v in d.govt_scheme_beneficiary.values]
-o["govt_scheme_beneficiary"] = d.govt_scheme_beneficiary
+# named schemes, as a check-all. The old pool carried only a yes/no, so the named pattern is drawn
+# here: ration is near-universal among those receiving anything, the rest taper. Code 10 (None of
+# these) is the explicit negative and is exclusive -- it cannot be ticked alongside a scheme.
+_SCH_P = {1: .78, 2: .34, 3: .21, 4: .17, 5: .58, 6: .07, 7: .41, 8: .12, 9: .05}
+_gs = []
+for v in d.govt_scheme_beneficiary.values:
+    if v != 1:
+        _gs.append("10")
+        continue
+    picked = [str(k) for k, pr in _SCH_P.items() if rng.random() < pr]
+    _gs.append(" ".join(picked) if picked else "10")
+o["govt_schemes"] = _gs
+SCHEME_OTHER = ["gaon ki samiti se", "mandir trust se madad", "kisan credit card"]
+o["govt_scheme_other"] = [str(rng.choice(SCHEME_OTHER)) if "9" in g.split() else "" for g in _gs]
 o["smartphone_owned"] = d.smartphone_owned
 _dig_old = code(d.digital_payment_use, {"Never": 0, "Sometimes": 1, "Often": 2})
 o["uses_digital_payment"] = (_dig_old > 0).astype(int)
@@ -661,10 +657,9 @@ job_sit = np.array(o["job_situation"])
 working = np.isin(job_sit, [1, 2, 3])      # codes 1-3 -> the whole job-quality block
 tail    = np.isin(job_sit, range(1, 8))    # codes 1-7 -> Apablaza routes these to Q21 as well
 seeking = job_sit == 8                     # code 8  -> routed straight to Q22/Q23
-# employer_type: Apablaza's own 7-way classification (Q8), alongside (not instead of) employment_type
-EMPT = {1: [.05, .02, .01, .02, .85, .03, .02], 2: [.05, .02, .01, .80, .05, .02, .05],
-        3: [.75, .15, .02, .01, .02, .02, .03], 4: [.65, .03, .01, .02, .15, .10, .04]}
-o["employer_type"] = np.where(working, [rng.choice([1, 2, 3, 4, 5, 6, 7], p=EMPT[e]) for e in et], np.nan)
+# employer_type is gone (2026-09-30): it asked employment status a second time in Apablaza's Q8
+# taxonomy, and Q8 crosses status with institutional sector, so a worker employed by an individual --
+# a thekedar, a shop owner -- had no true option. employment_type in Module B carries this.
 PERM = {1: [.10, .75, .10, .03, .02], 2: [.25, .60, .05, .05, .05], 3: [.20, .55, 0, .10, .15], 4: [0, .12, .78, .05, .05]}
 o["job_permanence"] = np.where(working, [rng.choice([1, 2, 3, 4, 5], p=PERM[e]) for e in et], np.nan)
 CON = {3: [.30, .10, .60], 4: [.02, .03, .95]}

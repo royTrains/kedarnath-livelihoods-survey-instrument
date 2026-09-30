@@ -19,7 +19,7 @@ not subject to that. Mitigations built in below:
   * export writes CSV in exactly the raw_asked.csv column order the Stata build already reads
 None of that removes the need for a daily export. It just makes forgetting it visible.
 """
-import json, os, sys
+import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -49,6 +49,9 @@ def to_js(expr):
     # ['1','5'] > 0 coerces to NaN > 0 and is FALSE, so a respondent reporting two shocks would have
     # had the coping question silently hidden. Caught by the Node harness against the XLSForm.
     e = e.replace("count-selected(V('", "SEL('").replace("'))", "').length")
+    # selected(${multi}, 'code') -> membership in the split code list. Must be the split tokens, not a
+    # substring: a substring test for '1' would also match the code 10.
+    e = re.sub(r"selected\(V\('(\w+)'\),\s*'(\w+)'\)", r"SEL('').includes('')", e)
     e = e.replace(" and ", " && ").replace(" or ", " || ")
     out, i = [], 0
     while i < len(e):                      # single '=' is equality in XPath, '==' in JS
@@ -99,6 +102,11 @@ for r in ROWS:
         "en": r["question"], "hi": HI.get(r["name"], r["question"]),
         "opt": "may be left blank" in r["skip"],
     }
+    # the XLSForm's choice_filter has no equivalent in this form, so carry the one rule it needs as
+    # data: exclude whatever `occupation` holds from the other-activities list, so a pony owner is not
+    # offered "Pony/mule owner" again as a second activity.
+    if r["name"] in X.CHOICE_FILTER:
+        q["cfx"] = X.CHOICE_FILTER[r["name"]].split("${")[1].rstrip("}")
     if r["name"] in HINTS:
         q["hn"] = HINTS[r["name"]]
         q["hnh"] = HINTS_HI.get(r["name"], HINTS[r["name"]])
@@ -305,7 +313,10 @@ function render(){
   const v = D[q.n] ?? "";
   if (q.t === "one" || q.t === "multi"){
     const cur = q.t === "multi" ? SEL(q.n) : [String(v)];
-    q.c.forEach(c => {
+    // choice exclusion: mirrors the XLSForm choice_filter. Filtered here rather than in q.c itself so
+    // the list re-filters if the enumerator goes Back and changes the answer it depends on.
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    (drop ? q.c.filter(c => String(c[0]) !== drop) : q.c).forEach(c => {
       const on = cur.includes(String(c[0]));
       h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
            " name=q value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" + (L ? c[1] : c[2]) + "</span></label>";

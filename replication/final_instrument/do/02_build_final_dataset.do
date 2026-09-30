@@ -42,7 +42,7 @@ import delimited "data/raw_asked.csv", clear varnames(1) case(preserve)
 *-----------------------------------------------------------------------------
 foreach v in other_activity_types distress_event_last365d shock_coping ///
              occupation_detail prev_occ target_occ native_language_other ///
-             govt_scheme_which work_equipment_detail migration_referral_other ///
+             govt_schemes govt_scheme_other work_equipment_detail migration_referral_other ///
              training_type_other {
     capture confirm variable `v'
     if !_rc {
@@ -123,9 +123,7 @@ gen byte yatra_end_month   = .
 * This is what replaces a season length assumed for everyone. Each respondent's own boundary is
 * wherever their location row turns over, which is also the answer to the mid-month Yatra-start
 * problem: we no longer need a single cut-off, because we no longer impose one.
-gen byte months_here        = 0
-gen byte months_home_base   = 0
-gen byte months_third_place = 0
+
 * Idle months: the form hides the earnings question when the month is coded "no paid work", so Kobo
 * returns an empty cell. Fill it with the zero it means BEFORE anything sums these columns --
 * otherwise a worker with any idle month gets a missing annual income instead of a correct one.
@@ -139,9 +137,6 @@ forvalues m = 1/12 {
     replace yatra_months            = yatra_months + 1            if status_m`m'==1
     replace offseason_months_worked = offseason_months_worked + 1 if inrange(status_m`m',2,7)
     replace months_no_work          = months_no_work + 1          if status_m`m'==8
-    replace months_here             = months_here + 1             if loc_m`m'==1
-    replace months_home_base        = months_home_base + 1        if loc_m`m'==2
-    replace months_third_place      = months_third_place + 1      if loc_m`m'==3
     replace yatra_income     = yatra_income + income_m`m'         if status_m`m'==1 & knows_monthly_income==1
     replace non_yatra_income = non_yatra_income + income_m`m'     if status_m`m'!=1 & knows_monthly_income==1
 }
@@ -149,12 +144,34 @@ forvalues m = 1/12 {
 * Type B in the closure-regime typology: sold labour away from BOTH bases. Stated (Module D) or
 * revealed (the location row) -- either establishes it, because a respondent who names the place he
 * worked has told us as much as one whose calendar shows the month.
-gen byte closure_labour_migrant = (worked_away_in_closure==1 | months_third_place>0)
-gen byte stays_all_year   = (closure_base==1)
-gen byte split_household  = inlist(closure_base,3,4)
-* The two reports of the same fact should agree. Where they do not, that is a data-quality flag
-* neither item could raise alone -- it is counted in the report below, never asserted away.
-gen byte dq_closure_mismatch = (worked_away_in_closure==1) != (months_third_place>0)
+* ---- measured seasonal base, from the absence spell (left_here_month / returned_here_month) ----
+* Twelve loc_m items were replaced by the spell on 2026-09-30: in this population the absence is
+* almost always one contiguous stretch, so twelve select_ones were a sixth of the interview for a
+* variable two questions can carry. The spell STRADDLES THE NEW YEAR -- the Yatra closes in November
+* and reopens in April or May -- so returned < left is the normal case and the arithmetic must wrap.
+* mod() does that: mod(4 - 11, 12) = 5 months away, which is right.
+gen byte months_away_total = 0
+replace  months_away_total = mod(returned_here_month - left_here_month, 12) if resp_returns_at_closure==1
+* a full-year absence is not possible for someone interviewed here in season; guard the degenerate case
+replace  months_away_total = 11 if months_away_total==0 & resp_returns_at_closure==1
+gen byte months_third_place = cond(worked_away_in_closure==1, months_away_for_work, 0)
+replace  months_third_place = months_away_total if months_third_place > months_away_total
+gen byte months_home_base   = months_away_total - months_third_place
+gen byte months_here        = 12 - months_away_total
+
+gen byte closure_labour_migrant = (worked_away_in_closure==1)
+gen byte stays_all_year   = (resp_returns_at_closure==0)
+gen byte split_household  = (hh_at_home_place==1)
+* The denominator the Yatra-season consumption figures actually belong to. This corrects a real error
+* in the poverty headcount: per-capita consumption divided the Yatra-season figure -- which covers
+* only "you and anyone staying with you here" -- by the FULL household size, so a man supporting
+* himself here for six months while a family of five lived at the home place was recorded at a
+* fraction of his true per-capita consumption and counted as poor by arithmetic.
+gen byte cons_pc_denom_season = cond(split_household==1 & !missing(n_here_season), n_here_season, hhsize)
+replace  cons_pc_denom_season = hhsize if cons_pc_denom_season > hhsize
+* dq_closure_mismatch is gone. It compared the stated off-season-migration item against the calendar
+* location row as two independent reports; months_third_place is now DERIVED from that same stated
+* item, so the two cannot disagree and the flag could only ever have read zero.
 * The two-season design does not fit a respondent who never moves: for them the Yatra-season and
 * off-season questions describe the same place. Check the identical-answer rate at the pilot.
 label var stays_all_year "Does not move at all when the Yatra closes"
@@ -164,14 +181,13 @@ label var stays_all_year "Does not move at all when the Yatra closes"
 * location properly, those two can contradict it, and one combination is genuinely impossible
 * rather than merely unusual: code 5 says the respondent left home for work, so the month cannot
 * also be coded at a base. Counted, not asserted: the form does not stop an enumerator entering it.
-gen byte dq_act_loc_conflict = 0
-forvalues m = 1/12 {
-    quietly replace dq_act_loc_conflict = 1 if status_m`m'==5 & inlist(loc_m`m',1,2)
-    quietly replace dq_act_loc_conflict = 1 if status_m`m'==4 & loc_m`m'==3
-}
+* dq_act_loc_conflict is gone too, because the conflict it caught cannot arise any more: activity
+* codes 4 and 5 no longer encode location (4 is casual wage labour, 5 is construction work), so
+* nothing in the activity row can contradict where the respondent was.
+* New check in its place: the reported off-season work months cannot exceed the absence itself.
+gen byte dq_away_exceeds_spell = (worked_away_in_closure==1 & months_away_for_work > months_away_total)
 * These two are built here rather than in dictionary.py, so labels.do does not label them.
-label var dq_closure_mismatch "Stated off-season migration disagrees with the calendar location row"
-label var dq_act_loc_conflict "Activity row and location row contradict in at least one month"
+label var dq_away_exceeds_spell "Months worked away exceed the reported absence from the Yatra route"
 
 *-----------------------------------------------------------------------------
 * ANNUAL-TOTAL FALLBACK (Apablaza Q15 route). Respondents who could not give
@@ -258,8 +274,13 @@ foreach v in staples perishables food_own food_out packaged_food pan_tobacco fue
 * rate, the rest of the year at the off-season rate, divided by 12 for an annual-average monthly
 * figure. Recall periods within each season follow HCES 2022-23 / IHDS-II; see the questionnaire PDF
 * section 8. Medical spending is split by HCES/IHDS-II into non-hospitalisation and hospitalisation.
+* The season weight is months_here -- months physically on the Yatra route, from the absence spell --
+* not yatra_months, which counts months of Yatra WORK. They are not the same: a worker can be here in
+* a month he did no Yatra work. The Yatra-season consumption figure describes spending WHILE HERE, so
+* the months-here count is the weight it belongs to. Before the spell existed there was nothing else
+* to use and yatra_months stood in.
 foreach v in staples perishables food_own food_out packaged_food pan_tobacco fuel routine_misc transport_comm rent med_nonhosp {
-    gen double cons_`v'_pm = (yatra_months*cons_`v'_yatra_pm + (12-yatra_months)*cons_`v'_offseason_pm)/12
+    gen double cons_`v'_pm = (months_here*cons_`v'_yatra_pm + (12-months_here)*cons_`v'_offseason_pm)/12
 }
 * packaged food is inside HCES's own food block (Section 7), so it joins the food aggregate.
 * pan/tobacco/intoxicants is a SEPARATE MPCE category in HCES and is added to the total below, not here.
@@ -271,9 +292,60 @@ foreach v in clothing education durables {
 gen double cons_medical_12m_pm = cons_med_nonhosp_pm + round(cons_medical_hosp_12m/12)
 gen double total_cons_pm = cons_food_pm + cons_pan_tobacco_pm + cons_fuel_pm + cons_routine_misc_pm + cons_transport_comm_pm + cons_rent_pm ///
     + cons_clothing_12m_pm + cons_education_12m_pm + cons_medical_12m_pm + cons_durables_12m_pm
-gen int cons_pc_pm = round(total_cons_pm/hhsize)
-gen double cons_pc_pm_narrow = (cons_food_pm + cons_pan_tobacco_pm + cons_fuel_pm + cons_routine_misc_pm + cons_transport_comm_pm + cons_rent_pm)/hhsize
-gen double cons_pc_ae_pm = total_cons_pm/(hhsize - n_children_u15 + 0.5*n_children_u15)
+*-----------------------------------------------------------------------------
+* PER CAPITA, WITH A SEASON-SPECIFIC DENOMINATOR.
+* This block used to divide total_cons_pm by hhsize and stop. That was wrong for
+* split households, and wrong in the direction that manufactures poverty. The
+* Yatra-season figures are asked as "you and anyone staying with you here"; the
+* off-season figures are asked of "your household". Dividing the blend of the
+* two by the FULL household size charged a man's own six months of on-site
+* spending against five people, so a split household was recorded at a fraction
+* of its true per-capita consumption and fell below the line by arithmetic
+* alone. 53 of 200 records in the synthetic run are split households.
+* So each season is divided by the number of people that season's figure
+* actually covers, and only then averaged: n_here_season while he is here,
+* hhsize once the household is reunited. Annual items (clothing, education,
+* hospitalisation, durables) are household-wide and keep hhsize throughout.
+* Known limitation, documented rather than papered over: what the family spends
+* AT THE HOME PLACE during the season is not observed. The respondent cannot
+* reliably report it, so this measures his own per-capita consumption level
+* rather than a whole-household one for the season half. remit_out_yatra_pm is
+* the best available proxy for the home-side flow and is collected.
+*-----------------------------------------------------------------------------
+local SEASONAL cons_food_pm + cons_pan_tobacco_pm + cons_fuel_pm + cons_routine_misc_pm + cons_transport_comm_pm + cons_rent_pm
+* rebuild the seasonal block at each season's own level, rather than from the already-blended figures
+gen double _cons_seas_yatra = 0
+gen double _cons_seas_off   = 0
+foreach v in staples perishables food_own food_out packaged_food pan_tobacco fuel routine_misc transport_comm rent {
+    replace _cons_seas_yatra = _cons_seas_yatra + cons_`v'_yatra_pm
+    replace _cons_seas_off   = _cons_seas_off   + cons_`v'_offseason_pm
+}
+gen double cons_annual_pm = cons_clothing_12m_pm + cons_education_12m_pm + cons_medical_12m_pm + cons_durables_12m_pm
+* Dividing the on-site figure by the people here (n_here_season) is NOT the fix on its own. Tried that
+* first and it overcorrected hard: split households went from 55% poor to 5% poor, because a man's
+* on-site spending over 1.6 people looks affluent while ignoring that the same earnings support 4.1
+* people at the home place. Both constructions are biased, in opposite directions.
+* What closes it is that the home-side flow IS observed, as the remittance he sends during the season.
+* So for a split household the season numerator is on-site spending PLUS remittances out, over the
+* full household -- total household resources consumed that month, from the two places they are spent
+* in. No double count: the off-season half uses household spending directly, by when the household is
+* reunited and remittances have stopped. hhsize stays the denominator throughout, which is also the
+* concept the Rangarajan per-capita line is defined on.
+gen double _seas_num = _cons_seas_yatra + cond(split_household==1, remit_out_yatra_pm, 0)
+gen double cons_pc_seasonal_pm = (months_here*(_seas_num/hhsize) ///
+                               + (12-months_here)*(_cons_seas_off/hhsize))/12
+gen int cons_pc_pm = round(cons_pc_seasonal_pm + cons_annual_pm/hhsize)
+gen double cons_pc_pm_narrow = cons_pc_seasonal_pm
+gen double cons_pc_ae_pm = (cons_pc_seasonal_pm*hhsize + cons_annual_pm) ///
+                           / (hhsize - n_children_u15 + 0.5*n_children_u15)
+* Sensitivity, and what n_here_season is actually for: the respondent's OWN per-capita consumption
+* while on site, ignoring the home side entirely. It is the individual-welfare reading of the same
+* data, and reporting the pair is how the split-household assumption gets shown rather than asserted.
+gen double cons_pc_onsite_pm = _cons_seas_yatra/cons_pc_denom_season
+drop _cons_seas_yatra _cons_seas_off _seas_num
+label var cons_pc_denom_season "People the Yatra-season consumption figures cover"
+label var cons_pc_seasonal_pm  "Per-capita monthly consumption, seasonal items, season-weighted"
+label var cons_pc_onsite_pm    "Respondent's own per-capita consumption while on site (sensitivity)"
 * Sethu et al. (2024) give TWO Rangarajan-method lines for 2022-23: Rs 2,515 rural, Rs 3,639 urban.
 * home_rural_urban picks the applicable one from the respondent's USUAL residence, not the worksite.
 * Before that variable existed this applied the rural line to everyone, measuring urban-resident
@@ -496,7 +568,7 @@ gen byte k_seeking = (job_situation==8)                 // 8:   routed straight 
 * skip rules: answered exactly when the filter says so
 assert missing(contract_status)   == !(k_working==1 & inlist(employment_type,3,4))
 assert missing(leave_rights)      == (k_working!=1)   // asked of everyone still working, not wage-only
-foreach v in employer_type workplace_registered pension_contrib work_health_ins injured_ever workplace_injury_12m {
+foreach v in workplace_registered pension_contrib work_health_ins injured_ever workplace_injury_12m {
     assert missing(`v') == (k_working!=1)
 }
 * wants_more_work is gated at codes 1-7, not 1-3: Apablaza routes the studying, in-training,
@@ -510,7 +582,7 @@ assert (loan_collateral==.) == !(loan_against_asset==1)
 assert (pays_interest==.)   == (took_loan_12m==0)
 assert missing(months_looked_for_work) == !(months_no_work>0 | k_seeking==1)
 * prev_occ is free text now, so "missing" means an empty string, not a system missing
-assert (prev_occ=="")             == (prev_occ_change!=1)
+assert prev_occ=="" if prev_occ_change!=1                 // one-directional: see above
 assert inrange(toilet_type,1,4)
 assert inrange(wall_material,1,3)
 assert (anc_4_visits==.)            == (birth_last_5y==0)
@@ -521,7 +593,6 @@ assert (loan_amount==.)              == (took_loan_12m==0)
 assert (loan_against_asset==.)       == (took_loan_12m==0)
 assert (has_jandhan_account==.)      == (has_bank_account==0)
 assert (has_crop_insurance==.)       == (land_cultivable_acres==0)
-assert (meal_spend_day_self==.)      == (cooks_own_meals_here==1)   // 1 = cooks own
 
 
 
@@ -532,7 +603,7 @@ assert missing(water_fetched_by)    == (water_on_premises==1)
 assert missing(hours_day_offseason) == (offseason_months_worked==0)
 assert missing(days_week_offseason) == (offseason_months_worked==0)
 assert (occupation_detail!="")  // verbatim job description, asked of everyone
-assert (native_language_other=="") == !inlist(native_language,96,97)
+assert native_language_other=="" if !inlist(native_language,96,97)   // one-directional
 assert missing(prev_occ_reason)   == (prev_occ_change!=1)
 assert !missing(n_other_activities)          // count, asked of everyone (0 = none)
 assert (other_activity_types=="") == (n_other_activities==0)
@@ -545,24 +616,31 @@ assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
 * respondents, because who placed you in a job is not a question about migration.
 assert !missing(migration_referral)
 assert !missing(worked_other_places)
-assert !missing(closure_base) & inrange(closure_base,1,4)
+assert !missing(resp_returns_at_closure)
+assert !missing(hh_at_home_place)
+assert missing(n_here_season) == (hh_at_home_place!=1)
 assert !missing(worked_away_in_closure)
-assert missing(years_coming_here) == (closure_base==1)
+assert missing(years_coming_here) == (resp_returns_at_closure!=1)
+assert missing(left_here_month)     == (resp_returns_at_closure!=1)
+assert missing(returned_here_month) == (resp_returns_at_closure!=1)
+assert missing(months_away_for_work) == (worked_away_in_closure!=1)
+assert inrange(left_here_month,1,12)     if resp_returns_at_closure==1
+assert inrange(returned_here_month,1,12) if resp_returns_at_closure==1
 assert missing(came_here_reason)  == (migrant!=1)
-assert (closure_work_detail=="") == !(worked_away_in_closure==1)
-assert (other_places_detail=="")  == !(worked_other_places==1)
-forvalues m = 1/12 {
-    assert inrange(loc_m`m',1,4)
-}
-* There is deliberately NO assert tying loc_m to status_m. An earlier version of this file asserted
-* that a Yatra-work month must be coded "here on the Yatra route", on the reasoning that the form
-* cannot emit anything else. Both halves of that were wrong. The form carries no constraint linking
-* the two rows, so the assert would have halted the build on data Kobo accepts -- the same failure
-* this file already had to remove elsewhere. And the combination is not even an error: a worker from
-* Guptkashi or Sonprayag who commutes up the route daily is doing Yatra work while living at the home
-* place, which is status 1 with loc 2 and is a true answer. That is not a rare case; the pilot puts
-* most of the seasonal movement inside this district. Genuine contradictions between the two rows are
-* counted in the data-quality report below instead.
+* ONE-DIRECTIONAL, and this matters. These three are verbatim "other, specify" fields marked
+* "may be left blank" in the dictionary and therefore NOT required on the form. A respondent can
+* open the gate and still decline to name the place, so "gate open implies text present" is a rule
+* the form does not enforce -- asserting it would halt the build on data Kobo accepts. What IS
+* enforceable is the other direction: the field cannot hold text when its gate is shut.
+assert closure_work_detail=="" if worked_away_in_closure!=1
+assert other_places_detail==""  if worked_other_places!=1
+assert govt_scheme_other==""    if !strpos(" " + govt_schemes + " ", " 9 ")
+* The absence spell replaced loc_m1..loc_m12 on 2026-09-30, and with it went the assert tying a
+* Yatra-work month to being on the route -- which was unenforced by the form and substantively wrong
+* anyway: a Guptkashi or Sonprayag worker commuting up the route daily does Yatra work while living at
+* the home place, and that is a true answer. Nothing replaces it, deliberately. The one cross-field
+* rule left here is that an absence cannot be shorter than the work done inside it, and that is a
+* data-quality FLAG, not an assert, because the form does not enforce it either.
 assert missing(years_schooling)   == (knows_years_schooling==0)
 assert missing(education_level_cat) == (knows_years_schooling==1)
 assert hoh_female==female if hoh_relation==1   // self-headed: head's sex is the respondent's own
@@ -646,25 +724,24 @@ if r(N) > 0 {
 * The stated off-season migration item against the calendar's location row. Two reports of the same
 * fact, asked minutes apart; a real respondent can and will disagree with himself. Counted, never
 * asserted -- an assert here would halt the build on data the form is perfectly happy to emit.
-quietly count if dq_closure_mismatch==1
+quietly count if dq_away_exceeds_spell==1
 if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- worked_away_in_closure disagrees with the calendar location row"
-    quietly replace _dq_flag = 1 if dq_closure_mismatch==1
+    di as error "  DATA QUALITY: " r(N) " record(s) -- months worked away exceed the reported absence from the route"
+    quietly replace _dq_flag = 1 if dq_away_exceeds_spell==1
     local dq_total = `dq_total' + r(N)
 }
-quietly count if dq_act_loc_conflict==1
+quietly count if split_household==1 & n_here_season >= hhsize & hhsize > 1
 if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- activity row and location row contradict (went away for work, but the month is coded at a base)"
-    quietly replace _dq_flag = 1 if dq_act_loc_conflict==1
+    di as error "  DATA QUALITY: " r(N) " record(s) -- household reported as split, but the on-site count equals household size"
+    quietly replace _dq_flag = 1 if split_household==1 & n_here_season >= hhsize & hhsize > 1
     local dq_total = `dq_total' + r(N)
 }
-* Someone who says they leave at closure but whose calendar never leaves the Yatra route. Not
-* impossible -- closure_base is what happens in a normal year, the calendar is last year -- but
-* worth querying, and worth watching as a share at the pilot.
-quietly count if inlist(closure_base,2,3) & months_home_base==0
+* Someone who says they go home at closure but whose reported absence is entirely spent working
+* elsewhere -- possible, but it means "home place" never actually featured, which is worth querying.
+quietly count if resp_returns_at_closure==1 & months_home_base==0
 if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- reports going home at closure, but no month is coded at the home place"
-    quietly replace _dq_flag = 1 if inlist(closure_base,2,3) & months_home_base==0
+    di as error "  DATA QUALITY: " r(N) " record(s) -- goes home at closure, but the whole absence was spent working elsewhere"
+    quietly replace _dq_flag = 1 if resp_returns_at_closure==1 & months_home_base==0
     local dq_total = `dq_total' + r(N)
 }
 di as result "  data-quality flags raised: `dq_total'"
@@ -704,7 +781,6 @@ assert yatra_months + offseason_months_worked + months_no_work == 12
 assert inrange(hours_day_yatra,1,18) & inrange(days_week_yatra,1,7)
 assert inrange(n_other_activities,0,6)
 assert inlist(job_permanence,1,2,3,4,5) if k_working==1
-assert inlist(employer_type,1,2,3,4,5,6,7) if k_working==1
 foreach v in cope_less_pref_food cope_borrow_food cope_reduce_meals cope_reduce_portion cope_restrict_adult {
     assert inrange(`v'_yatra_wk,0,7) & inrange(`v'_offseason_wk,0,7)
 }

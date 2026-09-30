@@ -69,6 +69,11 @@ def to_py(expr):
     # count-selected() on a select_multiple: non-empty export string means at least one box ticked
     e = re.sub(r"count-selected\(S\['(\w+)'\]\)\s*>\s*0",
                lambda m: "(S['" + m.group(1) + "'].astype(str).str.strip().replace('nan','') != '')", e)
+    # selected(${multi}, 'code'): the export is a space-separated code string, so test membership of
+    # the split tokens rather than a substring -- 'selected(x, "1")' must not match the code 10.
+    e = re.sub(r"selected\(S\['(\w+)'\],\s*'(\w+)'\)",
+               lambda m: ("S['" + m.group(1) + "'].astype(str).str.split().apply("
+                          "lambda t: '" + m.group(2) + "' in t)"), e)
     return e
 
 S = {c: sample[c] for c in sample.columns}
@@ -146,7 +151,7 @@ NEEDS = {
          "food_coping_deprived"] + XVARS,
     "Employment VEP (Apablaza + Chaudhuri)":
         ["emp_dep_access", "emp_dep_comp", "emp_dep_sec", "emp_dep_stab", "emp_dep_cond",
-         "emp_dep_count", "emp_dep_score", "emp_poor_k2", "job_situation", "employer_type",
+         "emp_dep_count", "emp_dep_score", "emp_poor_k2", "job_situation",
          "job_permanence", "hours_week_yatra", "work_income_pm"] + XVARS,
     "Transferability / structural displacement":
         ["occupation", "occupation_detail", "prev_occ", "prev_occ_change", "target_occ", "tk_regular_n", "tk_prior_n",
@@ -155,11 +160,12 @@ NEEDS = {
     "Shocks, coping and finance":
         ["shock_count", "shock_any", "shock_covariate", "shock_idiosyncratic",
          "coped_sold_assets", "coped_cut_consumption", "took_loan_12m", "n_health_insured",
-         "n_life_insured", "home_rural_urban", "cooks_own_meals_here"],
+         "n_life_insured", "home_rural_urban"],
     "Mobility and the closure regime":
-        ["closure_base", "closure_labour_migrant", "stays_all_year", "split_household",
-         "months_here", "months_home_base", "months_third_place", "worked_away_in_closure",
-         "worked_other_places", "would_move_for_work", "migrant"],
+        ["resp_returns_at_closure", "hh_at_home_place", "closure_labour_migrant", "stays_all_year",
+         "split_household", "months_here", "months_home_base", "months_third_place",
+         "months_away_total", "worked_away_in_closure", "worked_other_places",
+         "would_move_for_work", "migrant", "cons_pc_denom_season", "cons_pc_onsite_pm"],
 }
 # variables that are legitimately missing for most rows because they are skip-gated, with the
 # coverage each one should clear. child_school_dep is only defined for households that HAVE a child

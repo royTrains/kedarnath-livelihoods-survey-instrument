@@ -96,7 +96,11 @@ RELEVANT = {
     # Module D. NOT gated on origin: the pilot found 11 of 20 seasonal movers inside this district,
     # so an origin gate would skip most of the people who move. Only the two genuinely
     # origin-specific items (why you first came) and the two verbatim follow-ups are gated.
-    "years_coming_here": "${closure_base} != 1",
+    "years_coming_here": "${resp_returns_at_closure} = 1",
+    "n_here_season": "${hh_at_home_place} = 1",
+    "left_here_month": "${resp_returns_at_closure} = 1",
+    "returned_here_month": "${resp_returns_at_closure} = 1",
+    "months_away_for_work": "${worked_away_in_closure} = 1",
     "came_here_reason": "${origin} != 1",
     "closure_work_detail": "${worked_away_in_closure} = 1",
     "other_places_detail": "${worked_other_places} = 1",
@@ -109,11 +113,10 @@ RELEVANT = {
     "pays_interest": "${took_loan_12m} = 1",
     "loan_collateral": "${loan_against_asset} = 1",
     "has_crop_insurance": "${land_cultivable_acres} > 0",
-    "govt_scheme_which": "${govt_scheme_beneficiary} = 1",
+    "govt_scheme_other": "selected(${govt_schemes}, '9')",
     "work_equipment_detail": "${owns_work_equipment} = 1",
     "migration_referral_other": "${migration_referral} = 7",
     "remit_mode": "${remit_out_yatra_pm} > 0 or ${remit_out_offseason_pm} > 0",
-    "meal_spend_day_self": "${cooks_own_meals_here} = 2 or ${cooks_own_meals_here} = 3",
     "training_type_other": "${training_type} = 9",
     "shock_coping": "count-selected(${distress_event_last365d}) > 0",
     "anc_4_visits": "${birth_last_5y} = 1",
@@ -188,13 +191,20 @@ for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
     CMSG_HI[_n + "_yatra_wk"] = "0 से 7 दिन के बीच होना चाहिए।"
     CMSG_HI[_n + "_offseason_wk"] = "0 से 7 दिन के बीच होना चाहिए।"
 
+# choice_filter: drop options from a list depending on an earlier answer. Only one list needs it --
+# other_activity_types shares the 14-option occupation list with `occupation`, so without this a pony
+# owner is offered "Pony/mule owner" again as a SECOND activity. The filter compares against a `code`
+# column added to the choices sheet, which is XLSForm's mechanism for exactly this.
+CHOICE_FILTER = {"other_activity_types": "code != ${occupation}"}
+
 MODULE_TITLE = {m[0]: m[1] for m in MODULES}
 used_lsets = {r["lset"] for r in ROWS if r["origin"] in ("asked", "paradata") and r["name"] not in DROP_PARADATA and r["lset"]}
 
 survey_rows = []   # (type, name, label, required, relevant, constraint, constraint_message, calculation, trigger)
 
 def add(type_, name, label, required="", relevant="", constraint="", constraint_msg="", calc="", trigger=""):
-    survey_rows.append((type_, name, label, required, relevant, constraint, constraint_msg, calc, trigger))
+    survey_rows.append((type_, name, label, required, relevant, constraint, constraint_msg, calc, trigger,
+                        CHOICE_FILTER.get(name, "")))
 
 def xlsform_type(r):
     """kind 'multi' -> select_multiple (Kobo exports a space-separated string plus one binary column
@@ -271,7 +281,7 @@ ws_survey.title = "survey"
 ws_survey.append(["type", "name", "label::English (en)", "label::हिन्दी (hi)",
                   "hint::English (en)", "hint::हिन्दी (hi)", "required",
                   "relevant", "constraint", "constraint_message::English (en)", "constraint_message::हिन्दी (hi)",
-                  "calculation", "trigger"])
+                  "calculation", "trigger", "choice_filter"])
 _missing_hi = []
 for row in survey_rows:
     type_, name, label = row[0], row[1], row[2]
@@ -287,13 +297,15 @@ for row in survey_rows:
                      + r3[:3] + [r3[3], CMSG_HI.get(name, r3[3])] + r3[4:])
 
 ws_choices = wb.create_sheet("choices")
-ws_choices.append(["list_name", "name", "label::English (en)", "label::हिन्दी (hi)"])
+ws_choices.append(["list_name", "name", "label::English (en)", "label::हिन्दी (hi)", "code"])
 for lset in sorted(used_lsets):
     hi_set = HI_LSETS.get(lset, {})
     if not hi_set:
         _missing_hi.append(f"[choices] {lset}")
     for code, label in LSETS[lset].items():
-        ws_choices.append([lset, code, label, hi_set.get(code, label)])
+        # `code` duplicates `name` so a choice_filter has something to compare against; harmless on
+        # every other list, and required on the one that filters.
+        ws_choices.append([lset, code, label, hi_set.get(code, label), code])
         if code not in hi_set:
             _missing_hi.append(f"[choice] {lset}/{code}")
 

@@ -102,7 +102,6 @@ LSETS = {
     "ruralurban": {1: "Village (rural)", 2: "Town or city (urban)"},
     "collat": {1: "Jewellery or ornaments", 2: "Land", 3: "Animals", 4: "A vehicle",
                5: "Shop stock or business goods", 6: "House or building", 7: "Something else"},
-    "meals": {1: "Cooks their own", 2: "Buys them", 3: "Some of each"},
     # A two-way CHOICE, not a yes/no. Codes keep 1 = month-by-month and 0 = annual total so every
     # downstream ==1 / ==0 test still holds; only the labels change, because "No / Yes" is not an
     # answer to "month by month, or one total?".
@@ -146,11 +145,15 @@ LSETS = {
             12: "Guide",
             13: "Wage labourer (construction, loading, odd jobs)",
             14: "Other"},
-    "emptype": {1: "Own-account (self-employed, no hired workers)", 2: "Employer/business owner (self-employed)",
-                3: "Regular wage or salary", 4: "Casual wage labour"},
-    "emptype2": {1: "Employee, private company", 2: "Employee, public sector/government", 3: "Armed forces or law enforcement",
-                 4: "Employer/business owner (hires others)", 5: "Works alone, no employees", 6: "Unpaid family worker",
-                 7: "Domestic service worker"},
+    # Code 5 added 2026-09-30, taking over the one useful category from Apablaza's Q8 as employer_type
+    # was dropped: a son minding the family stall is a contributing family worker, and this list had
+    # nowhere to put him. The rest of Q8's categories were status crossed with institutional sector
+    # (private company, public sector, armed forces, domestic service), which left every worker
+    # employed by an INDIVIDUAL -- a thekedar, a shop owner, a dhaba owner, i.e. most of this sample --
+    # with no true option but "employee of a private company".
+    "emptype": {1: "Own-account (self-employed, no hired workers)",
+                2: "Employer/business owner (self-employed)", 3: "Regular wage or salary",
+                4: "Casual or daily wage labour", 5: "Unpaid family worker"},
     "month": {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August",
               9: "September", 10: "October", 11: "November", 12: "December"},
     # "Moved to this area" is gone. It answered a different question -- why you MIGRATED, not why
@@ -202,16 +205,6 @@ LSETS = {
     # was also selecting the poverty line -- Rs 2,515 against Rs 3,639, a 45% swing -- off a subjective
     # answer. home_rural_urban is now asked directly as the binary the line actually needs.
 
-    # Where the household is when the Yatra closes. The four codes are the pilot's own three residency
-    # categories (23 year-round resident / 20 seasonal migrant / 3 works here but family elsewhere,
-    # pilot/livelihood_clean.dta, n=46) with the last one split by whether the respondent himself goes
-    # back. This replaces migration_pattern and migrates_with_family, and it is deliberately NOT gated
-    # on origin: 11 of the 20 seasonal migrants in the pilot were from this same district, so a gate on
-    # "origin is not local" would have skipped the majority of the people who actually move.
-    "closurebase": {1: "We live here all year; nobody moves when the Yatra closes",
-                    2: "The whole household moves to the home place when the Yatra closes",
-                    3: "I go back to the home place when the Yatra closes; my household lives there all year",
-                    4: "I stay on here when the Yatra closes; my household lives at the home place all year"},
     # Reason for first coming to work here. Kept apart from prevreason, which is about changing WORK:
     # a migrant who took a new job on arrival had two true answers to the old combined item.
     "comereason": {1: "No work at home", 2: "Pay is better here",
@@ -223,10 +216,22 @@ LSETS = {
     # split from an assumption the whole instrument rests on into a measurement, respondent by
     # respondent -- and it fixes the mid-month season boundary, because the boundary is now wherever
     # each person's own row changes rather than a constant we chose.
-    "mloc": {1: "Here, on the Yatra route", 2: "At the home place",
-             3: "Somewhere else, for work", 4: "Somewhere else, not for work"},
-    "remitmode": {1: "Bank transfer", 2: "UPI or phone payment", 3: "Money order or post office",
-                  4: "Sent with someone going home", 5: "Carried it myself", 6: "Other"},
+    "month": {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
+              8: "August", 9: "September", 10: "October", 11: "November", 12: "December"},
+    # Named schemes, not "any government scheme". A category prompt makes the respondent recall a
+    # class ("did you get a benefit?") and people reliably fail at that; a named list is recognition,
+    # not recall. The levels also differ -- ration is per household, pensions are per person, MGNREGA
+    # is a job card, PM-KISAN follows the landholding -- which is why this is a check-all rather than
+    # a count of recipients: a count across these levels is not a coherent quantity.
+    "govtscheme": {1: "Ration card / PDS food grain", 2: "MGNREGA work or job card",
+                   3: "Old-age, widow or disability pension", 4: "PM-KISAN (farmer cash transfer)",
+                   5: "Ujjwala LPG connection", 6: "PM-SYM or Atal Pension Yojana",
+                   7: "Ayushman Bharat / health insurance card", 8: "Housing scheme (PMAY or state)",
+                   9: "Some other scheme", 10: "None of these"},
+    "remitmode": {1: "From my own phone (UPI or net banking)",
+                  2: "In person at a bank branch or bank mitra / CSP",
+                  3: "Money order or post office", 4: "Sent with someone going home",
+                  5: "Carried it myself", 6: "Through an agent or middleman", 7: "Other"},
     "credit": {1: "Nationalised or public-sector bank", 2: "Private bank", 3: "Cooperative bank or RRB",
                4: "Microfinance institution or SHG", 5: "Moneylender", 6: "Relative or friend",
                7: "Employer or contractor (advance)", 8: "Other"},
@@ -245,8 +250,15 @@ LSETS = {
     "stance": {1: "Support", 2: "Neutral", 3: "Oppose", 98: "Prefer not to say"},
     "task3": {1: "Yes, regularly in my main Yatra work", 2: "Not in my main work, but done before elsewhere", 3: "Never done"},
     "tier": {1: "Poor", 2: "Moderate", 3: "Good"},
+    # Codes 4 and 5 used to read "wage labour, staying at home" and "went away from home for work" --
+    # one activity (wage labour) split across two codes on a LOCATION criterion, which no labour-force
+    # classification does: ILO keeps status in employment, occupation, industry and place of work as
+    # separate variables, and Apablaza's own Q5 list carries no location at all. It also destroyed the
+    # activity information, since "went away" says nothing about the work done. Location is now the
+    # left_here_month / returned_here_month spell, and code 5 is spent on construction -- the commonest
+    # off-season destination occupation for this workforce, which previously had nowhere to go.
     "activity": {1: "Yatra work (main occupation)", 2: "Farming (crops)", 3: "Livestock (animals)",
-                 4: "Wage labour, staying at home", 5: "Went away from home for work",
+                 4: "Casual or daily wage labour", 5: "Construction work",
                  6: "Own small shop, stall or trade", 7: "Salaried job", 8: "No paid work"},
     "yndk": {0: "No", 1: "Yes", 97: "Don't know"},
     # Apablaza Appendix 2 Q5, all eleven categories, in their order -- the routing differs by code
@@ -344,46 +356,24 @@ R("B", "training_type", "Type of training received", "What kind of course or tra
 R("B", "training_type_other", "Type of training, written in (verbatim, optional)", "What was it? Write what they say.", "Write-in for training the list does not hold.", "text", skip="Ask only if training_type = 9 (Other); may be left blank", source="STEP module 2")
 
 # ------------------------------------------------------------------ C  income and remittances
-R("C", "status_m1", "Main activity in January", "In January, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in January of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m2", "Main activity in February", "In February, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in February of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m3", "Main activity in March", "In March, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in March of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m4", "Main activity in April", "In April, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in April of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m5", "Main activity in May", "In May, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in May of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m6", "Main activity in June", "In June, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in June of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m7", "Main activity in July", "In July, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in July of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m8", "Main activity in August", "In August, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in August of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m9", "Main activity in September", "In September, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in September of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m10", "Main activity in October", "In October, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in October of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m11", "Main activity in November", "In November, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in November of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-R("C", "status_m12", "Main activity in December", "In December, what was your main work or activity? (Fill the Yatra months first, then the others.)", "Main activity in December of the past year; code 1 is the Yatra work named in B1.", "cat", "activity", source="Monthly work calendar (Dercon and Krishnan 2000 measure seasonality month by month)")
-
 MONTHS = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"]
-# ---- location row on the same calendar ------------------------------------------------------
-# Second row of the twelve-month grid, asked of EVERYONE. Its job is to stop the instrument
-# assuming its own key fact. Every consumption, remittance and coping item in Modules C, E and I is
-# asked twice -- once for "a normal month during the Yatra season" and once for "a normal month when
-# the Yatra is closed" -- on the assumption that the respondent is in a different place in the two.
-# Until now that assumption was never measured, and the pilot suggests it is wrong for a large
-# minority: 23 of 46 respondents lived here year-round. This row also settles the mid-month season
-# boundary, because each respondent's own boundary is wherever their row changes, rather than a
-# single cut-off we impose on everyone. It is the empirical counterpart of closure_base in Module D:
-# closure_base is what the respondent says they do in a normal year, this is what they did last year.
-LOCNOTE = ("Where the respondent was living in {mo}, asked alongside the activity row and on the same "
-           "screen-flow. Code 1 is here on the Yatra route, 2 the home place named in Module D, 3 a "
-           "third place for work (the off-season labour migration that is the real mobility variable "
-           "in this population), 4 a third place for any other reason.")
-for _i, _mo in enumerate(MONTHS, start=1):
-    R("C", f"loc_m{_i}", f"Where living in {_mo}", f"And in {_mo}, where were you living?",
-      LOCNOTE.format(mo=_mo), "cat", "mloc",
-      source="Project design (measured seasonal base; replaces the assumed Yatra/off-season split)")
-# Earnings are asked month by month to avoid heaping on a single "typical" figure. Respondents who
-# cannot recall twelve separate figures are routed instead to an annual total plus a Yatra /
-# non-Yatra split, which Stata reweights back onto the work calendar. This is the project's version
-# of Apablaza's Q15 -- her fallback for a "does not know" answer to the monthly-earnings question
-# Q14 -- changed from her monthly range to an annual total because the work here is seasonal: a
-# season's takings are a real, memorable quantity, while an "average month" is an abstraction the
-# respondent would have to compute.
+# Presentation order, NOT variable order. status_m1 is still January and every downstream month
+# calculation is unchanged -- what moves is the sequence the enumerator is walked through. The
+# calendar used to open on January and then instruct "fill the Yatra months first, then the others",
+# which is an instruction the form cannot obey: it shows one question per screen in dictionary order.
+# Opening at the season instead makes the instruction unnecessary, because the order IS the
+# instruction, and it starts recall at the months the respondent remembers best. May is the opening:
+# the Yatra runs from Akshaya Tritiya to Bhai Dooj, so late April or May through November.
+CAL_ORDER = [5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4]
+for _i in CAL_ORDER:
+    _mo = MONTHS[_i - 1]
+    R("C", f"status_m{_i}", f"Main activity in {_mo}",
+      f"In {_mo}, what was your main work or activity?",
+      f"Main activity in {_mo} of the past year; code 1 is the Yatra work named in B1. Asked in "
+      f"season-first order (May through April), not January first.", "cat", "activity",
+      source="Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)")
+
 R("C", "knows_monthly_income", "Can recall earnings month by month", "Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?", "Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a yes/no, so the options read \"No / Yes\" against a question asking which of two things is easier.", "cat", "recall", source="Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)")
 for _i, _mo in enumerate(MONTHS, start=1):
     R("C", f"income_m{_i}", f"Earnings in {_mo} (Rs)", f"How much did you earn from all your work in {_mo}, after costs? (Rs)",
@@ -416,8 +406,14 @@ R("D", "home_rural_urban", "Usual home is in a village (1) or a town/city (2)", 
 # non-local would have skipped most of the people who actually move. Seasonal movement here is mostly
 # LOCAL movement, up-valley for the season and down-valley at closure, and a migrant dummy built on
 # district boundaries measures almost none of it.
-R("D", "closure_base", "Where the household is when the Yatra closes", "When the Yatra closes for the season, what happens -- do you and your household stay here, or go to your home place?", "The mobility regime, and the single most load-bearing fact in the instrument: Modules C, E and I all ask their questions twice on the assumption that the respondent is somewhere else once the Yatra shuts. Codes separate the household from the respondent because the pilot found both -- 3 of 46 respondents worked here with their family living elsewhere -- and because Module E's Yatra-season wording (\"you and anyone staying with you here\") is written for exactly that case and until now had nothing to key off. Replaces migration_pattern, migrates_with_family and the older usual_residence_differs, which between them asked a worse version of this three times.", "cat", "closurebase", source="Project design, categories from the pilot's own residency_pattern distribution (n=46)")
-R("D", "years_coming_here", "Years the respondent has been coming here for the season", "How many years have you been coming here for the Yatra season?", "Duration of the relationship with this worksite, which years_in_yatra_work does not give: that counts seasons in the CURRENT kind of work, so a porter who spent six years portering and then four running a stall reads as four. A first-year worker has neither the network nor the savings of a fifteen-year one, and that is an exposure term the VEP model wants.", "count", skip="Ask only if closure_base is not 1 (does not live here all year)", source="Project design (duration of the seasonal relationship)")
+# closure_base was one question doing two jobs. Its stem -- "do you and your household stay here, or
+# go to your home place?" -- named two subjects in a single breath and offered a binary while the
+# options were four, so a respondent had to parse a compound before answering. Split into the two
+# facts it was compressing. The same four cells come out, in Stata, from two plain yes/no answers.
+R("D", "resp_returns_at_closure", "Respondent goes to the home place when the Yatra closes", "When the Yatra closes for the season, do YOU go to your home place?", "Whether the RESPONDENT moves. This is the assumption the whole two-season design rests on: every consumption, remittance and coping item in Modules C, E and I is asked twice on the premise that he is somewhere else once the Yatra shuts. The pilot suggests it is false for a large minority -- 23 of 46 respondents lived here year-round.", "bin", "yn", source="Project design; categories from the pilot's own residency_pattern distribution (n=46)")
+R("D", "hh_at_home_place", "The rest of the household lives at the home place year-round", "And do the rest of your household live at your home place all year, or are they here with you during the season?", "Whether the HOUSEHOLD is split. Module E's Yatra-season wording (\"you and anyone staying with you here\") is written for exactly the split case and until now had nothing to key off; the pilot found 3 of 46 working here with family elsewhere. Also fixes a real error in the consumption aggregate -- see n_here_season.", "bin", "yn", source="Project design (split-household measurement, underpinning Module E)")
+R("D", "n_here_season", "People the respondent's on-site spending covers during the season", "During the Yatra season, how many people are you feeding and spending on here, counting yourself?", "The denominator the Yatra-season consumption figures actually belong to. Until this existed, per-capita consumption divided an on-site figure covering \"you and anyone staying with you here\" by the FULL household size, so a man supporting himself here for six months while his family of five lived at the home place was recorded at a fifth of his real per-capita consumption and pushed below the poverty line by arithmetic. Asked only of split households, because for everyone else it is hhsize.", "count", skip="Ask only if hh_at_home_place = 1", source="Project design (season-specific denominator for per-capita consumption)")
+R("D", "years_coming_here", "Years the respondent has been coming here for the season", "How many years have you been coming here for the Yatra season?", "Duration of the relationship with this worksite, which years_in_yatra_work does not give: that counts seasons in the CURRENT kind of work, so a porter who spent six years portering and then four running a stall reads as four. A first-year worker has neither the network nor the savings of a fifteen-year one, and that is an exposure term the VEP model wants.", "count", skip="Ask only if resp_returns_at_closure = 1", source="Project design (duration of the seasonal relationship)")
 R("D", "came_here_reason", "Main reason for first coming here to work", "What was the main reason you first came here to work?", "Push or pull, kept separate from prev_occ_reason, which is about changing WORK -- the old combined item gave a migrant who took a new job on arrival two true answers. Someone driven here by debt or by land too small to live on is in a different position from someone drawn by better pay, at identical current earnings.", "cat", "comereason", skip="Ask only if origin is not Local (same district)", source="Project design (push/pull as a vulnerability covariate)")
 
 # ---- off-season labour migration: the real mobility variable -----------------------------------
@@ -428,8 +424,20 @@ R("D", "came_here_reason", "Main reason for first coming here to work", "What wa
 # not, which is precisely what the structural-displacement question is trying to establish. It is the
 # respondent-level version of the item; a member-level version would need a household roster, which
 # this instrument deliberately does not have.
-R("D", "worked_away_in_closure", "Worked away from both bases during the last closure", "Last year, in the months when the Yatra was closed, did you go somewhere else for work?", "Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the cross-check on the calendar's location row: this should agree with loc_m* code 3 appearing in at least one month, and a disagreement is a data-quality flag neither item could raise alone.", "bin", "yn", source="Project design (off-season labour migration; cross-checks the Module C location row)")
+R("D", "worked_away_in_closure", "Worked away from both bases during the last closure", "Last year, in the months when the Yatra was closed, did you go somewhere else for work?", "Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the gate for months_away_for_work in Module C, which puts a length on it.", "bin", "yn", source="Project design (off-season labour migration)")
 R("D", "closure_work_detail", "Where, and what work, during the closure (verbatim, optional)", "Where did you go, and what work did you do there? Write what they say.", "Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail, target_occ and other_places_detail, so the off-season destination occupation enters the same classification as everything else and can be given a task vector.", "text", skip="Ask only if worked_away_in_closure = 1; may be left blank", source="Project design; coded to NCO-2015 in the office")
+# Module D, not C: these are gated on resp_returns_at_closure and worked_away_in_closure, which are
+# asked in this module. They sat in Module C at first and 06_form_fill_check.py caught it -- a gate
+# that is answered AFTER the question it controls can never open, so all three were unreachable.
+# ---- where the respondent was living, as a spell rather than twelve questions ------------------
+# This replaces loc_m1..loc_m12. The job is the same -- stop the instrument assuming its own key
+# fact, that people are somewhere else once the Yatra shuts -- but twelve select_ones to establish
+# what is almost always a single contiguous absence was a sixth of the interview for one variable.
+# Asked as the spell instead: the month they left and the month they came back. months_here,
+# months_home_base and months_third_place are all still derived, in Stata, from these three items.
+R("D", "left_here_month", "Month the respondent last left the Yatra route", "In the past year, which month did you last leave here and go to your home place?", "Start of the absence. Together with returned_here_month this gives the months spent at the home place, and by subtraction the months spent here -- which is the measured season length, and therefore also the answer to the mid-month season-boundary problem: each respondent's boundary is their own reported month, not a constant we impose.", "cat", "month", skip="Ask only if resp_returns_at_closure = 1", source="Project design (measured seasonal base, asked as a spell)")
+R("D", "returned_here_month", "Month the respondent came back to the Yatra route", "And which month did you come back here?", "End of the absence. A returned month EARLIER in the calendar than the left month is the normal case, not an error -- the absence straddles the new year, because the Yatra closes in November and reopens in April or May.", "cat", "month", skip="Ask only if resp_returns_at_closure = 1", source="Project design (measured seasonal base, asked as a spell)")
+R("D", "months_away_for_work", "Months spent working away from both bases", "In those months away, how many months did you spend working somewhere other than your home place?", "Off-season labour migration, in months. Gives months_third_place, which loc_m* used to carry as code 3, and is the quantity behind closure_labour_migrant -- the mobility variable that actually separates a household with a winter income from one without. 0 is a normal answer: it means the whole absence was spent at the home place.", "count", skip="Ask only if worked_away_in_closure = 1", source="Project design (off-season labour migration)")
 R("D", "worked_other_places", "Has gone elsewhere for work before coming here", "Before you started coming here, had you gone anywhere else for work?", "Prior mobility, over the whole working life rather than the last closure. A worker who has already moved between labour markets has revealed he can, which is exactly what the transferability analysis is trying to establish from task data alone. Ungated: it was previously asked only of non-local respondents, which assumed a local worker has no mobility history -- the pilot's 22 of 45 who had worked in another occupation says otherwise.", "bin", "yn", source="Project design (revealed mobility, for the transferability paper)")
 R("D", "other_places_detail", "Where, and what work (verbatim, optional)", "Where did you go, and what work did you do? Write what they say.", "Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail and target_occ, so a prior destination enters the same occupational classification as everything else.", "text", skip="Ask only if worked_other_places = 1; may be left blank", source="Project design; coded to NCO-2015 in the office")
 R("D", "would_move_for_work", "Would go away for work in the coming year if this ended", "If this work here ended, would you go away from your home place to look for work in the coming year?", "Stated mobility, which is the constraint the task-distance measure cannot see: a worker whose skills fit a destination perfectly but who will not leave is structurally displaced just the same. Pairs with target_occ -- that asks WHAT they would do, this asks whether they would move to do it -- and is read against worked_away_in_closure, the revealed version. Given a concrete horizon (\"in the coming year\") rather than left as an open hypothetical, following the VASyR 2025 practice of horizoning intention items; an unbounded \"would you ever\" is answered on disposition rather than on circumstance.", "cat", "yndk", source="Project design; horizoned intention item after VASyR 2025 (move_accom_yesno, asked over a stated 6-month horizon)")
@@ -473,8 +481,6 @@ EP("cons_med_nonhosp", "Medical spending, not hospital", "medicine, doctor's or 
    HC + ", Section 10.3 (30-day). " + IH + " 14.33 (30-day, out-patient)")
 
 SITEMEALS = ("Worksite subsistence. The consumption module asks what the HOUSEHOLD usually spends, but during the season the respondent lives at the worksite, often apart from that household, and his own subsistence there has a different cost structure: paid lodging, bought meals, no home production. cons_rent catches the lodging; nothing caught the meals. SCOPE: this pair is PERSONAL, not household, spending. It is descriptive of the worksite economy and must NOT be added into cons_pc_pm -- the VEP welfare measure stays household consumption per capita, and adding this would double-count against cons_food_out.")
-R("E", "cooks_own_meals_here", "Cooks their own meals at the Yatra site", "While you are here for the season, do you cook your own meals, or do you buy them?", "Gate for the worksite-subsistence pair. Asked as a genuine three-way choice, not a yes/no: the old version put \"do you cook, or do you buy?\" to a No/Yes button, which does not parse. \"Some of each\" is also the common real answer -- tea and roti in the morning, a bought meal at midday. " + SITEMEALS, "cat", "meals", source="Project design (migrant worksite subsistence)")
-R("E", "meal_spend_day_self", "Own spending on meals per day at the Yatra site (Rs)", "On a normal working day here, about how much do you spend on your own food and tea altogether? (Rs)", "Asked as one daily total rather than split across breakfast, lunch, dinner and tea: four money questions for a module that is explicitly supplementary would not pay for themselves, and a daily total is what a worker actually tracks. " + SITEMEALS, "money", skip="Ask only if cooks_own_meals_here is 2 (buys) or 3 (some of each)", source="Project design (migrant worksite subsistence)")
 EP("cons_packaged_food", "Biscuits, namkeen, packaged snacks and drinks", "biscuits, namkeen, chips, packaged snacks, cold drinks or bottled water",
    "HCES Section 7.2, packaged processed food -- the other half of Section 7. cons_food_out covers 7.1, SERVED processed food (a meal or tea bought and eaten out); this covers packaged items bought and eaten anywhere, which on a trek route is a real and separate category. Omitting it put our consumption aggregate below the total-MPCE concept the poverty line is calibrated against, which biased poverty UPWARD.",
    HC + ", Section 7.2 (7-day in HCES; usual monthly here, as for every other seasonal item)")
@@ -493,6 +499,14 @@ R("E", "cons_education_12m", "Education spending, last 12 months (Rs)", "In the 
 R("E", "cons_medical_hosp_12m", "Medical spending, hospital stays, last 12 months (Rs)", "In the last 12 months, how much did your household pay for any hospital admission or stay? (Rs, 0 if none)", "Hospitalisation spending; the lumpy, infrequent part of medical spending, at a 12-month recall that already spans both seasons. Together with the non-hospitalisation item above, this is the out-of-pocket health measure.", "money", source=HC + ", Section 10.2 (365-day, hospitalisation). " + IH + " 14.34 (365-day, in-patient). " + GH + " instead uses one combined 6-month medical item (less detail); we follow the matching HCES/IHDS split")
 R("E", "cons_durables_12m", "Durable goods spending, last 12 months (Rs)", "In the last 12 months, how much on durable goods: furniture, utensils, cooking appliances, phone, jewellery or ornaments, bicycle or vehicle parts? (Rs)", "Annual durables spending; already spans both seasons, so asked once.", "money", source=HC + ", Section 14 (365-day, 10 sub-groups). " + IH + " 14.40-14.48 (365-day). " + GH + " (12-month tier: durables, appliances, building materials). All three agree on the 12-month recall; insurance premiums, which IHDS (14.50) and the Nigeria survey (items 510-513) count here, are excluded, following HCES and standard national-accounts practice (insurance is a financial item, not consumption) -- premiums are covered instead by the insurance items in Module G")
 
+# cooks_own_meals_here and meal_spend_day_self were dropped 2026-09-30. meal_spend_day_self existed
+# to capture a migrant's own cost of living here, but it never entered cons_food_pm or any other
+# aggregate -- it appeared in the do-files only inside an assert -- while cons_food_out_yatra_pm asks
+# the same thing as a monthly figure and does feed the aggregate. Adding it in would have
+# double-counted. cooks_own_meals_here existed only to gate it. The asymmetry a reviewer spotted --
+# buying meals led to a follow-up and cooking them did not -- was the symptom: someone who cooks here
+# has their ingredient spending in cons_staples and cons_perishables already.
+
 # ------------------------------------------------------------------ F  housing and assets
 HOMENOTE = "Self-reported, not enumerator-observed: by design the interview happens away from the respondent's usual home (Kedarnath route sites, not their native place), so the enumerator cannot see it."
 R("F", "floor_material", "Main floor material at usual home", "What is the main material of the floor at your usual home?", HOMENOTE, "cat", "floor", source="NITI Aayog National MPI housing indicator")
@@ -502,7 +516,7 @@ R("F", "house_type", "House type at usual home (self-reported)", "Would you desc
 R("F", "electricity", "Usual home has an electricity connection", "Does your usual home have an electricity connection?", HOMENOTE, "bin", "yn", source="NITI Aayog National MPI")
 R("F", "toilet_type", "Type of toilet at usual home", "What kind of toilet does your household use at your usual home?", HOMENOTE + " NITI counts a household deprived if the facility is unimproved OR improved but SHARED with other households, so a plain own-toilet yes/no cannot decide the indicator: it misses an unshared but unimproved pit latrine, and it misses a flush toilet shared between four families.", "cat", "toilet", source="NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not)")
 R("F", "drinking_water", "Main source of drinking water at usual home", "What is your main source of drinking water at your usual home?", HOMENOTE + " Codes 1-6 are improved sources, 7-9 unimproved, following the JMP/NFHS taxonomy NITI Aayog's MPI indicator rests on.", "cat", "water", source="NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy)")
-R("F", "water_on_premises", "Drinking water is available on the premises", "Is that water available at the house itself, or does someone have to go and fetch it?", "On-premises vs. fetched. NITI counts even an IMPROVED source as deprived when it is more than a 30-minute round trip away, so source alone cannot decide the indicator -- this and the next item supply the missing limb.", "bin", "yn", source="NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)")
+R("F", "water_on_premises", "Drinking water is available on the premises", "Is the drinking water available at the house itself?", "On-premises vs. fetched. NITI counts even an IMPROVED source as deprived when it is more than a 30-minute round trip away, so source alone cannot decide the indicator -- this and the next item supply the missing limb.", "bin", "yn", source="NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)")
 R("F", "water_fetch_minutes", "Minutes for a round trip to fetch water", "How long does it take to go there, get the water and come back? (minutes, round trip)", "Round-trip fetching time. The 30-minute threshold is NITI's own; asked as a duration rather than a yes/no so the cutoff can be varied in robustness checks instead of being baked into the question.", "count", skip="Ask only if water_on_premises = 0", source="NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)")
 R("F", "water_fetched_by", "Who usually fetches the water", "Who in the household usually goes to fetch it?", "Who bears the fetching burden. Not an MPI indicator -- the MPI stops at whether water is far -- but the distributional question the MPI leaves out: a 40-minute round trip is a different household cost depending on whether an adult man or a girl under 15 makes it. Cheap to add once the fetching question exists at all.", "cat", "fetcher", skip="Ask only if water_on_premises = 0", source="Project design (intra-household burden of water collection; DHS/NFHS ask the same item)")
 R("F", "cooking_fuel", "Main cooking fuel at usual home", "What does your household mainly use to cook at your usual home?", HOMENOTE + " Replaces a yes/no LPG question. NITI Aayog's indicator names the dirty fuels explicitly -- dung, agricultural crops, shrubs, wood, charcoal or coal -- so a fuel LIST is required to apply it; a binary cannot. NOTE on kerosene: NITI's list does not name it, so it is NOT counted as deprived here, although the global MPI does count it. Recorded separately so either rule can be applied later.", "cat", "fuel", source="NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels)")
@@ -538,8 +552,8 @@ R("G", "loan_collateral", "What was pledged as security", "What did you have to 
 R("G", "n_health_insured", "Household members covered by health insurance or a scheme", "How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none)", "A COUNT, not a category. Health, life and crop cover are not alternatives -- a household can hold all three -- yet the old single categorical forced a choice and dumped any household with two into an uninformative \"more than one\". A count also shows PARTIAL coverage, which no binary can.", "count", source="NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023")
 R("G", "n_life_insured", "Household members with life insurance", "How many people in your household have life insurance? (0 if none)", "Count of life-insured members, asked separately from health cover for the reason above.", "count")
 R("G", "has_crop_insurance", "Household has crop insurance", "Is your crop insured?", "Asked only of households with cultivable land -- it is meaningless for the rest, and the old categorical offered it to everyone.", "bin", "yn", skip="Ask only if land_cultivable_acres > 0")
-R("G", "govt_scheme_beneficiary", "Received a government scheme benefit, last 12 months", "In the last 12 months, did your household receive benefits from any government scheme (for example ration, pension, cash transfer)?", "Scheme benefit received.", "bin", "yn")
-R("G", "govt_scheme_which", "Which scheme(s) (verbatim, optional)", "Which ones? Write what they say. If they cannot name it, leave this blank and move on.", "Free text, NOT required. A binary cannot separate a ration card from a widow pension from MGNREGA wages, and those imply very different protection. Optional on purpose: many people know they receive something without knowing its name, and forcing an answer would manufacture false precision.", "text", skip="Ask only if govt_scheme_beneficiary = 1; may be left blank")
+R("G", "govt_schemes", "Government schemes the household received from in the last 12 months", "In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to.", "Named schemes rather than \"any government scheme\", which asked the respondent to recall a category -- people reliably fail at that, and the old binary almost certainly undercounted. A check-all rather than a count of recipients, because the schemes sit at different levels: ration is per household, pensions per person, MGNREGA a job card, PM-KISAN per landholding, so a count across them is not a coherent quantity. Code 10 (None of these) is the explicit negative, so a blank is a missing answer rather than a no.", "multi", "govtscheme", source="Project design; scheme names as administered in Uttarakhand")
+R("G", "govt_scheme_other", "Which other scheme (verbatim, optional)", "Which scheme was that? Write what they say.", "Free text, NOT required, for a scheme the named list does not hold. The list replaced a bare yes/no precisely because a binary cannot separate a ration card from a widow pension from MGNREGA wages, and those imply very different protection -- so this now catches only the residual rather than carrying the whole burden.", "text", skip="Ask only if govt_schemes includes 9 (Some other scheme); may be left blank")
 R("G", "smartphone_owned", "Owns a smartphone", "Do you own a smartphone?", "Smartphone ownership.", "bin", "yn", source="VEP adaptive-capacity covariate; STEP digital items")
 R("G", "uses_digital_payment", "Uses UPI or another digital payment", "Do you ever use UPI or another way of paying by phone?", "Binary. The old never/sometimes/often scale asked respondents to rate their own frequency on an undefined scale; \"sometimes\" and \"often\" are not comparable between two people and carry nothing a binary does not.", "bin", "yn", source="VEP adaptive-capacity covariate; STEP digital items")
 R("G", "n_can_transact_online", "Household members who can pay by phone unaided", "How many people in your household can make a payment by phone themselves, without help? (0 if none)", "Household digital capability rather than the respondent's own use: it says who in the household can actually move money, and therefore something about who controls it.", "count", source="Project design (intra-household financial capability)")
@@ -612,7 +626,14 @@ KSKIP = "Ask only if job_situation is 1, 2 or 3 (currently working)"
 #   9-11 (sick/inactive/don't know)            -> end the module entirely
 KTAIL = "Ask if job_situation is 1 to 7 (Apablaza routes codes 4-7 straight to this question)"
 R("K", "job_situation", "Work situation during the last month", "Which best describes your situation during the last month: you work for pay full-time; you work for pay part-time or do occasional jobs; you study and work; you only study; you are only being trained for work; you are retired or pensioned; you do unpaid household tasks or care for others; you are unemployed and actively looking for work; you are sick or disabled and cannot work; or none of these?", "Screening item, Apablaza's full eleven-category set (Q5), coded from the answer rather than read aloud. The categories are kept apart because Apablaza routes them to three different places (see the gate comment above); collapsing them would lose the routing. In practice codes 4-6 almost never fire, since the sample is recruited at the Yatra worksite.", "cat", "jobsit", source=KA + "Q5 (all eleven categories, with its own three-way routing)")
-R("K", "employer_type", "Type of employer/work arrangement (Apablaza's own 7-way classification)", "In your current work, are you: an employee of a private company; an employee of the public sector or government; a member of the armed forces or law enforcement; an employer or business owner who hires others; working alone with no employees; an unpaid family worker; or a domestic service worker?", "Apablaza's own Q8 classification, asked alongside (not instead of) employment_type in Module B: employment_type is this project's own PLFS-style own-account/employer/regular/casual split, used throughout the rest of the instrument; employer_type adds Apablaza's finer distinctions (public/private/armed forces/domestic worker) for direct comparability with Table 3.", "cat", "emptype2", skip=KSKIP, source=KA + "Q8")
+# employer_type was dropped 2026-09-30. It asked employment status a SECOND time, in Apablaza's Q8
+# taxonomy, minutes after employment_type asked it in Module B -- two overlapping lists, no check that
+# they agreed, and only the Module B answer ever reached the analysis. Q8 is also the worse instrument
+# here: its codes cross status with institutional sector (private company / public sector / armed
+# forces / domestic service), so a porter paid by a thekedar or a shop worker paid by the shop owner --
+# employed by an individual, not a firm, which is most of this sample -- had no true option but
+# "employee of a private company". The one category Q8 had that Module B lacked, unpaid family worker,
+# has been added to emptype instead.
 R("K", "job_permanence", "Type of job: permanent, seasonal, casual, probationary or fixed-term", "Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term?", "Job permanence, Apablaza's five categories kept separate rather than merging probation with fixed-term.", "cat", "jobperm", skip=KSKIP, source=KA + "Q9")
 R("K", "contract_status", "Has a signed contract", "Do you have a signed contract? Yes, signed; yes but not yet signed; no contract.", "Contract status, wage workers only.", "cat", "contract", skip=KSKIP + "; and employment_type is 3 or 4 (wage workers) -- self-employed skip to the next question", source=KA + "Q11")
 R("K", "workplace_registered", "Workplace or business is registered", "Is your workplace or business registered, for example with a taxpayer or GST number, a shop or trade licence, the Yatra registration, or a union?", "Registered enterprise (Apablaza asks about a taxpayer number).", "bin", "yn", skip=KSKIP, source=KA + "Q12 (widened to local registrations)")
@@ -663,12 +684,13 @@ C("hoh_female", "Sex of the household head", "Derived from the gendered relation
 # was in no position to classify. The binary is what the line needs and what a respondent can answer.
 
 # ---- measured seasonal base, from the Module C location row -----------------------------------
-C("months_here", "Months living on the Yatra route in the past year", "Count of calendar months with loc code 1. This is the measured length of the respondent's own season, replacing a constant season length applied to everyone, and it is what the mid-month Yatra-start problem resolves to: each respondent's boundary is wherever their own row turns over.", "count of loc_m1-loc_m12 == 1", "count", source="Project design (measured from the Module C location row)")
-C("months_home_base", "Months living at the home place in the past year", "Count of calendar months with loc code 2.", "count of loc_m1-loc_m12 == 2", "count", source="Project design (measured from the Module C location row)")
-C("months_third_place", "Months living away from both bases for work", "Count of calendar months with loc code 3 -- off-season labour migration, measured rather than stated. The stated counterpart is worked_away_in_closure in Module D; the two should agree, and where they do not that is a data-quality flag neither could raise alone.", "count of loc_m1-loc_m12 == 3", "count", source="Project design (measured from the Module C location row)")
-C("closure_labour_migrant", "Sold labour away from both bases during the closure", "1 if the respondent either reported working away during the closure (worked_away_in_closure) or has at least one calendar month coded 'somewhere else, for work'. This is type B in the closure-regime typology and the mobility variable that actually carries information in this population, in place of a migrant dummy built on district boundaries -- which the pilot shows would classify 11 of 20 seasonal movers as non-movers.", "worked_away_in_closure==1 | months_third_place>0", "bin", "yn", source="Project design (off-season labour migration)")
-C("stays_all_year", "Does not move at all when the Yatra closes", "1 if closure_base = 1. The case the two-season design of this instrument does NOT fit: for these respondents the Yatra-season and off-season consumption questions describe the same place, and the pair should be checked for a suspiciously high identical-answer rate at the pilot.", "closure_base==1", "bin", "yn", source="Project design (assumption check on the two-season recall design)")
-C("split_household", "Respondent and household are in different places during the season", "1 if closure_base is 3 or 4 -- the household lives at the home place all year while the respondent is here for the season. This is the case Module E's Yatra-season wording ('you and anyone staying with you here') was written for, and until this item existed there was no way to tell which respondents it applied to.", "inlist(closure_base,3,4)", "bin", "yn", source="Project design (split-household measurement, underpinning Module E)")
+C("months_here", "Months living on the Yatra route in the past year", "Derived from the absence spell: 12 minus the months between left_here_month and returned_here_month, or 12 for a respondent who never leaves. This is the measured length of the respondent OWN season, in place of a constant applied to everyone, and it is what the mid-month Yatra-start problem resolves to -- the boundary is the month they reported, not one we chose.", "12 - months_home_base - months_third_place", "count", source="Project design (measured from the absence spell, Module C)")
+C("months_home_base", "Months living at the home place in the past year", "Months in the absence spell that were NOT spent working elsewhere. The spell straddles the new year -- the Yatra closes in November and reopens in April or May -- so the arithmetic wraps, which is handled in Stata.", "spell length minus months_away_for_work", "count", source="Project design (measured from the absence spell, Module C)")
+C("months_third_place", "Months living away from both bases for work", "months_away_for_work as reported, 0 for anyone who did not work away. Off-season labour migration with a length on it, which the old yes/no could not give.", "months_away_for_work, else 0", "count", source="Project design (off-season labour migration)")
+C("closure_labour_migrant", "Sold labour away from both bases during the closure", "1 if the respondent reported working away during the closure. Type B in the closure-regime typology and the mobility variable that actually carries information in this population, in place of a migrant dummy built on district boundaries -- which the pilot shows would classify 11 of 20 seasonal movers as non-movers.", "worked_away_in_closure==1", "bin", "yn", source="Project design (off-season labour migration)")
+C("cons_pc_denom_season", "People the Yatra-season consumption figures cover", "n_here_season for a split household, hhsize for everyone else. This is the fix for a real error in the poverty headcount: per-capita consumption divided the Yatra-season figure -- which covers only \"you and anyone staying with you here\" -- by the FULL household size, so a man supporting himself here for six months while a family of five lived at the home place was recorded at a fraction of his true per-capita consumption and counted as poor by arithmetic. The off-season half keeps hhsize, because by then the household is reunited.", "n_here_season if split_household==1, else hhsize", "count", source="Project design (season-specific denominator)")
+C("stays_all_year", "Does not move at all when the Yatra closes", "1 if the respondent does not go to the home place at closure. The case the two-season design of this instrument does NOT fit: for these respondents the Yatra-season and off-season questions describe the same place, and the pair should be checked for a suspiciously high identical-answer rate at the pilot.", "resp_returns_at_closure==0", "bin", "yn", source="Project design (assumption check on the two-season recall design)")
+C("split_household", "Respondent and household are in different places during the season", "1 if the rest of the household lives at the home place year-round. The case Module E Yatra-season wording was written for, and the case whose per-capita consumption was being computed wrongly until n_here_season existed.", "hh_at_home_place==1", "bin", "yn", source="Project design (split-household measurement, underpinning Module E)")
 C("credit_institutional", "Borrowed from an institutional lender", "1 if the household borrowed in the last 12 months from a bank, cooperative, RRB, microfinance institution or SHG (credit_source 1-4); 0 otherwise, INCLUDING households that did not borrow at all. Defined for every respondent on purpose: credit_source itself is now gated behind took_loan_12m, so using it directly as a VEP covariate would drop every non-borrower from the regression.", "took_loan_12m==1 & inrange(credit_source,1,4)", "bin", "yn", source="VEP adaptive-capacity covariate")
 C("credit_informal", "Borrowed from an informal lender", "1 if the household borrowed from a moneylender, relative, friend, employer or contractor (credit_source 5-8); 0 otherwise, including non-borrowers. Separated from institutional credit because the two have opposite signs for vulnerability.", "took_loan_12m==1 & inrange(credit_source,5,8)", "bin", "yn", source="VEP adaptive-capacity covariate")
 C("migrant", "Migrant: permanent home is outside the district", "1 if origin is not Local (same district).", "origin > 1", "bin", "yn")

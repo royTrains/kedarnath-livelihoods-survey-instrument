@@ -48,28 +48,41 @@ print(f"\nStata skip-logic asserts vs {len(d)} form-produced submissions\n")
 migrant = num("origin") > 1
 chk("!missing(migration_referral)", num("migration_referral").notna())
 chk("!missing(worked_other_places)", num("worked_other_places").notna())
-chk("closure_base in 1..4", num("closure_base").between(1, 4))
+chk("!missing(resp_returns_at_closure)", num("resp_returns_at_closure").notna())
+chk("!missing(hh_at_home_place)", num("hh_at_home_place").notna())
 chk("!missing(worked_away_in_closure)", num("worked_away_in_closure").notna())
-chk("missing(years_coming_here) == (closure_base==1)",
-    num("years_coming_here").isna() == (num("closure_base") == 1))
+chk("missing(n_here_season) == (hh_at_home_place!=1)",
+    num("n_here_season").isna() == (num("hh_at_home_place") != 1))
+chk("missing(years_coming_here) == (resp_returns_at_closure!=1)",
+    num("years_coming_here").isna() == (num("resp_returns_at_closure") != 1))
+chk("missing(left_here_month) == (resp_returns_at_closure!=1)",
+    num("left_here_month").isna() == (num("resp_returns_at_closure") != 1))
+chk("missing(returned_here_month) == (resp_returns_at_closure!=1)",
+    num("returned_here_month").isna() == (num("resp_returns_at_closure") != 1))
+chk("missing(months_away_for_work) == (worked_away_in_closure!=1)",
+    num("months_away_for_work").isna() == (num("worked_away_in_closure") != 1))
+chk("left_here_month in 1..12 when asked",
+    num("left_here_month").between(1, 12) | num("left_here_month").isna())
 chk("missing(came_here_reason) == (migrant!=1)", num("came_here_reason").isna() == (~migrant))
-chk("(closure_work_detail=='') == !(worked_away_in_closure==1)",
-    (txt("closure_work_detail") == "") == ~(num("worked_away_in_closure") == 1))
-chk("(other_places_detail=='') == !(worked_other_places==1)",
-    (txt("other_places_detail") == "") == ~(num("worked_other_places") == 1))
-chk("loc_m1..12 all in 1..4",
-    pd.concat([num(f"loc_m{m}").between(1, 4) for m in range(1, 13)], axis=1).all(1))
+# One-directional, matching the build. These are optional verbatim fields: the gate being open does
+# not oblige the enumerator to have typed anything, so only the reverse is enforceable.
+chk("closure_work_detail blank when its gate is shut",
+    (txt("closure_work_detail") == "") | (num("worked_away_in_closure") == 1))
+chk("other_places_detail blank when its gate is shut",
+    (txt("other_places_detail") == "") | (num("worked_other_places") == 1))
 chk("home_rural_urban in 1..2", num("home_rural_urban").between(1, 2))
+chk("govt_schemes never blank (code 10 is the explicit negative)", txt("govt_schemes") != "")
+chk("govt_scheme_other blank when 'other scheme' is not ticked",
+    (txt("govt_scheme_other") == "") | txt("govt_schemes").str.split().apply(lambda t: "9" in t))
+chk("other_activity_types never repeats the main occupation",
+    ~pd.Series([str(o) in str(a).split() for o, a in zip(d["occupation"], txt("other_activity_types"))]))
 
-# Combinations the build deliberately does NOT assert. Printed so the counts stay visible: if either
-# ever reads 0 across a few hundred forms, the form has gained a constraint somewhere and the
-# corresponding data-quality check in 02_build_final_dataset.do has become dead code.
-S = np.column_stack([num(f"status_m{m}") for m in range(1, 13)])
-L = np.column_stack([num(f"loc_m{m}") for m in range(1, 13)])
-print(f"\n  not asserted, by design -- Yatra-work month not coded on the route: "
-      f"{int(((S == 1) & (L != 1)).sum())} respondent-months (local commuters; a true answer)")
-print(f"  not asserted, counted as dq_act_loc_conflict -- activity 5 at a base: "
-      f"{int(((S == 5) & ((L == 1) | (L == 2))).sum())} respondent-months")
+# Combinations the build deliberately does NOT assert, printed so the counts stay visible. The old
+# pair here concerned the loc_m1..12 location row, which the absence spell replaced; what remains is
+# the one cross-field rule the form cannot enforce.
+_over = (num("months_away_for_work") > 0) & (num("worked_away_in_closure") != 1)
+print(f"\n  not asserted, counted as dq_away_exceeds_spell -- work months outside the absence: "
+      f"{int(_over.sum())} of {len(d)} rows")
 
 print()
 if fails:

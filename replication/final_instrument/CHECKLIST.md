@@ -367,3 +367,79 @@ Tracks the final questionnaire, variable dictionary and worked-example dataset i
       clean, 7/7 navigation tests, 50/50 forms filled and exported end to end through the form's own code
       with zero validation dead-ends, pyxform validates, Stata build and both analyses run clean, all eight
       analysis-readiness groups pass. 361 dictionary rows / 220 asked
+
+## Stage 14 — Field-review batch: nine issues from filling the form (2026-09-30)
+- [x] 14.1 **A live error in the poverty headcount.** `cons_pc_pm` divided `total_cons_pm` by `hhsize`,
+      but the Yatra-season consumption items are asked as "you and anyone staying with you here" while
+      the off-season items are asked of "your household". A split household therefore had one man's six
+      months of on-site spending charged against five people and fell below the line by arithmetic.
+      Fixing it by dividing the season half by `n_here_season` **overcorrected** — split households went
+      from 55% poor to 5% poor, because his on-site spend over 1.6 people looks affluent while the same
+      earnings support 4.1 at home. Both are biased, opposite ways. The close is that the home-side flow
+      IS observed: for a split household the season numerator is on-site spending **plus** outward
+      remittances, over full `hhsize`. Poverty 0.55 → 0.42; split 0.33 against non-split 0.46.
+      `cons_pc_onsite_pm` retained as the individual-welfare sensitivity
+- [x] 14.2 **The season weight is now `months_here`, not `yatra_months`.** Months physically on the
+      route, not months of Yatra *work* — the Yatra-season spending figure describes spending while
+      here, so that is the weight it belongs to. Before the absence spell existed there was nothing
+      else to use
+- [x] 14.3 **`loc_m1..loc_m12` replaced by an absence spell** (`left_here_month`, `returned_here_month`,
+      `months_away_for_work`). Twelve select_ones for what is almost always one contiguous absence was
+      a sixth of the interview; three questions carry it, and `months_here` / `months_home_base` /
+      `months_third_place` are all still derived. The spell straddles the new year, so the Stata
+      arithmetic wraps with `mod()`
+- [x] 14.4 **`closure_base` split into two binaries** (`resp_returns_at_closure`, `hh_at_home_place`).
+      The old stem named two subjects in one breath and offered a binary against four options. Same
+      four cells, derived in Stata from two plain yes/no answers
+- [x] 14.5 **`water_on_premises`**: an either/or question ("at the house itself, **or** does someone
+      have to go and fetch it?") answered Yes/No, so the gate on the two fetch questions fired on a
+      coin flip. Now a plain "Is the drinking water available at the house itself?". Swept the
+      instrument — it was the only remaining instance
+- [x] 14.6 **`remit_mode`**: bank transfer and UPI were separate options, but UPI *is* a bank transfer.
+      Recoded on the axis the item exists to measure — whether the respondent had to physically go
+      somewhere: own phone / in person at a branch or bank mitra / money order / sent with someone /
+      carried it myself / through an agent / other
+- [x] 14.7 **`govt_scheme_beneficiary` → `govt_schemes`**, a check-all of **named** schemes (PDS,
+      MGNREGA, pensions, PM-KISAN, Ujjwala, PM-SYM/APY, Ayushman, housing, other, none). "Any
+      government scheme" asked the respondent to recall a category and almost certainly undercounted.
+      Not a count of recipients: the schemes sit at different levels — household, person, job card,
+      landholding — so a count across them is not a coherent quantity
+- [x] 14.8 **`other_activity_types` no longer offers the main occupation.** It shares the 14-option
+      occupation list with `occupation`, so a pony owner was offered "Pony/mule owner" again as a
+      second activity. XLSForm `choice_filter` on a new `code` column; mirrored in the web form, where
+      the exclusion is applied at render time so it re-filters if the enumerator goes Back
+- [x] 14.9 **`meal_spend_day_self` and `cooks_own_meals_here` dropped.** The spend item never entered
+      any consumption aggregate — assert-only — and duplicated `cons_food_out_yatra_pm`, which does
+      feed it; adding it in would have double-counted. The cooks item existed only to gate it. This was
+      the cause of the asymmetry a reviewer spotted, that buying meals led to a follow-up and cooking
+      them did not
+- [x] 14.10 **`employer_type` dropped; `emptype` gains "unpaid family worker".** Apablaza's Q8 asked
+      employment status a second time, minutes after Module B, and is the worse instrument here: its
+      codes cross status with institutional sector, so a porter paid by a thekedar or a shop worker
+      paid by the shop owner — employed by an individual, which is most of this sample — had no true
+      option but "employee of a private company". Only the Module B answer ever reached the analysis
+- [x] 14.11 **Activity codes 4 and 5 stop encoding location.** They were "wage labour, staying at
+      home" and "went away from home for work" — one activity split across two codes on a location
+      criterion, which no labour-force classification does and which destroyed the activity
+      information. Now "casual or daily wage labour" and "construction work", the commonest off-season
+      destination occupation, which previously had nowhere to go. Checked against the held sources:
+      Apablaza's Q5 carries no location at all, STEP's `emp_status` is plain ICSE, and Lindenberg's
+      (2002) CARE seasonal calendar keeps migration timing and activity as separate rows
+- [x] 14.12 **The calendar opens at the season, not January.** It used to show January first and then
+      instruct "fill the Yatra months first" — an instruction the form cannot obey, one question per
+      screen in dictionary order. `CAL_ORDER` is presentation only: `status_m1` is still January and no
+      month arithmetic changed
+- [x] 14.13 **Enumerator hints** (`dictionary.HINTS`) reach the tablet as XLSForm `hint::` columns, the
+      web form, both scripts and the paper form. First one: seasonal vs occasional on `job_permanence`,
+      where the error runs one way — every job here is seasonal because the Yatra closes — and where
+      `emp_dep_stab` counts code 3 as unstable and code 2 as not
+- [x] 14.14 **Two bugs caught by the checks during this batch, both the same class.** (a)
+      `06_form_fill_check.py` rule-ordering found the three spell items placed in Module C while their
+      gates sit in Module D — a gate answered *after* the question it controls can never open, so all
+      three were unreachable; moved to D. (b) `09_asserts_vs_form.py` found five asserts requiring text
+      in an optional verbatim field whenever its gate was open, which the form does not enforce; all
+      made one-directional (the field cannot hold text when the gate is shut)
+- [x] 14.15 Verified: 0 Stata errors across the build and both analyses, `05` clean, `06` clean on all
+      eight analysis groups (79 of 210 asked items gated), 7/7 navigation, 50/50 forms filled and
+      exported, 18/18 skip-logic asserts hold on form-produced data, pyxform validates with the
+      choice_filter itemset and hint nodes compiled. 352 dictionary rows / 210 asked, down from 220
