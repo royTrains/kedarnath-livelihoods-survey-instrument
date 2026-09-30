@@ -581,101 +581,105 @@ Now some questions about your house and the things your household has.
 
 > **ENUMERATOR:** Options: 1 Kaccha · 2 Semi-pucca · 3 Pucca
 
-**117.** Does your usual home have an electricity connection?
+**117.** While you are here for the season, where do you sleep?
+
+> **ENUMERATOR:** Options: 1 Own house here · 2 Rented room or house · 3 Room or dormitory the employer provides · 4 Sleeps at the shop, dhaba or workplace · 5 Tent or temporary shelter · 6 Lodge, dharamshala or ashram · 7 In the open, or a verandah · 8 Somewhere else
+
+**118.** Does your usual home have an electricity connection?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**118.** What kind of toilet does your household use at your usual home?
+**119.** What kind of toilet does your household use at your usual home?
 
 > **ENUMERATOR:** Options: 1 No toilet / open defecation · 2 Pit latrine without slab or open pit · 3 Improved toilet, but shared with other households · 4 Improved toilet, used only by this household
 
-**119.** What is your main source of drinking water at your usual home?
+**120.** What is your main source of drinking water at your usual home?
 
 > **ENUMERATOR:** Options: 1 Piped into the house or yard · 2 Public tap or standpipe · 3 Handpump, tubewell or borewell · 4 Protected well or protected spring · 5 Rainwater collection · 6 Bottled, packaged or community RO · 7 Unprotected well or unprotected spring · 8 River, stream, pond or canal · 9 Tanker truck or cart with drum
 
-**120.** Is the drinking water available at the house itself?
+**121.** Is the drinking water available at the house itself?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**121.** How long does it take to go there, get the water and come back? (minutes, round trip)
+**122.** How long does it take to go there, get the water and come back? (minutes, round trip)
 
 > **ENUMERATOR:** Ask only if: water_on_premises = 0  
 > Record: whole number
 
-**122.** Who in the household usually goes to fetch it?
+**123.** Who in the household usually goes to fetch it?
 
 > **ENUMERATOR:** Ask only if: water_on_premises = 0  
 > Options: 1 An adult woman · 2 An adult man · 3 A girl under 15 · 4 A boy under 15 · 5 It varies / more than one person
 
-**123.** What does your household mainly use to cook at your usual home?
+**124.** What does your household mainly use to cook at your usual home?
 
 > **ENUMERATOR:** Options: 1 LPG or cylinder gas · 2 Piped natural gas · 3 Electricity · 4 Biogas (gobar gas plant) · 5 Kerosene · 6 Firewood · 7 Dung cakes (gobar) · 8 Crop residue, straw or shrubs · 9 Charcoal · 10 Coal or lignite
 
-**124.** Does your household own: a television?
+**125.** Does your household own: a television?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**125.** ... a radio?
+**126.** ... a radio?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**126.** ... a bicycle?
+**127.** ... a bicycle?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**127.** ... a motorcycle or scooter?
+**128.** ... a motorcycle or scooter?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**128.** ... a car, jeep or truck?
+**129.** ... a car, jeep or truck?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**129.** ... a telephone of any kind, mobile or landline?
+**130.** ... a telephone of any kind, mobile or landline?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**130.** ... a computer or laptop?
+**131.** ... a computer or laptop?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**131.** ... a cart pulled by an animal?
+**132.** ... a cart pulled by an animal?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**132.** ... a refrigerator?
+**133.** ... a refrigerator?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**133.** How much CULTIVABLE land does your household own or cultivate, in acres? Do not count the land the house stands on. (0 if none)
+**134.** How much CULTIVABLE land does your household own or cultivate, in acres? Do not count the land the house stands on. (0 if none)
 
 > **ENUMERATOR:** Record: number
 
-**134.** Does your household own any cows or buffaloes?
+**135.** Does your household own any cows or buffaloes?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**135.** Does your household own any goats or sheep?
+**136.** Does your household own any goats or sheep?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**136.** Does your household own any ponies or mules?
+**137.** Does your household own any ponies or mules?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**137.** Does your household own a shop or stall that you use to earn?
+**138.** Does your household own a shop or stall that you use to earn?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**138.** Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)?
+**139.** Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**139.** Does your household own equipment or tools that you use to earn?
+**140.** Does your household own equipment or tools that you use to earn?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**140.** What are they? Write what they say. Leave blank if they cannot say.
+**141.** What are they? Write what they say. Leave blank if they cannot say.
 
 > **ENUMERATOR:** Ask only if: owns_work_equipment = 1; may be left blank  
 > Record: write the answer in words, verbatim
@@ -689,80 +693,85 @@ Now some questions about your house and the things your household has.
 
 Now about savings, loans, insurance and government schemes.
 
-**141.** Does anyone in your household have a bank account or a post office account?
+**142.** Does anyone in your household have a bank account or a post office account?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**142.** Is any of these a Jan Dhan account?
+**143.** Is any of these a Jan Dhan account?
 
 > **ENUMERATOR:** Ask only if: has_bank_account = 1  
 > Options: 0 No · 1 Yes
 
-**143.** In the last 12 months, did you or anyone in your household borrow money?
+**144.** In the last 12 months, did you or anyone in your household borrow money?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**144.** Who was the main lender?
+**145.** Who was the main lender?
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1  
 > Options: 1 Nationalised or public-sector bank · 2 Private bank · 3 Cooperative bank or RRB · 4 Microfinance institution or SHG · 5 Moneylender · 6 Relative or friend · 7 Employer or contractor (advance) · 8 Other
 
-**145.** How much of that loan is still left to repay? (Rs)
+**146.** How much of that loan is still left to repay? (Rs)
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1  
 > Record: amount in rupees, whole number
 
-**146.** Do you pay interest on it?
+**147.** Do you pay interest on it?
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1  
 > Options: 0 No · 1 Yes
 
-**147.** On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known)
+**148.** On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known)
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1; may be left blank  
 > Record: number
 
-**148.** Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business?
+**149.** Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business?
 
 > **ENUMERATOR:** Ask only if: took_loan_12m = 1  
 > Options: 0 No · 1 Yes
 
-**149.** What did you have to give as security?
+**150.** What did you have to give as security?
 
 > **ENUMERATOR:** Ask only if: loan_against_asset = 1  
 > Options: 1 Jewellery or ornaments · 2 Land · 3 Animals · 4 A vehicle · 5 Shop stock or business goods · 6 House or building · 7 Something else
 
-**150.** How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none)
+**151.** How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none)
 
 > **ENUMERATOR:** Record: whole number
 
-**151.** How many people in your household have life insurance? (0 if none)
+**152.** How many people in your household have life insurance? (0 if none)
 
 > **ENUMERATOR:** Record: whole number
 
-**152.** Is your crop insured?
+**153.** Is your crop insured?
 
 > **ENUMERATOR:** Ask only if: land_cultivable_acres > 0  
 > Options: 0 No · 1 Yes
 
-**153.** In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to.
+**154.** In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to.
 
 > **ENUMERATOR:** select all that apply: 1 Ration card / PDS food grain · 2 MGNREGA work or job card · 3 Old-age, widow or disability pension · 4 PM-KISAN (farmer cash transfer) · 5 Ujjwala LPG connection · 6 PM-SYM or Atal Pension Yojana · 7 Ayushman Bharat / health insurance card · 8 Housing scheme (PMAY or state) · 9 Some other scheme · 10 None of these
 
-**154.** Which scheme was that? Write what they say.
+**155.** Which scheme was that? Write what they say.
 
 > **ENUMERATOR:** Ask only if: govt_schemes includes 9 (Some other scheme); may be left blank  
 > Record: write the answer in words, verbatim
 
-**155.** Do you own a smartphone?
+**156.** Can you draw your ration here, or only at your home place?
+
+> **ENUMERATOR:** Ask only if: govt_schemes includes 1 (ration card)  
+> Options: 1 Yes, can draw it here · 2 No, only at the home place · 3 Has never tried · 97 Does not know
+
+**157.** Do you own a smartphone?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**156.** Do you ever use UPI or another way of paying by phone?
+**158.** Do you ever use UPI or another way of paying by phone?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**157.** How many people in your household can make a payment by phone themselves, without help? (0 if none)
+**159.** How many people in your household can make a payment by phone themselves, without help? (0 if none)
 
 > **ENUMERATOR:** Record: whole number
 
@@ -775,42 +784,46 @@ Now about savings, loans, insurance and government schemes.
 
 Now a few questions about health in your household. You may leave out any of these.
 
-**158.** In the last 15 days, was anyone in your household ill?
+**160.** In the last 15 days, was anyone in your household ill?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**159.** How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else?
+**161.** How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else?
 
 > **ENUMERATOR:** Ask only if: morbidity_15d = 1  
 > Options: 1 Used savings · 2 Borrowed money · 3 Sold or pawned assets · 4 Cut consumption · 5 Help from relatives/community · 6 Did nothing/other
 
-**160.** About how much did the household spend on this in the last 15 days (medicine, doctor or clinic fees, travel for care)? (Rs)
+**162.** About how much did the household spend on this in the last 15 days (medicine, doctor or clinic fees, travel for care)? (Rs)
 
 > **ENUMERATOR:** Ask only if: morbidity_15d = 1  
 > Record: amount in rupees, whole number
 
-**161.** In the last 12 months, was anyone in your household admitted to hospital overnight?
+**163.** Do you have difficulty walking or climbing steps?
+
+> **ENUMERATOR:** Options: 1 No difficulty · 2 Some difficulty · 3 A lot of difficulty · 4 Cannot do it at all
+
+**164.** In the last 12 months, was anyone in your household admitted to hospital overnight?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**162.** In the last 3 months, was there a time when someone in your household needed medical care but could not get it?
+**165.** In the last 3 months, was there a time when someone in your household needed medical care but could not get it?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**163.** In the last five years, has any child or young person under 18 in your household died?
+**166.** In the last five years, has any child or young person under 18 in your household died?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**164.** In the last five years, did any woman in your household give birth?
+**167.** In the last five years, did any woman in your household give birth?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**165.** For the most recent birth, did she have at least four check-ups before the delivery?
+**168.** For the most recent birth, did she have at least four check-ups before the delivery?
 
 > **ENUMERATOR:** Ask only if: birth_last_5y = 1  
 > Options: 0 No · 1 Yes · 97 Don't know
 
-**166.** Was that delivery done with the help of a doctor, nurse or trained midwife?
+**169.** Was that delivery done with the help of a doctor, nurse or trained midwife?
 
 > **ENUMERATOR:** Ask only if: birth_last_5y = 1  
 > Options: 0 No · 1 Yes · 97 Don't know
@@ -824,52 +837,67 @@ Now a few questions about health in your household. You may leave out any of the
 
 Now about food, and about any difficult times in the last year and how your household managed.
 
-**167.** In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.
+**170.** In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.
 
 > **ENUMERATOR:** select all that apply: 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
 
-**168.** How did your household manage? Check every one they used.
+**171.** Of those, which one was hardest for your household?
+
+> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
+> Options: 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
+
+**172.** Because of that, about how much did your household lose in earnings, or have to spend? (Rs)
+
+> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
+> Record: amount in rupees, whole number
+
+**173.** In which month did that happen?
+
+> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
+> Options: 1 January · 2 February · 3 March · 4 April · 5 May · 6 June · 7 July · 8 August · 9 September · 10 October · 11 November · 12 December
+
+**174.** How did your household manage? Check every one they used.
 
 > **ENUMERATOR:** Ask only if: any shock was reported  
 > select all that apply: 1 Used savings · 2 Borrowed money · 3 Sold or pawned assets · 4 Cut consumption · 5 Help from relatives/community · 6 Did nothing/other
 
-**169.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
+**175.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**170.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
+**176.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**171.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
+**177.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**172.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
+**178.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**173.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
+**179.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**174.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
+**180.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**175.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
+**181.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**176.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
+**182.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**177.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
+**183.** In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
-**178.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
+**184.** In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
 
 > **ENUMERATOR:** Record: whole number
 
@@ -882,11 +910,11 @@ Now about food, and about any difficult times in the last year and how your hous
 
 Now two questions about the ropeway that has been proposed between Gaurikund and Kedarnath.
 
-**179.** A ropeway is proposed between Gaurikund and Kedarnath. Are you in favour, neutral, or against?
+**185.** A ropeway is proposed between Gaurikund and Kedarnath. Are you in favour, neutral, or against?
 
 > **ENUMERATOR:** Options: 1 Support · 2 Neutral · 3 Oppose · 98 Prefer not to say
 
-**180.** Is your main Yatra work carrying, transporting or guiding people or goods on the Gaurikund to Kedarnath trek?
+**186.** Is your main Yatra work carrying, transporting or guiding people or goods on the Gaurikund to Kedarnath trek?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
@@ -899,67 +927,67 @@ Now two questions about the ropeway that has been proposed between Gaurikund and
 
 Now a set of questions about the conditions of your work -- hours, pay, contract and so on. These come from a standard list used in many countries, so one or two may not fit your situation. Say so and we will move on.
 
-**181.** Which best describes your situation during the last month: you work for pay full-time; you work for pay part-time or do occasional jobs; you study and work; you only study; you are only being trained for work; you are retired or pensioned; you do unpaid household tasks or care for others; you are unemployed and actively looking for work; you are sick or disabled and cannot work; or none of these?
+**187.** Which best describes your situation during the last month: you work for pay full-time; you work for pay part-time or do occasional jobs; you study and work; you only study; you are only being trained for work; you are retired or pensioned; you do unpaid household tasks or care for others; you are unemployed and actively looking for work; you are sick or disabled and cannot work; or none of these?
 
 > **ENUMERATOR:** Options: 1 Works for pay full-time · 2 Works for pay part-time or occasional jobs · 3 Studies and works · 4 Only studies · 5 Being trained for work only · 6 Retired or pensioned · 7 Unpaid household tasks or caring for others · 8 Unemployed, actively seeking work · 9 Sick or disabled, cannot work · 10 Neither studying, working nor seeking work · 97 Does not know
 
-**182.** Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term?
+**188.** Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 1 Permanent · 2 Seasonal or temporary · 3 Occasional or casual · 4 On probation · 5 Fixed-term  
 > How to code: Both will sound seasonal here -- the Yatra closes for everyone. Ask about WITHIN the season. One employer keeps them on for a stretch = Seasonal or temporary. They take work day by day from whoever offers it = Occasional or casual. Self-employed: answer for how their own work runs. On probation and Fixed-term are rare here; do not reach for them.
 
-**183.** Do you have a signed contract? Yes, signed; yes but not yet signed; no contract.
+**189.** Do you have a signed contract? Yes, signed; yes but not yet signed; no contract.
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working); and employment_type is 3 or 4 (wage workers) -- self-employed skip to the next question  
 > Options: 1 Yes, signed · 2 Yes, but not yet signed · 3 No contract
 
-**184.** Is your workplace or business registered, for example with a taxpayer or GST number, a shop or trade licence, the Yatra registration, or a union?
+**190.** Is your workplace or business registered, for example with a taxpayer or GST number, a shop or trade licence, the Yatra registration, or a union?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 0 No · 1 Yes
 
-**185.** Do you contribute to any pension system? Yes, the employer deducts it; yes, voluntarily; no.
+**191.** Do you contribute to any pension system? Yes, the employer deducts it; yes, voluntarily; no.
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 1 Yes, employer deducts it · 2 Yes, contributes voluntarily · 3 No
 
-**186.** Do you have health insurance through your work? Yes; only private or other insurance; none; don't know.
+**192.** Do you have health insurance through your work? Yes; only private or other insurance; none; don't know.
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 1 Yes, through work · 2 Only private or other insurance · 3 None · 4 Don't know
 
-**187.** Do you have the right to paid holiday, sick or maternity leave?
+**193.** Do you have the right to paid holiday, sick or maternity leave?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 0 No · 1 Yes · 97 Don't know
 
-**188.** Have you ever been physically injured at your workplace?
+**194.** Have you ever been physically injured at your workplace?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 0 No · 1 Yes · 97 Don't know
 
-**189.** In the last 12 months, was anyone physically injured or killed at your workplace because of work?
+**195.** In the last 12 months, was anyone physically injured or killed at your workplace because of work?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1, 2 or 3 (currently working)  
 > Options: 0 No · 1 Yes · 97 Don't know
 
-**190.** Would you like to work more hours than you do?
+**196.** Would you like to work more hours than you do?
 
 > **ENUMERATOR:** Ask only if: job_situation is 1 to 7 (Apablaza routes codes 4-7 straight to this question)  
 > Options: 0 No · 1 Yes · 97 Don't know
 
-**191.** On a working day, how many MORE hours would you like to work?
+**197.** On a working day, how many MORE hours would you like to work?
 
 > **ENUMERATOR:** Ask only if: wants_more_work = 1, or if job_situation = 8 (Apablaza routes the unemployed-and-seeking category here directly)  
 > Record: whole number
 
-**192.** Across the months when you had no paid work, about how many MONTHS in total were you looking for work?
+**198.** Across the months when you had no paid work, about how many MONTHS in total were you looking for work?
 
 > **ENUMERATOR:** Ask only if: any month in the calendar is 'No paid work', or if job_situation = 8  
 > Record: whole number
 
-**193.** Was your current work the first paid job you ever had?
+**199.** Was your current work the first paid job you ever had?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes · 97 Don't know
 
@@ -972,74 +1000,74 @@ Now a set of questions about the conditions of your work -- hours, pay, contract
 
 Last, I will read out some kinds of work-tasks and ask whether you do them. There is no right or wrong answer -- we are trying to understand what skills the work here actually uses.
 
-**194.** Do you load, unload, stack or count goods? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**200.** Do you load, unload, stack or count goods? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**195.** Do you drive a motor vehicle? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**201.** Do you drive a motor vehicle? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**196.** Do you operate an engine or machine? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**202.** Do you operate an engine or machine? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**197.** Do you do electrical or wiring work? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**203.** Do you do electrical or wiring work? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**198.** Do you check equipment or the route for safety? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**204.** Do you check equipment or the route for safety? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**199.** Do you sell goods or services? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**205.** Do you sell goods or services? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**200.** Do you handle cash and payments? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**206.** Do you handle cash and payments? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**201.** Do you cook or prepare food or drink? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**207.** Do you cook or prepare food or drink? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**202.** Do you serve guests or customers? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**208.** Do you serve guests or customers? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**203.** Do you clean rooms or public areas? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**209.** Do you clean rooms or public areas? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**204.** Do you guide or explain things to visitors? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**210.** Do you guide or explain things to visitors? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**205.** Do you coordinate work by phone, radio or signals? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
+**211.** Do you coordinate work by phone, radio or signals? (1 regularly in my main Yatra work; 2 not in my main work, but done before elsewhere; 3 never)
 
 > **ENUMERATOR:** Options: 1 Yes, regularly in my main Yatra work · 2 Not in my main work, but done before elsewhere · 3 Never done
 
-**206.** Have you ever driven a motorcycle or scooter, with or without a licence?
+**212.** Have you ever driven a motorcycle or scooter, with or without a licence?
 
 > **ENUMERATOR:** Ask only if: tk_drive is 1 or 2  
 > Options: 0 No · 1 Yes
 
-**207.** ... a car or jeep?
+**213.** ... a car or jeep?
 
 > **ENUMERATOR:** Ask only if: tk_drive is 1 or 2  
 > Options: 0 No · 1 Yes
 
-**208.** ... a truck or bus?
+**214.** ... a truck or bus?
 
 > **ENUMERATOR:** Ask only if: tk_drive is 1 or 2  
 > Options: 0 No · 1 Yes
 
-**209.** In your work, do you read anything (notes, rate lists, tickets, messages)?
+**215.** In your work, do you read anything (notes, rate lists, tickets, messages)?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
-**210.** In your work, do you work out prices or costs?
+**216.** In your work, do you work out prices or costs?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 
@@ -1057,4 +1085,4 @@ Is there anything you want to ask me, or anything about your work you think we h
 > **ENUMERATOR:** Record anything volunteered here in the notes field. Check the form is complete before leaving — you cannot come back.
 
 
-_210 questions in all. Generated from dictionary.py — do not edit by hand._
+_216 questions in all. Generated from dictionary.py — do not edit by hand._

@@ -115,6 +115,10 @@ RELEVANT = {
     "loan_collateral": "${loan_against_asset} = 1",
     "has_crop_insurance": "${land_cultivable_acres} > 0",
     "govt_scheme_other": "selected(${govt_schemes}, '9')",
+    "ration_portable_here": "selected(${govt_schemes}, '1')",
+    "shock_worst": "count-selected(${distress_event_last365d}) > 0",
+    "shock_loss_amount": "count-selected(${distress_event_last365d}) > 0",
+    "shock_month": "count-selected(${distress_event_last365d}) > 0",
     "work_equipment_detail": "${owns_work_equipment} = 1",
     "migration_referral_other": "${migration_referral} = 7",
     "remit_mode": "${remit_out_yatra_pm} > 0 or ${remit_out_offseason_pm} > 0",
@@ -196,7 +200,14 @@ for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
 # other_activity_types shares the 14-option occupation list with `occupation`, so without this a pony
 # owner is offered "Pony/mule owner" again as a SECOND activity. The filter compares against a `code`
 # column added to the choices sheet, which is XLSForm's mechanism for exactly this.
-CHOICE_FILTER = {"other_activity_types": "code != ${occupation}"}
+CHOICE_FILTER = {
+    "other_activity_types": "code != ${occupation}",
+    # shock_worst must offer only the shocks the household actually reported. Without this it showed
+    # all eight, so "which of those was hardest" could be answered with an event they never named --
+    # 41 of 50 test forms did exactly that, and the Stata assert that the worst shock be one of the
+    # reported ones would then have halted the build on data the form was happy to emit.
+    "shock_worst": "selected(${distress_event_last365d}, code)",
+}
 
 MODULE_TITLE = {m[0]: m[1] for m in MODULES}
 used_lsets = {r["lset"] for r in ROWS if r["origin"] in ("asked", "paradata") and r["name"] not in DROP_PARADATA and r["lset"]}
@@ -229,12 +240,14 @@ add("select_one enum", "enum_id", enum_row["question"], required="yes")
 # A note, not a hint: our hint:: convention is labelled "do not read out", which is the opposite of
 # what this block is for.
 add("note", "consent_script", CONSENT_SCRIPT)
+site_row = next(r for r in p_rows if r["name"] == "site")
+add("select_one site", "site", site_row["question"], required="yes")
 consent_row = next(r for r in p_rows if r["name"] == "consent")
 add("select_one yn", "consent", consent_row["question"], required="yes")
 # background-geopoint: silent capture, no on-screen question; fires once consent is answered
 add("background-geopoint", "gps_location", "GPS location of the interview (captured silently).", trigger="${consent}")
 for r in p_rows:
-    if r["name"] in ("consent", "enum_id"):
+    if r["name"] in ("consent", "enum_id", "site"):
         continue
     add(xlsform_type(r), r["name"], r["question"], required="yes")
 

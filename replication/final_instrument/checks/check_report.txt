@@ -1,9 +1,9 @@
-Rows 200, variables 358; dictionary variables 352
+Rows 200, variables 370; dictionary variables 359
 Every dictionary variable is in the file, in dictionary order: False
 Variables without a label: ['months_away_total', 'cons_annual_pm']
-Value-label sets defined: 42 of 44 expected
+Value-label sets defined: 47 of 48 expected
 Missing counts for always-asked variables (should be empty): {}
-Poverty and employment quality: poor 0.42, poor(sensitivity) 0.08, employment-poor (2 of 5) 0.66
+Poverty and employment quality: poor 0.42, poor(sensitivity) 0.08, employment-poor (2 of 5) 0.65
 Consumption: cons_pc_pm mean 2838 (narrow 2427, adult-equiv 3149); income_seasonality_cv mean 1.28
 On/off-season consumption ratio (off-season usual month / Yatra-season usual month), by item:
   staples: 0.77
@@ -18,14 +18,14 @@ On/off-season consumption ratio (off-season usual month / Yatra-season usual mon
 Off-season food_own > Yatra-season food_own (expected mainly for farming/animal-husbandry off-season workers): 49% of respondents
 Off-season rent near zero for non-local migrants: mean off-season rent, local origin=200, non-local origin=14
 Remittances: mean annual outward Rs 5378, inward Rs 262; outward Yatra-season share of annual 0.69
-Employment deprivation rates (share): {'emp_dep_access': 0.19, 'emp_dep_comp': 0.42, 'emp_dep_sec': 0.5, 'emp_dep_stab': 0.23, 'emp_dep_cond': 0.62}
-Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.6, food_coping_deprived (rCSI>20) 0.04; unmet health-care need (3m) 0.15
+Employment deprivation rates (share): {'emp_dep_access': 0.18, 'emp_dep_comp': 0.42, 'emp_dep_sec': 0.48, 'emp_dep_stab': 0.23, 'emp_dep_cond': 0.65}
+Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.8, food_coping_deprived (rCSI>20) 0.10; unmet health-care need (3m) 0.14
 Education: knows exact years 0.79; mean years_schooling (of those who know) 7.8; education_level_cat used for 42 respondents
 Multiple work-holding: 0.34 hold at least one other activity; mean count among them 1.32 (max 4); mean income Rs 1868/mo; ticked-vs-stated mismatch 0.000
 Ex-ante skill-move direction (Nawakitphaitoon & Ormiston asymmetry): {1: 73, 2: 41, 3: 13, 4: 73}; mean coverage 0.65, mean retention 0.53
 Productive assets (mean count of 6, and migration referral distribution): count 1.02; referral {1: 19, 2: 16, 3: 7, 4: 5, 5: 5, 6: 1, 7: 1}
-Employment-poor count distribution: {0: 17, 1: 51, 2: 78, 3: 37, 4: 14, 5: 3}
+Employment-poor count distribution: {0: 13, 1: 58, 2: 76, 3: 32, 4: 20, 5: 1}
 Interview minutes: not simulated -- measured from Kobo start/end at the pretest
 Max interviews per enumerator per day: 5
 Tasks: mean regular 3.7 of 12, mean done-before 0.7; trek_dependent share 0.34
-Asked items with a skip rule: 79 of 210 asked
+Asked items with a skip rule: 83 of 216 asked

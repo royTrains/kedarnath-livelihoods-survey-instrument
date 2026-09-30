@@ -51,7 +51,11 @@ def to_js(expr):
     e = e.replace("count-selected(V('", "SEL('").replace("'))", "').length")
     # selected(${multi}, 'code') -> membership in the split code list. Must be the split tokens, not a
     # substring: a substring test for '1' would also match the code 10.
-    e = re.sub(r"selected\(V\('(\w+)'\),\s*'(\w+)'\)", r"SEL('').includes('')", e)
+    # A lambda, not a replacement template: a "\1" backreference written into this file through
+    # a Python string became a control character, and the rule then compiled to SEL('\x01').includes('\x02'),
+    # which never throws and never matches -- so the gated question was silently never asked.
+    e = re.sub(r"selected\(V\('(\w+)'\),\s*'(\w+)'\)",
+               lambda m: "SEL('%s').includes('%s')" % (m.group(1), m.group(2)), e)
     e = e.replace(" and ", " && ").replace(" or ", " || ")
     out, i = [], 0
     while i < len(e):                      # single '=' is equality in XPath, '==' in JS
@@ -106,7 +110,13 @@ for r in ROWS:
     # data: exclude whatever `occupation` holds from the other-activities list, so a pony owner is not
     # offered "Pony/mule owner" again as a second activity.
     if r["name"] in X.CHOICE_FILTER:
-        q["cfx"] = X.CHOICE_FILTER[r["name"]].split("${")[1].rstrip("}")
+        _f = X.CHOICE_FILTER[r["name"]]
+        # two shapes are in use: exclude one answer's value, or keep only the codes ticked in a
+        # multi-select. Carried as data so the web form applies the same rule the XLSForm compiles.
+        if _f.startswith("selected("):
+            q["cfo"] = _f.split("${")[1].split("}")[0]
+        else:
+            q["cfx"] = _f.split("${")[1].rstrip("}")
     if r["name"] in HINTS:
         q["hn"] = HINTS[r["name"]]
         q["hnh"] = HINTS_HI.get(r["name"], HINTS[r["name"]])
@@ -323,7 +333,11 @@ function qBlock(q){
   if (q.t === "one" || q.t === "multi"){
     const sel = q.t === "multi" ? SEL(q.n) : [String(v)];
     const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
-    (drop ? q.c.filter(c => String(c[0]) !== drop) : q.c).forEach(c => {
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    opts.forEach(c => {
       const on = sel.includes(String(c[0]));
       h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
            " name='q_" + q.n + "' value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" +

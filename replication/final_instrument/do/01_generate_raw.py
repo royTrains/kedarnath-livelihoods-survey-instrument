@@ -540,12 +540,15 @@ o["has_crop_insurance"] = np.where(_has_land,
 # named schemes, as a check-all. The old pool carried only a yes/no, so the named pattern is drawn
 # here: ration is near-universal among those receiving anything, the rest taper. Code 10 (None of
 # these) is the explicit negative and is exclusive -- it cannot be ticked alongside a scheme.
-_SCH_P = {1: .78, 2: .34, 3: .21, 4: .17, 5: .58, 6: .07, 7: .41, 8: .12, 9: .05}
+# Per-scheme rates drawn for EVERYONE, not conditioned on the old pool's govt_scheme_beneficiary
+# binary. That binary asked "did you get anything from any government scheme", and the named list
+# replaced it precisely because a category question like that under-reports -- people who draw PDS
+# grain every month routinely say no to it. Conditioning the named list on the binary would rebuild
+# the undercount the change was made to remove, and it did: ration-card coverage came out at 19%
+# against a real Uttarakhand figure far above that, leaving the portability indicator 95% constant.
+_SCH_P = {1: .71, 2: .26, 3: .14, 4: .12, 5: .49, 6: .05, 7: .33, 8: .09, 9: .04}
 _gs = []
-for v in d.govt_scheme_beneficiary.values:
-    if v != 1:
-        _gs.append("10")
-        continue
+for _ in range(n):
     picked = [str(k) for k, pr in _SCH_P.items() if rng.random() < pr]
     _gs.append(" ".join(picked) if picked else "10")
 o["govt_schemes"] = _gs
@@ -717,6 +720,43 @@ o["interview_duration_min"] = np.nan
 
 for v in ["flagged_contradiction", "dropout_score", "dropout_prob", "flagged_dropout", "retained"]:
     o[v] = d[v]
+
+
+# ---- variables added 2026-09-30 for the four analysis arms --------------------------------------
+# site: paradata the enumerator sets. Kedarnath is the larger route of the two.
+o["site"] = rng.choice([1, 2], n, p=[.72, .28])
+
+# where they sleep in season (Lyons et al. security/settlement dimension). Someone who lives here all
+# year sleeps at home; a seasonal worker is the one on a workplace floor, under canvas, or in the open.
+_ACC = {True:  [.62, .18, .07, .05, .02, .04, .01, .01],   # never leaves at closure
+        False: [.04, .22, .26, .24, .10, .08, .05, .01]}   # comes for the season
+o["accom_type_here"] = [int(rng.choice(range(1, 9), p=_ACC[bool(v)]))
+                        for v in (o["resp_returns_at_closure"].values == 0)]
+
+# Washington Group mobility item. Prevalence rises with age, and this workforce self-selects on being
+# able to climb, so serious difficulty is rare among those still working the route.
+_wg_p = np.clip((d.age.values - 25) / 220.0, .01, .30)
+o["func_limitation"] = [int(rng.choice([1, 2, 3, 4], p=[1 - q - q * .45, q, q * .33, q * .12]
+                                       / np.sum([1 - q - q * .45, q, q * .33, q * .12])))
+                        for q in _wg_p]
+
+# ration portability, asked only of households that named a ration card (code 1 in govt_schemes)
+_has_ration = np.array(["1" in str(g).split() for g in o["govt_schemes"].values])
+o["ration_portable_here"] = np.where(
+    _has_ration, rng.choice([1, 2, 3, 97], n, p=[.31, .46, .17, .06]), np.nan)
+
+# shock magnitude and timing, asked only of households reporting at least one shock. The worst shock
+# is drawn from the ones they actually reported, never from the whole list.
+_shk = [str(v).split() for v in o["distress_event_last365d"].values]
+o["shock_worst"] = [int(rng.choice(v)) if v and v != [""] and v != ["nan"] else np.nan for v in _shk]
+_any_shock = np.array([not (np.isnan(x) if isinstance(x, float) else False)
+                       for x in o["shock_worst"].values])
+o["shock_loss_amount"] = np.where(
+    _any_shock, (np.round(rng.gamma(1.9, 9000, n) / 500) * 500).clip(500, 200000), np.nan)
+# shocks cluster in the Yatra months, when there is income to lose and crowds to be disrupted
+o["shock_month"] = np.where(
+    _any_shock, rng.choice(range(1, 13), n,
+                           p=[.04, .03, .04, .09, .13, .13, .12, .11, .10, .08, .07, .06]), np.nan)
 
 keep = [r["name"] for r in ROWS if r["origin"] != "constructed"]
 missing = [k for k in keep if k not in o.columns]

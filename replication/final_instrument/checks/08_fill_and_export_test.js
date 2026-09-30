@@ -34,11 +34,26 @@ const TEXTS = { occupation_detail:["ghoda hankta hoon","porter ka kaam","chai ki
   work_equipment_detail:["auzar","chai ka saman",""], migration_referral_other:["gaon ka pradhan"],
   training_type_other:["photography"] };
 
+// The form filters the option list for two questions -- other_activity_types drops the main
+// occupation, shock_worst keeps only the shocks reported. An enumerator can only tap what is on the
+// screen, so the harness has to obey the same restriction or it manufactures answers the form cannot
+// produce, and then 09 reports a defect that does not exist.
+function optionsFor(q){
+  let c = q.c;
+  if (q.cfx){ const drop = String(A.D[q.cfx] ?? ""); if (drop) c = c.filter(x => String(x[0]) !== drop) }
+  if (q.cfo){
+    const only = String(A.D[q.cfo] ?? "").trim().split(/\s+/).filter(Boolean);
+    c = c.filter(x => only.includes(String(x[0])));
+  }
+  return c;
+}
+
 function answerFor(q){
   if (q.t === "text") return pick(TEXTS[q.n] || ["likha hua jawab"]);
-  if (q.t === "multi") { const c = q.c.map(x=>x[0]); const k = rnd(1, Math.min(3, c.length));
+  if (q.t === "multi") { const c = optionsFor(q).map(x=>x[0]); if (!c.length) return "";
+    const k = rnd(1, Math.min(3, c.length));
     return [...new Set(Array.from({length:k}, () => pick(c)))].sort((a,b)=>a-b).join(" ") }
-  if (q.t === "one") return pick(q.c.map(x=>x[0]));
+  if (q.t === "one") { const c = optionsFor(q).map(x=>x[0]); return c.length ? pick(c) : "" }
   // numerics: respect the constraint when there is one, otherwise something sane
   if (q.con){ for (const v of [0,1,2,3,5,7,12,20,30,45,80,100,180,300]){ const x=v; try{ if(eval(q.con)) return v }catch(e){} } }
   if (q.t === "int" && /_pm$|_12m$|income|amount|spend/.test(q.n)) return rnd(0,60)*50;

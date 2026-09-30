@@ -161,6 +161,25 @@ gen byte months_here        = 12 - months_away_total
 
 gen byte closure_labour_migrant = (worked_away_in_closure==1)
 gen byte stays_all_year   = (resp_returns_at_closure==0)
+
+* ---- indicators added for the Lyons et al. MLI and for VER --------------------------------------
+* Settlement conditions at the WORKSITE. Deprived on the three codes that are not shelter in any
+* ordinary sense: sleeping at the shop or dhaba, under canvas, or in the open.
+gen byte dep_accom_here = inlist(accom_type_here,4,5,7)
+label var dep_accom_here "Sleeps at the workplace, in a tent, or in the open, during the season"
+* Washington Group Short Set cutoff: a lot of difficulty, or cannot do it at all.
+gen byte dep_func_limit = inlist(func_limitation,3,4)
+label var dep_func_limit "Serious difficulty walking or climbing (WG-SS cutoff)"
+* Entitlement portability. A household with no ration card at all is deprived here too -- it has no
+* portable entitlement either -- which is why the missing case codes to 1 rather than to missing.
+gen byte dep_ration_portability = 1
+replace  dep_ration_portability = 0 if ration_portable_here==1
+label var dep_ration_portability "Cannot draw the ration entitlement at the worksite"
+* shock_loss_share is built further down, once total_cons_pm exists.
+* Did the worst shock land inside the earning season? Same shock, very different consequence.
+gen byte shock_in_season = .
+replace  shock_in_season = inrange(shock_month,5,11) if !missing(shock_month)
+label var shock_in_season "Worst shock fell in the Yatra season (May-November)"
 gen byte split_household  = (hh_at_home_place==1)
 * The denominator the Yatra-season consumption figures actually belong to. This corrects a real error
 * in the poverty headcount: per-capita consumption divided the Yatra-season figure -- which covers
@@ -335,6 +354,11 @@ gen double _seas_num = _cons_seas_yatra + cond(split_household==1, remit_out_yat
 gen double cons_pc_seasonal_pm = (months_here*(_seas_num/hhsize) ///
                                + (12-months_here)*(_cons_seas_off/hhsize))/12
 gen int cons_pc_pm = round(cons_pc_seasonal_pm + cons_annual_pm/hhsize)
+* Shock magnitude as a share of annual household consumption -- the per-unit denominator VER needs.
+* Built here rather than with the other shock variables because it needs the consumption aggregate.
+gen double shock_loss_share = shock_loss_amount/((cons_pc_seasonal_pm*hhsize + cons_annual_pm)*12) ///
+    if !missing(shock_loss_amount)
+label var shock_loss_share "Worst shock's loss as a share of annual household consumption"
 gen double cons_pc_pm_narrow = cons_pc_seasonal_pm
 gen double cons_pc_ae_pm = (cons_pc_seasonal_pm*hhsize + cons_annual_pm) ///
                            / (hhsize - n_children_u15 + 0.5*n_children_u15)
@@ -614,6 +638,15 @@ assert missing(morbidity_coping_15d) == (morbidity_15d==0)
 assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
 * migration_referral and worked_other_places are ungated now -- asked of everyone, including local
 * respondents, because who placed you in a job is not a question about migration.
+assert inlist(site,1,2)
+assert inrange(accom_type_here,1,8)
+assert inrange(func_limitation,1,4)
+assert missing(ration_portable_here) == !strpos(" " + govt_schemes + " ", " 1 ")
+assert missing(shock_worst)       == (distress_event_last365d=="")
+assert missing(shock_loss_amount) == (distress_event_last365d=="")
+assert missing(shock_month)       == (distress_event_last365d=="")
+* the worst shock must be one of the shocks actually reported, not any code from the list
+assert strpos(" " + distress_event_last365d + " ", " " + string(shock_worst) + " ") if !missing(shock_worst)
 assert !missing(migration_referral)
 assert !missing(worked_other_places)
 assert !missing(resp_returns_at_closure)
@@ -748,6 +781,14 @@ di as result "  data-quality flags raised: `dq_total'"
 * Assumption check on the whole two-season design. Every consumption, remittance and coping item in
 * this instrument is asked twice on the premise that the respondent is somewhere else once the Yatra
 * shuts. Until the location row existed, nothing measured how often that premise holds.
+quietly tabulate site, matcell(_sitec)
+di as result "  route split: Kedarnath " _sitec[1,1] ", Hemkund " _sitec[2,1]
+quietly summarize dep_accom_here
+di as result "  sleeping at the workplace, in a tent or in the open: " %4.1f (100*r(mean)) "%"
+quietly summarize dep_ration_portability
+di as result "  cannot draw the ration entitlement here: " %4.1f (100*r(mean)) "%"
+quietly summarize shock_loss_share if !missing(shock_loss_share)
+di as result "  worst shock, mean loss as a share of annual consumption: " %5.3f r(mean)
 quietly count if stays_all_year==1
 di as result "  two-season design: " r(N) " of " _N " respondents never move at closure (their two seasonal answers describe the same place)"
 quietly count if closure_labour_migrant==1

@@ -71,6 +71,19 @@ chk("closure_work_detail blank when its gate is shut",
 chk("other_places_detail blank when its gate is shut",
     (txt("other_places_detail") == "") | (num("worked_other_places") == 1))
 chk("home_rural_urban in 1..2", num("home_rural_urban").between(1, 2))
+chk("site in 1..2", num("site").between(1, 2))
+chk("accom_type_here in 1..8", num("accom_type_here").between(1, 8))
+chk("func_limitation in 1..4", num("func_limitation").between(1, 4))
+_ration = txt("govt_schemes").str.split().apply(lambda t: "1" in t)
+chk("missing(ration_portable_here) == (no ration card named)",
+    num("ration_portable_here").isna() == ~_ration)
+_shk = txt("distress_event_last365d") != ""
+for _v in ("shock_worst", "shock_loss_amount", "shock_month"):
+    chk(f"missing({_v}) == (no shock reported)", num(_v).isna() == ~_shk)
+# the worst shock must be one the household actually reported
+chk("shock_worst is among the shocks reported",
+    pd.Series([(not w) or (w in str(a).split())
+               for w, a in zip(txt("shock_worst"), txt("distress_event_last365d"))]))
 chk("govt_schemes never blank (code 10 is the explicit negative)", txt("govt_schemes") != "")
 chk("govt_scheme_other blank when 'other scheme' is not ticked",
     (txt("govt_scheme_other") == "") | txt("govt_schemes").str.split().apply(lambda t: "9" in t))

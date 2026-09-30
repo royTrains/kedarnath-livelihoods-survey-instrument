@@ -164,6 +164,28 @@ LSETS = {
     "emptype": {1: "Own-account (self-employed, no hired workers)",
                 2: "Employer/business owner (self-employed)", 3: "Regular wage or salary",
                 4: "Casual or daily wage labour", 5: "Unpaid family worker"},
+    # Two pilgrimage routes now, so every estimate can be stratified and the site can carry a fixed
+    # effect. GPS does the rest of the locating, which is why this is one question and not a place list.
+    "site": {1: "Kedarnath (Gaurikund to Kedarnath)", 2: "Hemkund Sahib (Govindghat to Hemkund)"},
+    # Where the worker actually sleeps during the season. The rest of Module F describes the USUAL
+    # home, which for a seasonal migrant is not where he spends six months of the year. Lyons et al.
+    # (2023) carry settlement conditions in their security dimension for the same reason: for a
+    # migrant population the accommodation at the destination is its own deprivation, and the
+    # home-place house says nothing about it.
+    "accomhere": {1: "Own house here", 2: "Rented room or house",
+                  3: "Room or dormitory the employer provides",
+                  4: "Sleeps at the shop, dhaba or workplace", 5: "Tent or temporary shelter",
+                  6: "Lodge, dharamshala or ashram", 7: "In the open, or a verandah",
+                  8: "Somewhere else"},
+    # Washington Group Short Set response scale, verbatim. Standard deprivation cutoff is
+    # "a lot of difficulty" or "cannot do it at all".
+    "wgdiff": {1: "No difficulty", 2: "Some difficulty", 3: "A lot of difficulty",
+               4: "Cannot do it at all"},
+    # One Nation One Ration Card portability -- the closest real analogue to the legal-residency
+    # indicator in Lyons et al.: an internal migrant whose entitlement works only at his home place is
+    # outside the food safety net for the half of the year he is actually earning.
+    "portable": {1: "Yes, can draw it here", 2: "No, only at the home place",
+                 3: "Has never tried", 97: "Does not know"},
     "month": {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August",
               9: "September", 10: "October", 11: "November", 12: "December"},
     # "Moved to this area" is gone. It answered a different question -- why you MIGRATED, not why
@@ -226,6 +248,28 @@ LSETS = {
     # split from an assumption the whole instrument rests on into a measurement, respondent by
     # respondent -- and it fixes the mid-month season boundary, because the boundary is now wherever
     # each person's own row changes rather than a constant we chose.
+    # Two pilgrimage routes now, so every estimate can be stratified and the site can carry a fixed
+    # effect. GPS does the rest of the locating, which is why this is one question and not a place list.
+    "site": {1: "Kedarnath (Gaurikund to Kedarnath)", 2: "Hemkund Sahib (Govindghat to Hemkund)"},
+    # Where the worker actually sleeps during the season. The rest of Module F describes the USUAL
+    # home, which for a seasonal migrant is not where he spends six months of the year. Lyons et al.
+    # (2023) carry settlement conditions in their security dimension for the same reason: for a
+    # migrant population the accommodation at the destination is its own deprivation, and the
+    # home-place house says nothing about it.
+    "accomhere": {1: "Own house here", 2: "Rented room or house",
+                  3: "Room or dormitory the employer provides",
+                  4: "Sleeps at the shop, dhaba or workplace", 5: "Tent or temporary shelter",
+                  6: "Lodge, dharamshala or ashram", 7: "In the open, or a verandah",
+                  8: "Somewhere else"},
+    # Washington Group Short Set response scale, verbatim. Standard deprivation cutoff is
+    # "a lot of difficulty" or "cannot do it at all".
+    "wgdiff": {1: "No difficulty", 2: "Some difficulty", 3: "A lot of difficulty",
+               4: "Cannot do it at all"},
+    # One Nation One Ration Card portability -- the closest real analogue to the legal-residency
+    # indicator in Lyons et al.: an internal migrant whose entitlement works only at his home place is
+    # outside the food safety net for the half of the year he is actually earning.
+    "portable": {1: "Yes, can draw it here", 2: "No, only at the home place",
+                 3: "Has never tried", 97: "Does not know"},
     "month": {1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July",
               8: "August", 9: "September", 10: "October", 11: "November", 12: "December"},
     # Named schemes, not "any government scheme". A category prompt makes the respondent recall a
@@ -306,6 +350,7 @@ def R(module, name, label, question, desc, kind, lset=None, skip="", source=SRC_
 # ------------------------------------------------------------------ P  cover and paradata
 R("P", "resp_id", "Respondent ID", "Assigned by the tablet.", "Unique respondent number.", "id", origin="paradata", source="Design")
 R("P", "enum_id", "Enumerator", "Which enumerator is doing this interview? (Select your own name before you approach anyone.)", "Which of the four enumerators did the interview. Asked as the FIRST question on the form, ahead of consent, so it is recorded even when consent is refused -- a refusal is data, and which enumerator collected it is part of that data. Kept alongside Kobo's own `_submitted_by` rather than replaced by it: `_submitted_by` only separates the four if every enumerator has their own login and always uses it, while this item also works under a shared login. Where they disagree (wrong name tapped, or a device signed in as someone else) that is a data-quality flag neither could raise alone -- check it on the real export.", "cat", "enum", origin="paradata", source="Design")
+R("P", "site", "Pilgrimage route being surveyed", "Which route is this interview on?", "Set by the enumerator before approaching anyone, alongside enum_id and ahead of consent, so it is recorded even when consent is refused. The study covers two routes now; GPS fixes the position within a route, so this one question is all that is needed to separate them. Enters the analysis as a stratifier and a fixed effect -- the two routes differ in season length, altitude, employer mix, and in whether the ropeway proposal applies at all.", "cat", "site", origin="paradata", source="Project design (two-route stratification)")
 R("P", "interview_date", "Interview date", "Recorded automatically.", "Date of interview.", "date", origin="paradata", source="Design")
 # location_cluster dropped 2026-09-24: it asked the enumerator to hand-code the interview site into
 # one of four route clusters, which the silently captured GPS below already records more precisely.
@@ -530,6 +575,7 @@ R("F", "floor_material", "Main floor material at usual home", "What is the main 
 R("F", "roof_material", "Main roof material at usual home", "What is the main material of the roof at your usual home?", HOMENOTE, "cat", "roof", source="NITI Aayog National MPI housing indicator")
 R("F", "wall_material", "Main wall material at usual home", "What are the walls of your usual home mainly made of?", HOMENOTE + " NITI's housing indicator is deprived if the FLOOR is natural material OR the ROOF OR THE WALL is rudimentary. Wall material was simply not asked before, so one of the three limbs could not be evaluated at all.", "cat", "wall", source="NITI Aayog National MPI housing indicator (wall limb)")
 R("F", "house_type", "House type at usual home (self-reported)", "Would you describe your usual home as kaccha (mud/thatch, temporary), semi-pucca (part-concrete) or pucca (solid, permanent)?", HOMENOTE + " Kaccha counts as deprived.", "cat", "house", source="NITI Aayog National MPI housing indicator")
+R("F", "accom_type_here", "Where the respondent sleeps during the season", "While you are here for the season, where do you sleep?", "Accommodation at the WORKSITE, which nothing else in this module describes -- floor_material, roof_material and the rest are about the usual home, and for a seasonal migrant that is not where he spends six months of the year. Feeds the security and social inclusion dimension of the Lyons et al. (2023) MLI, whose settlement-conditions indicator exists for exactly this case. Deprived at codes 4, 5 and 7: sleeping at the workplace, under canvas, or in the open.", "cat", "accomhere", source="Lyons et al. 2023, Table 2 (area/settlement conditions), adapted to a labour-migrant setting")
 R("F", "electricity", "Usual home has an electricity connection", "Does your usual home have an electricity connection?", HOMENOTE, "bin", "yn", source="NITI Aayog National MPI")
 R("F", "toilet_type", "Type of toilet at usual home", "What kind of toilet does your household use at your usual home?", HOMENOTE + " NITI counts a household deprived if the facility is unimproved OR improved but SHARED with other households, so a plain own-toilet yes/no cannot decide the indicator: it misses an unshared but unimproved pit latrine, and it misses a flush toilet shared between four families.", "cat", "toilet", source="NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not)")
 R("F", "drinking_water", "Main source of drinking water at usual home", "What is your main source of drinking water at your usual home?", HOMENOTE + " Codes 1-6 are improved sources, 7-9 unimproved, following the JMP/NFHS taxonomy NITI Aayog's MPI indicator rests on.", "cat", "water", source="NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy)")
@@ -571,6 +617,7 @@ R("G", "n_life_insured", "Household members with life insurance", "How many peop
 R("G", "has_crop_insurance", "Household has crop insurance", "Is your crop insured?", "Asked only of households with cultivable land -- it is meaningless for the rest, and the old categorical offered it to everyone.", "bin", "yn", skip="Ask only if land_cultivable_acres > 0")
 R("G", "govt_schemes", "Government schemes the household received from in the last 12 months", "In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to.", "Named schemes rather than \"any government scheme\", which asked the respondent to recall a category -- people reliably fail at that, and the old binary almost certainly undercounted. A check-all rather than a count of recipients, because the schemes sit at different levels: ration is per household, pensions per person, MGNREGA a job card, PM-KISAN per landholding, so a count across them is not a coherent quantity. Code 10 (None of these) is the explicit negative, so a blank is a missing answer rather than a no.", "multi", "govtscheme", source="Project design; scheme names as administered in Uttarakhand")
 R("G", "govt_scheme_other", "Which other scheme (verbatim, optional)", "Which scheme was that? Write what they say.", "Free text, NOT required, for a scheme the named list does not hold. The list replaced a bare yes/no precisely because a binary cannot separate a ration card from a widow pension from MGNREGA wages, and those imply very different protection -- so this now catches only the residual rather than carrying the whole burden.", "text", skip="Ask only if govt_schemes includes 9 (Some other scheme); may be left blank")
+R("G", "ration_portable_here", "Can draw the ration entitlement at the worksite", "Can you draw your ration here, or only at your home place?", "Portability of the food entitlement under One Nation One Ration Card, and the closest real analogue to the legal-residency indicator in Lyons et al. (2023): a migrant whose entitlement works only at his home place is outside the food safety net for the half of the year he is earning, which is exactly when a shock would bite. Asked only of households that named a ration card, so a non-cardholder is deprived by having no card rather than by this item.", "cat", "portable", skip="Ask only if govt_schemes includes 1 (ration card)", source="Lyons et al. 2023, Table 2 (legal residency), adapted; One Nation One Ration Card")
 R("G", "smartphone_owned", "Owns a smartphone", "Do you own a smartphone?", "Smartphone ownership.", "bin", "yn", source="VEP adaptive-capacity covariate; STEP digital items")
 R("G", "uses_digital_payment", "Uses UPI or another digital payment", "Do you ever use UPI or another way of paying by phone?", "Binary. The old never/sometimes/often scale asked respondents to rate their own frequency on an undefined scale; \"sometimes\" and \"often\" are not comparable between two people and carry nothing a binary does not.", "bin", "yn", source="VEP adaptive-capacity covariate; STEP digital items")
 R("G", "n_can_transact_online", "Household members who can pay by phone unaided", "How many people in your household can make a payment by phone themselves, without help? (0 if none)", "Household digital capability rather than the respondent's own use: it says who in the household can actually move money, and therefore something about who controls it.", "count", source="Project design (intra-household financial capability)")
@@ -579,6 +626,7 @@ R("G", "n_can_transact_online", "Household members who can pay by phone unaided"
 R("H", "morbidity_15d", "Anyone ill in the last 15 days", "In the last 15 days, was anyone in your household ill?", "Illness in the last 15 days.", "bin", "yn", source="NSS health module (15-day recall) [source not held by this project; citation unverified as of 2026-09-28]")
 R("H", "morbidity_coping_15d", "How the household coped with the cost of this illness", "How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else?", "Coping response to the illness reported above; same coping list as the Module I shock question.", "cat", "coping", skip="Ask only if morbidity_15d = 1", source="Project design (a reported illness with no cost/coping follow-up said nothing about its burden)")
 R("H", "morbidity_cost_15d", "Amount spent on this illness, last 15 days (Rs)", "About how much did the household spend on this in the last 15 days (medicine, doctor or clinic fees, travel for care)? (Rs)", "Out-of-pocket cost of the illness reported above.", "money", skip="Ask only if morbidity_15d = 1", source="Project design")
+R("H", "func_limitation", "Difficulty walking or climbing steps (Washington Group)", "Do you have difficulty walking or climbing steps?", "Washington Group Short Set item 3, asked verbatim with its own four-point scale and deprived at the standard cutoff of a lot of difficulty or cannot do it at all. One item rather than the full six, and the mobility one on purpose: this workforce carries loads and people up a 16-kilometre climb, so walking and climbing is both the function that matters most to the livelihood and the one most likely to be lost. Gives the Lyons et al. health dimension a disability indicator, which the NITI MPI has none of, and enters the VEP models as a sensitivity covariate. State the limit in the write-up: one item is not the WG-SS and cannot carry its prevalence estimate.", "cat", "wgdiff", source="Washington Group on Disability Statistics, Short Set item 3 (mobility), verbatim; Lyons et al. 2023 health dimension")
 R("H", "hospitalization_365d", "Anyone admitted to hospital in the last 12 months", "In the last 12 months, was anyone in your household admitted to hospital overnight?", "Hospital admission.", "bin", "yn", source="NSS health module (365-day recall) [source not held by this project; citation unverified as of 2026-09-28]")
 R("H", "health_access_barrier_3m", "Unable to get needed medical care, last 3 months", "In the last 3 months, was there a time when someone in your household needed medical care but could not get it?", "Healthcare-access barrier (unmet need), distinct from having insurance cover.", "bin", "yn", source="VASyR 2025 barriers_health_case_access_phc_m (primary-care access barriers); Lyons et al. 2023 Table 2 indicator 2 'healthcare access'")
 NITIH = ("NITI Aayog's Health dimension is three indicators -- Nutrition (1/6), Child and Adolescent "
@@ -595,6 +643,9 @@ R("H", "skilled_birth_attendant", "Most recent birth was assisted by trained hea
 
 # ------------------------------------------------------------------ I  shocks
 R("I", "distress_event_last365d", "Shocks in the last 12 months (check all that apply)", "In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.", "Check-all, replacing \"record the most serious one\". That instruction asked the enumerator to rank another household's misfortunes against each other, which they are in no position to do and which threw away every shock but one. The list also gains four COVARIATE shocks (codes 5-8) that hit the whole route at once; every code in the old list was household-idiosyncratic, so the covariate-versus-idiosyncratic decomposition could not be identified from this data at all.", "multi", "distress", source="VEP exposure covariate (Azeem et al. 2016); shock inventory following Gunther and Harttgen 2009, via Fujii 2016 section 4")
+R("I", "shock_worst", "The shock the household found hardest", "Of those, which one was hardest for your household?", "Names the single event that the magnitude and timing questions below refer to. Without it a household reporting three shocks would be answering how much did you lose about an unnamed average.", "cat", "distress", skip="Ask only if distress_event_last365d is not empty", source="Project design (anchors the magnitude and timing pair)")
+R("I", "shock_loss_amount", "Money lost or spent because of the worst shock (Rs)", "Because of that, about how much did your household lose in earnings, or have to spend? (Rs)", "Shock MAGNITUDE. Incidence alone cannot support a vulnerability-as-uninsured-exposure-to-risk analysis: VER asks how far consumption moves per unit of shock, and without a size there is no per unit. A rough figure is expected -- the quantity of interest is the order of magnitude against household consumption, not the rupee.", "money", skip="Ask only if distress_event_last365d is not empty", source="Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)")
+R("I", "shock_month", "Month the worst shock happened", "In which month did that happen?", "Shock TIMING, which is what matches the event to the monthly income calendar in Module C and to the season the household was in. A shock during the Yatra season and the same shock during the closure are different events for a household earning its whole year in six months.", "cat", "month", skip="Ask only if distress_event_last365d is not empty", source="Dercon and Krishnan 2000 (seasonal timing of shocks); project design")
 R("I", "shock_coping", "How the household coped (check all that apply)", "How did your household manage? Check every one they used.", "Check-all. The single-answer version forced a choice between \"sold or pawned assets\" and \"cut consumption\" -- which are precisely the two responses asset-smoothing theory (Carter and Zimmerman) says to compare, since a household facing a survival constraint may cut consumption specifically to defend its assets. Made mutually exclusive, the test was impossible.", "multi", "coping", skip="Ask only if any shock was reported", source="Coping strategies in VEP studies; Carter and Zimmerman 2000 on asset versus consumption smoothing")
 RCSI = ("The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, "
         "1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-security "
