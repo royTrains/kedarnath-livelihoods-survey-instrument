@@ -189,6 +189,9 @@ label.ch input{margin:3px 0 0}
    it is visibly a different kind of thing from the question above it and from the read-aloud intro,
    which is blue. Three kinds of text on one screen need three unmistakable looks. */
 .hint{background:#fff8e6;border-left:4px solid #b78103;border-radius:0 6px 6px 0;padding:9px 11px;margin:0 0 11px;font-size:13.5px;color:#5c4708}
+.card.off{display:none}
+.card.bad{border-color:var(--warn);box-shadow:0 0 0 1px var(--warn)}
+.mc{font-weight:400;text-transform:none;letter-spacing:0}
 .hint b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;color:#8a6200}
 h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
 /* Read-aloud module introduction. Deliberately styled unlike a question card -- tinted, ruled down
@@ -196,7 +199,8 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mut);text-transform:uppercase;l
    something the respondent is meant to answer. */
 .intro{background:#eff5ff;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:12px 14px;margin:0 0 12px;font-size:15px}
 .intro .lead{display:block;font-size:12px;color:var(--acc);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
-footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;max-width:680px;margin:0 auto}
+footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;align-items:center;max-width:680px;margin:0 auto}
+#mprog{flex:1;text-align:center;font-size:13px;color:var(--mut)}
 footer button{flex:1}
 .mid{text-align:center;padding:40px 16px;color:var(--mut)}
 #upd{display:none;background:#fef0c7;border-bottom:1px solid #f5c344;color:#7a5b00;padding:9px 14px;font-size:14px;text-align:center}
@@ -215,6 +219,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;bord
 <main id="app"></main>
 <footer id="nav" style="display:none">
   <button id="back">← <span data-t="back">पीछे</span></button>
+  <span id="mprog"></span>
   <button id="next" class="p"><span data-t="next">आगे</span> →</button>
 </footer>
 <script>
@@ -233,12 +238,14 @@ const T = {
  // instruction to speak, which is why it is not in the respondent-facing Hindi of INTROS_HI itself.
  readout:["पढ़कर सुनाएँ","Read aloud"],
  // Label on the enumerator hint. Says plainly that this one is not for the respondent.
- foryou:["सर्वेक्षक के लिए — पढ़कर न सुनाएँ","For the enumerator — do not read out"]
+ foryou:["सर्वेक्षक के लिए — पढ़कर न सुनाएँ","For the enumerator — do not read out"],
+ qs:["सवाल","questions"]
 };
 let L = 0;                                  // 0 = Hindi, 1 = English
 const t = k => T[k][L];
 const KEY = "kedarnath_v1", DKEY = "kedarnath_draft";
-let D = {}, idx = 0, shown = [];
+let D = {}, shown = [];
+const QBY = Object.fromEntries(CFG.q.map(q => [q.n, q]));
 // Which screen is showing. The language toggle used to INFER this from idx, which got it
 // wrong twice: after a refused consent idx is still inside the question list, so switching
 // language dropped the enumerator back into an interview that had already been saved and
@@ -248,8 +255,14 @@ let screen = "menu", lastRefused = false;
 // rules on every render, so answering a gate question changes its length and every index after
 // that point silently refers to a different question -- which looked, from the field, like typed
 // answers disappearing. `cur` survives that; an index cannot.
-let cur = null;
-function posOf(name){ const i = shown.findIndex(q => q.n === name); return i < 0 ? 0 : i }
+// Navigation is per MODULE, not per question: the whole module is on one screen and Next moves to
+// the next module. One question per screen meant ~210 taps per interview before anyone had answered
+// anything twice. `curMod` is a module CODE, not an index, for the same reason navigation used to be
+// keyed on question names -- an index into a list that gates can reshape is the bug that ate the
+// enumerator's place once already.
+let curMod = null;
+const modList = () => CFG.mods.filter(m => CFG.q.some(q => q.m === m.c)).map(m => m.c);
+function modPos(code){ const i = modList().indexOf(code); return i < 0 ? 0 : i }
 
 // ---- storage. Every write is wrapped: a private window or a full disk must not throw mid-interview.
 function load(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } }
@@ -284,66 +297,97 @@ function visible(q){
 }
 function rebuild(){ shown = CFG.q.filter(visible) }
 
-// ---- rendering
-function render(){
-  const app = document.getElementById("app");
-  rebuild();
-  if (!shown.length) return finish();
-  // resolve the remembered question; if it has just been hidden by its own gate, fall through to
-  // the next still-visible question rather than losing the enumerator's place entirely
-  idx = cur === null ? 0 : posOf(cur);
-  if (idx >= shown.length) return finish();
-  screen = "q";
-  const q = shown[idx], mod = CFG.mods.find(m => m.c === q.m);
-  cur = q.n;
-  const prevMod = idx > 0 ? shown[idx-1].m : null;
-  let h = "";
-  if (mod && q.m !== prevMod){
-    h += "<h2>" + (L ? mod.en : mod.hi) + "</h2>";
-    // The module introduction rides on the first visible question of the module rather than sitting
-    // on a screen of its own. A separate screen would have cost twelve extra taps per interview and,
-    // worse, would have needed an entry in `shown` -- and navigation is keyed on question NAMES via
-    // posOf(), so a non-question entry would have broken back/next the moment a gate moved.
-    const intro = L ? mod.ien : mod.ihi;
-    if (intro) h += "<div class=intro><span class=lead>" + t("readout") + "</span>" + intro + "</div>";
-  }
-  h += "<div class=card><div class=qn>" + (idx+1) + " / " + shown.length + "</div>";
+// ---- rendering: one MODULE per screen ---------------------------------------------------------
+// Every question in the module is written into the DOM, including ones a gate currently hides --
+// those get `hidden` and are toggled by applyGates() on each keystroke. Hiding with a class rather
+// than re-rendering is deliberate: re-rendering the module on every input would throw away focus and
+// the caret mid-number, which is precisely the "input is buggy" defect that was fixed once already.
+function qBlock(q){
+  const v = D[q.n] ?? "";
+  let h = "<div class=card data-q='" + q.n + "'>";
   h += "<div class=qt>" + (L ? q.en : q.hi) + "</div>";
   if (q.hn) h += "<div class=hint><b>" + t("foryou") + "</b>" + (L ? q.hn : q.hnh) + "</div>";
-  const v = D[q.n] ?? "";
   if (q.t === "one" || q.t === "multi"){
-    const cur = q.t === "multi" ? SEL(q.n) : [String(v)];
-    // choice exclusion: mirrors the XLSForm choice_filter. Filtered here rather than in q.c itself so
-    // the list re-filters if the enumerator goes Back and changes the answer it depends on.
+    const sel = q.t === "multi" ? SEL(q.n) : [String(v)];
     const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
     (drop ? q.c.filter(c => String(c[0]) !== drop) : q.c).forEach(c => {
-      const on = cur.includes(String(c[0]));
+      const on = sel.includes(String(c[0]));
       h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
-           " name=q value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" + (L ? c[1] : c[2]) + "</span></label>";
+           " name='q_" + q.n + "' value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" +
+           (L ? c[1] : c[2]) + "</span></label>";
     });
   } else if (q.t === "text"){
-    h += "<input type=text id=f value=\\"" + String(v).replace(/"/g,"&quot;") + "\\">";
+    h += "<input type=text value=\\"" + String(v).replace(/"/g,"&quot;") + "\\">";
   } else {
-    h += "<input type=number id=f inputmode=" + (q.t === "int" ? "numeric" : "decimal") +
+    h += "<input type=number inputmode=" + (q.t === "int" ? "numeric" : "decimal") +
          (q.t === "dec" ? " step=any" : "") + " value='" + v + "'>";
   }
   if (q.opt) h += "<div class=opt>" + t("opt") + "</div>";
-  h += "<div class=err id=err></div></div>";
+  h += "<div class=err></div></div>";
+  return h;
+}
+
+// Clearing answers that a gate has closed is not tidiness, it is correctness. A module shows all its
+// questions at once, so this sequence is ordinary: answer origin = "other state", answer "why did you
+// first come here", then correct origin to "local". The reason question disappears -- and used to keep
+// its answer, which then went into the export and broke the skip-logic asserts on a fact the
+// respondent never asserted. Kobo and ODK drop irrelevant answers at submission; this matches them.
+function clearHidden(){
+  let changed = false;
+  CFG.q.forEach(q => {
+    if (!visible(q) && D[q.n] !== undefined && D[q.n] !== ""){ delete D[q.n]; changed = true }
+  });
+  if (changed) save(DKEY, D);
+  return changed;
+}
+
+function applyGates(){
+  calc();
+  clearHidden();
+  let n = 0;
+  document.querySelectorAll("#app .card[data-q]").forEach(el => {
+    const q = QBY[el.dataset.q];
+    const on = visible(q);
+    el.classList.toggle("off", !on);
+    if (on) n++;
+  });
+  const c = document.getElementById("mcount");
+  if (c) c.textContent = n + " " + t("qs");
+}
+
+function render(){
+  const app = document.getElementById("app");
+  const mods = modList();
+  if (!mods.length) return finish();
+  if (curMod === null) curMod = mods[0];
+  screen = "q";
+  const mod = CFG.mods.find(m => m.c === curMod);
+  const qs = CFG.q.filter(q => q.m === curMod);
+  let h = "<h2>" + (L ? mod.en : mod.hi) + " <span id=mcount class=mc></span></h2>";
+  const intro = L ? mod.ien : mod.ihi;
+  if (intro) h += "<div class=intro><span class=lead>" + t("readout") + "</span>" + intro + "</div>";
+  qs.forEach(q => { h += qBlock(q) });
   app.innerHTML = h;
   app.scrollTop = 0; window.scrollTo(0,0);
   document.getElementById("nav").style.display = "flex";
-  document.getElementById("back").disabled = idx === 0;
+  document.getElementById("back").disabled = modPos(curMod) === 0;
+  document.getElementById("mprog").textContent =
+    (L ? "Module " : "खंड ") + (modPos(curMod)+1) + " / " + mods.length;
+
   // write on EVERY change, never only on submit
-  app.querySelectorAll("input").forEach(el => el.addEventListener("input", () => {
-    if (q.t === "multi"){
-      D[q.n] = [...app.querySelectorAll("input:checked")].map(x => x.value).sort((a,b)=>a-b).join(" ");
-    } else if (el.type === "radio"){ D[q.n] = el.value } else { D[q.n] = el.value }
-    save(DKEY, D);
-    app.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
-    // NO auto-advance. It used to fire 120 ms after any radio was touched, which meant a question
-    // could not be revisited and corrected without being thrown forward again, and the timer was
-    // never cancelled -- so it could fire after the enumerator had already pressed Back.
-  }));
+  app.querySelectorAll(".card[data-q]").forEach(card => {
+    const q = QBY[card.dataset.q];
+    card.querySelectorAll("input").forEach(el => el.addEventListener("input", () => {
+      if (q.t === "multi"){
+        D[q.n] = [...card.querySelectorAll("input:checked")].map(x => x.value).sort((a,b)=>a-b).join(" ");
+      } else { D[q.n] = el.value }
+      save(DKEY, D);
+      card.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
+      card.querySelector(".err").textContent = "";
+      applyGates();
+    }));
+  });
+  applyGates();
   paint();
 }
 
@@ -354,26 +398,50 @@ function validate(q){
   if (q.con){ const x = +v; try { if (!eval(q.con)) return L ? q.cmsg_en : q.cmsg_hi } catch(e){} }
   return null;
 }
+
+// Validate every question the module is currently SHOWING. A hidden question is not the enumerator's
+// problem and must never block the screen -- that is how a gated-off required field used to trap the
+// interview with no visible error to fix.
+// The decision is computed from DATA, not by reading the DOM. That keeps next() exercisable by the
+// headless harness in checks/08, which has no real document -- and a validation path the tests cannot
+// reach is one that breaks silently.
+function moduleErrors(){
+  return CFG.q.filter(q => q.m === curMod && visible(q))
+              .map(q => [q, validate(q)]).filter(p => p[1]);
+}
+function showErrors(errs){
+  const byName = Object.fromEntries(errs.map(p => [p[0].n, p[1]]));
+  let first = null;
+  document.querySelectorAll("#app .card[data-q]").forEach(card => {
+    const e = byName[card.dataset.q] || "";
+    const slot = card.querySelector(".err");
+    if (slot) slot.textContent = e;
+    card.classList.toggle("bad", !!e);
+    if (e && !first) first = card;
+  });
+  if (first && first.scrollIntoView) first.scrollIntoView({block:"center"});
+}
 function next(){
-  const q = shown[idx], e = validate(q);
-  if (e){ const el = document.getElementById("err"); if (el) el.textContent = e; return }
-  if (q.n === "consent" && String(D.consent) === "0"){ return finish(true) }
-  // recompute AFTER the answer, because the answer may have opened or closed later questions
-  rebuild();
-  const here = posOf(q.n);
-  if (here + 1 >= shown.length){ cur = null; return finish() }
-  cur = shown[here + 1].n;
+  const errs = moduleErrors();
+  showErrors(errs);
+  if (errs.length) return;
+  if (curMod === "P" && String(D.consent) === "0") return finish(true);
+  const mods = modList(), here = modPos(curMod);
+  if (here + 1 >= mods.length) return finish();
+  curMod = mods[here + 1];
   render();
 }
 function back(){
-  rebuild();
-  const here = posOf(cur);
+  const mods = modList(), here = modPos(curMod);
   if (here <= 0) return;
-  cur = shown[here - 1].n;
+  curMod = mods[here - 1];
   render();
 }
 
 function finish(refused){
+  // final sweep: a gate can close a question in a module the enumerator has already left, and that
+  // stale answer must not reach the export either.
+  calc(); clearHidden();
   D.__end = new Date().toISOString();
   D.__exported = false;
   const rows = all(); rows.push(D); save(KEY, rows);
@@ -404,7 +472,7 @@ function start(){
     p => { D.gps_lat = p.coords.latitude.toFixed(5); D.gps_lon = p.coords.longitude.toFixed(5); save(DKEY, D) },
     () => {}, {timeout: 20000, enableHighAccuracy: true});
   D.interview_date = new Date().toISOString().slice(0,10);
-  idx = 0; cur = null; save(DKEY, D); render();
+  curMod = null; save(DKEY, D); render();
 }
 
 // ---- export: exactly the raw_asked.csv column order the Stata build reads
@@ -495,7 +563,7 @@ if ("serviceWorker" in navigator) {
 }
 
 const draft = load(DKEY, null);
-if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; idx = 0; cur = null; render() }
+if (draft && Object.keys(draft).length > 2 && confirm("Resume the unfinished interview?")){ D = draft; curMod = null; render() }
 else menu();
 </script>
 </body></html>

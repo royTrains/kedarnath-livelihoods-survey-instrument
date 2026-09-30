@@ -192,51 +192,51 @@ Now I want to go through the last twelve months, one month at a time. For each m
 
 **34.** In May, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **35.** In June, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **36.** In July, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **37.** In August, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **38.** In September, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **39.** In October, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **40.** In November, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **41.** In December, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **42.** In January, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **43.** In February, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **44.** In March, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **45.** In April, what was your main work or activity?
 
-> **ENUMERATOR:** Options: 1 Yatra work (main occupation) · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
+> **ENUMERATOR:** Options: 1 Yatra work, or getting ready for the season · 2 Farming (crops) · 3 Livestock (animals) · 4 Casual or daily wage labour · 5 Construction work · 6 Own small shop, stall or trade · 7 Salaried job · 8 No paid work
 
 **46.** Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
 

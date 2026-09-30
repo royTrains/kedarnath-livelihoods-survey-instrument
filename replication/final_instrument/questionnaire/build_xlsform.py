@@ -202,9 +202,10 @@ used_lsets = {r["lset"] for r in ROWS if r["origin"] in ("asked", "paradata") an
 
 survey_rows = []   # (type, name, label, required, relevant, constraint, constraint_message, calculation, trigger)
 
-def add(type_, name, label, required="", relevant="", constraint="", constraint_msg="", calc="", trigger=""):
+def add(type_, name, label, required="", relevant="", constraint="", constraint_msg="", calc="",
+        trigger="", appearance=""):
     survey_rows.append((type_, name, label, required, relevant, constraint, constraint_msg, calc, trigger,
-                        CHOICE_FILTER.get(name, "")))
+                        CHOICE_FILTER.get(name, ""), appearance))
 
 def xlsform_type(r):
     """kind 'multi' -> select_multiple (Kobo exports a space-separated string plus one binary column
@@ -248,7 +249,9 @@ for mod in modules_in_order:
     mod_rows = [r for r in ROWS if r["module"] == mod and r["origin"] == "asked"]
     if not mod_rows:
         continue
-    add("begin_group", f"grp_{mod}", f"Module {mod}: {MODULE_TITLE[mod]}")
+    # field-list = the whole module on one screen, matching the web form. One question per screen was
+    # ~210 taps per interview before anyone had answered anything twice.
+    add("begin_group", f"grp_{mod}", f"Module {mod}: {MODULE_TITLE[mod]}", appearance="field-list")
     # Read-aloud introduction, as an unrequired note ahead of the module's first question. A note
     # carries no value into the export, so this adds a screen the enumerator reads and nothing to
     # the data. It is not marked required: a note cannot be, and forcing a tap here would only add
@@ -281,7 +284,7 @@ ws_survey.title = "survey"
 ws_survey.append(["type", "name", "label::English (en)", "label::हिन्दी (hi)",
                   "hint::English (en)", "hint::हिन्दी (hi)", "required",
                   "relevant", "constraint", "constraint_message::English (en)", "constraint_message::हिन्दी (hi)",
-                  "calculation", "trigger", "choice_filter"])
+                  "calculation", "trigger", "choice_filter", "appearance"])
 _missing_hi = []
 for row in survey_rows:
     type_, name, label = row[0], row[1], row[2]

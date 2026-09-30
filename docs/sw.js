@@ -1,4 +1,4 @@
-const CACHE = "kedarnath-7113359c68c1";
+const CACHE = "kedarnath-c1ee83f5d8ab";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 // Cache the whole app up front, so the FIRST offline open works rather than the second.

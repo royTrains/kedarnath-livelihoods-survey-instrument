@@ -5,739 +5,886 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{enumitem}
+\usepackage{array}
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
 
-\title{\textbf{Char Dham Ropeway Project:} \\ \large Assessment on Lives and Livelihoods}
+\setlist[itemize]{itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{itemsep=3pt,topsep=4pt}
+\renewcommand{\arraystretch}{1.1}
+
+\title{\textbf{Char Dham Ropeway Project} \\[4pt]
+\large An Assessment on Lives and Livelihoods of the Kedarnath Yatra Workforce}
 \author{}
-\date{}
+\date{September 2026}
 
 \begin{document}
 \maketitle
 
 \begin{quote}
-\noindent\textit{Status note.} This draft demonstrates the analysis pipeline on a synthetic,
-hand-parameterized dataset built to behave like a real Kedarnath fieldwork round
-(realistic non-response, enumerator metadata, and internal-consistency safeguards
-are all built into the data-generation script). Every number below is a
-demonstration of the method, not an empirical finding about actual Kedarnath
-households. Replace the underlying dataset with genuine survey data before
-treating any figure here as a result.
+\small
+\noindent\textbf{What is and is not real in this document.} Section~\ref{sec:pilot}
+reports a \emph{real} field pilot: 46 workers interviewed on the Kedarnath route during the
+2024 Yatra season. Those numbers are data. Section~\ref{sec:plan} sets out the main study
+that the pilot led to, and it is a \emph{plan} -- the instrument is built and the analysis
+code runs, but no main-round fieldwork has happened yet. Section~\ref{sec:worked} is a
+\emph{worked example}: the full analysis pipeline run end to end on a synthetic dataset that
+was hand-parameterised to behave like a real Kedarnath round. Every figure in
+Section~\ref{sec:worked} demonstrates that the method works. None of them says anything
+about actual Kedarnath households, and they must be replaced with fielded data before anyone
+quotes them.
 \end{quote}
+
+\tableofcontents
+\bigskip
 
 \section{Background}
 
-The Char Dham pilgrimage circuit draws several million visitors to Uttarakhand's
-high-Himalayan shrines each year, and Kedarnath is its most physically demanding
-leg: a 16-kilometre trek from Gaurikund to a shrine at nearly 3,600 metres. A
-dense, seasonal economy has grown up along this route to move pilgrims and serve
-them: pony handlers and pony-business operators, porters, palki (palanquin)
-bearers, shopkeepers and shop owners, hotel and lodging staff and owners, dhaba and food-stall owners, drivers on the road-head stretch, a small number of guides, and casual wage labourers. Their earnings are concentrated almost entirely in the
-May--October Yatra window.
+The Char Dham circuit pulls several million pilgrims into Uttarakhand's high-Himalayan
+shrines every year, and Kedarnath is the hardest leg of it: a roughly 16-kilometre climb from
+Gaurikund to a temple sitting at close to 3,600 metres. A dense seasonal economy has grown
+along that trail to carry pilgrims up and to feed and house them on the way. Pony and mule
+workers, porters who carry loads and sometimes people in a \textit{kandi}, palki and dandi
+bearers, tea-stall and dhaba operators, shopkeepers, hotel and lodge staff and owners,
+drivers working the road-head stretch, a small number of guides, and casual wage labourers.
+Almost all of what these households earn in a year, they earn between May and October.
 
-The Government of Uttarakhand has proposed a ropeway connecting Sonprayag to
-Kedarnath, intended to shorten the journey from around eight hours on foot to
-roughly half an hour. Whatever its benefits for pilgrim access, a ropeway of this
-kind functionally competes with, and could displace, the route's existing
-physical-transport workforce -- pony handlers, porters, and palki bearers in
-particular. This study exists to document who that workforce is, how exposed
-they currently are to poverty and to a broader set of deprivations, and how well
-their present skills would carry over into alternative work, \emph{before} that
-structural change occurs.
+The Government of Uttarakhand has proposed an aerial ropeway to Kedarnath. The detailed
+project report prepared for the state was for a Gaurikund alignment (Uttarakhand Tourism
+Development Board, 2022); the alignment that has since gone forward runs from Sonprayag, and
+is expected to cut a journey of eight hours or so on foot down to well under an hour. For
+pilgrims this is an unambiguous improvement. For the people whose entire working life is the
+walk itself, it is not. A ropeway of this kind does not complement pony and porter work, it
+substitutes for it directly.
+
+This report does two things. It presents what a 2024 field pilot of 46 route workers already
+established about who these workers are and how exposed they are, and it sets out the larger
+study designed on the back of that pilot -- a study meant to measure poverty, multidimensional
+deprivation, employment deprivation and forward-looking \emph{vulnerability} in this
+workforce \emph{before} the ropeway begins operating, so that there is a baseline to argue
+from later.
 
 \section{Literature Review}
 
-The study is grounded first in the sustainable-livelihoods literature, which
-frames a livelihood as the combination of capabilities, assets, and activities a
-household draws on to make a living, and treats a livelihood as sustainable when
-it can absorb shocks without eroding those capabilities and assets over time
-(Krantz, 2001). Subsequent applications emphasise how human capabilities,
-tangible assets, and economic activity interact in shaping livelihood strategy
-(Lax and Krug, n.d.), and note that hardship often arises not from a bare lack of
-assets but from an inability to protect or convert existing assets into new
-sources of livelihood -- a dynamic particularly visible in tourism-dependent
-settings, where livelihood assets sit inside a wider, changing structure of
-tourism activity (Laeis and Lemke, 2016). Together, this literature establishes that
-livelihood security depends not only on the resources available to a household,
-but on its capacity to redeploy those resources when conditions change.
+The study sits first inside the sustainable-livelihoods literature. Chambers and Conway
+(1992) defined a livelihood as the capabilities, assets and activities a household uses to
+make a living, and called it sustainable when it can absorb and recover from stress without
+eroding those capabilities and assets. DFID (1999) turned this into the five-capitals
+operational framework that most applied work now uses, and Ellis (2000) developed the
+diversification side of it, which matters here because diversification is precisely what the
+Kedarnath workforce lacks. Later applications, Krantz (2001) and Lax and Krug for instance,
+stress the same interaction between human capability, tangible assets and actual economic
+activity, and make the point that hardship often comes not from an absence of assets but from
+an inability to convert the assets a household has into some new source of livelihood. In
+tourism settings this is sharper still, because the household's assets sit inside a wider
+structure of visitor activity that the household does not control (Laeis and Lemke, 2016).
 
-That capacity to respond is developed further in the literature on household
-risk, coping, and consumption smoothing. Research on poverty dynamics shows that
-households can move in and out of poverty substantially within a single year, so
-a snapshot of current poverty status can understate real economic insecurity
-(Dercon and Krishnan, 2000). The risk literature accordingly examines how households
-smooth welfare through adjustments in consumption, labour supply, and asset
-holdings (Hoddinott and Quisumbing, 2008), and evidence from rural India shows that informal
-risk-sharing within villages can provide meaningful insurance, with individual
-consumption responding roughly symmetrically to income gains and losses
-(Bold and Broer, 2021). This underlines the importance of considering existing coping
-capacity, not just current income, when assessing how well households could
-absorb an economic shock.
+That capacity to respond is what the risk and consumption-smoothing literature examines.
+Poverty-dynamics work shows households moving in and out of poverty within a single year, so
+a snapshot of current poverty understates real insecurity (Dercon and Krishnan, 2000).
+Hoddinott and Quisumbing (2008) survey how households smooth welfare through consumption,
+labour supply and asset holdings, and evidence from rural India indicates informal
+risk-sharing inside villages does provide meaningful insurance, with consumption responding
+roughly symmetrically to income gains and losses (Bold and Broer, 2021). The lesson is that
+existing coping capacity, and not only current income, decides how a household absorbs a
+shock.
 
-Within this broader frame, poverty measures a household's \emph{existing}
-condition, while vulnerability extends the question to the risk of
-\emph{future} deprivation. The Foster--Greer--Thorbecke class of measures
-separates the incidence, depth, and severity of monetary poverty
-(Foster, Greer and Thorbecke, 1984), and for India the Rangarajan Committee methodology provides
-the basis for the monetary poverty line used here; its recent re-implementation
-directly on the 2022--23 Household Consumption Expenditure Survey
-(Sethu, Surya and Ruthu, 2024) is the source of the threshold used throughout this study.
-Monetary poverty on its own, however, misses overlapping deprivations in other
-dimensions of well-being. The counting approach of Alkire and Foster (2011)
-provides a systematic way to identify multidimensional poverty, and
-Alkire and Santos (2010) apply it across 104 developing countries. The
-distinction is not academic: using data on roughly 90,000 households in Punjab,
-Pakistan, Azeem, Mugera and Schilizzi (2018) find that 18 percent of households experiencing
-multidimensional poverty are missed entirely by the matching monetary measure,
-meaning the choice of poverty measure can materially change which households are
-identified as poor.
+Poverty measures the condition a household is in now. Vulnerability asks about the risk of
+being deprived later. The Foster--Greer--Thorbecke class separates incidence, depth and
+severity of monetary poverty (Foster, Greer and Thorbecke, 1984), and for India the
+Rangarajan Committee methodology gives the line; its re-implementation directly on the
+2022--23 Household Consumption Expenditure Survey by Sethu, Surya and Ruthu (2024) is what
+this study uses. But monetary poverty on its own misses overlapping deprivation in other
+dimensions. The counting approach of Alkire and Foster (2011) identifies multidimensional
+poverty systematically, Alkire and Santos (2010) apply it across 104 developing countries,
+and NITI Aayog (2021) fixes the indicator set and weights for India specifically. The
+distinction is not academic: on roughly 90,000 Punjab households, Azeem, Mugera and Schilizzi
+(2018) find 18 per cent of the multidimensionally poor are missed altogether by the matching
+monetary measure. Apablaza, Nogales and Sehnbruch (2026) extend the same counting logic to
+\emph{work itself}, building a five-indicator employment-deprivation measure out of access,
+compensation, security, stability and conditions, which is directly relevant for a workforce
+whose problem is the quality and durability of the job rather than the absence of one.
 
-A separate strand moves from identifying \emph{current} poverty to estimating
-the probability of \emph{future} poverty. Chaudhuri, Jalan and Suryahadi (2002) provide the
-foundational cross-sectional approach, in which observable household
-characteristics are used to estimate the probability that a household's future
-welfare falls below a poverty line -- the Vulnerability as Expected Poverty
-(VEP) framework used below. Gallardo (2018) situates this approach within a
-broader taxonomy: alongside VEP, one alternative paradigm asks whether a
-household's welfare falls below the poverty line once its own risk exposure is
-netted out of its expected welfare, using only the mean and a measure of
-dispersion rather than an assumed probability distribution.
-Chiwaula, Witt and Waibel (2011) implement one version of this using the plain standard
-deviation as the risk measure, and Gallardo (2013)'s own refinement instead
-uses only the \emph{downside} half of that dispersion -- the part that comes
-from falling short of the mean -- on the grounds that a household is not
-obviously harmed by unusually good luck, only by unusually bad luck. Both are
-implemented and compared against VEP in Section~\ref{sec:vmr} below. More generally,
-empirical work in this tradition shows that vulnerability estimates routinely
-exceed observed poverty rates, and that the balance between poverty-driven and
-risk-driven vulnerability varies by setting (Azeem, Mugera and Schilizzi, 2016); importantly for
-the present study, multidimensional poverty and vulnerability need not identify
-the same households as their monetary counterparts. A particularly close
-precedent is Lyons, Kass-Hanna and Montoya Castano (2023), who build a 21-indicator multidimensional
-livelihood index for Syrian refugee households in Lebanon and apply the same
-three-step feasible-generalized-least-squares VEP procedure used here to
-estimate forward-looking vulnerability, linking current deprivation to coping
-responses that range from savings and borrowing through to the sale of
-productive assets.
+A separate strand moves from identifying current poverty to estimating the probability of
+future poverty. Chaudhuri, Jalan and Suryahadi (2002) provide the foundational
+cross-sectional approach, in which observable household characteristics are used to estimate
+the probability that future welfare falls below a line. This is the Vulnerability as Expected
+Poverty (VEP) framework used throughout. Pritchett, Suryahadi and Sumarto (2000) develop the
+companion measure and make the targeting argument that follows from it, and Suryahadi and
+Sumarto (2003) supply the chronic-versus-transient decomposition that this study adopts.
+Fujii (2016) reviews the whole field and is the source for two design choices made here: that
+location and education are the covariates that come out significant most consistently, and
+that the measurement-error perturbation check is worth running. Günther and Harttgen (2009)
+separate idiosyncratic from covariate shocks, which is why the shock module distinguishes
+them. Gallardo (2018) then situates VEP inside a broader taxonomy and identifies a genuinely
+different family -- Vulnerability by Mean Risk -- which asks whether a household's expected
+welfare, once penalised for its own risk, clears the line, and makes no distributional
+assumption at all. Chiwaula, Witt and Waibel (2011) implement one version with the plain
+standard deviation; Gallardo's own refinement penalises only the \emph{downside} half of the
+dispersion, on the reasoning that a household is not harmed by unusually good luck. Both are
+estimated and compared against VEP in Section~\ref{sec:vmr}. Empirically, vulnerability rates
+routinely exceed observed poverty rates and the mix of poverty-driven and risk-driven
+vulnerability varies by setting (Azeem, Mugera and Schilizzi, 2016). The closest precedent to
+what is attempted here is Lyons, Kass-Hanna and Montoya Castano (2023), who build a
+21-indicator multidimensional livelihood index for Syrian refugee households in Lebanon and
+push it through the same three-stage FGLS procedure, linking current deprivation to coping
+responses that run from savings and borrowing up to the sale of productive assets. Feeny and
+McDonald (2016) do the multidimensional version for Melanesia.
 
-The final strand concerns what happens if a major change in the local economy
-alters the occupations through which households currently make a living. The
-literature on technological change and task composition shows that shifts in
-how work is organised change the demand for particular occupational tasks and
-skills (Autor, Levy and Murnane, 2003; Lewandowski, Park and Schotte, 2020). Within that literature, occupational
-skills transferability -- how much of what a worker knows carries over into a
-different occupation -- predicts smaller earnings losses after displacement
-(Nawakitphaitoon and Ormiston, 2016), and more recent work measures the proximity
-between a worker's own skill profile and the requirements of alternative
-occupations directly, generating occupation recommendations that can differ
-from a worker's own prior job (B\"achli et al., 2024). Most directly relevant here,
-Neffke, Nedelkoska and Wiederhold (2024) show that displacement sharply increases occupational
-switching -- displaced workers are eleven to twelve times more likely to change
-occupation than otherwise-similar non-displaced workers -- and that the
-earnings consequences depend on the specific nature of the resulting skill
-mismatch. They classify transitions into occupation \emph{stayers},
-\emph{lateral switchers} (broadly the same skills required), \emph{upskillers}
-(new occupation needs mostly new skills), \emph{downskillers} (many old skills
-go unused), and \emph{reskillers} (both at once) -- a typology this study's
-future skill-transferability module is designed to adapt.
+The last strand concerns what happens when a structural change removes the occupations
+households currently live off. Work on technological change and task composition shows that
+shifts in how work is organised change the demand for particular occupational tasks (Autor,
+Levy and Murnane, 2003; Lewandowski, Park and Schotte, 2020). Within that literature,
+occupational skills transferability predicts smaller earnings losses after displacement
+(Nawakitphaitoon and Ormiston, 2016), and Gathmann and Schönberg (2010) give the task-based
+distance measure that makes transferability computable from a task grid rather than from a
+wage regression. More recent work measures proximity between a worker's own profile and the
+requirements of alternative occupations directly, and generates occupation recommendations
+that can differ from a worker's prior job (Bächli et al., 2024). Martins-Neto, Gukovas and
+Fouarge weight that distance by the regional employment share of each destination occupation,
+which is the only sensible way to handle a setting where the obvious destination occupation
+does not exist yet. And most directly, Neffke, Nedelkoska and Wiederhold (2024) show
+displacement raises occupational switching by a factor of eleven or twelve, with earnings
+consequences that depend on the specific shape of the resulting mismatch -- they sort
+transitions into stayers, lateral switchers, upskillers, downskillers and reskillers, a
+typology this study's task module is built to reproduce.
 
-Taken together, the literature suggests that livelihood security in a setting
-like Kedarnath depends on four things: the assets and capabilities households
-currently hold, their existing exposure to poverty and other deprivations,
-their capacity to absorb shocks, and their ability to adjust if the local
-economic environment changes structurally. This study brings these strands
-together to establish the present livelihood and vulnerability position of the
-Yatra workforce and to lay the groundwork for assessing, in a subsequent
-extension, how transferable their current skills are to plausible post-ropeway
-occupations.
+Taken together the literature says livelihood security here depends on four things: the
+assets and capabilities the household holds, its present exposure to poverty and other
+deprivation, its capacity to absorb a shock, and its ability to move if the local economy
+changes shape. The pilot in Section~\ref{sec:pilot} speaks to the first, third and fourth.
+The main study is designed to add the second properly.
 
 \section{Research Gap, Research Questions and Hypotheses}
 
-\textbf{Research Gap.} Relatively little empirical work brings the
-sustainable-livelihoods, vulnerability, and occupational-adaptation literatures
-together to assess a population's current livelihood security \emph{in
-anticipation of} a specific, named structural change to the local economy,
-rather than after the fact. This study addresses that gap for the Kedarnath
-Yatra workforce ahead of the proposed ropeway.
+\textbf{Research gap.} Very little empirical work brings the sustainable-livelihoods,
+vulnerability and occupational-adaptation literatures together to assess a population's
+livelihood security \emph{in anticipation of} a specific, named, already-approved structural
+change, instead of after the fact. Displacement studies are nearly all retrospective, for the
+obvious reason that displacement has to happen before you can study it. Kedarnath offers the
+rarer case where the shock is announced, dated and geographically precise, and the affected
+workforce is still in place and countable.
 
-\textbf{Research Questions.} The study addresses the following questions:
+\textbf{Research questions.}
 \begin{enumerate}
-    \item What are the existing livelihood and occupational structures of households connected to the Yatra economy?
-    \item What is the extent and distribution of current monetary and multidimensional poverty and vulnerability?
-    \item What household characteristics are associated with differences in vulnerability and adaptive capacity?
-    \item To what extent are the skills of the existing workforce transferable to plausible post-ropeway occupations? \textit{(instrument extension, not yet fielded --- see Section~\ref{sec:skill})}
-    \item To what extent do workers intend to remain in the region or transition to alternative economic activities? \textit{(instrument extension, not yet fielded)}
+    \item What are the existing livelihood and occupational structures of households attached to the Yatra economy?
+    \item What is the extent and distribution of current monetary poverty, multidimensional deprivation and employment deprivation, and of forward-looking vulnerability in each?
+    \item Which household characteristics are associated with differences in vulnerability and adaptive capacity?
+    \item How transferable are the existing skills of this workforce to other work that is actually available in the region -- including but not limited to the jobs the ropeway is claimed to create?
+    \item Do workers intend to stay in the region or move, and what does that intention track?
 \end{enumerate}
 
-\textbf{Hypotheses.} The empirical analysis tests whether differences in
-household characteristics, livelihood structure, assets, and adaptive capacity
-are associated with differences in vulnerability -- and, once the skill module
-is fielded, with differences in occupational transition prospects.
+\textbf{Hypotheses.} The analysis tests whether differences in household characteristics,
+livelihood structure, assets and adaptive capacity are associated with differences in
+vulnerability; and, for the transferability arm, whether task overlap with regionally
+available occupations predicts which workers would be structurally displaced rather than
+merely inconvenienced.
 
-\section{Methodology, Data and Results}
+\section{Phase I: The 2024 Field Pilot}\label{sec:pilot}
 
-The study adopts an ex-ante, cross-sectional design: it documents the Yatra
-workforce's livelihood, poverty, and vulnerability position \emph{before} the
-ropeway is operational, as a baseline against which any future change can later
-be assessed. It does not attempt to estimate a causal effect of the ropeway
-itself.
+\subsection{Data and sample}
 
-\subsection{Data and Survey}
-
-Primary data are collected through a household survey covering demographic
-characteristics, livelihood activities, income sources, household assets,
-employment, consumption, indebtedness, and coping mechanisms. The survey is
-organised at the household level while retaining the respondent's principal
-Yatra-season occupation, employment arrangement, work experience, and
-off-season activity. Household size is observed as a single reported aggregate
-rather than reconstructed from a full member-by-member roster.
-
-Principal Yatra-season occupation is recorded in thirteen categories: pony handler, pony owner, porter, palki bearer, driver, guide, shopkeeper, shop owner, dhaba or food-stall owner, hotel or lodging worker, hotel or lodging owner, wage labourer, and other. The list was checked against a 46-respondent field pilot, which showed that drivers, food-stall owners and guides were missing from an earlier draft; temple priests, who also appeared in the pilot, are outside the scope of this study and are not sampled. Guides are included at a deliberately small share, since most guides work outside the Yatra corridor itself. Off-season activity is recorded in seven categories, including an explicit ``no other work'' option: in the pilot it was the single most common answer (39 percent), and a list that forces every respondent into some off-season activity misstates how many workers have no secondary livelihood at all.
-
-The instrument distinguishes four employment statuses within the Yatra economy -- self-employed own-account workers (no fixed employer, paid
-directly per trip/load through a turn-based rotation), self-employed
-employers/business owners, regular wage-salaried employees, and casual wage
-labourers with no fixed employer and no own-account relationship -- rather
-than grouping by how physically demanding the work looks; records month-by-month
-employment status and earnings across the full calendar year, so that
-Yatra-season and non-Yatra income can be separated; and captures housing,
-electricity, sanitation, drinking water, durable assets, land, livestock,
-banking, credit, insurance, health outcomes, distress events over the preceding
-year, and observed (not hypothetical) coping responses to economic stress.
-Every interview record also carries the administrative fields a genuine field
-round would produce -- an enumerator code, interview date and duration,
-approximate GPS location, and language of interview -- and the sample carries
-an explicit, documented fieldwork-attrition process (Section~\ref{sec:sample}) rather than
-assuming full response.
-
-Detailed occupational skill and task information required to construct a
-skill-transferability measure is not yet part of the fielded instrument; the
-current dataset supports Research Questions 1--3 only. Section~\ref{sec:skill} sets out how
-the fourth and fifth research questions would be answered once that module is
-added.
-
-\subsection{Monetary Poverty}
-
-Monetary poverty is measured with the Foster--Greer--Thorbecke (FGT) family of
-indices. Let $c_i$ be household $i$'s monthly per-capita consumption and $z$
-the poverty line:
-
-\begin{equation}
-P_\alpha = \frac{1}{N} \sum_{i=1}^{N} \left( \frac{z - c_i}{z} \right)^\alpha I(c_i < z)
-\end{equation}
-
-\noindent\textit{In words:} for every household below the line, work out how
-big its shortfall is \textbf{as a share of the line itself}, then average that
-shortfall across the whole sample. Setting $\alpha=0$ counts what share of
-households are poor at all (the \textbf{headcount}); $\alpha=1$ averages how
-far below the line the poor typically fall (the \textbf{depth} of poverty);
-$\alpha=2$ gives extra weight to the very poorest households (the
-\textbf{severity}), so a large shortfall counts for more than several small
-ones.
-
-The poverty line is set using the Rangarajan Committee methodology, following
-its direct re-implementation on the 2022--23 Household Consumption Expenditure
-Survey by Sethu, Surya and Ruthu (2024): \textbf{Rs.\ 2,515} per person per month (the
-rural line; the same source gives Rs.\ 3,639 for urban areas, not used here).
-This is a live methodological choice, not an official government figure -- the
-Government of India has not notified any poverty line since 2011--12 -- so
-Section~\ref{sec:robust} reports monetary vulnerability under an alternative, CPI-adjusted
-line as well.
-
-\paragraph{Result.}
+A structured questionnaire was administered to pilgrimage-route workers at Kedarnath during
+the 2024 Yatra season. Respondents were purposively sampled across the occupational
+categories visibly present at the site, with the aim of covering the full range of
+trail-dependent work rather than of being representative. The achieved sample is 46
+respondents and roughly 120 variables, covering income sources and amounts, household
+composition, productive assets, savings and debt, past exposure to income shocks, awareness of
+the ropeway, perceived post-ropeway opportunity, and a 1--5 Likert stance on the project.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lr}
+\caption{Pilot sample composition by occupational group ($N=46$)}
+\begin{tabular}{lrr}
 \toprule
-Measure & Value \\
+Occupational group & $N$ & Share (\%) \\
 \midrule
-Mean monthly per-capita consumption & Rs.\ 2,758 \\
-Poverty headcount, $P_0$ & 0.404 \\
-Poverty gap, $P_1$ & 0.065 \\
-Squared poverty gap, $P_2$ & 0.015 \\
+Hospitality (hotel, lodge, dhaba, shop) & 22 & 47.8 \\
+Animal handlers (pony, mule, palki)     & 12 & 26.1 \\
+Service (guide, priest, other)          &  6 & 13.0 \\
+Labour (porter / kandi)                 &  3 &  6.5 \\
+Transport (driver)                      &  3 &  6.5 \\
+\midrule
+Total & 46 & 100.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Mean consumption sits only about 10 percent above the poverty line, so two in five households (40.4 percent) fall below it. Occupation differences are small and not neatly ordered: in this sample current poverty is highest among shop owners (64 percent), shopkeepers (57 percent) and palki bearers (50 percent), and lowest among dhaba and food-stall owners (17 percent) and porters (20 percent). This is unsurprising given that welfare is measured through consumption at the usual place of residence, which is only loosely tied to Yatra-season earnings. Occupation groups also hold only three to fifteen households each, so these comparisons are descriptive, not statistically precise.
+Hospitality is the largest group, which reflects its dominance in the visible Kedarnath
+economy. Animal handlers are second, and as the rest of this section shows, they are the group
+most exposed to the ropeway.
 
-\subsection{Multidimensional Deprivation}
+\subsection{The economy is mono-dependent}
 
-Monetary poverty says nothing about whether a household also lacks
-electricity, sanitation, or schooling. The Alkire--Foster counting approach
-captures this by scoring each household on a set of weighted deprivation
-indicators and applying a cut-off. Following the structure of India's own
-National Multidimensional Poverty Index, three equally-weighted dimensions are
-used -- Health, Education, and Standard of Living -- each built from its own
-sub-indicators (health: geographic access to care and health-insurance
-coverage; education: respondent's own completed schooling, in the absence of a
-full household roster; standard of living: cooking fuel, electricity,
-sanitation, drinking water, housing quality, durable assets, and bank-account
-access).
+Yatra-derived income accounts for over 95 per cent of mean income in \emph{every} occupational
+group in the pilot. This is the single most important descriptive fact in the dataset. There
+is essentially no off-season fallback that would buffer a fall in trail demand, and when the
+pilot asked directly what people do outside the season, ``no other work'' was the most common
+single answer, at around 39 per cent. Hospitality and transport workers hold the highest
+median incomes, animal handlers sit at the bottom of the distribution.
 
-\begin{equation}
-s_i = \sum_j w_j \, d_{ij}
-\end{equation}
+Forty-one per cent of the sample (19 of 46) hold a BPL card. Among card holders savings rates
+are lower and vulnerability index values higher than among the 27 non-holders. But the card
+is a poor proxy for exposure -- several holders report incomes well above the formal
+threshold, and several of the most trail-dependent workers do not hold one at all. This is the
+finding that drives the targeting recommendation in Section~\ref{sec:policy}.
 
-\noindent\textit{In words:} household $i$'s overall deprivation score is just
-a weighted count of the boxes it is deprived on. Each indicator $j$ contributes
-its own weight $w_j$ (the three dimensions get equal weight, and each
-dimension's own sub-indicators split that weight evenly) whenever the
-household is flagged as deprived on it ($d_{ij}=1$). A household is
-\textbf{multidimensionally poor} if this score reaches at least one-third of
-the total weighted indicator set, not just deprived on any single item.
+\subsection{Ropeway stance is occupationally structured}
 
-Two summary numbers follow: the \textbf{headcount} $H$ is the share of
-households crossing this cut-off, and the \textbf{intensity} $A$ is how
-deprived the poor households are on average, once they have crossed it.
-Multiplying the two gives the standard \textbf{adjusted headcount ratio},
-which credits a policy that either pulls households out of poverty \emph{or}
-reduces how deprived the remaining poor households are:
-
-\begin{equation}
-M_0 = H \times A
-\end{equation}
-
-\paragraph{Result.}
+Of the 42 non-neutral respondents, 23 oppose the ropeway (stance 1 or 2) and 19 support it
+(stance 4 or 5). The split is not random across the trail.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lr}
+\caption{Ropeway stance by occupational group, pilot survey counts ($N=46$)}
+\begin{tabular}{lrrrrrr}
 \toprule
-Measure & Value \\
+ & \multicolumn{5}{c}{Likert stance (1 = strongly oppose, 5 = strongly support)} & \\
+\cmidrule(lr){2-6}
+Group & 1 & 2 & 3 & 4 & 5 & Total \\
 \midrule
-Multidimensional headcount, $H$ & 0.683 \\
-Average intensity among the poor, $A$ & 0.536 \\
-Adjusted headcount ratio, $M_0$ & 0.366 \\
+Animal      &  9 & 0 & 0 & 0 &  3 & 12 \\
+Labour      &  1 & 1 & 0 & 0 &  1 &  3 \\
+Transport   &  0 & 1 & 0 & 1 &  1 &  3 \\
+Service     &  1 & 1 & 1 & 0 &  3 &  6 \\
+Hospitality &  6 & 3 & 3 & 1 &  9 & 22 \\
+\midrule
+Total & 17 & 6 & 4 & 2 & 17 & 46 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-About seven in ten households (68.3 percent) are multidimensionally poor -- roughly 1.7 times the monetary poverty rate. The largest single contributors are no health insurance (61 percent of households), fewer than two household durables (56 percent), geographic health-access deprivation (56 percent), and no LPG as the primary cooking fuel (55 percent); electricity is close to universal (86 percent have it). This is not simply the same households showing up twice:
-Section~\ref{sec:agree} shows monetary and multidimensional deprivation identify
-substantially different, only partly overlapping groups.
+Animal handlers oppose at 75 per cent (9 of 12). Hospitality workers support at 45 per cent
+(10 of 22), nine of them at the top of the scale. Stance correlates negatively with the
+vulnerability index ($r = -0.39$).
 
-\subsection{Vulnerability as Expected Poverty (VEP)}
+\subsection{Opposers have more to lose and less to fall back on}
 
-A household can be poor today and comfortable next year, or the reverse.
-Chaudhuri, Jalan and Suryahadi (2002) formalise this as the \textbf{probability that a
-household's welfare falls below the poverty line in the near future},
-estimated from a single cross-section using two ideas: (i) households with
-similar observable characteristics face similar average welfare and similar
-welfare risk, and (ii) that average and that risk can both be estimated from
-how much actual consumption scatters around what those characteristics
-predict.
+Comparing the standardised livelihood profiles of the 23 opposers against the 19 supporters,
+opposers score systematically higher on vulnerability, Yatra income share and dependency
+ratio, and lower on adaptive capacity, asset index and number of income sources. The two
+things move together: the workers with the most to lose are the same workers with the least
+capacity to absorb the loss.
 
-Step one predicts each household's expected log-consumption from its own
-characteristics (education, assets, employment type, household size,
-migration status, and so on -- the full covariate list is given in Section~\ref{sec:determinants}):
+Three models were fitted, all of them on a sample small enough that they should be read as
+description and not inference.
 
+\begin{itemize}
+    \item \textbf{OLS on log income} ($N=46$, HC3 robust, $R^2 = 0.183$). Diversification is the clearest predictor: each additional income source a household holds is associated with roughly 35 per cent higher total income ($p = 0.013$). Occupation group points the expected way -- animal handlers earn less than hospitality workers -- but within-group variation swamps it at this sample size.
+    \item \textbf{Logit on opposition} ($N=42$ non-neutral, HC3). The only predictor reaching conventional significance is the vulnerability index, with a marginal effect of $+0.604$ (dy/dx at means, $z=2.15$, $p=0.031$; the coefficient itself is $p=0.070$). Being an animal handler adds about 20 points of opposition probability over an otherwise similar hospitality worker but does not reach significance ($p=0.297$), because three animal handlers with lower vulnerability and higher assets strongly \emph{support} the project. Yatra income share adds nothing once vulnerability is controlled, suggesting trail dependence matters mainly \emph{through} household fragility. McFadden pseudo-$R^2$ is 0.160.
+    \item \textbf{Classification, leave-one-out cross-validated} (appropriate at $N<50$). Random Forest reaches 61.9 per cent accuracy against a 54.8 per cent majority-class baseline; two logit specifications reach 57.1 per cent. The most predictive features are Yatra income share, the vulnerability index and the asset index, which agrees with the logit.
+\end{itemize}
+
+Principal components tells the same story geometrically. The first component explains 46.8 per
+cent of variation on its own and it is a single resilience--dependence axis: many income
+sources, high adaptive capacity and low trail dependence at one end, single-activity work with
+no alternatives and almost all income from the season at the other. Animal handlers and
+labourers sit at the dependence end. A multiple correspondence analysis, run twice -- once in
+Stata with stance as an active variable, once in Python with stance used only for colour, so
+the axes are not defined by stance -- puts strong opposition in the same neighbourhood as BPL
+card, no savings, no productive assets and no work history outside the Yatra economy, and
+strong support next to ownership, education and off-season diversification. That is a picture
+of the raw data rather than a model result, and it agrees with every model above.
+
+\subsection{Scenario analysis on a synthetic population}
+
+Forty-six respondents are enough to establish who these workers are. They are not enough to
+simulate an income shock -- with 12 animal handlers, group-level estimates would be driven by
+two or three individuals. So a synthetic population of 1,000 households was generated from the
+observed sample, half by smoothed bootstrap (resampling with a Silverman-bandwidth jitter on
+continuous variables, binary characteristics copied without jitter) and half by a Gaussian
+copula fitted to the joint distribution, which preserves the resilience--dependence structure
+the PCA found. Validation accepts it: 42 of 46 checks pass, the Frobenius norm of the
+correlation difference matrix is 0.596 against a ceiling of 2.0, and all 12 categorical and
+binary checks pass. The four failures are distributional mismatches in discrete-heavy
+variables where the copula smooths what is effectively a step function in a small sample.
+
+Four displacement scenarios were applied to Yatra-derived income only.
+
+\begin{table}[h]
+\centering
+\caption{Mean income by occupational group across scenarios (Rs.\ lakh per year, $N=1{,}000$ synthetic households)}
+\begin{tabular}{lrrrr>{\raggedright\arraybackslash}p{2.6cm}}
+\toprule
+Group & Baseline & Mild & Moderate & Severe & Severe + retraining \\
+\midrule
+Animal      & 5.22 & 3.55 ($-32\%$) & 2.09 ($-62\%$) & 1.25 ($-78\%$) & 3.66 ($-32\%$) \\
+Labour      & 6.38 & 4.87 ($-24\%$) & 3.35 ($-50\%$) & 2.34 ($-66\%$) & 5.26 ($-18\%$) \\
+Transport   & 7.74 & 8.36 ($+8\%$)  & 6.47 ($-18\%$) & 5.71 ($-26\%$) & 6.47 ($-18\%$) \\
+Service     & 6.62 & 7.41 ($+12\%$) & 6.38 ($-4\%$)  & 6.38 ($-4\%$)  & 6.38 ($-4\%$) \\
+Hospitality & 6.45 & 8.71 ($+35\%$) & 7.74 ($+20\%$) & 8.07 ($+25\%$) & 7.74 ($+20\%$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Effective changes are smaller than the shock parameters applied, because mean Yatra share is
+below 1.0 for most households. Counted against a monthly poverty line of Rs.\ 3,500 (Tendulkar
+Committee threshold, inflation-adjusted; Planning Commission of India, 2009), the mild and
+moderate scenarios induce almost no new poverty -- zero and three households respectively --
+while the severe scenario pushes 121 households below the line, and every single one of them is
+an animal handler. That is about 42 per cent of the synthetic animal-handler group. Retraining
+eliminates poverty induction in the moderate case entirely.
+
+The compensation exercise asks what lump sum would restore a three-month income buffer to each
+losing household, which is enough to stop distress asset sales and forced borrowing during a
+transition without being long-term income replacement:
+\begin{equation}
+C_i = \max\!\left(0,\; 3 \times \frac{y_i^{\text{pre}} - y_i^{\text{post}}}{12}\right)
+\end{equation}
+Aggregated, this comes to roughly Rs.\ 3.47 crore under moderate assumptions and Rs.\ 4.52
+crore under severe -- a fraction of a per cent of the project budget. Animal handlers need
+Rs.\ 78,331 per household (moderate) and Rs.\ 99,209 (severe); hospitality workers gain income
+in both and need nothing. The cost is dominated by two groups, which is exactly what makes
+occupational targeting efficient.
+
+\subsection{What the pilot could not do}
+
+The pilot is convenience-sampled, has one to thirteen observations per occupational group, and
+skews toward owners, so its \emph{shares} should not be quoted as population quantities. Its
+categories and wording are reusable, its shares are not. Beyond sampling, three substantive
+gaps motivated the main study:
+
+\begin{enumerate}
+    \item \textbf{No consumption module.} The pilot measured income, and income in a seasonal migrant economy is the noisiest possible welfare measure. Every poverty and vulnerability result above rests on income, which is why the poverty counts sit at implausible-looking levels (zero poor at baseline).
+    \item \textbf{No forward-looking vulnerability.} The pilot's ``vulnerability index'' is a composite of shock history, debt and low asset cover. It is a reasonable descriptive index but it is not vulnerability in the Chaudhuri et al. sense, which is an estimated \emph{probability} of falling below a line.
+    \item \textbf{No task data.} Skill transferability was discussed but nothing was collected that could measure it. The scenario ``retraining'' parameter is an assumption, not an estimate.
+\end{enumerate}
+
+\section{Phase II: The Main Study -- Forward Plan}\label{sec:plan}
+
+\subsection{Design}
+
+Ex-ante, cross-sectional, one round. The study documents the workforce's livelihood, poverty
+and vulnerability position before the ropeway operates, as a baseline that a later round can be
+compared against. It does not attempt to estimate a causal effect of a ropeway that is not yet
+running.
+
+Sampling is quota-based against the fourteen occupational categories, not random, with quotas
+recalibrated against a real enumeration of the route before fieldwork starts rather than
+carried over from the pilot's shares. Field constraints are four enumerators, about ten days,
+and one visit per respondent, which puts the realistic achieved sample in the range of 250 to
+320. Priests appear on the route but are outside the scope and are not sampled. Guides are
+included at a deliberately small share since most guides work outside the corridor itself.
+
+\subsection{The instrument}
+
+The fielded instrument is generated from a single machine-readable dictionary, which is what
+guarantees the questionnaire, the Hindi translation, the data-entry form, the Stata variable
+labels and the analysis code cannot drift apart. It currently holds 352 variables: 210 asked
+of the respondent, 129 constructed afterwards in Stata, 8 items of paradata, and 5 flags that
+exist only in the synthetic worked example. Thirteen modules:
+
+\begin{longtable}{@{}cl@{\hspace{1.2em}}p{8.4cm}@{}}
+\toprule
+& Module & What it establishes \\
+\midrule
+\endhead
+A & Respondent and household & Size, composition, headship, schooling in completed years, language of origin \\
+B & Work and work history & Principal occupation on a 14-category list anchored to NCO-2015, plus free text; employment status on the PLFS four-way split; other activities held alongside \\
+C & Monthly calendar & Activity and earnings for each of the twelve months, with an annual-total fallback for respondents who cannot recall month by month; remittances \\
+D & Migration & Origin, usual place of residence and whether it is rural or urban, who brought the worker to the route \\
+E & Household consumption & Item groups and recall periods matched to HCES, each asked twice -- a usual Yatra-season month and a usual off-season month \\
+F & Housing, amenities, assets & Walls, roof, floor, water source and fetch time, sanitation type, cooking fuel, NITI's asset list, productive assets as separate binaries \\
+G & Finance & Bank and post-office accounts, borrowing by lender type, outstanding debt, interest as rupees per hundred per month, insurance counts, schemes \\
+H & Health & Recent morbidity with its cost and coping response, access barriers, child mortality and maternal-care indicators \\
+I & Food security and shocks & The five reduced Coping Strategy Index items in WFP's own wording, asked for each season; shocks and coping as multi-select \\
+J & Ropeway & Stance, and an open response recorded verbatim \\
+K & Job quality & Apablaza et al.'s own items and their skip logic, feeding the five-indicator employment-deprivation score \\
+L & Tasks and skills & A short three-answer task grid: done regularly now, done before elsewhere, never done \\
+\bottomrule
+\end{longtable}
+
+Three design decisions are worth stating because they are not obvious and they were not free.
+
+\emph{Everything seasonal is asked twice.} Fieldwork happens during the Yatra season. A single
+``last 30 days'' consumption question would therefore capture on-site spending only and would
+treat five months of worksite living as if it held all year. Consumption, remittances and the
+coping-strategy items are each asked for a usual in-season month and a usual off-season month
+and weighted into an annual figure. This is not a refinement; when it was introduced it moved
+per-capita consumption by several hundred rupees and the headline poverty rate by more than
+twenty points.
+
+\emph{The household may be split.} During the season a large share of this workforce is living
+at the worksite while the rest of the household is at home somewhere else. Questions that begin
+``your household'' are unanswerable in that situation, so the in-season items ask about ``you
+and anyone staying with you here'' and housing items are explicitly about the usual home rather
+than about anything the enumerator can see.
+
+\emph{The poverty line is per respondent.} India sets separate rural and urban lines. Because
+the sample is majority-migrant with home locations scattered across several states and into
+Nepal, the line is applied according to the respondent's own usual place of residence --
+Rs.\ 2,515 rural and Rs.\ 3,639 urban (Sethu, Surya and Ruthu, 2024). One national line is
+applied to everybody including non-Indian workers, on the same principle Lyons et al.\ (2023)
+use for Syrian refugees in Lebanon: vulnerability is measured against the economy the worker is
+actually embedded in, not the one they came from.
+
+\subsection{Measures}
+
+\paragraph{Monetary poverty.} Foster--Greer--Thorbecke, with $c_i$ monthly per-capita
+consumption and $z_i$ the line that applies to household $i$:
+\begin{equation}
+P_\alpha = \frac{1}{N} \sum_{i=1}^{N} \left( \frac{z_i - c_i}{z_i} \right)^\alpha I(c_i < z_i)
+\end{equation}
+In words: for every household below its line, work out the shortfall as a share of the line,
+then average across the whole sample. $\alpha = 0$ counts who is poor at all, $\alpha = 1$
+averages how far below the poor fall, $\alpha = 2$ weights the very poorest more heavily.
+
+\paragraph{Multidimensional deprivation.} The Alkire--Foster counting approach, run on NITI
+Aayog's (2021) own indicator set and its own weights, so the result is comparable to a
+published national figure rather than to a survey-specific index invented here:
+\begin{equation}
+s_i = \sum_j w_j \, d_{ij}, \qquad M_0 = H \times A
+\end{equation}
+A household is multidimensionally poor when $s_i \geq 1/3$. $H$ is the share crossing that
+cut-off and $A$ is how deprived the poor are on average once they have crossed it.
+
+NITI's National MPI has \textbf{three dimensions and twelve indicators}. Health and Education
+and Standard of Living each carry one-third. Inside Health, Nutrition takes 1/6 and Child and
+Adolescent Mortality and Maternal Health take 1/12 each. Inside Education, Years of Schooling
+and School Attendance take 1/6 each. Standard of Living splits its third across seven
+indicators at 1/21 apiece. Table~\ref{tab:niti} gives every one of them, the weight, and the
+deprivation rule exactly as it is implemented in this study.
+
+\begin{longtable}{@{}p{2.1cm}p{3.1cm}c p{6.6cm}@{}}
+\caption{NITI Aayog (2021) National MPI: all three dimensions and all twelve indicators, with the deprivation rule as implemented here}\label{tab:niti}\\
+\toprule
+Dimension & Indicator & Weight & Deprived if \ldots \\
+\midrule
+\endfirsthead
+\toprule
+Dimension & Indicator & Weight & Deprived if \ldots \\
+\midrule
+\endhead
+Health & Nutrition & 1/6 & \textbf{Not collected.} NITI defines this on measured height and weight. A read-aloud interview at a worksite cannot produce anthropometry. See the note below. \\
+ & Child and adolescent mortality & 1/12 & Any death of a child or adolescent in the household in the last five years. \\
+ & Maternal health & 1/12 & A birth in the household in the last five years where the mother did not have four antenatal visits \emph{or} did not have a skilled attendant at delivery. NITI's rule fails on either limb, not both. \\
+\midrule
+Education & Years of schooling & 1/6 & No member aged 10 or above has completed six years of schooling. This is a \emph{household} indicator, not the respondent's own schooling. \\
+ & School attendance & 1/6 & Any child of school-going age (class 1 to 8) in the household is not attending. Households with no child in that age band are not deprived. \\
+\midrule
+Standard of living & Cooking fuel & 1/21 & The household cooks with dung, firewood, crop residue or shrubs, charcoal or coal. Kerosene is deliberately \emph{not} counted, because it is not on NITI's list, although the global MPI does count it. \\
+ & Sanitation & 1/21 & The toilet facility is unimproved, or it is improved but shared with other households. \\
+ & Drinking water & 1/21 & The source is unimproved, or it is improved but more than a 30-minute round trip away. Both limbs, not just the source. \\
+ & Electricity & 1/21 & The household has no electricity. \\
+ & Housing & 1/21 & The floor \emph{or} the roof \emph{or} the wall is made of inadequate material. All three limbs are asked. \\
+ & Assets & 1/21 & The household owns no more than one of radio, television, telephone, computer, animal cart, bicycle, motorcycle and refrigerator, \emph{and} does not own a car, jeep or truck. \\
+ & Bank account & 1/21 & No household member has a bank \emph{or post office} account. \\
+\bottomrule
+\end{longtable}
+
+\noindent Two things follow from that table and both have to be carried through the whole
+analysis. First, nutrition cannot be collected, so its 1/6 is redistributed proportionally over
+the remaining ten indicators and the resulting score must always be reported as a
+\textbf{ten-of-twelve adaptation of the National MPI}, never as the National MPI itself.
+Second, several of these indicators are about the household's \emph{usual home}, which during
+the Yatra season is somewhere the enumerator is not standing. They are therefore self-reported
+about that home, not observed, and the questionnaire says so explicitly in the wording.
+
+\paragraph{Employment deprivation.} Apablaza, Nogales and Sehnbruch (2026) apply the same
+counting logic to work itself. Their measure has five equally weighted indicators and the
+thresholds in their Table 3 are applied as written, with the departures noted below.
+
+\begin{longtable}{@{}p{2.3cm}c p{10.3cm}@{}}
+\caption{Apablaza, Nogales and Sehnbruch (2026): the five employment dimensions as implemented}\\
+\toprule
+Dimension & Weight & Deprived if \ldots \\
+\midrule
+\endfirsthead
+\toprule
+Dimension & Weight & Deprived if \ldots \\
+\midrule
+\endhead
+Access & 1/5 & More than six months without work in the year \emph{and} time spent searching; or working under 20 hours a week and wanting more work. Hours are checked in both seasons, since in-season hours run 60 to 90 a week and the limb could otherwise never fire. \\
+Compensation & 1/5 & Monthly work income below two-thirds of the sample median. \\
+Security & 1/5 & Wage workers: no signed contract. Self-employed: the business is not registered. \\
+Stability & 1/5 & Wage workers under one season in the work, self-employed under two, \emph{or} an occasional/casual job. Tenure here is counted in Yatra seasons of roughly six months, which is how Apablaza's under-six-months and under-twelve-months thresholds map onto this setting. The casual-job limb is this study's addition and not theirs. \\
+Conditions & 1/5 & A workplace injury or death in the last twelve months, or neither work-related health cover nor any pension contribution. \\
+\bottomrule
+\end{longtable}
+
+\noindent A worker is employment-poor at $k = 2$ of 5, which is the cut-off Apablaza et al.\ use.
+
+\subsection{Vulnerability estimation}
+
+Chaudhuri, Jalan and Suryahadi (2002) estimate the probability that a household's welfare
+falls below the line in the near future, from a single cross-section, on two assumptions:
+households with similar observables face similar average welfare and similar welfare
+\emph{risk}, and both can be recovered from how actual outcomes scatter around what the
+observables predict. Stage one regresses log consumption on characteristics,
 \begin{equation}
 \ln(c_i) = X_i'\beta + \varepsilon_i
 \end{equation}
-
-\noindent\textit{In words:} a household's log-consumption is whatever its
-characteristics $X_i$ predict, plus an unexplained leftover $\varepsilon_i$.
-Consumption is modelled in \textbf{logs} rather than rupees because household
-welfare is assumed to be roughly log-normally distributed -- consumption
-cannot go negative, and proportional swings (a 20 percent income loss) matter
-more consistently than rupee-for-rupee swings.
-
-Step two re-uses the size of each household's leftover ($\varepsilon_i$) from
-step one to predict how \emph{variable}, not just how large, that household's
-consumption typically is -- households whose characteristics predict a wide
-range of possible outcomes get a bigger risk estimate than households whose
-outcomes are usually tightly predictable. This variance estimate is then used
-to re-weight the original regression (a standard efficiency correction called
-feasible generalized least squares, FGLS), giving each household its own
-predicted mean and its own predicted risk.
-
-Combining the two gives a probability of falling into poverty, read off the
-standard bell-curve (normal) distribution:
-
+stage two regresses the squared residual on the same characteristics to get each household's
+own predicted variance, and stage three re-weights the original regression by that variance
+(feasible generalised least squares). Each household ends up with its own predicted mean and
+its own predicted risk, and the probability follows off the normal curve:
 \begin{equation}
-V_i = \Phi\!\left( \frac{\ln z - \widehat{\mu}_i}{\widehat{\sigma}_i} \right)
+V_i = \Phi\!\left( \frac{\ln z_i - \widehat{\mu}_i}{\widehat{\sigma}_i} \right)
 \end{equation}
+A household predicted to average comfortably above the line, but with a lot of uncertainty
+around that average, can still carry a high probability of falling below it. Following
+convention a household is called vulnerable at $V_i \geq 0.50$, and Section~\ref{sec:robust}
+sweeps that threshold rather than defending it.
 
-\noindent\textit{In words:} take the gap between the poverty line and the
-household's predicted average consumption, scale it by how uncertain that
-prediction is, and convert the result into a probability using the normal bell
-curve, $\Phi(\cdot)$. A household predicted to average well above the line,
-but with high uncertainty around that average, can still register a high
-probability of falling below it. Following convention, a household is
-classified \textbf{vulnerable} when this probability reaches at least 0.50.
+The same machinery is run on all three welfare measures: log consumption, the NITI-structured
+deprivation score, and the Apablaza employment-deprivation score. For the two deprivation
+scores the inequality flips, since a \emph{higher} score is the bad outcome. Applying
+Chaudhuri's FGLS to an employment-deprivation score is, as far as this project's literature
+search goes, not something any published paper has done, and it is the methodological
+contribution the study is aiming at.
 
-\paragraph{Result.}
+Covariates are organised following Azeem, Mugera and Schilizzi (2016) into adaptive capacity
+(education, bank account, institutional credit, training, smartphone), sensitivity (age,
+household size, employment status, years in Yatra work) and exposure (migrant status, closure
+regime, shocks, Yatra income share, income seasonality, health-access tier, urban, trail
+dependence). Location is in the set deliberately, on Fujii's (2016) finding that education and
+location are the two covariates that come out significant most consistently across this
+literature.
+
+\paragraph{Chronic versus transient.} Suryahadi and Sumarto (2003) split on \emph{expected}
+consumption against the line, not on vulnerability status: chronic poor are poor now and have
+$E[c] < z$; transient poor are poor now but have $E[c] \geq z$. Vulnerability against a
+threshold $\tau$ is a separate third axis, which gives a six-cell table rather than the familiar
+four-cell one. An earlier version of this project's code split on vulnerability and carried
+their names for a different quantity; that has been corrected.
+
+\subsection{Occupational transferability}
+
+This is a separate second paper and its questions in the instrument are deliberately short, but
+the design is fixed. The task grid records what the worker does, not how well they rate
+themselves, because a rating scale is not answerable by this population and a factual grid is.
+From it, $q_{oj}$ -- the fraction of workers in occupation $o$ doing task $j$ -- gives an angular
+separation between occupations exactly as in Gathmann and Schönberg (2010), and distance is one
+minus that similarity. The measure is asymmetric by construction, which is the point:
+Nawakitphaitoon and Ormiston's (2016) observation that $t_{ij} \neq t_{ji}$ is what lets a move
+be classified as lateral, upskilling, downskilling or reskilling in Neffke, Nedelkoska and
+Wiederhold's (2024) sense.
+
+The single-destination problem -- ``can a pony handler become a ropeway operator'' -- is
+dissolved by weighting distance to every other occupation by that occupation's regional
+employment share, following Martins-Neto, Gukovas and Fouarge. Ropeway jobs then become one
+entry in that sum, carrying the government's own claimed employment weight, so the policy claim
+gets tested on its own terms instead of being assumed. The validation referees will want is the
+observed-versus-random mobility test, which needs previous occupation on a broad classification
+and not on the Yatra list, and that is why previous and target occupation are both free text
+coded to NCO-2015 afterwards.
+
+\subsection{Fieldwork and outputs}
+
+Deliverables already built: a bilingual paper questionnaire, an offline data-entry form that
+needs no network, enumerator scripts in English and Hindi, a question register that gives the
+source and reasoning for every single item, and the full analysis chain from raw export to
+final tables. Everything regenerates from the dictionary, in order, and a set of automated
+checks re-verifies skip logic and variable ranges on every rebuild.
+
+\section{Worked Example on Synthetic Data}\label{sec:worked}
+
+Everything in this section is computed on a hand-parameterised synthetic dataset of 200
+generated respondents, of which 104 survive an explicit and deliberately non-random attrition
+process (weighted toward the busiest occupations, lower education, older age and migrant
+status), leaving 98 with complete covariates for the regressions. The point is to show the
+pipeline runs end to end and produces sensible, internally consistent output. The point is not
+the numbers.
+
+\subsection{Monetary poverty}
 
 \begin{table}[h]
 \centering
+\caption{Monetary poverty, synthetic worked example ($N = 104$)}
 \begin{tabular}{lr}
 \toprule
 Measure & Value \\
 \midrule
-Monetary vulnerability rate ($V_i \geq 0.50$) & 30.6\% \\
-Regression sample & $n=98$ of 104 \\
+Mean monthly per-capita consumption & Rs.\ 2,831 \\
+Median & Rs.\ 2,731 \\
+Applicable line: rural / urban & 86 / 18 households \\
+Poverty headcount, $P_0$ & 0.404 \\
+Poverty gap, $P_1$ & 0.084 \\
+Squared poverty gap, $P_2$ & 0.023 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-(Six respondents who declined to state their education level are excluded
-from the regression sample, since education is a covariate; they are retained
-in every descriptive statistic elsewhere in this report.)
+Mean consumption sits only about 12 per cent above the rural line, so two in five households
+fall below whichever line applies to them. Note that 26.9 per cent of respondents could not
+recall twelve separate monthly earnings figures and took the annual-total fallback instead;
+their income seasonality is a lower bound by construction, and the measurement-mode flag has to
+be carried into any specification that uses seasonality.
 
-Crossing current poverty status against this forward-looking measure sorts
-households into four familiar groups:
-
-\begin{table}[h]
-\centering
-\begin{tabular}{lll r}
-\toprule
-Group & Definition & & Share of $n=98$ \\
-\midrule
-Chronic poor & currently poor, and vulnerable & & 16.3\% \\
-Transient poor & currently non-poor, but vulnerable & & 14.3\% \\
-Escaped poverty & currently poor, but not vulnerable & & 23.5\% \\
-Non-poor & currently non-poor, and not vulnerable & & 45.9\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{Why this matters for targeting.} The \textbf{transient poor} -- about one household in seven -- are not currently poor at all, yet carry a real risk
-of falling into poverty. A policy response aimed only at today's poor would
-miss this entire group.
-
-\subsection{Do Monetary and Multidimensional Measures Agree?}\label{sec:agree}
-
-Applying the same VEP logic to the multidimensional deprivation score instead
-of log-consumption -- following Feeny and McDonald (2016) -- gives a parallel
-\textbf{multidimensional vulnerability} rate of \textbf{68.4 percent} (the
-inequality is flipped relative to the monetary case, since a \emph{higher}
-deprivation score, not a lower one, is the bad outcome). Cross-tabulating the
-two vulnerability measures:
+\subsection{Multidimensional and employment deprivation}
 
 \begin{table}[h]
 \centering
-\caption{Monetary vulnerable (rows) $\times$ multidimensionally vulnerable (columns), $n=98$}
-\begin{tabular}{lrrr}
-\toprule
- & Not MPI-vulnerable & MPI-vulnerable & Total \\
-\midrule
-Not monetary-vulnerable & 28 & 40 & 68 \\
-Monetary-vulnerable & 3 & 27 & 30 \\
-Total & 31 & 67 & 98 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Forty households -- 41 percent of the whole sample -- are multidimensionally vulnerable while showing no sign of monetary vulnerability at all. A targeting exercise built solely on income risk would miss all of them. The reverse gap is tiny: only three households are monetarily vulnerable without also being multidimensionally vulnerable, so on this sample monetary vulnerability is close to a subset of multidimensional vulnerability rather than a separate group.
-
-\subsection{Determinants of Vulnerability}\label{sec:determinants}
-
-Both regressions above use the same set of covariates, organised following
-Azeem, Mugera and Schilizzi (2016) into three groups that mirror the vulnerability literature's
-own exposure--sensitivity--adaptive-capacity framing:
-
-\begin{itemize}
-    \item \textbf{Adaptive capacity} -- years of education, bank-account ownership, access to institutional credit, receipt of skills training, smartphone ownership
-    \item \textbf{Sensitivity} -- age, household size, employment status (self-employed own-account worker / self-employed employer-business owner / regular wage-salaried / casual wage labour), years of experience in Yatra work
-    \item \textbf{Exposure} -- migrant status, any distress event in the past year, the share of annual income earned during the Yatra season, income seasonality, and geographic health-access tier
-\end{itemize}
-
-On this sample, the multidimensional deprivation score is most strongly associated with the respondent's years of education, the geographic health-access tier (households with poor or moderate access score markedly higher than those in well-connected market towns), and bank-account ownership, together with a negative association for the share of annual income earned in-season. Several of these are also inputs to the score itself: education, health access and bank-account access each enter the index directly, so part of their association is mechanical rather than a finding. The monetary consumption model finds few significant predictors: only the poorest health-access tier (associated with lower consumption) is significant at the 5 percent level, with household size and education marginal (p of about 0.05 and 0.09) -- a pattern consistent with a small, low-power sample rather than a claim that other characteristics do not matter.
-
-A methodological note on the employment-status variable itself: pony
-handlers, porters, and palki bearers are classified here as self-employed
-own-account workers, not casual wage labourers, because they are paid
-directly per trip or load through a turn-based rotation system with no fixed
-employer -- the same status as, say, an auto-rickshaw driver, even though
-the work itself is physically arduous in a way that invites an intuitive
-``casual labour'' label. Sorting occupations by economic relationship rather
-than by how the work looks is what lets this covariate distinguish
-precarious own-account work from actual employer/business-owner status, a
-distinction the vulnerability literature treats as substantively different
-(cf. Azeem, Mugera and Schilizzi, 2016).
-
-\subsection{Vulnerability by Mean Risk (Gallardo, 2018, Section 3.4)}\label{sec:vmr}
-
-The VEP approach above assumes consumption is log-normally distributed and
-reads a probability off that curve. Gallardo (2018)'s survey of the
-vulnerability literature identifies a genuinely different family of approaches
--- \textbf{Vulnerability by Mean Risk} -- that makes no distributional
-assumption at all. Instead, it compares a household's expected consumption,
-penalised for its own risk, directly against the poverty line, using
-consumption \emph{levels} rather than logs. Both variants below are estimated
-with their own two-step procedure (identical in spirit to the VEP steps above,
-but run on rupee consumption, not log-consumption), so as not to quietly
-reintroduce the log-normality assumption this family of approaches exists to
-avoid.
-
-\paragraph{Mean-deviation approach (Chiwaula, Witt and Waibel, 2011).}
-
-\begin{equation}
-\text{Vulnerable} \iff \widehat{\mu}_i - \widehat{\sigma}_i < z
-\end{equation}
-
-\noindent\textit{In words:} take a household's predicted average consumption,
-subtract one standard deviation's worth of its own risk, and check whether
-what is left still clears the poverty line. This treats an unusually good year
-and an unusually bad year as symmetric risks -- a limitation the next approach
-addresses directly.
-
-\paragraph{Downside semi-deviation approach (Gallardo, 2013).}
-
-\begin{equation}
-\text{Vulnerable} \iff \widehat{\mu}_i - \gamma \, \widehat{\sigma}_i^{-} \leq z, \qquad \gamma \in (0,1]
-\end{equation}
-
-\noindent\textit{In words:} the same idea, but the risk term
-$\widehat{\sigma}_i^{-}$ only counts the household's \textbf{downside} risk --
-how far consumption tends to fall \emph{short} of its predicted average,
-ignoring how far it sometimes runs \emph{above} it. This can tell apart two
-households with identical average consumption and identical overall
-variability if one of them is more exposed to bad outcomes specifically. The
-trade-off coefficient $\gamma$ reflects how heavily that downside risk is
-weighted; Gallardo argues it should sit somewhere in $(0,1]$ but does not pin
-down a single value, so Section~\ref{sec:robust} reports how the result moves across that
-whole range.
-
-\paragraph{Result: three paradigms, three different pictures.}
-
-\begin{table}[h]
-\centering
-\begin{tabular}{llr}
-\toprule
-Criterion & Paradigm & Vulnerability rate \\
-\midrule
-VEP (Chaudhuri, Jalan and Suryahadi, 2002) & expected poverty, log-normal & 30.6\% \\
-Mean-deviation (Chiwaula, Witt and Waibel, 2011) & mean risk, symmetric, levels & 91.8\% \\
-Downside semi-deviation (Gallardo, 2013), $\gamma=0.5$ & mean risk, downside-only, levels & 44.9\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{The choice of criterion is not a technicality.} Depending on which of
-these three, all defensible, definitions of ``vulnerable'' is used, the
-estimated vulnerability rate for the same 98 households ranges from 31 to 92 percent. The symmetric mean-deviation rule is by far the most permissive,
-because it penalises households for upside variability they would never
-actually experience as harm. VEP and the downside semi-deviation rule -- the
-two criteria that are actually sensitive to \emph{which direction} risk runs
--- agree far more closely (31 vs.\ 45 percent) and disagree on only 16 percent
-of households, mostly households near the poverty line whose classification
-is genuinely on a knife-edge.
-
-\subsection{Occupational Skill Transferability (Planned Extension)}\label{sec:skill}
-
-The current instrument identifies each respondent's principal occupation and
-employment type, but does not yet collect the task- or skill-level detail
-needed to measure how well those skills would carry over into a different
-occupation. A future extension, informed by Nawakitphaitoon and Ormiston (2016),
-B\"achli et al. (2024), and Neffke, Nedelkoska and Wiederhold (2024), would score each worker's current
-occupation on a shared set of skill descriptors and compare that profile
-against a small set of plausible post-ropeway occupations (ropeway operations
-and maintenance staff, expanded tourism and hospitality roles, construction),
-classifying each worker as a likely \emph{stayer}, \emph{lateral switcher},
-\emph{upskiller}, \emph{downskiller}, or \emph{reskiller} following Neffke et
-al.'s typology. No such measure is constructed in the present analysis;
-Research Questions 4 and 5 remain open.
-
-\subsection{Robustness Checks}\label{sec:robust}
-
-\paragraph{Is the poverty line doing all the work?}
-The Rs.\ 2,515 line used throughout is itself a contested figure: it is the
-only published estimate that re-runs the Rangarajan Committee's actual
-methodology on 2022--23 data, rather than adjusting the Committee's 2011--12
-line forward using the Consumer Price Index. Re-estimating monetary
-vulnerability under that alternative, CPI-adjusted line ($\approx$ Rs.\ 1,850,
-Rangarajan and Dev (2024)) instead:
-
-\begin{table}[h]
-\centering
+\caption{Deprivation measures, synthetic worked example}
 \begin{tabular}{lr}
 \toprule
-Poverty line & Monetary vulnerability \\
+Measure & Value \\
 \midrule
-Rs.\ 2,515 (Sethu, Surya and Ruthu, 2024) -- primary & 30.6\% \\
-Rs.\ 1,850 (Rangarajan and Dev, 2024), CPI-adjusted & 0.0\% \\
+Multidimensional headcount, $H$ (ten of NITI's twelve indicators) & 0.077 \\
+Average intensity among the poor, $A$ & 0.389 \\
+Adjusted headcount ratio, $M_0$ & 0.030 \\
+\midrule
+Mean employment-deprivation score (Apablaza et al.) & 0.385 \\
+Employment-poor headcount, $k = 2$ of 5 & 0.644 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The gap is large enough to be the headline finding of this robustness check in
-its own right: this sample's estimated consumption distribution clears the
-lower, CPI-adjusted line comfortably, but not the higher, directly-recomputed
-one. Whichever line a reader prefers, the result should be reported
-\emph{with} the line stated explicitly -- not as an unqualified ``vulnerability
-rate.''
+The three measures are emphatically not picking out the same households, which is the whole
+reason for running all three. Multidimensional poverty is \emph{low} here -- these workers
+mostly have electricity, a phone, a bank account and an improved water source at home -- while
+employment deprivation is very high, because what is wrong with these jobs is their quality,
+their security and their stability, and not the physical standard of living they finance.
 
-\paragraph{Gamma sensitivity, downside semi-deviation approach.}
+\subsection{Vulnerability as expected poverty}
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lrrrr}
+\caption{Suryahadi--Sumarto cells, monetary vulnerability ($N = 98$)}
+\begin{tabular}{llr}
 \toprule
-$\gamma$ & 0.25 & 0.50 & 0.75 & 1.00 \\
+Cell & Definition & Share \\
 \midrule
-Vulnerability rate & 26.5\% & 44.9\% & 56.1\% & 74.5\% \\
+A & Poor, low $E[c]$, vulnerable (chronic) & 23.5\% \\
+B & Poor, high $E[c]$, vulnerable (transient) & 1.0\% \\
+C & Poor, high $E[c]$, not vulnerable (transient) & 15.3\% \\
+D & Non-poor, low $E[c]$, vulnerable & 19.4\% \\
+E & Non-poor, high $E[c]$, vulnerable & 1.0\% \\
+F & Non-poor, high $E[c]$, not vulnerable & 39.8\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The rate rises smoothly and substantially across Gallardo's admissible range
-for $\gamma$, nearly tripling from one end to the other. Any application of
-this criterion should report $\gamma$ explicitly and, ideally, the same kind
-of range shown here, rather than a single point estimate.
+Collapsing: 44.9 per cent are vulnerable at $\tau = 0.5$, 22.1 per cent are chronically poor and
+15.4 per cent transiently poor. Cell D is the one policy usually misses -- one household in five
+is not poor today yet has an expected consumption below its own line, which is the definition of
+a household about to become poor. Multidimensional vulnerability is 3.1 per cent, and the
+overlap with monetary vulnerability is almost nil (2 of the 44 monetarily vulnerable). On
+synthetic data that is a mechanical consequence of a low MPI headcount and should not be read as
+a finding, but it does confirm the two arms are not measuring the same thing.
 
-\paragraph{Measurement-error perturbation.}
-Following Pritchett, Suryahadi and Sumarto (2000) and Azeem, Mugera and Schilizzi (2016), the VEP estimates were
-recomputed assuming that up to half of the estimated consumption variance is
-pure measurement error rather than real risk. The monetary vulnerability rate
-does not move at all across this range (30.6 percent throughout), which
-indicates that classified households sit well clear of the 0.50 threshold
-rather than clustered right on top of it -- a reassuring, not a suspicious,
-result.
+The employment arm gives a vulnerability rate of 38.8 per cent, decomposing into 34.7 per cent
+chronic, 4.1 per cent transient, 27.6 per cent escaped and 33.7 per cent never
+employment-poor. Cross-tabulated against current monetary poverty, half of the
+employment-vulnerable are currently monetary-poor against a third of the not-vulnerable --
+partial overlap, not identity. A targeting rule built on either one alone would miss a large
+part of the other.
 
-\paragraph{Correcting for non-random attrition.}
-Because the as-fielded sample's non-response is deliberately correlated with
-occupation, education, age, and migration status (Section~\ref{sec:sample}), an
-inverse-probability-weighted re-estimate provides a check on whether this
-attrition pattern is distorting the headline poverty rate. The IPW-weighted
-poverty rate is 40.4 percent, identical to the unweighted 40.4 percent to one decimal place, suggesting the correlated non-response does not, on its own, drive the headline result.
+\subsection{Vulnerability by Mean Risk}\label{sec:vmr}
 
-\subsection{How the Sample Was Assembled}\label{sec:sample}
+VEP assumes log-normality and reads a probability off that curve. The mean-risk family compares
+expected consumption, penalised for risk, against the line directly, in rupee levels and with no
+distributional assumption. Both variants are estimated with their own two-step procedure on
+levels rather than logs, so as not to smuggle the log-normality back in.
 
-The instrument generates an initial pool of 200 respondents, allocated to the thirteen occupation categories by fixed quotas (22 pony handlers, 12 pony owners, 18 porters, 12 palki bearers, 12 drivers, 4 guides, 20 shopkeepers, 20 shop owners, 12 dhaba and food-stall owners, 18 hotel and lodging workers, 18 hotel and lodging owners, 20 wage labourers and 12 other) rather than drawn at random, as a stratified quota design would fill its strata. The quotas are hand-set targets, not population estimates, and should be recalibrated against a proper enumeration before real fieldwork. The instrument then applies
-an explicit, documented attrition process intended to reproduce how a real
-Kedarnath fieldwork round loses observations: a small number of records are
-flagged and dropped for internally impossible answer combinations (the kind a
-data-cleaning pass would catch), and a larger share is lost to non-response
-that is deliberately \emph{not} random -- weighted toward occupations that are
-busiest or warier of a ropeway-themed survey, toward lower education, older
-age, and migrant status. This leaves an as-fielded analysis sample of
-\textbf{104} respondents out of the original 200, and the resulting sample is
-\emph{not} representative of the true occupation mix by construction -- a
-limitation to carry into any future real fieldwork round, not an artefact to
-correct away.
+\begin{align}
+\text{Chiwaula, Witt and Waibel (2011):} \quad & \text{vulnerable} \iff \widehat{\mu}_i - \widehat{\sigma}_i < z_i \\
+\text{Gallardo's downside refinement:} \quad & \text{vulnerable} \iff \widehat{\mu}_i - \gamma \widehat{\sigma}_i^{-} \leq z_i, \quad \gamma \in (0,1]
+\end{align}
 
-Every internally-impossible combination this process could plausibly generate
-was checked directly rather than assumed away: no household's house type
-contradicts its own floor or roof material, no high-income household remains
-recorded in the lowest housing-quality tier, and every age, household-size,
-income, and consumption field falls within its intended range. These checks
-are run automatically each time the underlying dataset is regenerated.
+The second counts only how far consumption tends to fall \emph{short} of its own predicted
+average and ignores how far it sometimes runs above it, which separates two households with
+identical means and identical overall variance if one of them is more exposed to bad outcomes
+specifically.
 
-\section{Discussion and Policy Implications}
+\begin{table}[h]
+\centering
+\caption{Three criteria, three different pictures ($N = 98$)}
+\begin{tabular}{llr}
+\toprule
+Criterion & Paradigm & Rate \\
+\midrule
+VEP (Chaudhuri, Jalan and Suryahadi, 2002) & expected poverty, log-normal & 44.9\% \\
+Mean deviation (Chiwaula, Witt and Waibel, 2011) & mean risk, symmetric, levels & 84.7\% \\
+Downside semi-deviation (Gallardo, 2018), $\gamma = 0.5$ & mean risk, downside only, levels & 56.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-Three findings, taken together, argue for a broader view of livelihood
-security in Kedarnath than income alone provides. First, multidimensional deprivation (68 percent) runs far ahead of monetary poverty (40 percent), and
-the two measures identify substantially different households (Section~\ref{sec:agree}) --
-consistent with Alkire and Foster (2011)'s argument that poverty is better
-understood as overlapping deprivations than as a single income shortfall.
-Second, the VEP estimates show that about one household in seven is \emph{not currently poor but at real risk of becoming so}, echoing Chaudhuri, Jalan and Suryahadi (2002)
-and Pritchett, Suryahadi and Sumarto (2000)'s point that a policy response aimed only at today's
-poor structurally overlooks this group. Third, the comparison across
-vulnerability paradigms in Section~\ref{sec:vmr} shows that even the definition of
-``vulnerable'' is not settled in the literature, and the resulting estimate
-can move by more than sixty percentage points depending on which defensible criterion is
-used -- a reason to report a range, and the criterion, rather than a single
-number.
+The choice of criterion is not a technicality. On the same 98 households three defensible
+definitions of ``vulnerable'' return 45, 56 and 85 per cent. The symmetric rule is by far the
+most permissive because it penalises households for upside variability they would never
+experience as harm. The two criteria that are actually sensitive to which direction risk runs
+agree far more closely with each other.
 
-For a pilgrimage economy this specific, seasonality and occupational
-dependence are not incidental details but central to the story: households
-earning most of their annual income within a five-month window, from a route
-whose physical character a ropeway would directly change, are exposed in ways
-a generic rural-poverty profile would not capture. The sustainable-livelihoods
-literature's emphasis on protecting and redeploying existing capabilities and
-assets, rather than income alone, is directly on point here
-(Krantz, 2001; Lax and Krug, n.d.). Evidence from other Indian settings undergoing
-comparable structural change -- most closely, the Jharkhand coal sector
-(Pelz et al., 2024) -- suggests households do adapt by shifting toward
-alternative, skill-based livelihood opportunities when given the chance, but
-the task-based literature is equally clear that successful transition depends
-on how transferable a worker's \emph{existing} skills actually are, not on
-generic retraining alone (Autor, Levy and Murnane, 2003; Nawakitphaitoon and Ormiston, 2016; B\"achli et al., 2024).
+\subsection{Robustness}\label{sec:robust}
 
-Taken together, this points toward five concrete implications for policy
-design around the ropeway:
+\begin{table}[h]
+\centering
+\caption{Sensitivity of the monetary vulnerability rate}
+\begin{tabular}{lrrrrr}
+\toprule
+Vulnerability threshold $\tau$ & 0.3 & 0.4 & 0.5 & 0.6 & 0.7 \\
+Rate & 68.4\% & 57.1\% & 44.9\% & 35.7\% & 24.5\% \\
+\midrule
+Downside criterion, $\gamma$ & 0.25 & 0.50 & 0.75 & 1.00 & \\
+Rate & 44.9\% & 56.1\% & 62.2\% & 69.4\% & \\
+\midrule
+Share of variance treated as measurement error & 0.0 & 0.2 & 0.3 & 0.4 & 0.5 \\
+Rate & 44.9\% & 44.9\% & 44.9\% & 44.9\% & 44.9\% \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{enumerate}
-    \item \textbf{Target the transient poor alongside the currently poor.} Any social-protection response confined to today's poverty rolls will miss roughly one household in seven that carries genuine forward risk.
-    \item \textbf{Protect productive assets, not just income.} Livelihood diversification support should focus on preserving the specific assets (pack animals, shop and hotel stock, tools) that let households absorb a shock without irreversible asset sales.
-    \item \textbf{Make training occupation-specific.} Generic vocational training is a weaker substitute for training linked to identifiable, transferable skills and real post-ropeway employment openings -- the point of the skill-transferability module proposed in Section~\ref{sec:skill}.
-    \item \textbf{Differentiate support for migrants and locally-rooted households.} The two groups face different livelihood strategies and different access to resources, and are unlikely to respond identically to the same intervention.
-    \item \textbf{Treat basic services as economic security, not a separate welfare concern.} Geographic health access is among the strongest predictors of multidimensional deprivation in this sample, alongside the respondent's own education; closing that gap is itself a livelihood-security intervention, not an unrelated one.
-\end{enumerate}
+Two of these three move a lot and one does not move at all. The threshold sweep nearly triples
+the rate across its range and the $\gamma$ sweep adds twenty-five points, so any application of
+either criterion should report the parameter and preferably the range, not a single point
+estimate. The measurement-error perturbation, following Pritchett, Suryahadi and Sumarto (2000)
+and Azeem, Mugera and Schilizzi (2016), does not move the rate at all even when half the
+estimated consumption variance is treated as pure noise, which indicates classified households
+sit clear of the 0.50 threshold rather than piled on top of it. That is reassuring rather than
+suspicious.
 
-These findings are deliberately \emph{ex-ante}: they describe the existing
-livelihood and vulnerability structure, not the causal effect of a ropeway
-that has not yet been built. A future assessment should build on this baseline
-by fielding the skill and target-occupation module outlined in Section~\ref{sec:skill},
-enabling a direct, worker-level measure of transition capacity once
-infrastructure-led change actually begins.
+\section{Discussion and Policy Implications}\label{sec:policy}
+
+Four things come out of the pilot and the design together.
+
+First, opposition to the ropeway is structural, not informational. The pilot's single
+significant predictor of opposition is the vulnerability index, and the same cluster --
+trail dependence, no off-season work, no assets, no savings, a BPL card -- shows up in the
+logit, in the classifier's feature importances, in the first principal component and in the
+correspondence analysis. Workers oppose the project because they have the most to lose from it
+and the least capacity to absorb that loss, not because they have misunderstood it. Consultation
+exercises designed around the assumption of misunderstanding will fail.
+
+Second, prevention is cheap and sequencing is everything. A targeted scheme of Rs.\ 3.5 to 4.5
+crore, on the pilot's own scenario arithmetic, restores a three-month income buffer to every
+losing household and removes poverty induction entirely. That is a fraction of a per cent of the
+project cost. But an income shock which arrives before the buffer does will trigger distress
+asset sales, borrowing at informal rates, and out-migration -- and those are hard to reverse
+with a later payment (Bryceson, 2000). Compensation and retraining have to be completed before
+commercial operations begin, not after the first season.
+
+Third, occupational registration beats BPL targeting. BPL card status overlaps with exposure in
+the pilot but the overlap is partial: several card holders earn well above the threshold and
+several of the most exposed workers hold no card. Eligibility keyed to pony-handler licence,
+porter registration or equivalent would reach the structurally exposed regardless of their
+formal poverty classification.
+
+Fourth, retraining needs visible placements first. The retraining scenario is the best outcome
+in the whole simulation, but about 30 per cent of pilot respondents already see no post-ropeway
+opportunity for themselves and animal handlers are over-represented among them. A programme
+announced without committed, visible placements in ropeway operations, station services or
+guiding will not get uptake, and then its failure will be read as evidence that the workers did
+not want to retrain.
+
+Two further implications follow from the main study's design rather than from the pilot. The
+transient group -- households that are not poor now but whose expected consumption sits below
+their own line -- is invisible to any targeting rule built on current poverty status, and the
+worked example puts it at around one household in five. And employment deprivation and
+consumption poverty identify overlapping but distinctly different populations, so a scheme
+aimed at income alone will leave the job-quality problem exactly where it found it. That
+matters here because the ropeway does not reduce anyone's income to zero. It removes a
+particular kind of work.
+
+The broader point is the one the sustainable-livelihoods literature has been making since
+Chambers and Conway (1992): what protects a household through a structural change is its
+capacity to redeploy what it already has, not its income level on the day the change arrives.
+Evidence from comparable Indian transitions, most closely the Jharkhand coal economy (Pelz et
+al., 2024), suggests households do shift toward alternative skill-based livelihoods when the
+opportunity is real. The task-based literature is equally clear that whether they succeed
+depends on how transferable their existing skills actually are, and not on generic retraining
+(Autor, Levy and Murnane, 2003; Nawakitphaitoon and Ormiston, 2016; Bächli et al., 2024).
 
 \section{Limitations}
 
 \begin{itemize}
-    \item \textbf{Synthetic data.} Every figure in this report comes from a hand-parameterized synthetic dataset built to exercise the analysis pipeline realistically, not from completed fieldwork. It must be replaced with genuine survey data before any number here is treated as an empirical finding about Kedarnath.
-    \item \textbf{No household roster.} Household size and composition are respondent-reported aggregates; the education deprivation indicator reflects only the respondent's own schooling, not a full household roster, and cannot capture child-specific indicators (e.g.\ school enrolment) that a standard national MPI would include.
-    \item \textbf{Small, non-representative sample.} At $n=104$ (98 for regression-based estimates), occupation-level comparisons and covariate estimates carry wide uncertainty, and the sample's non-response pattern is deliberately correlated with occupation and education (Section~\ref{sec:sample}).
-    \item \textbf{Poverty line is contested.} No official Indian poverty line exists for 2022--23 under either the Tendulkar or Rangarajan methodology; Section~\ref{sec:robust} reports results under two competing estimates rather than presenting either as authoritative.
-    \item \textbf{Cross-sectional vulnerability.} Like all VEP-style estimates, the vulnerability measures here rest on the assumption that the estimated relationship between household characteristics and welfare risk is stable going forward; they are indicators of prospective risk, not predictions of a specific future outcome.
+    \item \textbf{The pilot is not representative.} Forty-six respondents, purposively sampled, one to thirteen per occupational group, and skewed toward owners. Its categories and question wording carry forward; its shares should not be quoted as population quantities.
+    \item \textbf{The pilot measured income, not consumption.} Every poverty count in Section~\ref{sec:pilot}, including the scenario headcounts, rests on annual income in an economy where income is violently seasonal. This is the main reason the main study rebuilt the welfare measure from scratch.
+    \item \textbf{Section~\ref{sec:worked} is synthetic.} It demonstrates that the pipeline works. It is not evidence about Kedarnath and must be replaced before any figure in it is quoted.
+    \item \textbf{The MPI here is a ten-of-twelve adaptation.} NITI's nutrition indicator needs anthropometry, which a questionnaire cannot collect. The weight is redistributed proportionally and the result is not the National MPI, and should never be presented as comparable to it.
+    \item \textbf{Consumption is not price-deflated between contexts.} In-season consumption happens at a high-altitude worksite and off-season consumption mostly happens somewhere else entirely, often in another state. The two are added together without a spatial price adjustment, because no deflator exists at the resolution this needs.
+    \item \textbf{The poverty line is contested.} India has notified no official line since 2011--12. The Rangarajan re-computation on 2022--23 HCES data (Sethu, Surya and Ruthu, 2024) is used because it is the only estimate that re-runs the actual methodology on current data rather than inflating the 2011--12 figure forward, but it is a live methodological choice and should always be reported with the line stated.
+    \item \textbf{The income and occupation calendar is cited to a source not yet read line by line.} Module C's monthly design follows the FAO/ILO Livelihood Assessment Tool-kit. Unlike every other source in this study, that document has not yet been checked directly against the wording actually used, and it should be before fielding.
+    \item \textbf{Cross-sectional vulnerability is not prediction.} Like all VEP-style estimates, everything here assumes the relationship between characteristics and welfare risk is stable going forward. These are indicators of prospective risk, not forecasts.
 \end{itemize}
 
 \begin{thebibliography}{99}
 
-\bibitem[Alkire and Foster(2011)]{alkirefoster2011} Alkire, S. and Foster, J. (2011). Counting and multidimensional poverty measurement. \textit{Journal of Public Economics}, 95(7-8):476--487.
+\bibitem{alkirefoster2011} Alkire, S. and Foster, J. (2011). Counting and multidimensional poverty measurement. \textit{Journal of Public Economics}, 95(7--8):476--487.
 
-\bibitem[Alkire and Santos(2010)]{alkiresantos2010} Alkire, S. and Santos, M. E. (2010). Acute Multidimensional Poverty: A New Index for Developing Countries. \textit{SSRN Electronic Journal}.
+\bibitem{alkiresantos2010} Alkire, S. and Santos, M. E. (2010). Acute Multidimensional Poverty: A New Index for Developing Countries. \textit{SSRN Electronic Journal}.
 
-\bibitem[Autor et al.(2003)]{autor2003} Autor, D. H., Levy, F., and Murnane, R. J. (2003). The Skill Content of Recent Technological Change: An Empirical Exploration. \textit{Quarterly Journal of Economics}, 118(4):1279--1333.
+\bibitem{apablaza2026} Apablaza, M., Nogales, R., and Sehnbruch, K. (2026). The Work Dimension in Multidimensional Poverty Measurement. \textit{Social Indicators Research}, 183(2):25.
 
-\bibitem[Azeem et al.(2016)]{azeem2016} Azeem, M. M., Mugera, A. W., and Schilizzi, S. (2016). Poverty and vulnerability in the Punjab, Pakistan: A multilevel analysis. \textit{Journal of Asian Economics}, 44:57--72.
+\bibitem{autor2003} Autor, D. H., Levy, F., and Murnane, R. J. (2003). The Skill Content of Recent Technological Change: An Empirical Exploration. \textit{Quarterly Journal of Economics}, 118(4):1279--1333.
 
-\bibitem[Azeem et al.(2018)]{azeem2018} Azeem, M. M., Mugera, A. W., and Schilizzi, S. (2018). Vulnerability to Multi-Dimensional Poverty: An Empirical Comparison of Alternative Measurement Approaches. \textit{The Journal of Development Studies}, 54(9):1612--1636.
+\bibitem{azeem2016} Azeem, M. M., Mugera, A. W., and Schilizzi, S. (2016). Poverty and vulnerability in the Punjab, Pakistan: A multilevel analysis. \textit{Journal of Asian Economics}, 44:57--72.
 
-\bibitem[B\"achli et al.(2024)]{bachli2024} B\"achli, M., Benghalem, H., Tinello, D., Aschwanden, D., Zuber, S., Kliegel, M., Pellizzari, M., and Lalive, R. (2024). Ranking occupations by their proximity to workers' profiles. \textit{Swiss Journal of Economics and Statistics}, 160(1):8.
+\bibitem{azeem2018} Azeem, M. M., Mugera, A. W., and Schilizzi, S. (2018). Vulnerability to Multi-Dimensional Poverty: An Empirical Comparison of Alternative Measurement Approaches. \textit{The Journal of Development Studies}, 54(9):1612--1636.
 
-\bibitem[Bold and Broer(2021)]{bold2021} Bold, T. and Broer, T. (2021). Risk Sharing in Village Economies Revisited. \textit{Journal of the European Economic Association}, 19(6):3207--3248.
+\bibitem{bachli2024} B\"achli, M., Benghalem, H., Tinello, D., Aschwanden, D., Zuber, S., Kliegel, M., Pellizzari, M., and Lalive, R. (2024). Ranking occupations by their proximity to workers' profiles. \textit{Swiss Journal of Economics and Statistics}, 160(1):8.
 
-\bibitem[Chaudhuri et al.(2002)]{chaudhuri2002} Chaudhuri, S., Jalan, J., and Suryahadi, A. (2002). Assessing Household Vulnerability to Poverty from Cross-Sectional Data: A Methodology and Estimates from Indonesia. Discussion Paper 0102-52, Columbia University Department of Economics.
+\bibitem{bold2021} Bold, T. and Broer, T. (2021). Risk Sharing in Village Economies Revisited. \textit{Journal of the European Economic Association}, 19(6):3207--3248.
 
-\bibitem[Chiwaula et al.(2011)]{chiwaula2011} Chiwaula, L. S., Witt, R., and Waibel, H. (2011). An Asset-Based Approach to Vulnerability: The Case of Small-Scale Fishing Areas in Cameroon and Nigeria. \textit{The Journal of Development Studies}, 47(2):338--353.
+\bibitem{bryceson2000} Bryceson, D. F. (2000). Rural Africa at the Crossroads: Livelihood Practices and Policies. \textit{Natural Resource Perspectives}, 52. Overseas Development Institute.
 
-\bibitem[Dercon and Krishnan(2000)]{dercon2000} Dercon, S. and Krishnan, P. (2000). Vulnerability, seasonality and poverty in Ethiopia. \textit{The Journal of Development Studies}, 36(6):25--53.
+\bibitem{chambers1992} Chambers, R. and Conway, G. (1992). Sustainable Rural Livelihoods: Practical Concepts for the 21st Century. IDS Discussion Paper 296, Institute of Development Studies, Brighton.
 
-\bibitem[Feeny and McDonald(2016)]{feeny2016} Feeny, S. and McDonald, L. (2016). Vulnerability to Multidimensional Poverty: Findings from Households in Melanesia. \textit{The Journal of Development Studies}, 52(3):447--464.
+\bibitem{chaudhuri2002} Chaudhuri, S., Jalan, J., and Suryahadi, A. (2002). Assessing Household Vulnerability to Poverty from Cross-Sectional Data: A Methodology and Estimates from Indonesia. Discussion Paper 0102-52, Columbia University Department of Economics.
 
-\bibitem[Foster et al.(1984)]{foster1984} Foster, J., Greer, J., and Thorbecke, E. (1984). A Class of Decomposable Poverty Measures. \textit{Econometrica}, 52(3):761--766.
+\bibitem{chiwaula2011} Chiwaula, L. S., Witt, R., and Waibel, H. (2011). An Asset-Based Approach to Vulnerability: The Case of Small-Scale Fishing Areas in Cameroon and Nigeria. \textit{The Journal of Development Studies}, 47(2):338--353.
 
-\bibitem[Gallardo(2013)]{gallardo2013} Gallardo, M. (2013). Vulnerability as downside-risk exposure: a mean-risk dominance approach. Unpublished working paper.
+\bibitem{dercon2000} Dercon, S. and Krishnan, P. (2000). Vulnerability, seasonality and poverty in Ethiopia. \textit{The Journal of Development Studies}, 36(6):25--53.
 
-\bibitem[Gallardo(2018)]{gallardo2018} Gallardo, M. (2018). Identifying Vulnerability to Poverty: A Critical Survey. \textit{Journal of Economic Surveys}, 32(4):1074--1105.
+\bibitem{dfid1999} DFID (1999). \textit{Sustainable Livelihoods Guidance Sheets}. Department for International Development, London.
 
-\bibitem[Hoddinott and Quisumbing(2008)]{hoddinott2008} Hoddinott, J. and Quisumbing, A. R. (2008). Methods for Microeconometric Risk and Vulnerability Assessments. SSRN Working Paper 1281055.
+\bibitem{ellis2000} Ellis, F. (2000). \textit{Rural Livelihoods and Diversity in Developing Countries}. Oxford University Press, Oxford.
 
-\bibitem[Krantz(2001)]{krantz2001} Krantz, L. (2001). \textit{The Sustainable Livelihood Approach to Poverty Reduction: An Introduction}. Swedish International Development Cooperation Agency.
+\bibitem{faoilo2009} FAO and ILO (2009). \textit{The Livelihood Assessment Tool-kit: Analysing and Responding to the Impact of Disasters on the Livelihoods of People}. Food and Agriculture Organization / International Labour Organization, Rome and Geneva.
 
-\bibitem[Laeis and Lemke(2016)]{laeis2016} Laeis, G. C. and Lemke, S. (2016). Social entrepreneurship in tourism: applying sustainable livelihoods approaches. \textit{International Journal of Contemporary Hospitality Management}, 28(6):1076--1093.
+\bibitem{feeny2016} Feeny, S. and McDonald, L. (2016). Vulnerability to Multidimensional Poverty: Findings from Households in Melanesia. \textit{The Journal of Development Studies}, 52(3):447--464.
 
-\bibitem[Lax and Krug]{laxkrug} Lax, J. and Krug, J. Livelihood assessment: A participatory tool for natural resource dependent communities.
+\bibitem{foster1984} Foster, J., Greer, J., and Thorbecke, E. (1984). A Class of Decomposable Poverty Measures. \textit{Econometrica}, 52(3):761--766.
 
-\bibitem[Lewandowski et al.(2020)]{lewandowski2020} Lewandowski, P., Park, A., and Schotte, S. (2020). \textit{The Global Distribution of Routine and Non-Routine Work}. WIDER Working Paper 2020/75. UNU-WIDER.
+\bibitem{fujii2016} Fujii, T. (2016). Concepts and Measurement of Vulnerability to Poverty and Other Issues: A Review of Literature. Edward Elgar Publishing, Cheltenham.
 
-\bibitem[Lyons et al.(2023)]{lyons2023} Lyons, A. C., Kass-Hanna, J., and Montoya Castano, A. (2023). A multidimensional approach to measuring vulnerability to poverty among refugee populations. \textit{Journal of International Development}, 35(7):2014--2045.
+\bibitem{gallardo2018} Gallardo, M. (2018). Identifying Vulnerability to Poverty: A Critical Survey. \textit{Journal of Economic Surveys}, 32(4):1074--1105.
 
-\bibitem[Nawakitphaitoon and Ormiston(2016)]{nawakitphaitoon2016} Nawakitphaitoon, K. and Ormiston, R. (2016). The estimation methods of occupational skills transferability. \textit{Journal for Labour Market Research}, 49(4):317--327.
+\bibitem{gathmann2010} Gathmann, C. and Sch\"onberg, U. (2010). How General Is Human Capital? A Task-Based Approach. \textit{Journal of Labor Economics}, 28(1):1--49.
 
-\bibitem[Neffke et al.(2024)]{neffke2024} Neffke, F., Nedelkoska, L., and Wiederhold, S. (2024). Skill mismatch and the costs of job displacement. \textit{Research Policy}, 53(2):104933.
+\bibitem{gunther2009} G\"unther, I. and Harttgen, K. (2009). Estimating Households' Vulnerability to Idiosyncratic and Covariate Shocks: A Novel Method Applied in Madagascar. \textit{World Development}, 37(7):1222--1234.
 
-\bibitem[Pelz et al.(2024)]{pelz2024} Pelz, S. et al. (2024). The spatial and economic footprint of the coal industry on rural livelihoods in Jharkhand, India.
+\bibitem{hoddinott2008} Hoddinott, J. and Quisumbing, A. R. (2008). Methods for Microeconometric Risk and Vulnerability Assessments. SSRN Working Paper 1281055.
 
-\bibitem[Pritchett et al.(2000)]{pritchett2000} Pritchett, L., Suryahadi, A., and Sumarto, S. (2000). Quantifying Vulnerability to Poverty: A Proposed Measure, Applied to Indonesia. World Bank Policy Research Working Paper 2437.
+\bibitem{krantz2001} Krantz, L. (2001). \textit{The Sustainable Livelihood Approach to Poverty Reduction: An Introduction}. Swedish International Development Cooperation Agency, Stockholm.
 
-\bibitem[Rangarajan and Dev(2024)]{rangarajandev2024} Rangarajan, C. and Dev, S. M. (2024). With New Consumption Survey, the Need for New Indices. \textit{The Indian Express}, March 12.
+\bibitem{laeis2016} Laeis, G. C. M. and Lemke, S. (2016). Social entrepreneurship in tourism: applying sustainable livelihoods approaches. \textit{International Journal of Contemporary Hospitality Management}, 28(6):1076--1093.
 
-\bibitem[Sethu et al.(2024)]{sethu2024} Sethu, C. A., Surya, L. T. A., and Ruthu, C. A. (2024). Poverty in India: The Rangarajan Method and the 2022--23 Household Consumption Expenditure Survey. \textit{Review of Agrarian Studies}, 14(2):3--22.
+\bibitem{laxkrug} Lax, J. and Krug, J. Livelihood Assessment: A Participatory Tool for Natural Resource Dependent Communities.
+
+\bibitem{lewandowski2020} Lewandowski, P., Park, A., and Schotte, S. (2020). \textit{The Global Distribution of Routine and Non-Routine Work}. WIDER Working Paper 2020/75, UNU-WIDER, Helsinki.
+
+\bibitem{lyons2023} Lyons, A. C., Kass-Hanna, J., and Montoya Castano, A. (2023). A multidimensional approach to measuring vulnerability to poverty among refugee populations. \textit{Journal of International Development}, 35(7):2014--2045.
+
+\bibitem{martinsneto} Martins-Neto, A., Gukovas, R. M., and Fouarge, D. Forced Displacement and Occupational Mobility: A Skills-Based Approach.
+
+\bibitem{maxwell2008} Maxwell, D. and Caldwell, R. (2008). \textit{The Coping Strategies Index: Field Methods Manual}. 2nd edition. CARE and World Food Programme.
+
+\bibitem{mospi2024} Ministry of Statistics and Programme Implementation (2024). \textit{Household Consumption Expenditure Survey 2022--23} and \textit{2023--24}. Government of India, New Delhi.
+
+\bibitem{nawakitphaitoon2016} Nawakitphaitoon, K. and Ormiston, R. (2016). The estimation methods of occupational skills transferability. \textit{Journal for Labour Market Research}, 49(4):317--327.
+
+\bibitem{nco2015} National Classification of Occupations 2015, Volumes I, II-A and II-B. Directorate General of Employment and Training, Ministry of Labour and Employment, Government of India.
+
+\bibitem{neffke2024} Neffke, F., Nedelkoska, L., and Wiederhold, S. (2024). Skill mismatch and the costs of job displacement. \textit{Research Policy}, 53(2):104933.
+
+\bibitem{niti2021} NITI Aayog (2021). \textit{National Multidimensional Poverty Index: Baseline Report}. Government of India, New Delhi.
+
+\bibitem{pelz2024} Pelz, S., Krumm, A., Aklin, M., Nandan, V., and Urpelainen, J. (2024). The spatial and economic footprint of the coal industry on rural livelihoods in Jharkhand, India. \textit{Energy Policy}, 186:113973.
+
+\bibitem{planningcommission2009} Planning Commission of India (2009). \textit{Report of the Expert Group to Review the Methodology for Estimation of Poverty}. Government of India, New Delhi.
+
+\bibitem{pritchett2000} Pritchett, L., Suryahadi, A., and Sumarto, S. (2000). Quantifying Vulnerability to Poverty: A Proposed Measure, Applied to Indonesia. World Bank Policy Research Working Paper 2437.
+
+\bibitem{sethu2024} Sethu, C. A., Abhinav Surya, L. T., and Ruthu, C. A. (2024). Poverty in India: The Rangarajan Method and the 2022--23 Household Consumption Expenditure Survey. \textit{Review of Agrarian Studies}, 14(2):3--22.
+
+\bibitem{suryahadi2003} Suryahadi, A. and Sumarto, S. (2003). Poverty and Vulnerability in Indonesia Before and After the Economic Crisis. \textit{Asian Economic Journal}, 17(1):45--64.
+
+\bibitem{unhcr2025} UNHCR, UNICEF and WFP (2025). \textit{Vulnerability Assessment of Syrian Refugees in Lebanon (VASyR) 2025}. Beirut.
+
+\bibitem{utdb2022} Uttarakhand Tourism Development Board (2022). \textit{Kedarnath Ropeway Project: Detailed Project Report}. Government of Uttarakhand, Dehradun.
 
 \end{thebibliography}
 

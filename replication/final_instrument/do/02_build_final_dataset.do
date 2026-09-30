@@ -661,10 +661,10 @@ foreach v in drove_twowheeler drove_car drove_heavy {
 *=============================================================================
 gen byte _dq_flag = 0
 local dq_total = 0
-quietly count if yatra_months<3 | yatra_months>6
+quietly count if yatra_months<3 | yatra_months>9
 if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- Yatra season outside the expected 3-6 months"
-    quietly replace _dq_flag = 1 if yatra_months<3 | yatra_months>6
+    di as error "  DATA QUALITY: " r(N) " record(s) -- Yatra season outside the expected 3-9 months"
+    quietly replace _dq_flag = 1 if yatra_months<3 | yatra_months>9
     local dq_total = `dq_total' + r(N)
 }
 quietly count if yatra_end_month - yatra_start_month + 1 != yatra_months

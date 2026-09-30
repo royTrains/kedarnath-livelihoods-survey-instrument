@@ -21,7 +21,7 @@ global.URL = { createObjectURL: () => "blob:x" };
 global.setTimeout = f => f;
 
 js = js.replace(/^const draft[\s\S]*$/m, "");
-eval(js + "\n;module.exports={get D(){return D},set D(v){D=v},get cur(){return cur},get shown(){return shown},CFG,start,next,finish,exportCsv,all,rebuild};");
+eval(js + "\n;module.exports={get D(){return D},set D(v){D=v},get curMod(){return curMod},set curMod(v){curMod=v},get screen(){return screen},CFG,QBY,visible,validate,moduleErrors,modList,start,next,finish,exportCsv,all,render};");
 const A = module.exports;
 const Q = Object.fromEntries(A.CFG.q.map(q => [q.n, q]));
 
@@ -46,27 +46,43 @@ function answerFor(q){
 }
 
 let filled = 0, guardTrips = 0;
+// The form shows one MODULE per screen, so a filled interview is: answer every question the module is
+// currently showing, press Next, repeat. Gates inside a module reshape it as answers land, so the
+// visible set is recomputed after each answer rather than once per module.
 for (let i = 0; i < 50; i++){
   A.start();
-  let steps = 0;
-  while (steps++ < 600){
-    const name = A.cur;
-    if (!name) break;
-    const q = Q[name];
-    if (!q) break;
-    if (name === "consent") A.D[name] = 1;                 // always consent, or the interview ends
-    else A.D[name] = answerFor(q);
-    const before = A.cur;
-    A.next();
-    if (A.cur === before){                                  // validate() refused -- try another value
-      let fixed = false;
-      for (const v of [0,1,2,3,5,10,25,50,100]){ A.D[name] = v; A.next(); if (A.cur !== before){ fixed = true; break } }
-      if (!fixed){ guardTrips++; if(guardTrips<=3) console.log("    dead-end at:", name, "con:", q.con, "hhsize:", A.D.hhsize); break }
+  let hops = 0, stuck = false;
+  while (hops++ < 40){
+    const mod = A.curMod;
+    // several passes: answering one question can open another in the same module
+    for (let pass = 0; pass < 4; pass++){
+      A.CFG.q.filter(q => q.m === mod && A.visible(q)).forEach(q => {
+        if (A.D[q.n] !== undefined && A.D[q.n] !== "") return;
+        A.D[q.n] = q.n === "consent" ? 1 : answerFor(q);
+      });
     }
-    if (A.cur === null) break;                              // finish() ran
+    // clear anything that fails its own constraint, then retry a few sane values
+    let errs = A.moduleErrors();
+    for (let tries = 0; tries < 12 && errs.length; tries++){
+      errs.forEach(([q]) => {
+        for (const v of [1, 0, 2, 3, 5, 7, 10, 12, 25, 50, 100]){
+          A.D[q.n] = v;
+          if (!A.validate(q)) return;
+        }
+      });
+      errs = A.moduleErrors();
+    }
+    if (errs.length){
+      guardTrips++;
+      if (guardTrips <= 3) console.log("    dead-end in module", mod, "->", errs.map(e => e[0].n + ": " + e[1]).join("; ").slice(0,160));
+      stuck = true; break;
+    }
+    A.next();
+    if (A.screen === "done") break;
+    if (A.curMod === mod){ guardTrips++; stuck = true; break }
   }
-  if (A.cur === null) filled++;
-  else { A.finish(); filled++ }
+  if (!stuck && A.screen !== "done") A.finish();
+  filled++;
 }
 console.log(`  interviews completed: ${filled} / 50   (validation dead-ends: ${guardTrips})`);
 console.log(`  records in storage:   ${A.all().length}`);

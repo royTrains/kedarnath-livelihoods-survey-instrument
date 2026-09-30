@@ -257,7 +257,14 @@ LSETS = {
     # activity information, since "went away" says nothing about the work done. Location is now the
     # left_here_month / returned_here_month spell, and code 5 is spent on construction -- the commonest
     # off-season destination occupation for this workforce, which previously had nowhere to go.
-    "activity": {1: "Yatra work (main occupation)", 2: "Farming (crops)", 3: "Livestock (animals)",
+    # Code 1 covers preparing for the season as well as working it. Without that, a lodge owner
+    # repairing rooms in March, a pony owner feeding animals through February, a shopkeeper buying
+    # stock in April had no true option and would land on 8 (no paid work) -- which is wrong, and wrong
+    # in a way that reads as idleness. Consequence: yatra_months now counts preparation months too, so
+    # it is months of Yatra LIVELIHOOD rather than months of Yatra earnings. The consumption season
+    # weight does not use it (that is months_here, from the absence spell), and the data-quality band
+    # on yatra_months was widened from 3-6 to 3-9 to match.
+    "activity": {1: "Yatra work, or getting ready for the season", 2: "Farming (crops)", 3: "Livestock (animals)",
                  4: "Casual or daily wage labour", 5: "Construction work",
                  6: "Own small shop, stall or trade", 7: "Salaried job", 8: "No paid work"},
     "yndk": {0: "No", 1: "Yes", 97: "Don't know"},
