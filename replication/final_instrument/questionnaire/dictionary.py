@@ -24,6 +24,16 @@ MODULES = [  # code, title
     ("L", "Tasks and skills (short block)"),
 ]
 
+# The consent script, read verbatim before anything else is asked. This lives here, with the rest of
+# the instrument, because it was previously duplicated: build_scripts.py held the full version and
+# build_webform.py a shorter paraphrase of it, and NEITHER reached the tablet -- the consent question's
+# own text said "Read the consent script" while the script itself appeared only in the printed script.
+# An enumerator holding a phone had nothing to read. Informed consent is the one thing in this
+# instrument that cannot be left to memory, so it is now rendered on the consent screen itself.
+CONSENT_SCRIPT = """We are doing a study on the livelihoods of people who work on the Yatra route. I would like to ask you some questions about your work, your household and your spending.
+
+Taking part is your choice. You can stop at any time, and you can skip any question you do not want to answer. Nothing you tell me will be linked to your name, and nothing you say will affect your work here or any government benefit."""
+
 # Read-aloud module introductions. The enumerator reads these before the module's first question.
 # They exist because this instrument asks the same thing twice (two seasons) or twelve times (the
 # calendar) in several places, and a respondent who does not know that is coming reads the repetition
@@ -303,7 +313,7 @@ R("P", "interview_date", "Interview date", "Recorded automatically.", "Date of i
 # a continuous rather than categorical location input, and no named site in the exported data either way.
 R("P", "gps_lat", "GPS latitude of interview", "Recorded automatically.", "Latitude of the interview location.", "num", origin="paradata", source="Design")
 R("P", "gps_lon", "GPS longitude of interview", "Recorded automatically.", "Longitude of the interview location.", "num", origin="paradata", source="Design")
-R("P", "consent", "Respondent gave informed consent", "Read the consent script. Do you agree to take part? (1 yes, 0 no; stop if no)", "Consent given after the script was read.", "bin", "yn", origin="paradata", source="Design")
+R("P", "consent", "Respondent gave informed consent", "Do you agree to take part?", "Consent given after the script was read.", "bin", "yn", origin="paradata", source="Design")
 R("P", "interview_duration_min", "Interview length (minutes)", "Recorded automatically (start to end).", "Total interview time; the target is 45 minutes or less.", "num", origin="paradata", source="Design")
 R("P", "dur_tasks_min", "Time spent on tasks block L (minutes)", "Recorded automatically (module timestamps).", "Time for the short task and papers block; tracks the burden of the transferability add-on.", "num", origin="paradata", source="Design")
 

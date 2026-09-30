@@ -36,12 +36,13 @@ import openpyxl
 HERE = os.path.dirname(os.path.abspath(__file__))
 import sys
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
-from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI, CONSENT_SCRIPT_HI
 
 # The module introduction notes are looked up by row name like any other label, so register their
 # Hindi under the same key the note row will carry.
 HI.update({f"intro_{_c}": _t for _c, _t in INTROS_HI.items()})
+HI["consent_script"] = CONSENT_SCRIPT_HI
 
 OUT = os.path.join(HERE, "Kedarnath_final_kobo.xlsx")
 
@@ -224,6 +225,10 @@ p_rows = [r for r in ROWS if r["module"] == "P" and r["name"] not in DROP_PARADA
 # enumerator first: set before approaching anyone, and captured even if consent is then refused
 enum_row = next(r for r in p_rows if r["name"] == "enum_id")
 add("select_one enum", "enum_id", enum_row["question"], required="yes")
+# The consent script as a note directly above the question, so it is on screen when it is needed.
+# A note, not a hint: our hint:: convention is labelled "do not read out", which is the opposite of
+# what this block is for.
+add("note", "consent_script", CONSENT_SCRIPT)
 consent_row = next(r for r in p_rows if r["name"] == "consent")
 add("select_one yn", "consent", consent_row["question"], required="yes")
 # background-geopoint: silent capture, no on-screen question; fires once consent is answered

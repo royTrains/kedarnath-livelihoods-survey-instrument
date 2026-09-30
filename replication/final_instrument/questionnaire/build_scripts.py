@@ -12,8 +12,8 @@ indented so they are visually impossible to confuse with the spoken text.
 import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
-from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, CONSENT_SCRIPT, HINTS
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI, CONSENT_SCRIPT_HI
 
 # Natural joins between modules -- the sentence that carries the respondent from one topic to the
 # next. Without these a read-aloud interview lurches between subjects and feels like an interrogation.
@@ -32,22 +32,11 @@ MODTITLE_HI = {
     "K": "काम की गुणवत्ता", "L": "काम-काज और हुनर (छोटा हिस्सा)",
 }
 
-CONSENT_EN = """We are doing a study on the livelihoods of people who work on the Yatra route. I would like
-to ask you some questions about your work, your household and your spending.
-
-Taking part is your choice. You can stop at any time, and you can skip any question you do not want to
-answer. Nothing you tell me will be linked to your name, and nothing you say will affect your work here
-or any government benefit.
-
-Do you agree to take part?"""
-
-CONSENT_HI = """हम यात्रा मार्ग पर काम करने वाले लोगों के रोज़गार पर एक अध्ययन कर रहे हैं। मैं आपसे आपके काम,
-आपके घर और आपके ख़र्च के बारे में कुछ सवाल पूछना चाहूँगा/चाहूँगी।
-
-इसमें शामिल होना आपकी मर्ज़ी है। आप कभी भी रोक सकते हैं, और जिस सवाल का जवाब नहीं देना चाहते उसे छोड़ सकते हैं।
-आप जो बताएँगे वह आपके नाम से नहीं जोड़ा जाएगा, और उससे यहाँ आपके काम या किसी सरकारी सुविधा पर कोई असर नहीं पड़ेगा।
-
-क्या आप इसमें शामिल होना चाहते हैं?"""
+# The consent script lives in dictionary.py now. It used to be defined here AND, in a shorter
+# paraphrase, in build_webform.py -- two versions of an informed-consent statement in one repo, and
+# neither of them displayed on the tablet. The closing script stays local: it is spoken, not
+# administered, and nothing else consumes it.
+CONSENT_EN, CONSENT_HI = CONSENT_SCRIPT, CONSENT_SCRIPT_HI
 
 CLOSE_EN = """That is everything. Thank you for your time — I know the season is busy and this took a while.
 

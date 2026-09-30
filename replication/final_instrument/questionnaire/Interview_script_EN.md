@@ -4,14 +4,9 @@
 
 ## Consent
 
-We are doing a study on the livelihoods of people who work on the Yatra route. I would like
-to ask you some questions about your work, your household and your spending.
+We are doing a study on the livelihoods of people who work on the Yatra route. I would like to ask you some questions about your work, your household and your spending.
 
-Taking part is your choice. You can stop at any time, and you can skip any question you do not want to
-answer. Nothing you tell me will be linked to your name, and nothing you say will affect your work here
-or any government benefit.
-
-Do you agree to take part?
+Taking part is your choice. You can stop at any time, and you can skip any question you do not want to answer. Nothing you tell me will be linked to your name, and nothing you say will affect your work here or any government benefit.
 
 > **ENUMERATOR:** If they say no, thank them and stop.
 

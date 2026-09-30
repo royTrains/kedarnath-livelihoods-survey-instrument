@@ -23,8 +23,8 @@ import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS
-from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT
+from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI, CONSENT_SCRIPT_HI
 import build_xlsform as X
 
 OUT = os.path.join(HERE, "index.html")
@@ -136,12 +136,9 @@ for r in ROWS:
 
 CFG = {"q": questions, "mods": modules, "cols": export_cols, "labs": LABS}
 
-CONSENT_EN = ("We are doing a study on the livelihoods of people who work on the Yatra route. Taking "
-              "part is your choice, you can stop at any time, and you can skip any question. Nothing "
-              "you say will be linked to your name or affect your work or any government benefit.")
-CONSENT_HI = ("हम यात्रा मार्ग पर काम करने वाले लोगों के रोज़गार पर अध्ययन कर रहे हैं। इसमें शामिल होना आपकी मर्ज़ी है, "
-              "आप कभी भी रोक सकते हैं, और कोई भी सवाल छोड़ सकते हैं। आप जो बताएँगे वह आपके नाम से नहीं जोड़ा जाएगा और "
-              "उससे आपके काम या किसी सरकारी सुविधा पर कोई असर नहीं पड़ेगा।")
+# The consent script now comes from dictionary.CONSENT_SCRIPT. This file used to hold its own shorter
+# paraphrase, which is how two versions of an informed-consent statement came to exist in one repo.
+CONSENT_EN, CONSENT_HI = CONSENT_SCRIPT, CONSENT_SCRIPT_HI
 
 HTML = """<!doctype html>
 <html lang="hi" translate="no">
@@ -190,6 +187,12 @@ label.ch input{margin:3px 0 0}
    which is blue. Three kinds of text on one screen need three unmistakable looks. */
 .hint{background:#fff8e6;border-left:4px solid #b78103;border-radius:0 6px 6px 0;padding:9px 11px;margin:0 0 11px;font-size:13.5px;color:#5c4708}
 .card.off{display:none}
+/* The consent script. Read verbatim, so it gets its own look -- green rule, larger text than a hint,
+   and the label says word for word. Three read-aloud registers on this form now: blue module intro
+   (read it), amber hint (do NOT read it), green consent (read it exactly). */
+.consent{background:#f0f7f0;border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:13px 15px;margin:0 0 14px;font-size:15.5px}
+.consent p{margin:0 0 9px}.consent p:last-child{margin:0}
+.consent .lead{display:block;font-size:11.5px;color:var(--ok);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:6px}
 .card.bad{border-color:var(--warn);box-shadow:0 0 0 1px var(--warn)}
 .mc{font-weight:400;text-transform:none;letter-spacing:0}
 .hint b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;color:#8a6200}
@@ -239,7 +242,10 @@ const T = {
  readout:["पढ़कर सुनाएँ","Read aloud"],
  // Label on the enumerator hint. Says plainly that this one is not for the respondent.
  foryou:["सर्वेक्षक के लिए — पढ़कर न सुनाएँ","For the enumerator — do not read out"],
- qs:["सवाल","questions"]
+ qs:["सवाल","questions"],
+ // Label on the consent script. It is an instruction to the enumerator about HOW to deliver the
+ // block below it, which is why it is not part of the script text itself.
+ verbatim:["यह ज्यों का त्यों पढ़कर सुनाएँ","Read this out, word for word"]
 };
 let L = 0;                                  // 0 = Hindi, 1 = English
 const t = k => T[k][L];
@@ -305,6 +311,13 @@ function rebuild(){ shown = CFG.q.filter(visible) }
 function qBlock(q){
   const v = D[q.n] ?? "";
   let h = "<div class=card data-q='" + q.n + "'>";
+  // The consent script is rendered ON the consent question, not as a module preamble. It is the one
+  // block in this form that must be read word for word, so it is marked as such and styled unlike
+  // both the question and the enumerator hint -- which says the opposite, do not read out.
+  if (q.n === "consent"){
+    h += "<div class=consent><span class=lead>" + t("verbatim") + "</span>" +
+         t("cons").split("\\n\\n").map(x => "<p>" + x + "</p>").join("") + "</div>";
+  }
   h += "<div class=qt>" + (L ? q.en : q.hi) + "</div>";
   if (q.hn) h += "<div class=hint><b>" + t("foryou") + "</b>" + (L ? q.hn : q.hnh) + "</div>";
   if (q.t === "one" || q.t === "multi"){

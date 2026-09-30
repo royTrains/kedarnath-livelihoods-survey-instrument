@@ -2,7 +2,7 @@
 import csv, os, sys
 import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from dictionary import ROWS, LSETS, MODULES, TASKS, INTROS, HINTS
+from dictionary import ROWS, LSETS, MODULES, TASKS, INTROS, CONSENT_SCRIPT, HINTS
 from latex_helpers import esc, compile_tex
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -102,6 +102,12 @@ for m in MODULES:
     # questions. On paper the distinction has to carry itself: there is no interface to enforce it.
     if code in INTROS:
         tex += "\\begin{quote}\\small\\textit{Read aloud: " + esc(INTROS[code]) + "}\\end{quote}\n"
+    # Module P carries the consent script, which is read verbatim rather than paraphrased -- so it is
+    # printed in full on the paper form too, not referred to.
+    if code == "P":
+        paras = "\\\\[6pt]".join(esc(x) for x in CONSENT_SCRIPT.split("\n\n"))
+        tex += ("\\begin{quote}\\small\\textbf{Read this out, word for word:}\\\\[4pt]\n\\textit{"
+                + paras + "}\\end{quote}\n")
     rows = []
     for i, r in enumerate(rr, 1):
         q = esc(r["question"])
