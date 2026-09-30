@@ -194,10 +194,6 @@ LSETS = {
     # others. Migration reason now has its own item in Module D.
     "prevreason": {1: "Better income", 2: "Lost the previous work", 3: "Work ended with the season",
                    4: "Family reasons", 5: "Health or injury", 6: "Other"},
-    "trtype": {1: "ITI or other trade course", 2: "Hotel, catering or tourism", 3: "Driving",
-               4: "Mobile, computer or electrical repair", 5: "Tailoring or handicraft",
-               6: "Animal handling or veterinary", 7: "Construction trade (mason, carpenter, plumber)",
-               8: "Health or first aid", 9: "Other"},
     "origin": {1: "Local (same district)", 2: "Other Uttarakhand district", 3: "Other Indian state", 4: "Nepal"},
     "referral": {1: "A family member already working here", 2: "A friend or someone from the village",
                  3: "A thekedar or contractor I now work for",
@@ -206,7 +202,6 @@ LSETS = {
                  7: "Someone else"},
     "floor": {1: "Mud/kaccha", 2: "Cement/mud-cement", 3: "Tile/mosaic/marble"},
     "roof": {1: "Thatch/wood/mud", 2: "Tin/GI sheet", 3: "Concrete/RCC"},
-    "house": {1: "Kaccha", 2: "Semi-pucca", 3: "Pucca"},
     "wall": {1: "Mud, thatch, bamboo or other natural material", 2: "Unburnt brick, wood or tin",
              3: "Burnt brick, cement, concrete or stone"},
     "toilet": {1: "No toilet / open defecation", 2: "Pit latrine without slab or open pit",
@@ -228,8 +223,6 @@ LSETS = {
     "fuel": {1: "LPG or cylinder gas", 2: "Piped natural gas", 3: "Electricity",
              4: "Biogas (gobar gas plant)", 5: "Kerosene", 6: "Firewood", 7: "Dung cakes (gobar)",
              8: "Crop residue, straw or shrubs", 9: "Charcoal", 10: "Coal or lignite"},
-    "fetcher": {1: "An adult woman", 2: "An adult man", 3: "A girl under 15", 4: "A boy under 15",
-                5: "It varies / more than one person"},
     # adminlevel (village / town / city) was dropped 2026-09-28. It asked the respondent to perform an
     # administrative classification that is a Census status, not a folk category: whether a place is a
     # statutory town, a census town or a village is not something a resident knows, so two people from
@@ -414,8 +407,6 @@ R("B", "prev_occ", "Previous main work (verbatim, NCO-coded later)", "What was y
 R("B", "target_occ", "Work the respondent would move to if this work ended (verbatim, NCO-coded later)", "If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples.", "Stated destination occupation. " + NCONOTE + " Two uses: it is the respondent's own target, which no external classification can supply; and comparing it with the task-nearest feasible destination gives an aspiration-versus-capability gap that the occupational-commonality literature has no worker-stated benchmark for. 'Don't know' and 'nothing / I would have no work' are both substantive answers -- record them as said.", "text", source="Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office")
 R("B", "prev_occ_reason", "Main reason for changing work", "What was the main reason you changed?", "Reason for the last change.", "cat", "prevreason", skip="Ask only if prev_occ_change = 1", source="Job-history item")
 R("B", "training_received", "Ever completed a training course or apprenticeship", "Apart from school and college, have you ever completed any training course or apprenticeship?", "Vocational or on-the-job training, explicitly EXCLUDING school AND college. The old wording said only \"not counting school\", which left it ambiguous whether a degree counted -- some respondents would have reported a BA here. Formal education is already measured in years by years_schooling (a graduate reports about 15), so counting it again here would double-count it.", "bin", "yn", source="STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate")
-R("B", "training_type", "Type of training received", "What kind of course or training was it?", "Two categories (vocational/trade and tourism/hospitality) could not hold what this workforce actually trains in -- driving, mobile repair, tailoring, animal handling, an ITI trade and a hotel course are not the same thing, and the first two options forced most of them into the wrong box. Widened, with a write-in for the rest.", "cat", "trtype", skip="Ask only if training_received = 1", source="STEP module 2")
-R("B", "training_type_other", "Type of training, written in (verbatim, optional)", "What was it? Write what they say.", "Write-in for training the list does not hold.", "text", skip="Ask only if training_type = 9 (Other); may be left blank", source="STEP module 2")
 
 # ------------------------------------------------------------------ C  income and remittances
 MONTHS = ["January", "February", "March", "April", "May", "June",
@@ -574,14 +565,12 @@ HOMENOTE = "Self-reported, not enumerator-observed: by design the interview happ
 R("F", "floor_material", "Main floor material at usual home", "What is the main material of the floor at your usual home?", HOMENOTE, "cat", "floor", source="NITI Aayog National MPI housing indicator")
 R("F", "roof_material", "Main roof material at usual home", "What is the main material of the roof at your usual home?", HOMENOTE, "cat", "roof", source="NITI Aayog National MPI housing indicator")
 R("F", "wall_material", "Main wall material at usual home", "What are the walls of your usual home mainly made of?", HOMENOTE + " NITI's housing indicator is deprived if the FLOOR is natural material OR the ROOF OR THE WALL is rudimentary. Wall material was simply not asked before, so one of the three limbs could not be evaluated at all.", "cat", "wall", source="NITI Aayog National MPI housing indicator (wall limb)")
-R("F", "house_type", "House type at usual home (self-reported)", "Would you describe your usual home as kaccha (mud/thatch, temporary), semi-pucca (part-concrete) or pucca (solid, permanent)?", HOMENOTE + " Kaccha counts as deprived.", "cat", "house", source="NITI Aayog National MPI housing indicator")
 R("F", "accom_type_here", "Where the respondent sleeps during the season", "While you are here for the season, where do you sleep?", "Accommodation at the WORKSITE, which nothing else in this module describes -- floor_material, roof_material and the rest are about the usual home, and for a seasonal migrant that is not where he spends six months of the year. Feeds the security and social inclusion dimension of the Lyons et al. (2023) MLI, whose settlement-conditions indicator exists for exactly this case. Deprived at codes 4, 5 and 7: sleeping at the workplace, under canvas, or in the open.", "cat", "accomhere", source="Lyons et al. 2023, Table 2 (area/settlement conditions), adapted to a labour-migrant setting")
 R("F", "electricity", "Usual home has an electricity connection", "Does your usual home have an electricity connection?", HOMENOTE, "bin", "yn", source="NITI Aayog National MPI")
 R("F", "toilet_type", "Type of toilet at usual home", "What kind of toilet does your household use at your usual home?", HOMENOTE + " NITI counts a household deprived if the facility is unimproved OR improved but SHARED with other households, so a plain own-toilet yes/no cannot decide the indicator: it misses an unshared but unimproved pit latrine, and it misses a flush toilet shared between four families.", "cat", "toilet", source="NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not)")
 R("F", "drinking_water", "Main source of drinking water at usual home", "What is your main source of drinking water at your usual home?", HOMENOTE + " Codes 1-6 are improved sources, 7-9 unimproved, following the JMP/NFHS taxonomy NITI Aayog's MPI indicator rests on.", "cat", "water", source="NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy)")
 R("F", "water_on_premises", "Drinking water is available on the premises", "Is the drinking water available at the house itself?", "On-premises vs. fetched. NITI counts even an IMPROVED source as deprived when it is more than a 30-minute round trip away, so source alone cannot decide the indicator -- this and the next item supply the missing limb.", "bin", "yn", source="NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)")
 R("F", "water_fetch_minutes", "Minutes for a round trip to fetch water", "How long does it take to go there, get the water and come back? (minutes, round trip)", "Round-trip fetching time. The 30-minute threshold is NITI's own; asked as a duration rather than a yes/no so the cutoff can be varied in robustness checks instead of being baked into the question.", "count", skip="Ask only if water_on_premises = 0", source="NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)")
-R("F", "water_fetched_by", "Who usually fetches the water", "Who in the household usually goes to fetch it?", "Who bears the fetching burden. Not an MPI indicator -- the MPI stops at whether water is far -- but the distributional question the MPI leaves out: a 40-minute round trip is a different household cost depending on whether an adult man or a girl under 15 makes it. Cheap to add once the fetching question exists at all.", "cat", "fetcher", skip="Ask only if water_on_premises = 0", source="Project design (intra-household burden of water collection; DHS/NFHS ask the same item)")
 R("F", "cooking_fuel", "Main cooking fuel at usual home", "What does your household mainly use to cook at your usual home?", HOMENOTE + " Replaces a yes/no LPG question. NITI Aayog's indicator names the dirty fuels explicitly -- dung, agricultural crops, shrubs, wood, charcoal or coal -- so a fuel LIST is required to apply it; a binary cannot. NOTE on kerosene: NITI's list does not name it, so it is NOT counted as deprived here, although the global MPI does count it. Recorded separately so either rule can be applied later.", "cat", "fuel", source="NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels)")
 R("F", "owns_tv", "Owns a television", "Does your household own: a television?", "Durable asset.", "bin", "yn", source="NITI Aayog National MPI assets indicator")
 R("F", "owns_radio", "Owns a radio", "... a radio?", "Durable asset.", "bin", "yn", source="NITI Aayog National MPI assets indicator")
@@ -602,9 +591,18 @@ R("F", "owns_work_vehicle", "Owns a vehicle used for work", "Does your household
 R("F", "owns_work_equipment", "Owns equipment or tools used for work", "Does your household own equipment or tools that you use to earn?", PRODNOTE, "bin", "yn", source="Chaudhuri et al. 2002 asset covariate")
 R("F", "work_equipment_detail", "What equipment or tools (verbatim, optional)", "What are they? Write what they say. Leave blank if they cannot say.", "Free text, NOT required. A binary cannot separate a set of hand tools from a generator or a chai urn, and the transferability analysis reads capital alongside tasks.", "text", skip="Ask only if owns_work_equipment = 1; may be left blank")
 
+# Dropped 2026-09-30 after tracing every asked question to an analysis (checks/10):
+#   water_fetched_by      who fetches the water. NITI's water indicator is source and distance; the
+#                         gender of the fetcher is an equity descriptor that fed nothing.
+#   has_jandhan_account   has_bank_account already carries financial inclusion, and nothing used the
+#                         Jan Dhan subtype.
+#   training_type         training_received (the binary) is what the analysis uses; the type and its
+#   training_type_other   verbatim fed nothing. Two questions.
+#   house_type            kaccha / semi-pucca / pucca is a summary of floor, roof and wall, and
+#                         mpi_housing_dep is built from those three directly.
+
 # ------------------------------------------------------------------ G  finance, insurance, schemes, phone
 R("G", "has_bank_account", "Household has a bank or post office account", "Does anyone in your household have a bank account or a post office account?", "NITI's wording is \"no household member has a bank account OR A POST OFFICE ACCOUNT\". Post office accounts are common in hill districts and were previously excluded by the question wording, which would have marked some covered households as deprived.", "bin", "yn", source="NITI Aayog National MPI bank-account indicator; VEP adaptive-capacity covariate")
-R("G", "has_jandhan_account", "Has a Jan Dhan account", "Is any of these a Jan Dhan account?", "Jan Dhan account. Now gated on actually having a bank account -- it was previously asked of everyone, including households that had just said they have none.", "bin", "yn", skip="Ask only if has_bank_account = 1")
 R("G", "took_loan_12m", "Borrowed money in the last 12 months", "In the last 12 months, did you or anyone in your household borrow money?", "Gate for the credit block.", "bin", "yn", source="VEP adaptive-capacity covariate")
 R("G", "credit_source", "Main lender", "Who was the main lender?", "Lender TYPE, replacing the old institutional/non-institutional binary: a moneylender, an SHG and a contractor advance are three different things for vulnerability, and collapsing them hid which one a household actually depends on.", "cat", "credit", skip="Ask only if took_loan_12m = 1", source="VEP adaptive-capacity covariate (lender type)")
 R("G", "loan_amount", "Total amount still owed (Rs)", "How much of that loan is still left to repay? (Rs)", "Outstanding DEBT STOCK, not the amount borrowed. The instrument previously recorded who lent but never how much is owed -- which is the quantity that decides whether a shock turns into poverty.", "money", skip="Ask only if took_loan_12m = 1", source="Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty)")

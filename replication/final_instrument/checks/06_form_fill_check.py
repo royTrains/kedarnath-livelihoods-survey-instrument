@@ -142,7 +142,7 @@ NEEDS = {
         ["cons_pc_pm", "poor", "poor_sensitivity_cpi", "cons_pc_pm_narrow", "cons_pc_ae_pm"] + XVARS,
     "Multidimensional VEP (Alkire-Foster / Lyons et al.)":
         ["health_access_deprived", "n_health_insured", "child_school_dep", "education_years",
-         "floor_material", "roof_material", "wall_material", "house_type", "electricity",
+         "floor_material", "roof_material", "wall_material", "electricity",
          "drinking_water", "water_on_premises", "water_deprived", "cooking_fuel",
          "mpi_mortality_dep", "mpi_maternal_dep", "mpi_schooling_dep", "mpi_attendance_dep",
          "mpi_housing_dep", "mpi_sanitation_dep", "mpi_electricity_dep", "mpi_bank_dep",
@@ -171,7 +171,10 @@ NEEDS = {
 # coverage each one should clear. child_school_dep is only defined for households that HAVE a child
 # aged 6-14; Alkire-Foster treats a household with no eligible member as non-deprived, so partial
 # coverage here is correct behaviour, not a defect.
-GATED = {"prev_occ": 0.20, "target_occ": 0.50, "best_alt_occupation": 0.90, "task_cover_best": 0.90,
+GATED = {# job_permanence and its Module K siblings are gated on job_situation 1-3 (currently working),
+         # so the handful of respondents who are not working are correctly missing, not thin.
+         "job_permanence": 0.85, "contract_status": 0.85, "workplace_registered": 0.85,
+         "prev_occ": 0.20, "target_occ": 0.50, "best_alt_occupation": 0.90, "task_cover_best": 0.90,
          "task_retain_best": 0.90, "skill_move_type": 0.90, "child_school_dep": 0.20}
 
 for analysis, cols in NEEDS.items():

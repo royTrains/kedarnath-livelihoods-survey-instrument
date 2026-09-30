@@ -43,7 +43,7 @@ import delimited "data/raw_asked.csv", clear varnames(1) case(preserve)
 foreach v in other_activity_types distress_event_last365d shock_coping ///
              occupation_detail prev_occ target_occ native_language_other ///
              govt_schemes govt_scheme_other work_equipment_detail migration_referral_other ///
-             training_type_other {
+             closure_work_detail other_places_detail {
     capture confirm variable `v'
     if !_rc {
         capture confirm string variable `v'
@@ -359,6 +359,88 @@ gen int cons_pc_pm = round(cons_pc_seasonal_pm + cons_annual_pm/hhsize)
 gen double shock_loss_share = shock_loss_amount/((cons_pc_seasonal_pm*hhsize + cons_annual_pm)*12) ///
     if !missing(shock_loss_amount)
 label var shock_loss_share "Worst shock's loss as a share of annual household consumption"
+
+*=============================================================================
+* VARIABLES THAT WERE BEING ASKED AND NOT USED.
+* checks/10_every_question_earns_its_place.py traces every asked question to an
+* analysis. It found 28 items reaching nothing but an assert on themselves --
+* interview time spent to check itself. Where the question was worth asking, the
+* fix belongs here rather than in the form. Where it was not, the question was
+* dropped instead (see the note in dictionary.py, Module G).
+*=============================================================================
+
+* ---- debt burden. This is half of gap N4, and it turned out the data was already there: the loan
+* amount, the interest rate, whether an asset was pledged, and what. None of it entered anything.
+gen double debt_service_ratio = .
+replace  debt_service_ratio = (loan_amount*loan_interest_per100_pm/100)/(total_annual_income/12) ///
+    if took_loan_12m==1 & pays_interest==1 & total_annual_income>0
+label var debt_service_ratio "Monthly interest as a share of monthly income"
+gen byte debt_secured_on_asset = (loan_against_asset==1) if took_loan_12m==1
+label var debt_secured_on_asset "Loan is secured on a household asset"
+* Pledging a productive asset is the case that turns a loan into a livelihood risk: the collateral is
+* the thing the income comes from. Codes 3, 4 and 5 are animals, a vehicle and shop stock.
+gen byte debt_on_productive_asset = inlist(loan_collateral,3,4,5) if loan_against_asset==1
+label var debt_on_productive_asset "Loan secured on the asset the livelihood depends on"
+gen double debt_stock_months = loan_amount/(total_annual_income/12) if took_loan_12m==1 & total_annual_income>0
+label var debt_stock_months "Outstanding loan, in months of household income"
+
+* ---- health. Five items were collected and none reached an estimate, although morbidity and
+* hospitalisation are the health shock that VER is about and Lyons carries healthcare access as an
+* indicator of its own.
+gen byte health_shock_any = (morbidity_15d==1 | hospitalization_365d==1)
+label var health_shock_any "Illness in the last 15 days or a hospital admission in 12 months"
+gen double health_cost_share = morbidity_cost_15d/(total_annual_income/12) if morbidity_15d==1 & total_annual_income>0
+label var health_cost_share "Out-of-pocket cost of recent illness, share of monthly income"
+* Coping with a health cost by borrowing or by selling something is distress financing -- the standard
+* marker that a health event has done lasting damage rather than been absorbed.
+gen byte health_distress_financing = inlist(morbidity_coping_15d,3,4) if morbidity_15d==1
+label var health_distress_financing "Met the health cost by borrowing or selling an asset"
+gen byte dep_health_access = (health_access_barrier_3m==1)
+label var dep_health_access "Someone could not get health care when needed (Lyons D1)"
+
+* ---- income composition. The monthly calendar asks for earnings from ALL work, so this does not go
+* into the aggregate -- it would double-count. What it gives, and nothing else does, is the split
+* between the main work and the rest, which is the multiple-jobholding gap Apablaza names and her own
+* instrument does not fill.
+gen double secondary_income_share = .
+replace  secondary_income_share = (other_activity_income_pm*12)/total_annual_income ///
+    if n_other_activities>0 & total_annual_income>0
+replace  secondary_income_share = 0 if n_other_activities==0
+label var secondary_income_share "Share of annual income from work other than the main occupation"
+
+* ---- remaining adaptive-capacity and stratifier variables that fed nothing
+gen byte has_cultivable_land = (land_cultivable_acres>0) if !missing(land_cultivable_acres)
+label var has_cultivable_land "Household owns or cultivates any land"
+gen byte insured_any = (n_health_insured>0 | n_life_insured>0 | has_crop_insurance==1)
+label var insured_any "Household holds any insurance at all"
+* Lyons D5 carries access to phones and digital services as a social-inclusion indicator.
+gen byte dep_digital_excluded = (smartphone_owned==0 & uses_digital_payment==0)
+label var dep_digital_excluded "Neither a smartphone nor any digital payment use (Lyons D5)"
+* Remittance channel as cost and friction: codes 3 to 6 all require a trip, a fee, or a third party.
+gen byte remit_costly_channel = inlist(remit_mode,3,4,5,6) if !missing(remit_mode)
+label var remit_costly_channel "Sends money by a channel that costs a trip, a fee or a middleman"
+* Which KIND of event the household found hardest, now that shock_worst names it.
+gen byte worst_shock_covariate = inlist(shock_worst,3,5,6,7) if !missing(shock_worst)
+label var worst_shock_covariate "The hardest shock was a covariate one, not idiosyncratic"
+
+* ---- the last six, each collapsed to the one contrast that carries the information -------------
+* 27 native-language categories cannot enter a regression on this sample. What matters is whether the
+* respondent speaks a language of these hills: it proxies how long the family has been here and how
+* easily he deals with employers, officials and pilgrims.
+gen byte lang_local = inlist(native_language,1,2) if !missing(native_language)
+label var lang_local "Native language is Garhwali or Kumaoni"
+* Push against pull. Someone driven here by no work at home, land too small to live on, or a debt to
+* repay is in a different position from someone drawn by better pay, at identical current earnings.
+gen byte came_for_push = inlist(came_here_reason,1,4,5) if !missing(came_here_reason)
+label var came_for_push "Came here pushed (no work, land too small, debt) rather than pulled"
+* Placement by a contractor or agent, as distinct from a family or village referral. An agent-placed
+* worker usually carries a fee or an advance, which is a debt relationship the wage alone does not show.
+gen byte placed_by_agent = (migration_referral==3) if !missing(migration_referral)
+label var placed_by_agent "Placed in this work by a contractor or agent"
+gen byte home_outside_state = (home_state!=27) if !missing(home_state)
+label var home_outside_state "Permanent home is outside Uttarakhand"
+label var worked_other_places "Had gone elsewhere for work before coming here"
+label var first_job_ever "This work is the first paid job the respondent ever had"
 gen double cons_pc_pm_narrow = cons_pc_seasonal_pm
 gen double cons_pc_ae_pm = (cons_pc_seasonal_pm*hhsize + cons_annual_pm) ///
                            / (hhsize - n_children_u15 + 0.5*n_children_u15)
@@ -407,7 +489,6 @@ gen byte shock_idiosyncratic = (shock_1 | shock_2 | shock_4 | shock_8)
 * are no longer forced to be mutually exclusive
 gen byte coped_sold_assets     = cope_3
 gen byte coped_cut_consumption = cope_4
-
 
 gen byte productive_assets_count = owns_cow_buffalo + owns_goat_sheep + owns_pony_mule + owns_shop_stall + owns_work_vehicle + owns_work_equipment
 *-----------------------------------------------------------------------------
@@ -478,6 +559,11 @@ quietly summarize work_income_pm, detail
 local med = r(p50)
 * access: unemployed >6 months (and spent time searching) OR under 20 h/week and wanting more
 gen byte emp_dep_access = (months_no_work>6 & months_looked_for_work>0) | (wants_more_work==1 & hours_week_yatra<20)
+* Underemployment GAP, from Apablaza Q22. more_hours_day was asked and unused, so the size of the
+* shortfall was invisible: someone wanting one more hour and someone wanting six read identically.
+gen double hours_wanted_gap = more_hours_day*days_week_yatra if wants_more_work==1
+replace  hours_wanted_gap = 0 if wants_more_work!=1
+label var hours_wanted_gap "Extra hours per week the respondent wants"
 * compensation: fallback threshold (67% of the sample median)
 gen byte emp_dep_comp   = (work_income_pm < 0.67*`med') if !missing(work_income_pm)
 * security: wage workers = no signed contract; self-employed = business not registered
@@ -493,7 +579,12 @@ gen byte emp_dep_stab = ((inlist(employment_type,3,4) & years_in_yatra_work < 1)
                          (inlist(employment_type,1,2) & years_in_yatra_work < 2) | ///
                          job_permanence==3)
 * conditions: workplace injury or death in the last 12 months, or neither work health insurance nor a pension
-gen byte emp_dep_cond   = (workplace_injury_12m==1) | (work_health_ins==3 & pension_contrib==3)
+* Apablaza's working-conditions domain is injury PLUS access to labour rights, and she names three
+* rights: work health insurance, a pension contribution, and PAID LEAVE. leave_rights was collected
+* from the start and never entered the indicator, so a worker with insurance but no leave at all read
+* as non-deprived. Deprived now on injury, or on having none of the three.
+gen byte emp_dep_cond   = (workplace_injury_12m==1) ///
+    | (work_health_ins==3 & pension_contrib==3 & leave_rights!=1)
 egen byte emp_dep_count = rowtotal(emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond)
 gen double emp_dep_score = emp_dep_count/5
 gen byte emp_poor_k2    = (emp_dep_count>=2)
@@ -615,15 +706,11 @@ assert inrange(mpi_score,0,1)
 assert (credit_source==.)            == (took_loan_12m==0)
 assert (loan_amount==.)              == (took_loan_12m==0)
 assert (loan_against_asset==.)       == (took_loan_12m==0)
-assert (has_jandhan_account==.)      == (has_bank_account==0)
 assert (has_crop_insurance==.)       == (land_cultivable_acres==0)
-
-
 
 assert inrange(drinking_water,1,9)
 assert inlist(cooking_fuel,1,2,3,4,5,6,7,8,9,10)
 assert missing(water_fetch_minutes) == (water_on_premises==1)
-assert missing(water_fetched_by)    == (water_on_premises==1)
 assert missing(hours_day_offseason) == (offseason_months_worked==0)
 assert missing(days_week_offseason) == (offseason_months_worked==0)
 assert (occupation_detail!="")  // verbatim job description, asked of everyone
@@ -632,7 +719,6 @@ assert missing(prev_occ_reason)   == (prev_occ_change!=1)
 assert !missing(n_other_activities)          // count, asked of everyone (0 = none)
 assert (other_activity_types=="") == (n_other_activities==0)
 assert missing(other_activity_income_pm) == (n_other_activities==0)
-assert missing(training_type)     == (training_received!=1)
 assert (shock_coping=="")         == (distress_event_last365d=="")
 assert missing(morbidity_coping_15d) == (morbidity_15d==0)
 assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
@@ -813,11 +899,8 @@ forvalues m = 1/12 {
     assert income_m`m'==0 if status_m`m'==8 & income_from_fallback==0
 }
 
-
 assert yatra_months + offseason_months_worked + months_no_work == 12
 * logic
-
-
 
 assert inrange(hours_day_yatra,1,18) & inrange(days_week_yatra,1,7)
 assert inrange(n_other_activities,0,6)
@@ -825,7 +908,6 @@ assert inlist(job_permanence,1,2,3,4,5) if k_working==1
 foreach v in cope_less_pref_food cope_borrow_food cope_reduce_meals cope_reduce_portion cope_restrict_adult {
     assert inrange(`v'_yatra_wk,0,7) & inrange(`v'_offseason_wk,0,7)
 }
-
 
 assert inrange(rcsi_score,0,7+14+7+7+21)   // max possible: 7*(1+2+1+1+3)
 foreach v in injured_ever workplace_injury_12m wants_more_work {

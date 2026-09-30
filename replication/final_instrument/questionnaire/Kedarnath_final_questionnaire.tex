@@ -12,7 +12,7 @@
 
 \plainbox{\textbf{What this is.} The final list of questions and variables for the survey of Yatra workers. The main aim is to measure
 \textbf{vulnerability to poverty} (VEP and multidimensional poverty). A short employment-quality block and a short tasks block are added.
-The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{216 asked questions}, 9 recorded automatically or by the enumerator,
+The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{211 asked questions}, 9 recorded automatically or by the enumerator,
 and 129 variables built afterwards in Stata. The companion file \texttt{variable\_dictionary.csv} lists everything in one table.}
 
 \section*{1. Rules the questions follow}
@@ -38,18 +38,18 @@ Interview length is NOT estimated here. The module list below gives item counts 
 \endhead
 P & Cover page, consent and paradata & 9 \\
 A & Respondent and household & 17 \\
-B & Work and work history & 16 \\
+B & Work and work history & 14 \\
 C & Monthly calendar of work and income; remittances & 34 \\
 D & Migration & 18 \\
 E & Household consumption & 27 \\
-F & Housing, amenities and assets & 29 \\
-G & Finance, insurance and schemes & 18 \\
+F & Housing, amenities and assets & 27 \\
+G & Finance, insurance and schemes & 17 \\
 H & Health & 10 \\
 I & Food security, shocks and coping & 15 \\
 J & Ropeway & 2 \\
 K & Job quality (Apablaza et al. 2026 questions) & 13 \\
 L & Tasks and skills (short block) & 17 \\
- & \textbf{Total} & \textbf{225} \\
+ & \textbf{Total} & \textbf{220} \\
 \bottomrule
 \end{longtable}
 }
@@ -144,8 +144,6 @@ B11 & What was your previous main work? Write down exactly what they say, in the
 B12 & If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples. &  & \texttt{target\_occ}\newline Source: Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office \\
 B13 & What was the main reason you changed? & 1 Better income; 2 Lost the previous work; 3 Work ended with the season; 4 Family reasons; 5 Health or injury; 6 Other & \texttt{prev\_occ\_reason}\newline \textit{Skip: Ask only if prev\_occ\_change = 1}\newline Source: Job-history item \\
 B14 & Apart from school and college, have you ever completed any training course or apprenticeship? & 1 Yes, 0 No & \texttt{training\_received}\newline Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate \\
-B15 & What kind of course or training was it? & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other & \texttt{training\_type}\newline \textit{Skip: Ask only if training\_received = 1}\newline Source: STEP module 2 \\
-B16 & What was it? Write what they say. &  & \texttt{training\_type\_other}\newline \textit{Skip: Ask only if training\_type = 9 (Other); may be left blank}\newline Source: STEP module 2 \\
 \bottomrule
 \end{longtable}
 }
@@ -288,32 +286,30 @@ E27 & In the last 12 months, how much on durable goods: furniture, utensils, coo
 F1 & What is the main material of the floor at your usual home? & 1 Mud/kaccha; 2 Cement/mud-cement; 3 Tile/mosaic/marble & \texttt{floor\_material}\newline Source: NITI Aayog National MPI housing indicator \\
 F2 & What is the main material of the roof at your usual home? & 1 Thatch/wood/mud; 2 Tin/GI sheet; 3 Concrete/RCC & \texttt{roof\_material}\newline Source: NITI Aayog National MPI housing indicator \\
 F3 & What are the walls of your usual home mainly made of? & 1 Mud, thatch, bamboo or other natural material; 2 Unburnt brick, wood or tin; 3 Burnt brick, cement, concrete or stone & \texttt{wall\_material}\newline Source: NITI Aayog National MPI housing indicator (wall limb) \\
-F4 & Would you describe your usual home as kaccha (mud/thatch, temporary), semi-pucca (part-concrete) or pucca (solid, permanent)? & 1 Kaccha; 2 Semi-pucca; 3 Pucca & \texttt{house\_type}\newline Source: NITI Aayog National MPI housing indicator \\
-F5 & While you are here for the season, where do you sleep? & 1 Own house here; 2 Rented room or house; 3 Room or dormitory the employer provides; 4 Sleeps at the shop, dhaba or workplace; 5 Tent or temporary shelter; 6 Lodge, dharamshala or ashram; 7 In the open, or a verandah; 8 Somewhere else & \texttt{accom\_type\_here}\newline Source: Lyons et al. 2023, Table 2 (area/settlement conditions), adapted to a labour-migrant setting \\
-F6 & Does your usual home have an electricity connection? & 1 Yes, 0 No & \texttt{electricity}\newline Source: NITI Aayog National MPI \\
-F7 & What kind of toilet does your household use at your usual home? & 1 No toilet / open defecation; 2 Pit latrine without slab or open pit; 3 Improved toilet, but shared with other households; 4 Improved toilet, used only by this household & \texttt{toilet\_type}\newline Source: NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not) \\
-F8 & What is your main source of drinking water at your usual home? & 1 Piped into the house or yard; 2 Public tap or standpipe; 3 Handpump, tubewell or borewell; 4 Protected well or protected spring; 5 Rainwater collection; 6 Bottled, packaged or community RO; 7 Unprotected well or unprotected spring; 8 River, stream, pond or canal; 9 Tanker truck or cart with drum & \texttt{drinking\_water}\newline Source: NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy) \\
-F9 & Is the drinking water available at the house itself? & 1 Yes, 0 No & \texttt{water\_on\_premises}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
-F10 & How long does it take to go there, get the water and come back? (minutes, round trip) & Whole number & \texttt{water\_fetch\_minutes}\newline \textit{Skip: Ask only if water\_on\_premises = 0}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
-F11 & Who in the household usually goes to fetch it? & 1 An adult woman; 2 An adult man; 3 A girl under 15; 4 A boy under 15; 5 It varies / more than one person & \texttt{water\_fetched\_by}\newline \textit{Skip: Ask only if water\_on\_premises = 0}\newline Source: Project design (intra-household burden of water collection; DHS/NFHS ask the same item) \\
-F12 & What does your household mainly use to cook at your usual home? & 1 LPG or cylinder gas; 2 Piped natural gas; 3 Electricity; 4 Biogas (gobar gas plant); 5 Kerosene; 6 Firewood; 7 Dung cakes (gobar); 8 Crop residue, straw or shrubs; 9 Charcoal; 10 Coal or lignite & \texttt{cooking\_fuel}\newline Source: NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels) \\
-F13 & Does your household own: a television? & 1 Yes, 0 No & \texttt{owns\_tv}\newline Source: NITI Aayog National MPI assets indicator \\
-F14 & ... a radio? & 1 Yes, 0 No & \texttt{owns\_radio}\newline Source: NITI Aayog National MPI assets indicator \\
-F15 & ... a bicycle? & 1 Yes, 0 No & \texttt{owns\_bicycle}\newline Source: NITI Aayog National MPI assets indicator \\
-F16 & ... a motorcycle or scooter? & 1 Yes, 0 No & \texttt{owns\_motorcycle}\newline Source: NITI Aayog National MPI assets indicator \\
-F17 & ... a car, jeep or truck? & 1 Yes, 0 No & \texttt{owns\_car}\newline Source: NITI Aayog National MPI assets indicator (car or truck limb) \\
-F18 & ... a telephone of any kind, mobile or landline? & 1 Yes, 0 No & \texttt{owns\_phone}\newline Source: NITI Aayog National MPI assets indicator \\
-F19 & ... a computer or laptop? & 1 Yes, 0 No & \texttt{owns\_computer}\newline Source: NITI Aayog National MPI assets indicator \\
-F20 & ... a cart pulled by an animal? & 1 Yes, 0 No & \texttt{owns\_animal\_cart}\newline Source: NITI Aayog National MPI assets indicator \\
-F21 & ... a refrigerator? & 1 Yes, 0 No & \texttt{owns\_fridge}\newline Source: NITI Aayog National MPI assets indicator \\
-F22 & How much CULTIVABLE land does your household own or cultivate, in acres? Do not count the land the house stands on. (0 if none) & Number & \texttt{land\_cultivable\_acres}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F23 & Does your household own any cows or buffaloes? & 1 Yes, 0 No & \texttt{owns\_cow\_buffalo}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F24 & Does your household own any goats or sheep? & 1 Yes, 0 No & \texttt{owns\_goat\_sheep}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F25 & Does your household own any ponies or mules? & 1 Yes, 0 No & \texttt{owns\_pony\_mule}\newline Source: Project design (pilot livelihood survey) \\
-F26 & Does your household own a shop or stall that you use to earn? & 1 Yes, 0 No & \texttt{owns\_shop\_stall}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F27 & Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)? & 1 Yes, 0 No & \texttt{owns\_work\_vehicle}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F28 & Does your household own equipment or tools that you use to earn? & 1 Yes, 0 No & \texttt{owns\_work\_equipment}\newline Source: Chaudhuri et al. 2002 asset covariate \\
-F29 & What are they? Write what they say. Leave blank if they cannot say. &  & \texttt{work\_equipment\_detail}\newline \textit{Skip: Ask only if owns\_work\_equipment = 1; may be left blank}\newline Source: Standard household-survey item \\
+F4 & While you are here for the season, where do you sleep? & 1 Own house here; 2 Rented room or house; 3 Room or dormitory the employer provides; 4 Sleeps at the shop, dhaba or workplace; 5 Tent or temporary shelter; 6 Lodge, dharamshala or ashram; 7 In the open, or a verandah; 8 Somewhere else & \texttt{accom\_type\_here}\newline Source: Lyons et al. 2023, Table 2 (area/settlement conditions), adapted to a labour-migrant setting \\
+F5 & Does your usual home have an electricity connection? & 1 Yes, 0 No & \texttt{electricity}\newline Source: NITI Aayog National MPI \\
+F6 & What kind of toilet does your household use at your usual home? & 1 No toilet / open defecation; 2 Pit latrine without slab or open pit; 3 Improved toilet, but shared with other households; 4 Improved toilet, used only by this household & \texttt{toilet\_type}\newline Source: NITI Aayog National MPI sanitation indicator (improved/unimproved and shared/not) \\
+F7 & What is your main source of drinking water at your usual home? & 1 Piped into the house or yard; 2 Public tap or standpipe; 3 Handpump, tubewell or borewell; 4 Protected well or protected spring; 5 Rainwater collection; 6 Bottled, packaged or community RO; 7 Unprotected well or unprotected spring; 8 River, stream, pond or canal; 9 Tanker truck or cart with drum & \texttt{drinking\_water}\newline Source: NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy) \\
+F8 & Is the drinking water available at the house itself? & 1 Yes, 0 No & \texttt{water\_on\_premises}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
+F9 & How long does it take to go there, get the water and come back? (minutes, round trip) & Whole number & \texttt{water\_fetch\_minutes}\newline \textit{Skip: Ask only if water\_on\_premises = 0}\newline Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule) \\
+F10 & What does your household mainly use to cook at your usual home? & 1 LPG or cylinder gas; 2 Piped natural gas; 3 Electricity; 4 Biogas (gobar gas plant); 5 Kerosene; 6 Firewood; 7 Dung cakes (gobar); 8 Crop residue, straw or shrubs; 9 Charcoal; 10 Coal or lignite & \texttt{cooking\_fuel}\newline Source: NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels) \\
+F11 & Does your household own: a television? & 1 Yes, 0 No & \texttt{owns\_tv}\newline Source: NITI Aayog National MPI assets indicator \\
+F12 & ... a radio? & 1 Yes, 0 No & \texttt{owns\_radio}\newline Source: NITI Aayog National MPI assets indicator \\
+F13 & ... a bicycle? & 1 Yes, 0 No & \texttt{owns\_bicycle}\newline Source: NITI Aayog National MPI assets indicator \\
+F14 & ... a motorcycle or scooter? & 1 Yes, 0 No & \texttt{owns\_motorcycle}\newline Source: NITI Aayog National MPI assets indicator \\
+F15 & ... a car, jeep or truck? & 1 Yes, 0 No & \texttt{owns\_car}\newline Source: NITI Aayog National MPI assets indicator (car or truck limb) \\
+F16 & ... a telephone of any kind, mobile or landline? & 1 Yes, 0 No & \texttt{owns\_phone}\newline Source: NITI Aayog National MPI assets indicator \\
+F17 & ... a computer or laptop? & 1 Yes, 0 No & \texttt{owns\_computer}\newline Source: NITI Aayog National MPI assets indicator \\
+F18 & ... a cart pulled by an animal? & 1 Yes, 0 No & \texttt{owns\_animal\_cart}\newline Source: NITI Aayog National MPI assets indicator \\
+F19 & ... a refrigerator? & 1 Yes, 0 No & \texttt{owns\_fridge}\newline Source: NITI Aayog National MPI assets indicator \\
+F20 & How much CULTIVABLE land does your household own or cultivate, in acres? Do not count the land the house stands on. (0 if none) & Number & \texttt{land\_cultivable\_acres}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F21 & Does your household own any cows or buffaloes? & 1 Yes, 0 No & \texttt{owns\_cow\_buffalo}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F22 & Does your household own any goats or sheep? & 1 Yes, 0 No & \texttt{owns\_goat\_sheep}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F23 & Does your household own any ponies or mules? & 1 Yes, 0 No & \texttt{owns\_pony\_mule}\newline Source: Project design (pilot livelihood survey) \\
+F24 & Does your household own a shop or stall that you use to earn? & 1 Yes, 0 No & \texttt{owns\_shop\_stall}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F25 & Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)? & 1 Yes, 0 No & \texttt{owns\_work\_vehicle}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F26 & Does your household own equipment or tools that you use to earn? & 1 Yes, 0 No & \texttt{owns\_work\_equipment}\newline Source: Chaudhuri et al. 2002 asset covariate \\
+F27 & What are they? Write what they say. Leave blank if they cannot say. &  & \texttt{work\_equipment\_detail}\newline \textit{Skip: Ask only if owns\_work\_equipment = 1; may be left blank}\newline Source: Standard household-survey item \\
 \bottomrule
 \end{longtable}
 }
@@ -330,23 +326,22 @@ F29 & What are they? Write what they say. Leave blank if they cannot say. &  & \
 \midrule
 \endhead
 G1 & Does anyone in your household have a bank account or a post office account? & 1 Yes, 0 No & \texttt{has\_bank\_account}\newline Source: NITI Aayog National MPI bank-account indicator; VEP adaptive-capacity covariate \\
-G2 & Is any of these a Jan Dhan account? & 1 Yes, 0 No & \texttt{has\_jandhan\_account}\newline \textit{Skip: Ask only if has\_bank\_account = 1}\newline Source: Standard household-survey item \\
-G3 & In the last 12 months, did you or anyone in your household borrow money? & 1 Yes, 0 No & \texttt{took\_loan\_12m}\newline Source: VEP adaptive-capacity covariate \\
-G4 & Who was the main lender? & 1 Nationalised or public-sector bank; 2 Private bank; 3 Cooperative bank or RRB; 4 Microfinance institution or SHG; 5 Moneylender; 6 Relative or friend; 7 Employer or contractor (advance); 8 Other & \texttt{credit\_source}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: VEP adaptive-capacity covariate (lender type) \\
-G5 & How much of that loan is still left to repay? (Rs) & Rupees (whole number) & \texttt{loan\_amount}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty) \\
-G6 & Do you pay interest on it? & 1 Yes, 0 No & \texttt{pays\_interest}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Project design (informal lending is often interest-free) \\
-G7 & On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known) & Number & \texttt{loan\_interest\_per100\_pm}\newline \textit{Skip: Ask only if took\_loan\_12m = 1; may be left blank}\newline Source: Project design (informal-credit pricing as locally quoted) \\
-G8 & Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business? & 1 Yes, 0 No & \texttt{loan\_against\_asset}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability) \\
-G9 & What did you have to give as security? & 1 Jewellery or ornaments; 2 Land; 3 Animals; 4 A vehicle; 5 Shop stock or business goods; 6 House or building; 7 Something else & \texttt{loan\_collateral}\newline \textit{Skip: Ask only if loan\_against\_asset = 1}\newline Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003 (asset-based coping) \\
-G10 & How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none) & Whole number & \texttt{n\_health\_insured}\newline Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023 \\
-G11 & How many people in your household have life insurance? (0 if none) & Whole number & \texttt{n\_life\_insured}\newline Source: Standard household-survey item \\
-G12 & Is your crop insured? & 1 Yes, 0 No & \texttt{has\_crop\_insurance}\newline \textit{Skip: Ask only if land\_cultivable\_acres > 0}\newline Source: Standard household-survey item \\
-G13 & In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to. & 1 Ration card / PDS food grain; 2 MGNREGA work or job card; 3 Old-age, widow or disability pension; 4 PM-KISAN (farmer cash transfer); 5 Ujjwala LPG connection; 6 PM-SYM or Atal Pension Yojana; 7 Ayushman Bharat / health insurance card; 8 Housing scheme (PMAY or state); 9 Some other scheme; 10 None of these & \texttt{govt\_schemes}\newline Source: Project design; scheme names as administered in Uttarakhand \\
-G14 & Which scheme was that? Write what they say. &  & \texttt{govt\_scheme\_other}\newline \textit{Skip: Ask only if govt\_schemes includes 9 (Some other scheme); may be left blank}\newline Source: Standard household-survey item \\
-G15 & Can you draw your ration here, or only at your home place? & 1 Yes, can draw it here; 2 No, only at the home place; 3 Has never tried; 97 Does not know & \texttt{ration\_portable\_here}\newline \textit{Skip: Ask only if govt\_schemes includes 1 (ration card)}\newline Source: Lyons et al. 2023, Table 2 (legal residency), adapted; One Nation One Ration Card \\
-G16 & Do you own a smartphone? & 1 Yes, 0 No & \texttt{smartphone\_owned}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
-G17 & Do you ever use UPI or another way of paying by phone? & 1 Yes, 0 No & \texttt{uses\_digital\_payment}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
-G18 & How many people in your household can make a payment by phone themselves, without help? (0 if none) & Whole number & \texttt{n\_can\_transact\_online}\newline Source: Project design (intra-household financial capability) \\
+G2 & In the last 12 months, did you or anyone in your household borrow money? & 1 Yes, 0 No & \texttt{took\_loan\_12m}\newline Source: VEP adaptive-capacity covariate \\
+G3 & Who was the main lender? & 1 Nationalised or public-sector bank; 2 Private bank; 3 Cooperative bank or RRB; 4 Microfinance institution or SHG; 5 Moneylender; 6 Relative or friend; 7 Employer or contractor (advance); 8 Other & \texttt{credit\_source}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: VEP adaptive-capacity covariate (lender type) \\
+G4 & How much of that loan is still left to repay? (Rs) & Rupees (whole number) & \texttt{loan\_amount}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty) \\
+G5 & Do you pay interest on it? & 1 Yes, 0 No & \texttt{pays\_interest}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Project design (informal lending is often interest-free) \\
+G6 & On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known) & Number & \texttt{loan\_interest\_per100\_pm}\newline \textit{Skip: Ask only if took\_loan\_12m = 1; may be left blank}\newline Source: Project design (informal-credit pricing as locally quoted) \\
+G7 & Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business? & 1 Yes, 0 No & \texttt{loan\_against\_asset}\newline \textit{Skip: Ask only if took\_loan\_12m = 1}\newline Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability) \\
+G8 & What did you have to give as security? & 1 Jewellery or ornaments; 2 Land; 3 Animals; 4 A vehicle; 5 Shop stock or business goods; 6 House or building; 7 Something else & \texttt{loan\_collateral}\newline \textit{Skip: Ask only if loan\_against\_asset = 1}\newline Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003 (asset-based coping) \\
+G9 & How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none) & Whole number & \texttt{n\_health\_insured}\newline Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023 \\
+G10 & How many people in your household have life insurance? (0 if none) & Whole number & \texttt{n\_life\_insured}\newline Source: Standard household-survey item \\
+G11 & Is your crop insured? & 1 Yes, 0 No & \texttt{has\_crop\_insurance}\newline \textit{Skip: Ask only if land\_cultivable\_acres > 0}\newline Source: Standard household-survey item \\
+G12 & In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to. & 1 Ration card / PDS food grain; 2 MGNREGA work or job card; 3 Old-age, widow or disability pension; 4 PM-KISAN (farmer cash transfer); 5 Ujjwala LPG connection; 6 PM-SYM or Atal Pension Yojana; 7 Ayushman Bharat / health insurance card; 8 Housing scheme (PMAY or state); 9 Some other scheme; 10 None of these & \texttt{govt\_schemes}\newline Source: Project design; scheme names as administered in Uttarakhand \\
+G13 & Which scheme was that? Write what they say. &  & \texttt{govt\_scheme\_other}\newline \textit{Skip: Ask only if govt\_schemes includes 9 (Some other scheme); may be left blank}\newline Source: Standard household-survey item \\
+G14 & Can you draw your ration here, or only at your home place? & 1 Yes, can draw it here; 2 No, only at the home place; 3 Has never tried; 97 Does not know & \texttt{ration\_portable\_here}\newline \textit{Skip: Ask only if govt\_schemes includes 1 (ration card)}\newline Source: Lyons et al. 2023, Table 2 (legal residency), adapted; One Nation One Ration Card \\
+G15 & Do you own a smartphone? & 1 Yes, 0 No & \texttt{smartphone\_owned}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
+G16 & Do you ever use UPI or another way of paying by phone? & 1 Yes, 0 No & \texttt{uses\_digital\_payment}\newline Source: VEP adaptive-capacity covariate; STEP digital items \\
+G17 & How many people in your household can make a payment by phone themselves, without help? (0 if none) & Whole number & \texttt{n\_can\_transact\_online}\newline Source: Project design (intra-household financial capability) \\
 \bottomrule
 \end{longtable}
 }
@@ -785,17 +780,14 @@ Zheng and Ma 2023 (China, CLES) & Ten food groups counted over the reference wee
 \texttt{portable} & 1 Yes, can draw it here; 2 No, only at the home place; 3 Has never tried; 97 Does not know \\
 \texttt{month} & 1 January; 2 February; 3 March; 4 April; 5 May; 6 June; 7 July; 8 August; 9 September; 10 October; 11 November; 12 December \\
 \texttt{prevreason} & 1 Better income; 2 Lost the previous work; 3 Work ended with the season; 4 Family reasons; 5 Health or injury; 6 Other \\
-\texttt{trtype} & 1 ITI or other trade course; 2 Hotel, catering or tourism; 3 Driving; 4 Mobile, computer or electrical repair; 5 Tailoring or handicraft; 6 Animal handling or veterinary; 7 Construction trade (mason, carpenter, plumber); 8 Health or first aid; 9 Other \\
 \texttt{origin} & 1 Local (same district); 2 Other Uttarakhand district; 3 Other Indian state; 4 Nepal \\
 \texttt{referral} & 1 A family member already working here; 2 A friend or someone from the village; 3 A thekedar or contractor I now work for; 4 An agent or middleman who placed me (usually for a fee); 5 No one; I found it myself; 6 The employer called me directly; 7 Someone else \\
 \texttt{floor} & 1 Mud/kaccha; 2 Cement/mud-cement; 3 Tile/mosaic/marble \\
 \texttt{roof} & 1 Thatch/wood/mud; 2 Tin/GI sheet; 3 Concrete/RCC \\
-\texttt{house} & 1 Kaccha; 2 Semi-pucca; 3 Pucca \\
 \texttt{wall} & 1 Mud, thatch, bamboo or other natural material; 2 Unburnt brick, wood or tin; 3 Burnt brick, cement, concrete or stone \\
 \texttt{toilet} & 1 No toilet / open defecation; 2 Pit latrine without slab or open pit; 3 Improved toilet, but shared with other households; 4 Improved toilet, used only by this household \\
 \texttt{water} & 1 Piped into the house or yard; 2 Public tap or standpipe; 3 Handpump, tubewell or borewell; 4 Protected well or protected spring; 5 Rainwater collection; 6 Bottled, packaged or community RO; 7 Unprotected well or unprotected spring; 8 River, stream, pond or canal; 9 Tanker truck or cart with drum \\
 \texttt{fuel} & 1 LPG or cylinder gas; 2 Piped natural gas; 3 Electricity; 4 Biogas (gobar gas plant); 5 Kerosene; 6 Firewood; 7 Dung cakes (gobar); 8 Crop residue, straw or shrubs; 9 Charcoal; 10 Coal or lignite \\
-\texttt{fetcher} & 1 An adult woman; 2 An adult man; 3 A girl under 15; 4 A boy under 15; 5 It varies / more than one person \\
 \texttt{comereason} & 1 No work at home; 2 Pay is better here; 3 Family or people from my village were already here; 4 Land at home is too little to live on; 5 Debt to repay; 6 A contractor or agent brought me; 7 Married into / moved with family; 8 Some other reason \\
 \texttt{govtscheme} & 1 Ration card / PDS food grain; 2 MGNREGA work or job card; 3 Old-age, widow or disability pension; 4 PM-KISAN (farmer cash transfer); 5 Ujjwala LPG connection; 6 PM-SYM or Atal Pension Yojana; 7 Ayushman Bharat / health insurance card; 8 Housing scheme (PMAY or state); 9 Some other scheme; 10 None of these \\
 \texttt{remitmode} & 1 From my own phone (UPI or net banking); 2 In person at a bank branch or bank mitra / CSP; 3 Money order or post office; 4 Sent with someone going home; 5 Carried it myself; 6 Through an agent or middleman; 7 Other \\

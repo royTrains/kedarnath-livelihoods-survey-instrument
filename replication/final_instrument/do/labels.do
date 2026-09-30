@@ -13,12 +13,10 @@ label define edu2 1 "No formal education" 2 "Some schooling, did not complete pr
 label define emptype 1 "Own-account (self-employed, no hired workers)" 2 "Employer/business owner (self-employed)" 3 "Regular wage or salary" 4 "Casual or daily wage labour" 5 "Unpaid family worker", replace
 label define enum 1 "Raman" 2 "Rishit" 3 "Tanmay" 4 "Anuj", replace
 label define famstruct 1 "Nuclear (you, spouse and unmarried children only)" 2 "Joint (living with parents, married siblings or other extended family)" 3 "Single-member household", replace
-label define fetcher 1 "An adult woman" 2 "An adult man" 3 "A girl under 15" 4 "A boy under 15" 5 "It varies / more than one person", replace
 label define floor 1 "Mud/kaccha" 2 "Cement/mud-cement" 3 "Tile/mosaic/marble", replace
 label define fuel 1 "LPG or cylinder gas" 2 "Piped natural gas" 3 "Electricity" 4 "Biogas (gobar gas plant)" 5 "Kerosene" 6 "Firewood" 7 "Dung cakes (gobar)" 8 "Crop residue, straw or shrubs" 9 "Charcoal" 10 "Coal or lignite", replace
 label define govtscheme 1 "Ration card / PDS food grain" 2 "MGNREGA work or job card" 3 "Old-age, widow or disability pension" 4 "PM-KISAN (farmer cash transfer)" 5 "Ujjwala LPG connection" 6 "PM-SYM or Atal Pension Yojana" 7 "Ayushman Bharat / health insurance card" 8 "Housing scheme (PMAY or state)" 9 "Some other scheme" 10 "None of these", replace
 label define hohrel 1 "Self (respondent is the head)" 2 "Husband" 3 "Wife" 4 "Father" 5 "Mother" 6 "Son" 7 "Daughter" 8 "Brother" 9 "Sister" 10 "Other male relative" 11 "Other female relative" 12 "Other, non-relative (male)" 13 "Other, non-relative (female)", replace
-label define house 1 "Kaccha" 2 "Semi-pucca" 3 "Pucca", replace
 label define jobperm 1 "Permanent" 2 "Seasonal or temporary" 3 "Occasional or casual" 4 "On probation" 5 "Fixed-term", replace
 label define jobsit 1 "Works for pay full-time" 2 "Works for pay part-time or occasional jobs" 3 "Studies and works" 4 "Only studies" 5 "Being trained for work only" 6 "Retired or pensioned" 7 "Unpaid household tasks or caring for others" 8 "Unemployed, actively seeking work" 9 "Sick or disabled, cannot work" 10 "Neither studying, working nor seeking work" 97 "Does not know", replace
 label define marital 1 "Currently married" 2 "Never married" 3 "Widowed/divorced/separated", replace
@@ -42,7 +40,6 @@ label define state 1 "Andhra Pradesh" 2 "Arunachal Pradesh" 3 "Assam" 4 "Bihar" 
 label define task3 1 "Yes, regularly in my main Yatra work" 2 "Not in my main work, but done before elsewhere" 3 "Never done", replace
 label define tier 1 "Poor" 2 "Moderate" 3 "Good", replace
 label define toilet 1 "No toilet / open defecation" 2 "Pit latrine without slab or open pit" 3 "Improved toilet, but shared with other households" 4 "Improved toilet, used only by this household", replace
-label define trtype 1 "ITI or other trade course" 2 "Hotel, catering or tourism" 3 "Driving" 4 "Mobile, computer or electrical repair" 5 "Tailoring or handicraft" 6 "Animal handling or veterinary" 7 "Construction trade (mason, carpenter, plumber)" 8 "Health or first aid" 9 "Other", replace
 label define wall 1 "Mud, thatch, bamboo or other natural material" 2 "Unburnt brick, wood or tin" 3 "Burnt brick, cement, concrete or stone", replace
 label define water 1 "Piped into the house or yard" 2 "Public tap or standpipe" 3 "Handpump, tubewell or borewell" 4 "Protected well or protected spring" 5 "Rainwater collection" 6 "Bottled, packaged or community RO" 7 "Unprotected well or unprotected spring" 8 "River, stream, pond or canal" 9 "Tanker truck or cart with drum", replace
 label define wgdiff 1 "No difficulty" 2 "Some difficulty" 3 "A lot of difficulty" 4 "Cannot do it at all", replace
@@ -107,9 +104,6 @@ label variable prev_occ_reason "Main reason for changing work"
 label values prev_occ_reason prevreason
 label variable training_received "Ever completed a training course or apprenticeship"
 label values training_received yn
-label variable training_type "Type of training received"
-label values training_type trtype
-label variable training_type_other "Type of training, written in (verbatim, optional)"
 label variable status_m5 "Main activity in May"
 label values status_m5 activity
 label variable status_m6 "Main activity in June"
@@ -222,8 +216,6 @@ label variable roof_material "Main roof material at usual home"
 label values roof_material roof
 label variable wall_material "Main wall material at usual home"
 label values wall_material wall
-label variable house_type "House type at usual home (self-reported)"
-label values house_type house
 label variable accom_type_here "Where the respondent sleeps during the season"
 label values accom_type_here accomhere
 label variable electricity "Usual home has an electricity connection"
@@ -235,8 +227,6 @@ label values drinking_water water
 label variable water_on_premises "Drinking water is available on the premises"
 label values water_on_premises yn
 label variable water_fetch_minutes "Minutes for a round trip to fetch water"
-label variable water_fetched_by "Who usually fetches the water"
-label values water_fetched_by fetcher
 label variable cooking_fuel "Main cooking fuel at usual home"
 label values cooking_fuel fuel
 label variable owns_tv "Owns a television"
@@ -273,8 +263,6 @@ label values owns_work_equipment yn
 label variable work_equipment_detail "What equipment or tools (verbatim, optional)"
 label variable has_bank_account "Household has a bank or post office account"
 label values has_bank_account yn
-label variable has_jandhan_account "Has a Jan Dhan account"
-label values has_jandhan_account yn
 label variable took_loan_12m "Borrowed money in the last 12 months"
 label values took_loan_12m yn
 label variable credit_source "Main lender"
@@ -789,17 +777,6 @@ notes training_received: Meaning: Vocational or on-the-job training, explicitly 
 notes training_received: Meaning (cont.): Formal education is already measured in years by years_schooling (a graduate reports about 15), so counting it again here would double-count it.
 notes training_received: Question: Apart from school and college, have you ever completed any training course or apprenticeship?
 notes training_received: Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate
-notes training_type: Module B - Work and work history; origin: asked
-notes training_type: Meaning: Two categories (vocational/trade and tourism/hospitality) could not hold what this workforce actually trains in -- driving, mobile repair, tailoring, animal handling, an ITI trade and a hotel course are not the same thing, and the
-notes training_type: Meaning (cont.): first two options forced most of them into the wrong box. Widened, with a write-in for the rest.
-notes training_type: Question: What kind of course or training was it?
-notes training_type: Skip rule: Ask only if training_received = 1
-notes training_type: Source: STEP module 2
-notes training_type_other: Module B - Work and work history; origin: asked
-notes training_type_other: Meaning: Write-in for training the list does not hold.
-notes training_type_other: Question: What was it? Write what they say.
-notes training_type_other: Skip rule: Ask only if training_type = 9 (Other); may be left blank
-notes training_type_other: Source: STEP module 2
 notes status_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes status_m5: Meaning: Main activity in May of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
 notes status_m5: Question: In May, what was your main work or activity?
@@ -1290,10 +1267,6 @@ notes wall_material: Meaning: Self-reported, not enumerator-observed: by design 
 notes wall_material: Meaning (cont.): if the FLOOR is natural material OR the ROOF OR THE WALL is rudimentary. Wall material was simply not asked before, so one of the three limbs could not be evaluated at all.
 notes wall_material: Question: What are the walls of your usual home mainly made of?
 notes wall_material: Source: NITI Aayog National MPI housing indicator (wall limb)
-notes house_type: Module F - Housing, amenities and assets; origin: asked
-notes house_type: Meaning: Self-reported, not enumerator-observed: by design the interview happens away from the respondent's usual home (Kedarnath route sites, not their native place), so the enumerator cannot see it. Kaccha counts as deprived.
-notes house_type: Question: Would you describe your usual home as kaccha (mud/thatch, temporary), semi-pucca (part-concrete) or pucca (solid, permanent)?
-notes house_type: Source: NITI Aayog National MPI housing indicator
 notes accom_type_here: Module F - Housing, amenities and assets; origin: asked
 notes accom_type_here: Meaning: Accommodation at the WORKSITE, which nothing else in this module describes -- floor_material, roof_material and the rest are about the usual home, and for a seasonal migrant that is not where he spends six months of the year.
 notes accom_type_here: Meaning (cont.): Feeds the security and social inclusion dimension of the Lyons et al. (2023) MLI, whose settlement-conditions indicator exists for exactly this case. Deprived at codes 4, 5 and 7: sleeping at the workplace, under canvas, or in the
@@ -1324,12 +1297,6 @@ notes water_fetch_minutes: Meaning: Round-trip fetching time. The 30-minute thre
 notes water_fetch_minutes: Question: How long does it take to go there, get the water and come back? (minutes, round trip)
 notes water_fetch_minutes: Skip rule: Ask only if water_on_premises = 0
 notes water_fetch_minutes: Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)
-notes water_fetched_by: Module F - Housing, amenities and assets; origin: asked
-notes water_fetched_by: Meaning: Who bears the fetching burden. Not an MPI indicator -- the MPI stops at whether water is far -- but the distributional question the MPI leaves out: a 40-minute round trip is a different household cost depending on whether an adult
-notes water_fetched_by: Meaning (cont.): man or a girl under 15 makes it. Cheap to add once the fetching question exists at all.
-notes water_fetched_by: Question: Who in the household usually goes to fetch it?
-notes water_fetched_by: Skip rule: Ask only if water_on_premises = 0
-notes water_fetched_by: Source: Project design (intra-household burden of water collection; DHS/NFHS ask the same item)
 notes cooking_fuel: Module F - Housing, amenities and assets; origin: asked
 notes cooking_fuel: Meaning: Self-reported, not enumerator-observed: by design the interview happens away from the respondent's usual home (Kedarnath route sites, not their native place), so the enumerator cannot see it. Replaces a yes/no LPG question. NITI
 notes cooking_fuel: Meaning (cont.): Aayog's indicator names the dirty fuels explicitly -- dung, agricultural crops, shrubs, wood, charcoal or coal -- so a fuel LIST is required to apply it; a binary cannot. NOTE on kerosene: NITI's list does not name it, so it is
@@ -1413,11 +1380,6 @@ notes has_bank_account: Meaning: NITI's wording is 'no household member has a ba
 notes has_bank_account: Meaning (cont.): households as deprived.
 notes has_bank_account: Question: Does anyone in your household have a bank account or a post office account?
 notes has_bank_account: Source: NITI Aayog National MPI bank-account indicator; VEP adaptive-capacity covariate
-notes has_jandhan_account: Module G - Finance, insurance and schemes; origin: asked
-notes has_jandhan_account: Meaning: Jan Dhan account. Now gated on actually having a bank account -- it was previously asked of everyone, including households that had just said they have none.
-notes has_jandhan_account: Question: Is any of these a Jan Dhan account?
-notes has_jandhan_account: Skip rule: Ask only if has_bank_account = 1
-notes has_jandhan_account: Source: Standard household-survey item
 notes took_loan_12m: Module G - Finance, insurance and schemes; origin: asked
 notes took_loan_12m: Meaning: Gate for the credit block.
 notes took_loan_12m: Question: In the last 12 months, did you or anyone in your household borrow money?
@@ -2406,7 +2368,7 @@ capture notes retained: Module Z - Synthetic-design variables (not collected); o
 capture notes retained: Meaning: 1 if the synthetic respondent stayed in the fielded sample.
 capture notes retained: Source: Synthetic design
 
-order resp_id enum_id site interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u15 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received training_type training_type_other status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 status_m1 status_m2 status_m3 status_m4 knows_monthly_income income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban resp_returns_at_closure hh_at_home_place n_here_season years_coming_here came_here_reason worked_away_in_closure closure_work_detail left_here_month returned_here_month months_away_for_work worked_other_places other_places_detail would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material house_type accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes water_fetched_by cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account has_jandhan_account took_loan_12m credit_source loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_schemes govt_scheme_other ration_portable_here smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_worst shock_loss_amount shock_month shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here months_home_base months_third_place closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
+order resp_id enum_id site interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u15 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 status_m1 status_m2 status_m3 status_m4 knows_monthly_income income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban resp_returns_at_closure hh_at_home_place n_here_season years_coming_here came_here_reason worked_away_in_closure closure_work_detail left_here_month returned_here_month months_away_for_work worked_other_places other_places_detail would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account took_loan_12m credit_source loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_schemes govt_scheme_other ration_portable_here smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_worst shock_loss_amount shock_month shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here months_home_base months_third_place closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
 capture order dropout_prob, last
 capture order dropout_score, last
 capture order flagged_contradiction, last

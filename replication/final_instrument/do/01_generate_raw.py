@@ -208,9 +208,7 @@ o["training_received"] = d.training_received
 # repair, tailoring or animal handling, which is most of what this workforce actually trains in
 _tt_old = code(d.training_type, {"Vocational": 1, "Tourism": 2})
 _tt = np.where(_tt_old == 2, 2, rng.choice([1, 3, 4, 5, 6, 7, 8, 9], n, p=[.30, .18, .12, .10, .10, .12, .05, .03]))
-o["training_type"] = np.where(np.isnan(_tt_old), np.nan, _tt)
 TT_OTHER = ["yoga sikhaya", "photography ka course", "band party mein baja"]
-o["training_type_other"] = [str(rng.choice(TT_OTHER)) if v == 9 else "" for v in np.nan_to_num(o.training_type.values)]
 
 # ---- C: monthly calendar (kept exactly from the earlier file) -----------------------------
 # "Migrated for work" now maps to 4 (casual wage labour), not 5: code 5 is Construction work since the
@@ -433,7 +431,6 @@ for _c in ["staples","perishables","food_own","food_out","packaged_food","pan_to
 # ---- F ------------------------------------------------------------------------
 o["floor_material"] = code(d.floor_material, {"Mud": 1, "Cement": 2, "Tile": 3})
 o["roof_material"] = code(d.roof_material, {"Thatch": 1, "Tin": 2, "Concrete": 3})
-o["house_type"] = code(d.house_type, {"Kaccha": 1, "Semi": 2, "Pucca": 3})
 o["electricity"] = d.electricity
 # toilet: the old pool holds only an own-toilet yes/no. NITI needs improved-vs-unimproved AND
 # shared-vs-not, so the binary is expanded: "has a toilet" splits into improved-unshared and
@@ -461,9 +458,6 @@ o["water_on_premises"] = _on_prem
 # round-trip minutes, heavier-tailed for unimproved sources; NITI's threshold is 30
 _mins = np.where(np.isin(_w, [7, 8, 9]), rng.gamma(3.0, 12, n), rng.gamma(2.2, 7, n))
 o["water_fetch_minutes"] = np.where(_on_prem == 0, np.round(_mins).clip(2, 180), np.nan)
-# who fetches: overwhelmingly women and girls, which is the point of asking
-o["water_fetched_by"] = np.where(_on_prem == 0,
-                                 rng.choice([1, 2, 3, 4, 5], n, p=[.58, .13, .16, .05, .08]), np.nan)
 
 # COOKING FUEL: the old pool holds only an LPG yes/no, so non-LPG is spread over the dirty fuels
 # NITI names (and a little clean electricity/biogas, which the old binary wrongly called deprived).
@@ -499,7 +493,6 @@ o["work_equipment_detail"] = [str(rng.choice(EQ)) if v == 1 else "" for v in o.o
 # ---- G ------------------------------------------------------------------------
 o["has_bank_account"] = d.has_bank_account
 # Jan Dhan is now gated on having an account at all -- previously asked of everyone
-o["has_jandhan_account"] = np.where(d.has_bank_account.values == 1, d.has_jandhan_account.values, np.nan)
 
 # ---- credit block: lender type, debt stock, price, security -----------------------------------
 _old_cred = code(d.credit_source, {"No credit": 0, "Institutional": 1, "Non-institutional": 2})

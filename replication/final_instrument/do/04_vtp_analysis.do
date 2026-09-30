@@ -64,9 +64,10 @@ use "data/kedarnath_final_n200_fielded.dta", clear
 *=============================================================================
 gen byte urban = (home_rural_urban==2)
 
-global X_adapt  education_years has_bank_account credit_institutional training_received smartphone_owned
-global X_sens   age hhsize i.employment_type years_in_yatra_work dep_func_limit
-global X_expo   migrant closure_labour_migrant stays_all_year shock_any yatra_income_share income_seasonality_cv i.health_access_tier urban trek_dependent i.site
+global X_adapt  education_years has_bank_account credit_institutional training_received smartphone_owned insured_any has_cultivable_land debt_stock_months secondary_income_share
+global X_sens   age hhsize i.employment_type years_in_yatra_work dep_func_limit i.marital_status health_shock_any lang_local first_job_ever
+global X_expo   migrant closure_labour_migrant stays_all_year shock_any yatra_income_share income_seasonality_cv i.health_access_tier urban trek_dependent i.site years_coming_here ///
+                came_for_push placed_by_agent worked_other_places home_outside_state
 global X        $X_adapt $X_sens $X_expo
 
 di as result "{hline 78}"
