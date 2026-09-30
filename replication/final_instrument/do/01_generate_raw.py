@@ -221,6 +221,25 @@ for m in range(12):
     status[:, m] = [ACT[v] for v in d[f"status_m{m+1}"].astype(str)]
     _to_constr = (status[:, m] == 4) & (rng.random(n) < 0.34)
     status[_to_constr, m] = 5
+
+# The pool lays every respondent's Yatra block on the same months, so status_m5, m6 and m7 came out
+# CONSTANT at 1 and yatra_start_month was 5 for all 200 rows. Nothing then exercised the season
+# boundary -- the mid-month start problem, yatra_start_month/yatra_end_month, or the 3-9 month
+# data-quality band. Each respondent now gets his own start and end. Activity code 1 covers preparing
+# for the season as well as working it, so an owner can start in March; the Yatra itself runs to Bhai
+# Dooj, so the close is October or November.
+_start = rng.choice([3, 4, 5, 6], n, p=[.08, .27, .46, .19])
+_end   = rng.choice([9, 10, 11], n, p=[.31, .44, .25])
+_offdist = np.array([2, 3, 4, 5, 6, 7, 8])
+_offp = np.array([.17, .07, .19, .11, .13, .05, .28])
+for i in range(n):
+    for m in range(12):
+        inside = _start[i] <= m + 1 <= _end[i]
+        if inside:
+            status[i, m] = 1
+        elif status[i, m] == 1:            # pool said Yatra outside this worker's own season
+            status[i, m] = int(rng.choice(_offdist, p=_offp))
+for m in range(12):
     o[f"status_m{m+1}"] = status[:, m]
 inc = d[[f"income_m{m}" for m in range(1, 13)]].values.astype(float)
 months_no_work = (status == 8).sum(1)

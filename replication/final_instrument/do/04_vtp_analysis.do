@@ -64,11 +64,25 @@ use "data/kedarnath_final_n200_fielded.dta", clear
 *=============================================================================
 gen byte urban = (home_rural_urban==2)
 
-global X_adapt  education_years has_bank_account credit_institutional training_received smartphone_owned insured_any has_cultivable_land debt_stock_months secondary_income_share
-global X_sens   age hhsize i.employment_type years_in_yatra_work dep_func_limit i.marital_status health_shock_any lang_local first_job_ever
-global X_expo   migrant closure_labour_migrant stays_all_year shock_any yatra_income_share income_seasonality_cv i.health_access_tier urban trek_dependent i.site years_coming_here ///
-                came_for_push placed_by_agent worked_other_places home_outside_state
+* The core set is deliberately parsimonious. The FGLS estimation sample is ~104
+* households, and three stages are run on it; 40-odd regressors on that many rows
+* is not an estimate, it is a memory of the sample. Everything here is defined for
+* every row -- see the regression-safe block in 02 -- so nothing is dropped.
+global X_adapt  education_years has_bank_account credit_institutional training_received ///
+                smartphone_owned insured_any debt_stock_months_r
+global X_sens   age hhsize i.employment_type years_in_yatra_work dep_func_limit health_shock_any
+global X_expo   migrant closure_labour_migrant shock_any yatra_income_share ///
+                income_seasonality_cv urban trek_dependent i.site
 global X        $X_adapt $X_sens $X_expo
+
+* The extended set adds the covariates that are informative but not core. Reported
+* as one alternative specification rather than carried through all three stages,
+* which keeps the headline model interpretable and still puts every collected
+* variable to work. All are regression-safe.
+global X_extra  has_cultivable_land secondary_income_share lang_local first_job_ever ///
+                i.marital_status stays_all_year i.health_access_tier years_coming_here_r ///
+                came_for_push_r placed_by_agent worked_other_places home_outside_state ///
+                health_cost_share_r debt_service_ratio_r
 
 di as result "{hline 78}"
 di as result " Covariate groups (Azeem et al. 2016 structure)"
@@ -165,6 +179,28 @@ quietly summarize chronic_poor
 di as result "   Chronic poor   (poor AND E[c] < z): " %5.1f (100*r(mean)) "%"
 quietly summarize transient_poor
 di as result "   Transient poor (poor BUT E[c] >= z): " %5.1f (100*r(mean)) "%"
+di as result "{hline 78}"
+
+*----------------------------------------------------------------------------
+* 2b. Extended specification: the core set plus the non-core covariates.
+* Reported as one alternative rather than carried through all three stages, so
+* every collected variable is put to work without the headline model carrying
+* more regressors than ~100 households can support.
+*----------------------------------------------------------------------------
+quietly regress ln_c $X
+local n_core = e(N)
+local k_core = e(df_m)
+local r_core = e(r2_a)
+quietly regress ln_c $X $X_extra
+di as result " 2b. Specification comparison"
+di as result "     core:     n = " `n_core' ", regressors = " `k_core' ", adj R2 = " %5.3f `r_core'
+di as result "     extended: n = " e(N)    ", regressors = " e(df_m) ", adj R2 = " %5.3f e(r2_a)
+* The guard this file did not have. A gated covariate deletes every row its gate
+* excluded, the deletions intersect, and the sample can collapse without any
+* error being raised -- it went to 4 observations once, silently.
+if e(N) < 0.8*`n_core' {
+    di as error "     WARNING: the extended set costs " `n_core'-e(N) " observations to listwise deletion"
+}
 di as result "{hline 78}"
 
 *=============================================================================
@@ -294,25 +330,32 @@ di as result "{hline 78}"
 * because `vulnerable' is itself a threshold function of the same X -- inspect
 * e(sample) if Stata drops observations.
 *=============================================================================
-* Wrapped in capture on purpose. A logit dies outright when its outcome does not vary, and an
-* outcome CAN legitimately be constant in a real sample -- every worker vulnerable in a bad year,
-* or none in a small pilot. Killing the whole analysis at its last step over that would mean losing
-* the FGLS results already estimated above, which is the wrong trade.
-foreach out in vulnerable mpi_vulnerable {
-    quietly summarize `out'
-    if r(sd) == 0 | r(N) == 0 {
-        di as error "  SKIPPED logit of `out': the outcome does not vary (mean " r(mean) ", N " r(N) ")"
-    }
-    else {
-        capture noisily logit `out' $X, iterate(200)
-        if _rc {
-            di as error "  logit of `out' did not converge (rc " _rc "); FGLS results above are unaffected"
-        }
-        else {
-            estimates store `out'_logit
+* The logit of `vulnerable' on $X was removed on 2026-09-30, and this is why.
+* Vh is built from the FGLS fit on $X, and `vulnerable' is Vh thresholded at tau.
+* Regressing that back on $X is not an estimate of anything -- the outcome is a
+* deterministic function of the regressors. It showed exactly what that implies:
+* Pseudo R2 = 1.0000, log likelihood = 0, LR chi2 with negative degrees of
+* freedom, and Stata quietly dropping the perfectly-predicted rows, which is what
+* cut those lines to 77 and then 55 observations. A reader meeting a pseudo R2 of
+* 1 in a results table would reasonably take it for a finding.
+* What the covariates do to vulnerability is already reported, in the FGLS
+* coefficients above. What is NOT circular is how vulnerability falls across
+* groups that were not used to construct it, so that is what is reported here.
+di as result " 5. Vulnerability by group (descriptive; no group here enters \$X)"
+foreach g in occupation resp_returns_at_closure accom_type_here {
+    capture confirm variable `g'
+    if !_rc {
+        di as result "   by `g':"
+        quietly levelsof `g', local(lv)
+        foreach l of local lv {
+            quietly summarize vulnerable if `g'==`l'
+            if r(N) >= 5 {
+                di as result "      " %-4.0f `l' "  n = " %3.0f r(N) "   vulnerable " %5.1f (100*r(mean)) "%"
+            }
         }
     }
 }
+di as result "{hline 78}"
 
 capture which esttab
 if _rc==0 {

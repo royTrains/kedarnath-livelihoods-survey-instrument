@@ -1,30 +1,30 @@
-Rows 200, variables 384; dictionary variables 354
+Rows 200, variables 390; dictionary variables 354
 Every dictionary variable is in the file, in dictionary order: False
 Variables without a label: ['months_away_total', 'cons_annual_pm']
 Value-label sets defined: 44 of 45 expected
 Missing counts for always-asked variables (should be empty): {}
-Poverty and employment quality: poor 0.46, poor(sensitivity) 0.08, employment-poor (2 of 5) 0.60
-Consumption: cons_pc_pm mean 2846 (narrow 2436, adult-equiv 3159); income_seasonality_cv mean 1.28
+Poverty and employment quality: poor 0.46, poor(sensitivity) 0.09, employment-poor (2 of 5) 0.67
+Consumption: cons_pc_pm mean 2894 (narrow 2484, adult-equiv 3215); income_seasonality_cv mean 1.17
 On/off-season consumption ratio (off-season usual month / Yatra-season usual month), by item:
-  staples: 0.76
-  perishables: 0.76
-  food_own: 1.13
-  food_out: 0.76
-  fuel: 0.76
+  staples: 0.77
+  perishables: 0.77
+  food_own: 1.14
+  food_out: 0.77
+  fuel: 0.77
   routine_misc: 0.77
   transport_comm: 0.77
-  rent: 0.55
+  rent: 0.61
   med_nonhosp: 0.76
-Off-season food_own > Yatra-season food_own (expected mainly for farming/animal-husbandry off-season workers): 46% of respondents
-Off-season rent near zero for non-local migrants: mean off-season rent, local origin=210, non-local origin=18
-Remittances: mean annual outward Rs 5378, inward Rs 262; outward Yatra-season share of annual 0.69
-Employment deprivation rates (share): {'emp_dep_access': 0.19, 'emp_dep_comp': 0.42, 'emp_dep_sec': 0.51, 'emp_dep_stab': 0.2, 'emp_dep_cond': 0.57}
-Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.6, food_coping_deprived (rCSI>20) 0.09; unmet health-care need (3m) 0.20
+Off-season food_own > Yatra-season food_own (expected mainly for farming/animal-husbandry off-season workers): 48% of respondents
+Off-season rent near zero for non-local migrants: mean off-season rent, local origin=205, non-local origin=50
+Remittances: mean annual outward Rs 5376, inward Rs 263; outward Yatra-season share of annual 0.70
+Employment deprivation rates (share): {'emp_dep_access': 0.15, 'emp_dep_comp': 0.43, 'emp_dep_sec': 0.53, 'emp_dep_stab': 0.21, 'emp_dep_cond': 0.62}
+Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.6, food_coping_deprived (rCSI>20) 0.08; unmet health-care need (3m) 0.17
 Education: knows exact years 0.79; mean years_schooling (of those who know) 7.8; education_level_cat used for 42 respondents
 Multiple work-holding: 0.34 hold at least one other activity; mean count among them 1.32 (max 4); mean income Rs 1868/mo; ticked-vs-stated mismatch 0.000
 Ex-ante skill-move direction (Nawakitphaitoon & Ormiston asymmetry): {1: 73, 2: 41, 3: 13, 4: 73}; mean coverage 0.65, mean retention 0.53
-Productive assets (mean count of 6, and migration referral distribution): count 0.94; referral {1: 19, 2: 16, 3: 7, 4: 5, 5: 5, 6: 1, 7: 1}
-Employment-poor count distribution: {0: 15, 1: 65, 2: 64, 3: 42, 4: 12, 5: 2}
+Productive assets (mean count of 6, and migration referral distribution): count 0.95; referral {1: 17, 2: 19, 3: 8, 4: 3, 5: 6, 6: 1}
+Employment-poor count distribution: {0: 15, 1: 52, 2: 80, 3: 38, 4: 12, 5: 3}
 Interview minutes: not simulated -- measured from Kobo start/end at the pretest
 Max interviews per enumerator per day: 5
 Tasks: mean regular 3.7 of 12, mean done-before 0.7; trek_dependent share 0.34

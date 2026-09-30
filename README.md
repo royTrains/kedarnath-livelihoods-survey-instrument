@@ -37,6 +37,8 @@ drivers and guides, most of them seasonal migrants.
 | `checks/05_checks.py` | Independent Python re-check of the Stata output. |
 | `checks/06_form_fill_check.py` | Fills the form 100 times, tests the skip logic against the XLSForm, and checks each analysis has what it needs. |
 | `checks/07_navigation_test.js` / `08_fill_and_export_test.js` | Drive the web form's own navigation and export code: gate/back behaviour, then 50 full interviews to CSV. |
+| `checks/10_every_question_earns_its_place.py` | The reverse of `06`: traces every asked question to an analysis. A variable used only inside an assert is interview time spent checking itself. |
+| `checks/11_estimation_samples.py` | Reads the "Number of obs" lines. A gated covariate in a regression deletes every row its gate excluded, and the deletions intersect — that once cut the FGLS sample from 104 to 4 with no error raised. |
 | `checks/09_asserts_vs_form.py` | Runs the Stata build's cross-variable asserts against that 50-form CSV. The synthetic generator makes consistent records, so only this catches an assert the form can actually violate — which halts the build on real field data. |
 
 ### The six outputs, all from one dictionary
@@ -69,6 +71,10 @@ python questionnaire/build_question_register.py
 node   checks/07_navigation_test.js questionnaire/index.html
 node   checks/08_fill_and_export_test.js questionnaire/index.html /tmp/form_export.csv
 python checks/09_asserts_vs_form.py /tmp/form_export.csv
+python checks/10_every_question_earns_its_place.py
+stata -e do do/03_employment_vulnerability.do
+stata -e do do/04_vtp_analysis.do
+python checks/11_estimation_samples.py
 ```
 
 Three traps worth knowing. `build_xlsform.py` keeps its skip rules in a **hand-built `RELEVANT` dict** —

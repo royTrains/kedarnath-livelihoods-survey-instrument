@@ -441,6 +441,41 @@ gen byte home_outside_state = (home_state!=27) if !missing(home_state)
 label var home_outside_state "Permanent home is outside Uttarakhand"
 label var worked_other_places "Had gone elsewhere for work before coming here"
 label var first_job_ever "This work is the first paid job the respondent ever had"
+
+*=============================================================================
+* REGRESSION-SAFE FORMS OF THE GATED VARIABLES.
+* A skip-gated variable put into a regression raw deletes every row the gate
+* excluded, and the deletions INTERSECT. Adding four of them to the covariate
+* set -- years_coming_here missing for 44%, came_for_push for 73%,
+* debt_stock_months for 70%, health_cost_share for 91% -- cut the FGLS
+* estimation sample from 104 observations to 4. Stata does not error on that.
+* It reports it, in a line nothing was reading.
+* So each gated covariate gets a form defined for EVERY row: the quantity where
+* it applies, a neutral zero where it does not, and the incidence dummy kept
+* alongside so the zero is never confused with a measured zero.
+*=============================================================================
+gen double years_coming_here_r = cond(resp_returns_at_closure==1, years_coming_here, 0)
+label var years_coming_here_r "Years coming here for the season (0 if he never leaves)"
+gen byte came_for_push_r = cond(migrant==1, came_for_push, 0)
+label var came_for_push_r "Came here pushed rather than pulled (0 for local workers)"
+gen double debt_stock_months_r = cond(took_loan_12m==1 & !missing(debt_stock_months), debt_stock_months, 0)
+label var debt_stock_months_r "Outstanding loan in months of income (0 if no loan)"
+gen double health_cost_share_r = cond(morbidity_15d==1 & !missing(health_cost_share), health_cost_share, 0)
+label var health_cost_share_r "Out-of-pocket health cost, share of monthly income (0 if no illness)"
+gen double debt_service_ratio_r = cond(!missing(debt_service_ratio), debt_service_ratio, 0)
+label var debt_service_ratio_r "Monthly interest as a share of income (0 if no interest-bearing loan)"
+
+* Anything still carrying missings must not reach $X. Checked here rather than
+* discovered in a regression line: this is the guard the n=4 collapse needed.
+foreach v in years_coming_here_r came_for_push_r debt_stock_months_r health_cost_share_r ///
+             debt_service_ratio_r secondary_income_share has_cultivable_land insured_any ///
+             lang_local placed_by_agent home_outside_state worked_other_places first_job_ever ///
+             dep_func_limit health_shock_any {
+    quietly count if missing(`v')
+    if r(N) > 0 {
+        di as error "  COVARIATE NOT REGRESSION-SAFE: `v' is missing for " r(N) " row(s)"
+    }
+}
 gen double cons_pc_pm_narrow = cons_pc_seasonal_pm
 gen double cons_pc_ae_pm = (cons_pc_seasonal_pm*hhsize + cons_annual_pm) ///
                            / (hhsize - n_children_u15 + 0.5*n_children_u15)
@@ -558,7 +593,20 @@ gen double work_income_pm = (yatra_income + non_yatra_income)/12
 quietly summarize work_income_pm, detail
 local med = r(p50)
 * access: unemployed >6 months (and spent time searching) OR under 20 h/week and wanting more
-gen byte emp_dep_access = (months_no_work>6 & months_looked_for_work>0) | (wants_more_work==1 & hours_week_yatra<20)
+* ACCESS TO EMPLOYMENT. Apablaza's Table 3 threshold is unemployment, or under 20 hours a week while
+* wanting more. The hours limb is structurally inert in this setting and the data says so: ZERO of 200
+* respondents work under 20 hours a week in season, because this workforce works 60-hour weeks for a
+* few months and then stops. Part-time underemployment is not how scarcity of work shows up here;
+* MONTHS without work is. Keeping only her limbs would report an access deprivation of 4% for a
+* workforce that is idle half the year.
+* So both are computed. emp_dep_access_apablaza is her threshold exactly, kept for comparability, and
+* emp_dep_access adds the seasonal limb -- wanting more work and idle for a quarter of the year --
+* which is the same construct measured the way this labour market expresses it. The departure is
+* reported, and the pair should be shown side by side in the paper.
+gen byte emp_dep_access_apablaza = (months_no_work>6 & months_looked_for_work>0) ///
+    | (wants_more_work==1 & hours_week_yatra<20)
+label var emp_dep_access_apablaza "Access deprivation, Apablaza Table 3 threshold exactly"
+gen byte emp_dep_access = emp_dep_access_apablaza | (wants_more_work==1 & months_no_work>=3)
 * Underemployment GAP, from Apablaza Q22. more_hours_day was asked and unused, so the size of the
 * shortfall was invisible: someone wanting one more hour and someone wanting six read identically.
 gen double hours_wanted_gap = more_hours_day*days_week_yatra if wants_more_work==1
@@ -587,6 +635,13 @@ gen byte emp_dep_cond   = (workplace_injury_12m==1) ///
     | (work_health_ins==3 & pension_contrib==3 & leave_rights!=1)
 egen byte emp_dep_count = rowtotal(emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond)
 gen double emp_dep_score = emp_dep_count/5
+quietly summarize hours_week_yatra
+di as result "  access domain: hours_week_yatra ranges " r(min) "-" r(max) "; Apablaza's <20h limb fires for " ///
+    cond(r(min)<20, "some", "NO") " respondents"
+quietly summarize emp_dep_access_apablaza
+local a = 100*r(mean)
+quietly summarize emp_dep_access
+di as result "  access deprivation: Apablaza threshold " %4.1f `a' "%, with the seasonal limb " %4.1f (100*r(mean)) "%"
 gen byte emp_poor_k2    = (emp_dep_count>=2)
 
 * task block summaries
