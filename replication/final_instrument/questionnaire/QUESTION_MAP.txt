@@ -1,0 +1,485 @@
+============================================================================================
+                              KEDARNATH SURVEY — QUESTION MAP                               
+                every question, every gate, in the order the form asks them                 
+============================================================================================
+
+  LEGEND
+    123  question number, as the enumerator meets it
+    |->  this question only appears when the condition holds
+    ..   optional; may be left blank
+    **   this answer opens or closes other questions
+
+  210 questions asked · 78 of them gated · 30 questions act as gates
+
+
++------------------------------------------------------------------------------------------+
+| MODULE A — Respondent and household                                                      |
+| 17 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] First, a few things about you and the people who live in your household.
+
+         1   age                        number  
+         2   female                     choose 1 of 2  
+         3   hoh_relation               choose 1 of 13  
+         4 **native_language            choose 1 of 27  
+           \__ opens/closes: Q5
+   |-> if Q4 = 96 OR Q4 = 97
+   |      5   native_language_other      free text  
+         6   marital_status             choose 1 of 3  
+         7 **knows_years_schooling      choose 1 of 2  
+           \__ opens/closes: Q8, Q9
+   |-> if Q7 = 1
+   |      8   years_schooling            number  
+   |-> if Q7 = 0
+   |      9   education_level_cat        choose 1 of 5  
+        10   hhsize                     number  
+        11   any_member_6yr_schooling   choose 1 of 2  
+        12   family_structure           choose 1 of 3  
+        13 **n_earners                  number  
+           \__ opens/closes: Q14
+   |-> if Q13 > 1
+   |     14   main_income_earner         choose 1 of 2  
+        15   n_children_u15             number  
+        16 **n_children_6_14            number  
+           \__ opens/closes: Q17
+   |-> if Q16 > 0
+   |     17   n_children_out_school      number  
+
++------------------------------------------------------------------------------------------+
+| MODULE B — Work and work history                                                         |
+| 14 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now about the work you do here on the Yatra route, and the work you did be...
+
+        18 **occupation                 choose 1 of 14  
+           \__ this answer is removed from the options of: Q22
+        19   occupation_detail          free text  
+        20   employment_type            choose 1 of 5  
+        21 **n_other_activities         number  
+           \__ opens/closes: Q22, Q23
+   |-> if Q21 > 0
+   |     22   other_activity_types       check-all of 14  
+           \__ options exclude whatever was answered at Q18
+   |-> if Q21 > 0
+   |     23   other_activity_income_pm   amount in Rs  
+        24   years_in_yatra_work        number  
+        25   hours_day_yatra            number  
+        26   days_week_yatra            number  
+        27 **prev_occ_change            choose 1 of 2  
+           \__ opens/closes: Q28, Q30
+   |-> if Q27 = 1
+   |     28   prev_occ                   free text  
+        29   target_occ                 free text  
+   |-> if Q27 = 1
+   |     30   prev_occ_reason            choose 1 of 6  
+        31   training_received          choose 1 of 2  
+
++------------------------------------------------------------------------------------------+
+| MODULE C — Monthly calendar of work and income; remittances                              |
+| 34 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now I want to go through the last twelve months, one month at a time. For ...
+
+        32   status_m5                  choose 1 of 8  
+        33   status_m6                  choose 1 of 8  
+        34   status_m7                  choose 1 of 8  
+        35   status_m8                  choose 1 of 8  
+        36   status_m9                  choose 1 of 8  
+        37   status_m10                 choose 1 of 8  
+        38   status_m11                 choose 1 of 8  
+        39   status_m12                 choose 1 of 8  
+        40   status_m1                  choose 1 of 8  
+        41   status_m2                  choose 1 of 8  
+        42   status_m3                  choose 1 of 8  
+        43   status_m4                  choose 1 of 8  
+        44 **knows_monthly_income       choose 1 of 2  
+           \__ opens/closes: Q57, Q58, Q45, Q46, Q47, Q48, Q49, Q50, Q51, Q52, Q53, Q54, Q55, Q56
+   |-> if Q44 = 1 AND Q40 != 8
+   |     45   income_m1                  amount in Rs  
+   |-> if Q44 = 1 AND Q41 != 8
+   |     46   income_m2                  amount in Rs  
+   |-> if Q44 = 1 AND Q42 != 8
+   |     47   income_m3                  amount in Rs  
+   |-> if Q44 = 1 AND Q43 != 8
+   |     48   income_m4                  amount in Rs  
+   |-> if Q44 = 1 AND Q32 != 8
+   |     49   income_m5                  amount in Rs  
+   |-> if Q44 = 1 AND Q33 != 8
+   |     50   income_m6                  amount in Rs  
+   |-> if Q44 = 1 AND Q34 != 8
+   |     51   income_m7                  amount in Rs  
+   |-> if Q44 = 1 AND Q35 != 8
+   |     52   income_m8                  amount in Rs  
+   |-> if Q44 = 1 AND Q36 != 8
+   |     53   income_m9                  amount in Rs  
+   |-> if Q44 = 1 AND Q37 != 8
+   |     54   income_m10                 amount in Rs  
+   |-> if Q44 = 1 AND Q38 != 8
+   |     55   income_m11                 amount in Rs  
+   |-> if Q44 = 1 AND Q39 != 8
+   |     56   income_m12                 amount in Rs  
+   |-> if Q44 = 0
+   |     57   income_annual_total        amount in Rs  
+   |-> if Q44 = 0
+   |     58   pct_income_yatra           number  
+        59 **remit_out_yatra_pm         amount in Rs  
+           \__ opens/closes: Q61
+        60   remit_out_offseason_pm     amount in Rs  
+   |-> if Q59 > 0 OR Q60 > 0
+   |     61   remit_mode                 choose 1 of 7  
+        62   remit_in_yatra_pm          amount in Rs  
+        63   remit_in_offseason_pm      amount in Rs  
+   :-> if calc_offseason_work > 0
+   |     64   hours_day_offseason        number  
+   :-> if calc_offseason_work > 0
+   |     65   days_week_offseason        number  
+
++------------------------------------------------------------------------------------------+
+| MODULE D — Migration                                                                     |
+| 18 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now a few questions about where your home is, and what you do when the Yat...
+
+        66 **origin                     choose 1 of 4  
+           \__ opens/closes: Q73
+        67   home_state                 choose 1 of 37  
+        68   home_rural_urban           choose 1 of 2  
+        69 **resp_returns_at_closure    choose 1 of 2  
+           \__ opens/closes: Q72, Q76, Q77
+        70 **hh_at_home_place           choose 1 of 2  
+           \__ opens/closes: Q71
+   |-> if Q70 = 1
+   |     71   n_here_season              number  
+   |-> if Q69 = 1
+   |     72   years_coming_here          number  
+   |-> if Q66 != 1
+   |     73   came_here_reason           choose 1 of 8  
+        74 **worked_away_in_closure     choose 1 of 2  
+           \__ opens/closes: Q78, Q75
+   |-> if Q74 = 1
+   |     75   closure_work_detail        free text..
+   |-> if Q69 = 1
+   |     76   left_here_month            choose 1 of 12  
+   |-> if Q69 = 1
+   |     77   returned_here_month        choose 1 of 12  
+   |-> if Q74 = 1
+   |     78   months_away_for_work       number  
+        79 **worked_other_places        choose 1 of 2  
+           \__ opens/closes: Q80
+   |-> if Q79 = 1
+   |     80   other_places_detail        free text..
+        81   would_move_for_work        choose 1 of 3  
+        82 **migration_referral         choose 1 of 7  
+           \__ opens/closes: Q83
+   |-> if Q82 = 7
+   |     83   migration_referral_other   free text..
+
++------------------------------------------------------------------------------------------+
+| MODULE E — Household consumption                                                         |
+| 27 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now about what your household usually spends in a month. For each thing I ...
+
+        84 **spend_differs_by_season    choose 1 of 2  
+           \__ opens/closes: Q86, Q88, Q90, Q92, Q104, Q106, Q94, Q96, Q98, Q100, Q102
+        85   cons_staples_yatra_pm      amount in Rs  
+   |-> if Q84 = 1
+   |     86   cons_staples_offseason_pm  amount in Rs  
+        87   cons_perishables_yatra_pm  amount in Rs  
+   |-> if Q84 = 1
+   |     88   cons_perishables_offseason_pm amount in Rs  
+        89   cons_food_own_yatra_pm     amount in Rs  
+   |-> if Q84 = 1
+   |     90   cons_food_own_offseason_pm amount in Rs  
+        91   cons_food_out_yatra_pm     amount in Rs  
+   |-> if Q84 = 1
+   |     92   cons_food_out_offseason_pm amount in Rs  
+        93   cons_fuel_yatra_pm         amount in Rs  
+   |-> if Q84 = 1
+   |     94   cons_fuel_offseason_pm     amount in Rs  
+        95   cons_routine_misc_yatra_pm amount in Rs  
+   |-> if Q84 = 1
+   |     96   cons_routine_misc_offseason_pm amount in Rs  
+        97   cons_transport_comm_yatra_pm amount in Rs  
+   |-> if Q84 = 1
+   |     98   cons_transport_comm_offseason_pm amount in Rs  
+        99   cons_rent_yatra_pm         amount in Rs  
+   |-> if Q84 = 1
+   |    100   cons_rent_offseason_pm     amount in Rs  
+       101   cons_med_nonhosp_yatra_pm  amount in Rs  
+   |-> if Q84 = 1
+   |    102   cons_med_nonhosp_offseason_pm amount in Rs  
+       103   cons_packaged_food_yatra_pm amount in Rs  
+   |-> if Q84 = 1
+   |    104   cons_packaged_food_offseason_pm amount in Rs  
+       105   cons_pan_tobacco_yatra_pm  amount in Rs  
+   |-> if Q84 = 1
+   |    106   cons_pan_tobacco_offseason_pm amount in Rs  
+       107   cons_clothing_12m          amount in Rs  
+       108   cons_education_12m         amount in Rs  
+       109   cons_medical_hosp_12m      amount in Rs  
+       110   cons_durables_12m          amount in Rs  
+
++------------------------------------------------------------------------------------------+
+| MODULE F — Housing, amenities and assets                                                 |
+| 27 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now some questions about your house and the things your household has.
+
+       111   floor_material             choose 1 of 3  
+       112   roof_material              choose 1 of 3  
+       113   wall_material              choose 1 of 3  
+       114   accom_type_here            choose 1 of 8  
+       115   electricity                choose 1 of 2  
+       116   toilet_type                choose 1 of 4  
+       117   drinking_water             choose 1 of 9  
+       118 **water_on_premises          choose 1 of 2  
+           \__ opens/closes: Q119
+   |-> if Q118 = 0
+   |    119   water_fetch_minutes        number  
+       120   cooking_fuel               choose 1 of 10  
+       121   owns_tv                    choose 1 of 2  
+       122   owns_radio                 choose 1 of 2  
+       123   owns_bicycle               choose 1 of 2  
+       124   owns_motorcycle            choose 1 of 2  
+       125   owns_car                   choose 1 of 2  
+       126   owns_phone                 choose 1 of 2  
+       127   owns_computer              choose 1 of 2  
+       128   owns_animal_cart           choose 1 of 2  
+       129   owns_fridge                choose 1 of 2  
+       130 **land_cultivable_acres      number  
+           \__ opens/closes: Q148
+       131   owns_cow_buffalo           choose 1 of 2  
+       132   owns_goat_sheep            choose 1 of 2  
+       133   owns_pony_mule             choose 1 of 2  
+       134   owns_shop_stall            choose 1 of 2  
+       135   owns_work_vehicle          choose 1 of 2  
+       136 **owns_work_equipment        choose 1 of 2  
+           \__ opens/closes: Q137
+   |-> if Q136 = 1
+   |    137   work_equipment_detail      free text..
+
++------------------------------------------------------------------------------------------+
+| MODULE G — Finance, insurance and schemes                                                |
+| 17 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now about savings, loans, insurance and government schemes.
+
+       138   has_bank_account           choose 1 of 2  
+       139 **took_loan_12m              choose 1 of 2  
+           \__ opens/closes: Q140, Q141, Q144, Q142
+   |-> if Q139 = 1
+   |    140   credit_source              choose 1 of 8  
+   |-> if Q139 = 1
+   |    141   loan_amount                amount in Rs  
+   |-> if Q139 = 1
+   |    142 **pays_interest              choose 1 of 2  
+           \__ opens/closes: Q143
+   |-> if Q142 = 1
+   |    143   loan_interest_per100_pm    number..
+   |-> if Q139 = 1
+   |    144 **loan_against_asset         choose 1 of 2  
+           \__ opens/closes: Q145
+   |-> if Q144 = 1
+   |    145   loan_collateral            choose 1 of 7  
+       146   n_health_insured           number  
+       147   n_life_insured             number  
+   :-> if Q130 > 0
+   |    148   has_crop_insurance         choose 1 of 2  
+       149 **govt_schemes               check-all of 10  
+           \__ opens/closes: Q150, Q151
+   |-> if selected(Q149, '9')
+   |    150   govt_scheme_other          free text..
+   |-> if selected(Q149, '1')
+   |    151   ration_portable_here       choose 1 of 4  
+       152   smartphone_owned           choose 1 of 2  
+       153   uses_digital_payment       choose 1 of 2  
+       154   n_can_transact_online      number  
+
++------------------------------------------------------------------------------------------+
+| MODULE H — Health                                                                        |
+| 10 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now a few questions about health in your household. You may leave out any ...
+
+       155 **morbidity_15d              choose 1 of 2  
+           \__ opens/closes: Q156, Q157
+   |-> if Q155 = 1
+   |    156   morbidity_coping_15d       choose 1 of 6  
+   |-> if Q155 = 1
+   |    157   morbidity_cost_15d         amount in Rs  
+       158   func_limitation            choose 1 of 4  
+       159   hospitalization_365d       choose 1 of 2  
+       160   health_access_barrier_3m   choose 1 of 2  
+       161   child_death_5y             choose 1 of 2  
+       162 **birth_last_5y              choose 1 of 2  
+           \__ opens/closes: Q163, Q164
+   |-> if Q162 = 1
+   |    163   anc_4_visits               choose 1 of 3  
+   |-> if Q162 = 1
+   |    164   skilled_birth_attendant    choose 1 of 3  
+
++------------------------------------------------------------------------------------------+
+| MODULE I — Food security, shocks and coping                                              |
+| 14 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now about food, and about any difficult times in the last year and how you...
+
+       165 **distress_event_last365d    check-all of 9  
+           \__ opens/closes: Q166, Q167, Q168
+   |-> if not(selected(Q165, '9')) AND count(Q165) > 0
+   |    166   shock_loss_amount          amount in Rs  
+   |-> if not(selected(Q165, '9')) AND count(Q165) > 0
+   |    167   shock_month                choose 1 of 12  
+   |-> if not(selected(Q165, '9')) AND count(Q165) > 0
+   |    168   shock_coping               check-all of 6  
+       169   cope_less_pref_food_yatra_wk number  
+       170   cope_less_pref_food_offseason_wk number  
+       171   cope_borrow_food_yatra_wk  number  
+       172   cope_borrow_food_offseason_wk number  
+       173   cope_reduce_meals_yatra_wk number  
+       174   cope_reduce_meals_offseason_wk number  
+       175   cope_reduce_portion_yatra_wk number  
+       176   cope_reduce_portion_offseason_wk number  
+       177   cope_restrict_adult_yatra_wk number  
+       178   cope_restrict_adult_offseason_wk number  
+
++------------------------------------------------------------------------------------------+
+| MODULE J — Ropeway                                                                       |
+| 2 questions                                                                              |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now two questions about the ropeway that has been proposed between Gauriku...
+
+       179   ropeway_stance             choose 1 of 4  
+       180   trek_dependent             choose 1 of 2  
+
++------------------------------------------------------------------------------------------+
+| MODULE K — Job quality (Apablaza et al. 2026 questions)                                  |
+| 13 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Now a set of questions about the conditions of your work -- hours, pay, co...
+
+       181 **job_situation              choose 1 of 11  
+           \__ opens/closes: Q182, Q183, Q184, Q185, Q186, Q187, Q188, Q189, Q190
+   |-> if Q181 <= 3
+   |    182   job_permanence             choose 1 of 5  
+   |-> if (Q181 <= 3) AND (Q20 = 3 OR Q20 = 4)
+   |    183   contract_status            choose 1 of 3  
+   |-> if Q181 <= 3
+   |    184   workplace_registered       choose 1 of 2  
+   |-> if Q181 <= 3
+   |    185   pension_contrib            choose 1 of 3  
+   |-> if Q181 <= 3
+   |    186   work_health_ins            choose 1 of 4  
+   |-> if Q181 <= 3
+   |    187   leave_rights               choose 1 of 3  
+   |-> if Q181 <= 3
+   |    188   injured_ever               choose 1 of 3  
+   |-> if Q181 <= 3
+   |    189   workplace_injury_12m       choose 1 of 3  
+   |-> if Q181 <= 7
+   |    190 **wants_more_work            choose 1 of 3  
+           \__ opens/closes: Q191
+   |-> if Q190 = 1 OR Q181 = 8
+   |    191   more_hours_day             number  
+   :-> if calc_months_no_work > 0 OR Q181 = 8
+   |    192   months_looked_for_work     number  
+       193   first_job_ever             choose 1 of 3  
+
++------------------------------------------------------------------------------------------+
+| MODULE L — Tasks and skills (short block)                                                |
+| 17 questions                                                                             |
++------------------------------------------------------------------------------------------+
+
+   [read aloud] Last, I will read out some kinds of work-tasks and ask whether you do them...
+
+       194   tk_load                    choose 1 of 3  
+       195 **tk_drive                   choose 1 of 3  
+           \__ opens/closes: Q206, Q207, Q208
+       196   tk_engine                  choose 1 of 3  
+       197   tk_electric                choose 1 of 3  
+       198   tk_safety                  choose 1 of 3  
+       199   tk_sell                    choose 1 of 3  
+       200   tk_cash                    choose 1 of 3  
+       201   tk_cook                    choose 1 of 3  
+       202   tk_serve                   choose 1 of 3  
+       203   tk_clean                   choose 1 of 3  
+       204   tk_guide                   choose 1 of 3  
+       205   tk_coord                   choose 1 of 3  
+   |-> if Q195 = 1 OR Q195 = 2
+   |    206   drove_twowheeler           choose 1 of 2  
+   |-> if Q195 = 1 OR Q195 = 2
+   |    207   drove_car                  choose 1 of 2  
+   |-> if Q195 = 1 OR Q195 = 2
+   |    208   drove_heavy                choose 1 of 2  
+       209   read_at_work               choose 1 of 2  
+       210   calc_at_work               choose 1 of 2  
+
+============================================================================================
+                                     CROSS-MODULE GATES                                     
+                  a question whose gate was answered in an earlier module                   
+============================================================================================
+
+   Q148 has_crop_insurance           <- Q130 land_cultivable_acres (module F)
+
+============================================================================================
+                             THE BRANCH POINTS THAT MATTER MOST                             
+============================================================================================
+
+   Q44 knows_monthly_income (choose 1 of 2)
+      controls 14 questions: Q45, Q46, Q47, Q48, Q49, Q50, Q51, Q52, Q53, Q54, Q55, Q56, Q57, Q58
+
+   Q84 spend_differs_by_season (choose 1 of 2)
+      controls 11 questions: Q86, Q88, Q90, Q92, Q94, Q96, Q98, Q100, Q102, Q104, Q106
+
+   Q181 job_situation (choose 1 of 11)
+      controls 9 questions: Q182, Q183, Q184, Q185, Q186, Q187, Q188, Q189, Q190
+
+   Q139 took_loan_12m (choose 1 of 2)
+      controls 4 questions: Q140, Q141, Q142, Q144
+
+   Q195 tk_drive (choose 1 of 3)
+      controls 3 questions: Q206, Q207, Q208
+
+   Q69 resp_returns_at_closure (choose 1 of 2)
+      controls 3 questions: Q72, Q76, Q77
+
+   Q165 distress_event_last365d (check-all of 9)
+      controls 3 questions: Q166, Q167, Q168
+
+   Q27 prev_occ_change (choose 1 of 2)
+      controls 2 questions: Q28, Q30
+
+   Q21 n_other_activities (number)
+      controls 2 questions: Q22, Q23
+
+   Q7 knows_years_schooling (choose 1 of 2)
+      controls 2 questions: Q8, Q9
+
+   Q155 morbidity_15d (choose 1 of 2)
+      controls 2 questions: Q156, Q157
+
+   Q74 worked_away_in_closure (choose 1 of 2)
+      controls 2 questions: Q75, Q78
+
+   Q149 govt_schemes (check-all of 10)
+      controls 2 questions: Q150, Q151
+
+   Q162 birth_last_5y (choose 1 of 2)
+      controls 2 questions: Q163, Q164
+
+============================================================================================
+Generated by build_question_map.py from dictionary.py and build_xlsform.RELEVANT,
+which is the same pair the form itself is built from, so this map cannot drift from it.
+============================================================================================

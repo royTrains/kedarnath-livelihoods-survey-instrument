@@ -1,7 +1,7 @@
-Rows 200, variables 393; dictionary variables 355
+Rows 200, variables 391; dictionary variables 354
 Every dictionary variable is in the file, in dictionary order: False
 Variables without a label: ['months_away_total', 'cons_annual_pm', '_has_real_shock']
-Value-label sets defined: 44 of 45 expected
+Value-label sets defined: 43 of 45 expected
 Missing counts for always-asked variables (should be empty): {}
 Poverty and employment quality: poor 0.46, poor(sensitivity) 0.09, employment-poor (2 of 5) 0.67
 Consumption: cons_pc_pm mean 2894 (narrow 2484, adult-equiv 3215); income_seasonality_cv mean 1.17
@@ -28,4 +28,4 @@ Employment-poor count distribution: {0: 15, 1: 52, 2: 80, 3: 38, 4: 12, 5: 3}
 Interview minutes: not simulated -- measured from Kobo start/end at the pretest
 Max interviews per enumerator per day: 5
 Tasks: mean regular 3.7 of 12, mean done-before 0.7; trek_dependent share 0.34
-Asked items with a skip rule: 79 of 211 asked
+Asked items with a skip rule: 78 of 210 asked

@@ -419,9 +419,6 @@ label var dep_digital_excluded "Neither a smartphone nor any digital payment use
 * Remittance channel as cost and friction: codes 3 to 6 all require a trip, a fee, or a third party.
 gen byte remit_costly_channel = inlist(remit_mode,3,4,5,6) if !missing(remit_mode)
 label var remit_costly_channel "Sends money by a channel that costs a trip, a fee or a middleman"
-* Which KIND of event the household found hardest, now that shock_worst names it.
-gen byte worst_shock_covariate = inlist(shock_worst,3,5,6,7) if !missing(shock_worst)
-label var worst_shock_covariate "The hardest shock was a covariate one, not idiosyncratic"
 
 * ---- the last six, each collapsed to the one contrast that carries the information -------------
 * 27 native-language categories cannot enter a regression on this sample. What matters is whether the
@@ -790,11 +787,9 @@ assert inlist(site,1,2)
 assert inrange(accom_type_here,1,8)
 assert inrange(func_limitation,1,4)
 assert missing(ration_portable_here) == !strpos(" " + govt_schemes + " ", " 1 ")
-assert missing(shock_worst) == !_has_real_shock
 assert missing(shock_loss_amount) == !_has_real_shock
 assert missing(shock_month) == !_has_real_shock
 * the worst shock must be one of the shocks actually reported, not any code from the list
-assert strpos(" " + distress_event_last365d + " ", " " + string(shock_worst) + " ") if !missing(shock_worst)
 * Code 9 is exclusive. Ticked with a real shock it is a contradiction the form permits, so it is a
 * data-quality flag rather than an assert.
 gen byte dq_shock_none_and_some = (no_shock_reported==1 & shock_count>0)

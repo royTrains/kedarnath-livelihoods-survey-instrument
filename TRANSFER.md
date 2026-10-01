@@ -66,6 +66,7 @@ python questionnaire/build_webform.py
 python questionnaire/build_questionnaire.py
 python questionnaire/build_scripts.py
 python questionnaire/build_question_register.py
+python questionnaire/build_question_map.py       # QUESTION_MAP.txt -- the flow map
 python do/01_generate_raw.py
 python do/make_labels_do.py
 "/c/Program Files/Stata17/StataMP-64.exe" -e do do/02_build_final_dataset.do

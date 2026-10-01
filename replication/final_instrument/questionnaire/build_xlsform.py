@@ -114,7 +114,6 @@ RELEVANT = {
     "has_crop_insurance": "${land_cultivable_acres} > 0",
     "govt_scheme_other": "selected(${govt_schemes}, '9')",
     "ration_portable_here": "selected(${govt_schemes}, '1')",
-    "shock_worst": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "shock_loss_amount": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "shock_month": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "work_equipment_detail": "${owns_work_equipment} = 1",
@@ -203,12 +202,9 @@ for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
 # owner is offered "Pony/mule owner" again as a SECOND activity. The filter compares against a `code`
 # column added to the choices sheet, which is XLSForm's mechanism for exactly this.
 CHOICE_FILTER = {
+    # other_activity_types shares the 14-option occupation list with `occupation`, so without this a
+    # pony owner is offered "Pony/mule owner" again as a second activity.
     "other_activity_types": "code != ${occupation}",
-    # shock_worst must offer only the shocks the household actually reported. Without this it showed
-    # all eight, so "which of those was hardest" could be answered with an event they never named --
-    # 41 of 50 test forms did exactly that, and the Stata assert that the worst shock be one of the
-    # reported ones would then have halted the build on data the form was happy to emit.
-    "shock_worst": "selected(${distress_event_last365d}, code)",
 }
 
 MODULE_TITLE = {m[0]: m[1] for m in MODULES}

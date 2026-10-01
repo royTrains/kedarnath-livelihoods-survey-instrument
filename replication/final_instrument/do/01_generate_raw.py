@@ -764,9 +764,8 @@ o["ration_portable_here"] = np.where(
 # is drawn from the ones they actually reported, never from the whole list.
 _shk = [str(v).split() for v in o["distress_event_last365d"].values]
 _real = [[x for x in v if x not in ("", "nan", "9")] for v in _shk]
-o["shock_worst"] = [int(rng.choice(v)) if v else np.nan for v in _real]
-_any_shock = np.array([not (np.isnan(x) if isinstance(x, float) else False)
-                       for x in o["shock_worst"].values])
+_any_real = [bool(v) for v in _real]
+_any_shock = np.array(_any_real)
 o["shock_loss_amount"] = np.where(
     _any_shock, (np.round(rng.gamma(1.9, 9000, n) / 500) * 500).clip(500, 200000), np.nan)
 # shocks cluster in the Yatra months, when there is income to lose and crowds to be disrupted

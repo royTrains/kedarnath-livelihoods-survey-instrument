@@ -81,12 +81,9 @@ chk("missing(ration_portable_here) == (no ration card named)",
 # that was added when this item turned out to be a required multi-select with no way to answer no.
 _shk = (txt("distress_event_last365d") != "") & ~txt("distress_event_last365d").str.split().apply(
     lambda t: "9" in t)
-for _v in ("shock_worst", "shock_loss_amount", "shock_month"):
+for _v in ("shock_loss_amount", "shock_month"):
     chk(f"missing({_v}) == (no shock reported)", num(_v).isna() == ~_shk)
 # the worst shock must be one the household actually reported
-chk("shock_worst is among the shocks reported, and is never the no-shock code",
-    pd.Series([(not w) or (w != "9" and w in str(a).split())
-               for w, a in zip(txt("shock_worst"), txt("distress_event_last365d"))]))
 chk("code 9 is never ticked alongside a real shock",
     ~(txt("distress_event_last365d").str.split().apply(lambda t: "9" in t and len(t) > 1)))
 chk("govt_schemes never blank (code 10 is the explicit negative)", txt("govt_schemes") != "")
