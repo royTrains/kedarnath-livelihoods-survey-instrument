@@ -24,7 +24,7 @@ import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT, BUILD
 from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI, CONSENT_SCRIPT_HI
 import build_xlsform as X
 
@@ -165,9 +165,10 @@ for r in ROWS:
 # copy of this page is indistinguishable from the current one otherwise, and a field report against
 # the wrong build costs more time than the bug does: three issues in one review had already been
 # fixed, and the reporter had no way to know.
-import hashlib as _h
-BUILD = (_dt.date.today().isoformat() + "." +
-         _h.sha1(json.dumps([q["n"] for q in questions], sort_keys=True).encode()).hexdigest()[:6])
+# BUILD comes from dictionary.BUILD so this form and the Kobo form stamp the SAME value. It was
+# computed here until 2026-10-01, over this builder's own question list, which meant the two forms
+# could disagree about the build id for one and the same question set -- and the id exists precisely
+# so a field report can be matched to a build.
 export_cols.append("form_build")
 CFG = {"q": questions, "mods": modules, "cols": export_cols, "labs": LABS, "build": BUILD}
 

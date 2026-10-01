@@ -36,7 +36,7 @@ import openpyxl
 HERE = os.path.dirname(os.path.abspath(__file__))
 import sys
 sys.path.insert(0, HERE)
-from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT
+from dictionary import ROWS, LSETS, MODULES, INTROS, HINTS, CONSENT_SCRIPT, BUILD
 from translations_hi import HI, HI_LSETS, INTROS_HI, HINTS_HI, CONSENT_SCRIPT_HI
 
 # The module introduction notes are looked up by row name like any other label, so register their
@@ -110,10 +110,8 @@ RELEVANT = {
     "n_here_season": "${hh_at_home_place} = 1",
     "left_here_month": "${resp_returns_at_closure} = 1",
     "returned_here_month": "${resp_returns_at_closure} = 1",
-    "months_away_for_work": "${worked_away_in_closure} = 1",
     "came_here_reason": "${origin} != 1",
     "closure_work_detail": "${worked_away_in_closure} = 1",
-    "other_places_detail": "${worked_other_places} = 1",
     "native_language_other": "${native_language} = 96 or ${native_language} = 97",
     "credit_source": "${took_loan_12m} = 1",
     "loan_purpose": "${took_loan_12m} = 1",
@@ -124,9 +122,18 @@ RELEVANT = {
     "pays_interest": "${took_loan_12m} = 1",
     "loan_collateral": "${loan_against_asset} = 1",
     "has_crop_insurance": "${land_cultivable_acres} > 0",
-    "govt_scheme_other": "selected(${govt_schemes}, '9')",
-    "ration_portable_here": "selected(${govt_schemes}, '1')",
-    "shock_loss_amount": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
+    "govt_schemes_detail": "${govt_any_benefit} = 1",
+    "shock_work_lost_weeks": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
+    "shock_money_spent": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
+    # The respondent is himself a household member aged 10 or over, so his own six years settle the
+    # household indicator by entailment. The bracket route can only settle it at "completed
+    # secondary or higher": "completed primary but not secondary" spans 5 to 9 years and straddles
+    # the six-year threshold, so it does not, and the question is still asked. Written as two
+    # disjoint branches rather than one expression over both variables, because only one of the two
+    # is ever answered and a comparison against the blank one must not be what decides the gate.
+    "any_member_6yr_schooling":
+        "${knows_years_schooling} = 1 and ${years_schooling} < 6"
+        " or ${knows_years_schooling} = 0 and ${education_level_cat} != 4",
     "shock_month": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "work_equipment_detail": "${owns_work_equipment} = 1",
     "migration_referral_other": "${migration_referral} = 7",
@@ -159,10 +166,12 @@ CONSTRAINT = {
     # it alongside a real shock is a contradiction, so the form refuses it rather than letting the
     # build flag it afterwards. Enforceable in XLSForm and in the web form alike, which keeps the two
     # saying the same thing.
-    # Same exclusivity as the shock list. "None of these" with a ration card ticked beside it is a
-    # contradiction the form should refuse rather than the build flag afterwards.
-    "govt_schemes": ("not(selected(., '10') and count-selected(.) > 1)",
-                     "'None of these' cannot be ticked with a scheme. Choose one or the other."),
+    # Coping code 6 is "paid it out of normal earnings, nothing given up" -- the explicit NO-coping
+    # answer, split out of the old "did nothing/other" box. Ticking it beside borrowing or selling
+    # is a contradiction in exactly the way code 9 is on the shock list, and replaces the scheme
+    # exclusivity rule that went when the scheme check-all became a yes/no plus free text.
+    "shock_coping": ("not(selected(., '6') and count-selected(.) > 1)",
+                     "'Paid it out of normal earnings' cannot be ticked with another answer. Choose one or the other."),
     "distress_event_last365d": ("not(selected(., '9') and count-selected(.) > 1)",
                                 "'Nothing of this kind happened' cannot be ticked with a shock. Choose one or the other."),
     "age": (". >= 10 and . <= 90", "Age must be between 10 and 90."),
@@ -183,7 +192,9 @@ CONSTRAINT = {
     "land_cultivable_acres": (". >= 0", "Land cannot be negative."),
     "loan_amount": (". >= 0", "An amount cannot be negative."),
     "loan_amount_borrowed": (". >= 0", "An amount cannot be negative."),
-    "shock_loss_amount": (". >= 0", "An amount cannot be negative."),
+    "shock_money_spent": (". >= 0", "An amount cannot be negative."),
+    # A year has 52 weeks and the shock sits inside a 12-month recall.
+    "shock_work_lost_weeks": (". >= 0 and . <= 52", "Weeks of work lost must be between 0 and 52."),
     "other_activity_income_pm": (". >= 0", "Earnings cannot be negative."),
     # Schooling cannot exceed a life. Four is the earliest a child starts class 1 here.
     "years_schooling": (". >= 0 and . <= ${age} - 4",
@@ -209,8 +220,13 @@ CONSTRAINT = {
     "n_life_insured": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
     "n_can_transact_online": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
     "n_earners": (". >= 1 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
-    "n_children_u15": (". >= 0 and . <= ${hhsize} - 1", "Cannot be more than the household size minus the respondent."),
-    "n_children_6_14": (". >= 0 and . <= ${n_children_u15}", "Cannot be more than the number of children under 15."),
+    # Two disjoint bands now, so the pair is constrained against the HOUSEHOLD rather than against
+    # each other: under-6 plus 6-to-14 cannot exceed the household size minus the respondent. The
+    # old pair constrained 6-to-14 <= under-15, which let a respondent report more children than he
+    # had household members at all, and needed a data-quality flag to catch it afterwards.
+    "n_children_u6": (". >= 0 and . <= ${hhsize} - 1", "Cannot be more than the household size minus the respondent."),
+    "n_children_6_14": (". >= 0 and . + ${n_children_u6} <= ${hhsize} - 1",
+                        "The two groups of children together cannot exceed the household size minus the respondent."),
     "n_children_out_school": (". >= 0 and . <= ${n_children_6_14}", "Cannot be more than the number of children aged 6 to 14."),
 }
 for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
@@ -230,8 +246,9 @@ CMSG_HI = {
     "n_life_insured": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
     "n_can_transact_online": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
     "n_earners": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
-    "n_children_u15": "घर के लोगों में से आपको छोड़कर, उससे ज़्यादा नहीं हो सकता।",
-    "n_children_6_14": "15 साल से छोटे बच्चों से ज़्यादा नहीं हो सकता।",
+    "n_children_u6": "घर के लोगों में से आपको छोड़कर, उससे ज़्यादा नहीं हो सकता।",
+    "n_children_6_14": "दोनों मिलाकर, घर के लोगों में से आपको छोड़कर, उससे ज़्यादा नहीं हो सकते।",
+    "shock_work_lost_weeks": "हफ़्ते 0 से 52 के बीच होने चाहिए।",
     "n_children_out_school": "6 से 14 साल के बच्चों से ज़्यादा नहीं हो सकता।",
     "days_week_offseason": "हफ़्ते के दिन 1 से 7 के बीच होने चाहिए।",
     "hours_day_offseason": "दिन के घंटे 1 से 18 के बीच होने चाहिए।",
@@ -288,8 +305,14 @@ consent_row = next(r for r in p_rows if r["name"] == "consent")
 add("select_one yn", "consent", consent_row["question"], required="yes")
 # background-geopoint: silent capture, no on-screen question; fires once consent is answered
 add("background-geopoint", "gps_location", "GPS location of the interview (captured silently).", trigger="${consent}")
+# form_build is a hidden CALCULATE carrying dictionary.BUILD, not a question. It reached this loop
+# as an ordinary paradata row and came out as a REQUIRED TEXT FIELD labelled "Recorded
+# automatically." -- an unanswerable required question that would have stopped the Kobo form dead,
+# which is the exact failure the last field review hit. The web form always set it in code; this is
+# the Kobo equivalent.
+add("calculate", "form_build", "", calc="'%s'" % BUILD)
 for r in p_rows:
-    if r["name"] in ("consent", "enum_id", "site"):
+    if r["name"] in ("consent", "enum_id", "site", "form_build"):
         continue
     add(xlsform_type(r), r["name"], r["question"], required="yes")
 

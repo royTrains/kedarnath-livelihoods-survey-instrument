@@ -42,8 +42,8 @@ import delimited "data/raw_asked.csv", clear varnames(1) case(preserve)
 *-----------------------------------------------------------------------------
 foreach v in other_activity_types distress_event_last365d shock_coping ///
              occupation_detail prev_occ target_occ native_language_other ///
-             govt_schemes govt_scheme_other work_equipment_detail migration_referral_other form_build ///
-             closure_work_detail other_places_detail {
+             govt_schemes_detail work_equipment_detail migration_referral_other form_build ///
+             closure_work_detail {
     capture confirm variable `v'
     if !_rc {
         capture confirm string variable `v'
@@ -131,6 +131,11 @@ forvalues m = 1/12 {
     replace income_m`m' = 0 if status_m`m'==8 & knows_monthly_income==1 & missing(income_m`m')
 }
 
+* Defined HERE, not with income_from_fallback further down, because the income accumulation
+* immediately below reads it. A flag generated after the block that uses it is the ordering bug
+* this project has now hit four times; the build caught it this time.
+gen byte income_declined = missing(knows_monthly_income)
+label var income_declined "Declined to give any earnings figures (earnings variables are missing)"
 gen double yatra_income = 0
 gen double non_yatra_income = 0
 forvalues m = 1/12 {
@@ -139,6 +144,14 @@ forvalues m = 1/12 {
     replace months_no_work          = months_no_work + 1          if status_m`m'==8
     replace yatra_income     = yatra_income + income_m`m'         if status_m`m'==1 & knows_monthly_income==1
     replace non_yatra_income = non_yatra_income + income_m`m'     if status_m`m'!=1 & knows_monthly_income==1
+}
+
+* A declined earnings answer must not read as zero earnings. Every income aggregate above starts at
+* 0 and accumulates, so a respondent who gave nothing finishes at 0 -- which would put him under the
+* poverty line, mark him deprived on Apablaza's compensation domain, and pull the sample median down
+* for everyone else. Set to missing instead: he costs the earnings covariates, not the case.
+foreach v in yatra_income non_yatra_income {
+    replace `v' = . if income_declined==1
 }
 
 * Type B in the closure-regime typology: sold labour away from BOTH bases. Stated (Module D) or
@@ -154,9 +167,10 @@ gen byte months_away_total = 0
 replace  months_away_total = mod(returned_here_month - left_here_month, 12) if resp_returns_at_closure==1
 * a full-year absence is not possible for someone interviewed here in season; guard the degenerate case
 replace  months_away_total = 11 if months_away_total==0 & resp_returns_at_closure==1
-gen byte months_third_place = cond(worked_away_in_closure==1, months_away_for_work, 0)
-replace  months_third_place = months_away_total if months_third_place > months_away_total
-gen byte months_home_base   = months_away_total - months_third_place
+* months_third_place and months_home_base are gone with months_away_for_work (2026-10-01), the
+* question both were built from. Neither reached a covariate vector or a deprivation indicator.
+* months_here -- the season weight on every consumption and income figure in the study -- comes
+* from the absence SPELL and never depended on the dropped question.
 gen byte months_here        = 12 - months_away_total
 
 gen byte closure_labour_migrant = (worked_away_in_closure==1)
@@ -189,8 +203,8 @@ gen byte split_household  = (hh_at_home_place==1)
 gen byte cons_pc_denom_season = cond(split_household==1 & !missing(n_here_season), n_here_season, hhsize)
 replace  cons_pc_denom_season = hhsize if cons_pc_denom_season > hhsize
 * dq_closure_mismatch is gone. It compared the stated off-season-migration item against the calendar
-* location row as two independent reports; months_third_place is now DERIVED from that same stated
-* item, so the two cannot disagree and the flag could only ever have read zero.
+* location row as two independent reports, and the location row no longer exists; the stated item is
+* now the only report there is, so there is nothing for it to disagree with.
 * The two-season design does not fit a respondent who never moves: for them the Yatra-season and
 * off-season questions describe the same place. Check the identical-answer rate at the pilot.
 label var stays_all_year "Does not move at all when the Yatra closes"
@@ -203,10 +217,8 @@ label var stays_all_year "Does not move at all when the Yatra closes"
 * dq_act_loc_conflict is gone too, because the conflict it caught cannot arise any more: activity
 * codes 4 and 5 no longer encode location (4 is casual wage labour, 5 is construction work), so
 * nothing in the activity row can contradict where the respondent was.
-* New check in its place: the reported off-season work months cannot exceed the absence itself.
-gen byte dq_away_exceeds_spell = (worked_away_in_closure==1 & months_away_for_work > months_away_total)
-* These two are built here rather than in dictionary.py, so labels.do does not label them.
-label var dq_away_exceeds_spell "Months worked away exceed the reported absence from the Yatra route"
+* dq_away_exceeds_spell is gone with months_away_for_work: the quantity it bounded is no longer
+* collected, so there is nothing left to contradict the absence spell.
 
 *-----------------------------------------------------------------------------
 * ANNUAL-TOTAL FALLBACK (Apablaza Q15 route). Respondents who could not give
@@ -214,6 +226,16 @@ label var dq_away_exceeds_spell "Months worked away exceed the reported absence 
 * Yatra work; that pair is reweighted back onto the calendar here so every
 * downstream variable has the same definition on both paths.
 *-----------------------------------------------------------------------------
+* THREE income paths now, not two. The earnings calendar stopped being compulsory on 2026-10-01 --
+* it is a control in the vulnerability models, not the dependent variable, and a required earnings
+* question would have ended interviews. A blank knows_monthly_income means the respondent declined
+* to discuss earnings at all, and BOTH routes stay shut.
+*   income_from_fallback==0, income_declined==0  twelve monthly figures
+*   income_from_fallback==1                      annual total plus the Yatra share
+*   income_declined==1                           no earnings data for this respondent
+* Declining must leave every income variable MISSING, never zero. A fabricated zero would read as
+* destitution: it would put the respondent under the poverty line, mark him deprived on Apablaza's
+* compensation domain, and drag the sample median down for everybody else.
 gen byte income_from_fallback = (knows_monthly_income==0)
 replace yatra_income     = income_annual_total * pct_income_yatra/100       if income_from_fallback==1
 replace non_yatra_income = income_annual_total * (100-pct_income_yatra)/100 if income_from_fallback==1
@@ -358,10 +380,29 @@ gen double _seas_num = _cons_seas_yatra + cond(split_household==1, remit_out_yat
 gen double cons_pc_seasonal_pm = (months_here*(_seas_num/hhsize) ///
                                + (12-months_here)*(_cons_seas_off/hhsize))/12
 gen int cons_pc_pm = round(cons_pc_seasonal_pm + cons_annual_pm/hhsize)
+* ---- shock magnitude: the time limb valued at measured earnings, plus the cash limb -------------
+* shock_loss_amount asked the respondent for "earnings lost AND money spent, in all" -- two
+* quantities in different kinds, added in his head, one of them requiring him to put a price on his
+* own forgone work. Split at the question (shock_work_lost_weeks, shock_money_spent) and recombined
+* here, with the weeks valued at HIS OWN measured earnings in the season the shock fell in.
+gen double _shk_wk = .
+replace _shk_wk = (yatra_income/yatra_months)/4.33 ///
+    if shock_in_season==1 & yatra_months>0 & !missing(yatra_income) & income_declined==0
+replace _shk_wk = (non_yatra_income/offseason_months_worked)/4.33 ///
+    if shock_in_season==0 & offseason_months_worked>0 & !missing(non_yatra_income) & income_declined==0
+* Fall back on the annual average weekly wage where the season-specific one does not exist (a shock
+* in a season with no worked months, which is exactly when the season-specific figure is undefined).
+replace _shk_wk = ((yatra_income + non_yatra_income)/12)/4.33 ///
+    if missing(_shk_wk) & income_declined==0 & !missing(yatra_income) & !missing(non_yatra_income)
+gen double shock_earnings_lost = shock_work_lost_weeks * _shk_wk if !missing(shock_work_lost_weeks)
+label var shock_earnings_lost "Earnings lost to the worst shock, weeks x own measured weekly wage"
+gen double shock_loss_total = shock_earnings_lost + shock_money_spent
+label var shock_loss_total "Total cost of the worst shock: earnings lost plus money spent (Rs)"
+drop _shk_wk
 * Shock magnitude as a share of annual household consumption -- the per-unit denominator VER needs.
 * Built here rather than with the other shock variables because it needs the consumption aggregate.
-gen double shock_loss_share = shock_loss_amount/((cons_pc_seasonal_pm*hhsize + cons_annual_pm)*12) ///
-    if !missing(shock_loss_amount)
+gen double shock_loss_share = shock_loss_total/((cons_pc_seasonal_pm*hhsize + cons_annual_pm)*12) ///
+    if !missing(shock_loss_total)
 label var shock_loss_share "Worst shock's loss as a share of annual household consumption"
 
 *=============================================================================
@@ -457,9 +498,16 @@ label var came_for_push "Came here pushed (no work, land too small, debt) rather
 * worker usually carries a fee or an advance, which is a debt relationship the wage alone does not show.
 gen byte placed_by_agent = (migration_referral==3) if !missing(migration_referral)
 label var placed_by_agent "Placed in this work by a contractor or agent"
-gen byte home_outside_state = (home_state!=27) if !missing(home_state)
+* home_state is asked ONLY when origin is "another Indian state", so this was missing for 178 of 200
+* rows -- and it sits in the X_extra covariate list, which is how the FGLS sample went from 104 to 4
+* once already. It does not need a neutral-zero form: the other three origin codes GIVE the answer.
+* Local and other-Uttarakhand-district are both Uttarakhand; Nepal is outside it. Filled, not
+* neutralised, so the variable carries real information for every row.
+gen byte home_outside_state = .
+replace  home_outside_state = 0 if inlist(origin,1,2)            // Uttarakhand by definition
+replace  home_outside_state = 1 if origin==4                     // Nepal
+replace  home_outside_state = (home_state!=27) if origin==3
 label var home_outside_state "Permanent home is outside Uttarakhand"
-label var worked_other_places "Had gone elsewhere for work before coming here"
 label var first_job_ever "This work is the first paid job the respondent ever had"
 
 *=============================================================================
@@ -484,18 +532,36 @@ gen double health_cost_share_r = cond(morbidity_15d==1 & !missing(health_cost_sh
 label var health_cost_share_r "Out-of-pocket health cost, share of monthly income (0 if no illness)"
 gen double debt_service_ratio_r = cond(!missing(debt_service_ratio), debt_service_ratio, 0)
 label var debt_service_ratio_r "Monthly interest as a share of income (0 if no interest-bearing loan)"
+* Added 2026-10-01 with the optional earnings calendar. yatra_income_share and
+* income_seasonality_cv are both in the EXPOSURE vector of every VEP arm, and both are missing for
+* a respondent who declined earnings -- so without these three the optional calendar would have
+* re-created the n=104-to-4 collapse this block exists to prevent, by a different route.
+* income_declined goes into the covariate set alongside them, which is what keeps the neutral zero
+* from being read as a measured zero.
+gen double yatra_income_share_r = cond(income_declined==1, 0, yatra_income_share)
+label var yatra_income_share_r "Share of income from Yatra work (0 if earnings were declined)"
+gen double income_seasonality_cv_r = cond(income_declined==1, 0, income_seasonality_cv)
+label var income_seasonality_cv_r "CV of monthly earnings (0 if earnings were declined)"
+gen double secondary_income_share_r = cond(missing(secondary_income_share), 0, secondary_income_share)
+label var secondary_income_share_r "Share of income from other work (0 if none or earnings declined)"
 
 * Anything still carrying missings must not reach $X. Checked here rather than
 * discovered in a regression line: this is the guard the n=4 collapse needed.
 foreach v in years_coming_here_r came_for_push_r debt_stock_months_r health_cost_share_r ///
-             debt_service_ratio_r secondary_income_share has_cultivable_land insured_any ///
-             lang_local placed_by_agent home_outside_state worked_other_places first_job_ever ///
+             debt_service_ratio_r secondary_income_share_r has_cultivable_land insured_any ///
+             lang_local placed_by_agent home_outside_state first_job_ever ///
+             yatra_income_share_r income_seasonality_cv_r income_declined ///
              dep_func_limit health_shock_any {
     quietly count if missing(`v')
     if r(N) > 0 {
         di as error "  COVARIATE NOT REGRESSION-SAFE: `v' is missing for " r(N) " row(s)"
     }
 }
+* Children under 15 is now the sum of the two disjoint bands actually asked, rather than its own
+* question sitting beside a 6-to-14 count that was a subset of it. The respondent no longer has to
+* subtract one from the other, and the two can no longer contradict each other.
+gen byte n_children_u15 = n_children_u6 + n_children_6_14
+label var n_children_u15 "Household children under 15 (under-6 plus 6-to-14)"
 gen double cons_pc_pm_narrow = cons_pc_seasonal_pm
 gen double cons_pc_ae_pm = (cons_pc_seasonal_pm*hhsize + cons_annual_pm) ///
                            / (hhsize - n_children_u15 + 0.5*n_children_u15)
@@ -531,10 +597,16 @@ forvalues k = 1/8 {
     gen byte shock_`k' = strpos(_sh, " `k' ") > 0
 }
 drop _sh
+* Seven coping codes now, not six. The old code 6 read "did nothing/other", which was two opposite
+* answers in one box: absorbed the cost out of normal earnings (NOT stressed) versus did something
+* unlisted (stressed in a way the list did not hold). Code 6 is now the first, code 7 the second,
+* and code 6 is exclusive on the form.
 gen str _cp = " " + trim(shock_coping) + " "
-forvalues k = 1/6 {
+forvalues k = 1/7 {
     gen byte cope_`k' = strpos(_cp, " `k' ") > 0
 }
+label var cope_6 "Paid the cost out of normal earnings; nothing given up"
+label var cope_7 "Coped in some way not on the list"
 drop _cp
 egen byte shock_count = rowtotal(shock_1-shock_8)
 gen byte shock_any = shock_count > 0
@@ -573,11 +645,40 @@ gen byte mpi_asset_deprived = (mpi_asset_count <= 1) & owns_car==0
 *   Educ     1/3 = Years of Schooling 1/6 + School Attendance 1/6
 *   Living   1/3 = seven indicators at 1/21 each
 * NUTRITION IS NOT COLLECTED: NITI defines it on measured height/weight, which a read-aloud
-* worksite interview cannot produce. Its 1/6 is redistributed proportionally over the other ten.
-* Report the result as a TEN-of-twelve adaptation, never as the National MPI.
+* worksite interview cannot produce. ELEVEN of the twelve indicators are collected -- mortality,
+* maternal health, years of schooling, school attendance, cooking fuel, sanitation, drinking water,
+* electricity, housing, assets, bank account -- and nutrition's 1/6 is redistributed proportionally
+* over those eleven. Report the result as an ELEVEN-of-twelve adaptation, never as the National MPI.
+* (This header and the mpi_score label both said TEN until 2026-10-01. The formula always summed
+* eleven; only the prose was wrong, but it was the prose going into the write-up.)
+*
+* TWO scores are built, and both get reported:
+*   mpi_score        strict. Nutrition omitted and the rest reweighted. Claims nothing about
+*                    nutrition at all, which is the conservative and transparent choice.
+*   mpi_score_lyons  substituted. The food-coping indicator (rCSI > 20) takes nutrition's 1/6 slot,
+*                    so all twelve weights are filled and nothing is reweighted. This is the
+*                    indicator Lyons et al. (2023) use for the same dimension in a survey that
+*                    likewise could not weigh anybody, at the same cutoff. It is a SUBSTITUTION,
+*                    not a measurement of undernourishment: rCSI measures what the household did
+*                    because food or the money for it ran short -- the route INTO undernutrition
+*                    rather than undernutrition itself.
+* The gap between the two headcounts is the sensitivity of the result to that substitution, and it
+* belongs in the robustness table rather than in a footnote.
 *=============================================================================
 gen byte mpi_mortality_dep   = (child_death_5y==1)
-gen byte mpi_maternal_dep    = (birth_last_5y==1 & (anc_4_visits!=1 | skilled_birth_attendant!=1))
+* skilled_birth_attendant is now the CADRE, not a yes/no: deprived unless a doctor (1) or a nurse,
+* ANM or LHV (2) conducted the delivery. NFHS and NITI both count an ASHA (3), an Anganwadi worker
+* (3) and a dai (4) as NOT skilled, and the old yes/no wording ("doctor, nurse or trained midwife")
+* would have had an accompanying ASHA heard as a yes -- which would have understated deprivation on
+* this limb in exactly the districts where ASHAs do most of the accompanying.
+gen byte mpi_maternal_dep    = (birth_last_5y==1 & (anc_4_visits!=1 | !inlist(skilled_birth_attendant,1,2)))
+* any_member_6yr_schooling is not asked where the respondent's own schooling already settles it --
+* he is himself a member aged 10 or over, so six years of his own makes the household answer Yes by
+* entailment. Fill those rows before the indicator reads the variable, or an entailed Yes would come
+* through as missing and the indicator would quietly go missing with it.
+replace any_member_6yr_schooling = 1 if missing(any_member_6yr_schooling) ///
+    & ((knows_years_schooling==1 & years_schooling>=6 & !missing(years_schooling)) ///
+       | (knows_years_schooling==0 & education_level_cat==4))
 gen byte mpi_schooling_dep   = (any_member_6yr_schooling==0)
 gen byte mpi_housing_dep     = (floor_material==1 | roof_material==1 | wall_material==1)
 gen byte mpi_sanitation_dep  = inlist(toilet_type,1,2,3)
@@ -592,6 +693,9 @@ gen double mpi_score = ( (1/12)*mpi_mortality_dep + (1/12)*mpi_maternal_dep ///
               + mpi_housing_dep + mpi_asset_deprived + mpi_bank_dep) ) / (1 - 1/6)
 gen byte mpi_poor = (mpi_score >= 1/3) if !missing(mpi_score)
 
+* ---- the substituted companion score. food_coping_deprived is built further down with the rCSI,
+* so these three are generated there, not here; this note is where you would look for them.
+
 gen byte child_school_dep = (n_children_out_school>0) if n_children_6_14>0 & !missing(n_children_out_school)
 
 * ---- reduced Coping Strategy Index (rCSI), standard WFP weights 1/2/1/1/3, Yatra-season/off-season
@@ -602,6 +706,22 @@ gen int rcsi_offseason_wk = cope_less_pref_food_offseason_wk + 2*cope_borrow_foo
     + cope_reduce_portion_offseason_wk + 3*cope_restrict_adult_offseason_wk
 gen double rcsi_score = (yatra_months*rcsi_yatra_wk + (12-yatra_months)*rcsi_offseason_wk)/12
 gen byte food_coping_deprived = (rcsi_score > 20) if !missing(rcsi_score)   // Lyons et al. 2023 / VASyR cutoff
+
+* ---- NITI Nutrition: the substituted companion score (see the MPI header above) -----------------
+* mpi_nutrition_proxy_dep is NOT a measure of undernourishment and must never be labelled as one.
+* It is the Lyons et al. (2023) food-coping indicator, occupying the 1/6 weight NITI gives to a
+* measurement this instrument cannot take.
+gen byte mpi_nutrition_proxy_dep = food_coping_deprived
+label var mpi_nutrition_proxy_dep "MPI nutrition SUBSTITUTE: food-coping deprived (not anthropometry)"
+* All twelve weights filled, so no reweighting: 1/6 + 1/12 + 1/12 + 1/6 + 1/6 + 7*(1/21) = 1.
+gen double mpi_score_lyons = (1/6)*mpi_nutrition_proxy_dep ///
+    + (1/12)*mpi_mortality_dep + (1/12)*mpi_maternal_dep ///
+    + (1/6)*mpi_schooling_dep + (1/6)*mpi_attendance_dep ///
+    + (1/21)*(cooking_fuel_deprived + mpi_sanitation_dep + water_deprived + mpi_electricity_dep ///
+              + mpi_housing_dep + mpi_asset_deprived + mpi_bank_dep)
+label var mpi_score_lyons "MPI deprivation score, 12 of 12 with the Lyons food-coping substitute"
+gen byte mpi_poor_lyons = (mpi_score_lyons >= 1/3) if !missing(mpi_score_lyons)
+label var mpi_poor_lyons "MPI-poor under the substituted score (score at or above 1/3)"
 
 * ---- employment quality: five Apablaza et al. (2026) core domains, equal weights ----
 gen int hours_week_yatra = hours_day_yatra*days_week_yatra
@@ -657,7 +777,19 @@ gen byte emp_dep_stab = ((inlist(employment_type,3,4) & years_in_yatra_work < 1)
 * as non-deprived. Deprived now on injury, or on having none of the three.
 gen byte emp_dep_cond   = (workplace_injury_12m==1) ///
     | (work_health_ins==3 & pension_contrib==3 & leave_rights!=1)
+* rowtotal() treats a missing indicator as ZERO, which would read an UNMEASURED domain as a
+* non-deprivation and quietly understate the count. That became reachable on 2026-10-01: a
+* respondent who declines earnings has no work_income_pm, so emp_dep_comp is missing for him, and
+* under rowtotal he would have come out as not-deprived on compensation rather than unmeasured.
+* Alkire-Foster identification drops an observation with a missing indicator, so that is what
+* happens here, and the count of dropped rows is reported rather than left to be inferred.
+egen byte emp_dep_nmiss = rowmiss(emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond)
 egen byte emp_dep_count = rowtotal(emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond)
+replace  emp_dep_count = . if emp_dep_nmiss > 0
+quietly count if emp_dep_nmiss > 0
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- an employment domain is unmeasured; dropped from emp_dep_count"
+}
 gen double emp_dep_score = emp_dep_count/5
 quietly summarize hours_week_yatra
 di as result "  access domain: hours_week_yatra ranges " r(min) "-" r(max) "; Apablaza's <20h limb fires for " ///
@@ -815,15 +947,19 @@ gen byte _has_real_shock = !(distress_event_last365d=="" | no_shock_reported==1)
 assert (shock_coping=="") == !_has_real_shock
 assert missing(morbidity_coping_15d) == (morbidity_15d==0)
 assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
-* migration_referral and worked_other_places are ungated now -- asked of everyone, including local
-* respondents, because who placed you in a job is not a question about migration.
+* migration_referral is ungated -- asked of everyone, including local respondents, because who
+* placed you in a job is not a question about migration.
 assert inlist(site,1,2)
 * Module J is Kedarnath-only: it names a specific proposal.
 assert missing(ropeway_stance) == (site!=1)
 assert inrange(accom_type_here,1,8)
 assert inrange(func_limitation,1,4)
-assert missing(ration_portable_here) == !strpos(" " + govt_schemes + " ", " 1 ")
-assert missing(shock_loss_amount) == !_has_real_shock
+* ration_portable_here is ungated as of 2026-10-01: it used to be gated on the ration-card code in
+* the scheme check-all, and that check-all is now a yes/no plus free text, so "we have no ration
+* card" is an option on the item itself (code 4) rather than an absence.
+assert !missing(ration_portable_here)
+assert missing(shock_work_lost_weeks) == !_has_real_shock
+assert missing(shock_money_spent)     == !_has_real_shock
 assert missing(shock_month) == !_has_real_shock
 * the worst shock must be one of the shocks actually reported, not any code from the list
 * Code 9 is exclusive. Ticked with a real shock it is a contradiction the form permits, so it is a
@@ -852,7 +988,6 @@ label var dq_minor_working "Respondent is under 18"
 gen byte dq_shock_none_and_some = (no_shock_reported==1 & shock_count>0)
 label var dq_shock_none_and_some "Ticked 'nothing happened' alongside a real shock"
 assert !missing(migration_referral)
-assert !missing(worked_other_places)
 assert !missing(resp_returns_at_closure)
 assert !missing(hh_at_home_place)
 assert missing(n_here_season) == (hh_at_home_place!=1)
@@ -860,7 +995,6 @@ assert !missing(worked_away_in_closure)
 assert missing(years_coming_here) == (resp_returns_at_closure!=1)
 assert missing(left_here_month)     == (resp_returns_at_closure!=1)
 assert missing(returned_here_month) == (resp_returns_at_closure!=1)
-assert missing(months_away_for_work) == (worked_away_in_closure!=1)
 assert inrange(left_here_month,1,12)     if resp_returns_at_closure==1
 assert inrange(returned_here_month,1,12) if resp_returns_at_closure==1
 assert missing(came_here_reason)  == (migrant!=1)
@@ -870,8 +1004,11 @@ assert missing(came_here_reason)  == (migrant!=1)
 * the form does not enforce -- asserting it would halt the build on data Kobo accepts. What IS
 * enforceable is the other direction: the field cannot hold text when its gate is shut.
 assert closure_work_detail=="" if worked_away_in_closure!=1
-assert other_places_detail==""  if worked_other_places!=1
-assert govt_scheme_other==""    if !strpos(" " + govt_schemes + " ", " 9 ")
+* govt_schemes_detail is the exception to the one-directional rule above: unlike the other verbatim
+* fields it IS required on the form, because it is now the only place a benefit's identity is
+* recorded. So both directions are enforceable and both are asserted.
+assert govt_schemes_detail==""  if govt_any_benefit!=1
+assert govt_schemes_detail!=""  if govt_any_benefit==1
 * The absence spell replaced loc_m1..loc_m12 on 2026-09-30, and with it went the assert tying a
 * Yatra-work month to being on the route -- which was unenforced by the form and substantively wrong
 * anyway: a Guptkashi or Sonprayag worker commuting up the route daily does Yatra work while living at
@@ -880,6 +1017,10 @@ assert govt_scheme_other==""    if !strpos(" " + govt_schemes + " ", " 9 ")
 * data-quality FLAG, not an assert, because the form does not enforce it either.
 assert missing(years_schooling)   == (knows_years_schooling==0)
 assert missing(education_level_cat) == (knows_years_schooling==1)
+* The household schooling indicator is skipped wherever the respondent's own answer entails a Yes.
+* After the fill above, no row may be missing -- a missing one would be an entailed Yes that the
+* fill failed to catch, and it would silently take mpi_schooling_dep with it.
+assert !missing(any_member_6yr_schooling)
 assert hoh_female==female if hoh_relation==1   // self-headed: head's sex is the respondent's own
 assert !missing(hoh_female)                    // derived for every row, never asked
 assert main_income_earner==1 if n_earners==1   // automatic fill: sole earner is the main earner
@@ -916,11 +1057,22 @@ if r(N) > 0 {
     quietly replace _dq_flag = 1 if n_children_out_school > n_children_6_14 & !missing(n_children_out_school)
     local dq_total = `dq_total' + r(N)
 }
-quietly count if n_children_6_14 > n_children_u15 | n_children_u15 > hhsize-1
+* The old version of this flag caught 6-to-14 exceeding under-15, a contradiction that could only
+* arise because the two questions overlapped. They are disjoint bands now, so what is left to check
+* is the two of them against the household: children cannot outnumber the household minus the
+* respondent. The form constrains this at entry too; this catches anything entered on an older build.
+quietly count if n_children_u15 > hhsize-1
 if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- child counts exceed their parent count"
-    quietly replace _dq_flag = 1 if n_children_6_14 > n_children_u15 | n_children_u15 > hhsize-1
+    di as error "  DATA QUALITY: " r(N) " record(s) -- more children than household members"
+    quietly replace _dq_flag = 1 if n_children_u15 > hhsize-1
     local dq_total = `dq_total' + r(N)
+}
+* Declined earnings. Not an error -- the calendar is deliberately not compulsory -- but every
+* income covariate is missing for these rows, and so is shock_loss_total, so the count belongs in
+* the report where it can be read against the estimation samples in checks/11.
+quietly count if income_declined==1
+if r(N) > 0 {
+    di as result "  NOTE: " r(N) " record(s) declined earnings entirely -- income covariates missing, not zero"
 }
 quietly count if n_earners < 1 | n_earners > hhsize
 if r(N) > 0 {
@@ -977,26 +1129,16 @@ if r(N) > 0 {
     quietly replace _dq_flag = 1 if dq_shock_none_and_some==1
     local dq_total = `dq_total' + r(N)
 }
-quietly count if dq_away_exceeds_spell==1
-if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- months worked away exceed the reported absence from the route"
-    quietly replace _dq_flag = 1 if dq_away_exceeds_spell==1
-    local dq_total = `dq_total' + r(N)
-}
 quietly count if split_household==1 & n_here_season >= hhsize & hhsize > 1
 if r(N) > 0 {
     di as error "  DATA QUALITY: " r(N) " record(s) -- household reported as split, but the on-site count equals household size"
     quietly replace _dq_flag = 1 if split_household==1 & n_here_season >= hhsize & hhsize > 1
     local dq_total = `dq_total' + r(N)
 }
-* Someone who says they go home at closure but whose reported absence is entirely spent working
-* elsewhere -- possible, but it means "home place" never actually featured, which is worth querying.
-quietly count if resp_returns_at_closure==1 & months_home_base==0
-if r(N) > 0 {
-    di as error "  DATA QUALITY: " r(N) " record(s) -- goes home at closure, but the whole absence was spent working elsewhere"
-    quietly replace _dq_flag = 1 if resp_returns_at_closure==1 & months_home_base==0
-    local dq_total = `dq_total' + r(N)
-}
+* The flag that lived here -- "goes home at closure but the whole absence was spent working
+* elsewhere" -- was built on months_home_base, and went with months_away_for_work on 2026-10-01.
+* Nothing replaces it: with only the yes/no, an absence spent working away is no longer measurable
+* against the length of the absence, and inventing a proxy for it would be worse than not having it.
 di as result "  data-quality flags raised: `dq_total'"
 * Assumption check on the whole two-season design. Every consumption, remittance and coping item in
 * this instrument is asked twice on the premise that the respondent is somewhere else once the Yatra
@@ -1019,18 +1161,23 @@ rename _dq_flag dq_flag
 * calendar logic
 * The "earnings are 0 exactly when the month was idle" rule only applies on the calendar path:
 * fallback respondents are never asked the monthly figures, so theirs are missing, not zero.
+* The earnings calendar is not compulsory, so each of these holds only on the path it describes.
+* income_declined==1 is the third path: no monthly figures, no annual total, nothing to assert
+* except that nothing is there.
 assert missing(income_m1) if income_from_fallback==1
 assert !missing(income_annual_total) & !missing(pct_income_yatra) if income_from_fallback==1
 assert missing(income_annual_total) & missing(pct_income_yatra)   if income_from_fallback==0
 assert inrange(pct_income_yatra,0,100) if income_from_fallback==1
-assert !missing(income_seasonality_cv) | (yatra_income+non_yatra_income)==0
+assert !missing(income_seasonality_cv) | (yatra_income+non_yatra_income)==0 | income_declined==1
+assert missing(yatra_income) & missing(non_yatra_income) if income_declined==1
+assert missing(income_annual_total) & missing(pct_income_yatra) if income_declined==1
 forvalues m = 1/12 {
     assert inrange(status_m`m',1,8)
     * ONE-directional on purpose. An idle month must report zero -- the form hides the question and
     * the build fills it. The converse is NOT true: a worker can genuinely earn nothing in a month
     * they worked (an unpaid stretch, a washed-out week), and asserting the biconditional would have
     * failed on the first real respondent who reported it.
-    assert income_m`m'==0 if status_m`m'==8 & income_from_fallback==0
+    assert income_m`m'==0 if status_m`m'==8 & income_from_fallback==0 & income_declined==0
 }
 
 assert yatra_months + offseason_months_worked + months_no_work == 12
@@ -1052,7 +1199,10 @@ foreach v of local tkl {
     assert inlist(`v',1,2,3)
 }
 assert tk_regular_n + tk_prior_n <= 12
-assert total_annual_income>0 & cons_pc_pm>0
+* A respondent who declined earnings has no income total to be positive. Consumption still must be:
+* it is the dependent variable in every VEP arm, and it is asked separately from earnings.
+assert total_annual_income>0 | income_declined==1
+assert cons_pc_pm>0
 foreach v in staples perishables food_own food_out packaged_food pan_tobacco fuel routine_misc transport_comm rent med_nonhosp {
     assert cons_`v'_yatra_pm >= 0 & cons_`v'_offseason_pm >= 0
 }

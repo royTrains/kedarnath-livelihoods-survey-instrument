@@ -3,10 +3,11 @@
 
 label define accomhere 1 "At my own usual home (I live here)" 2 "Rented room or house" 3 "Room or dormitory the employer provides" 4 "Sleeps at the shop, dhaba or workplace" 5 "Tent or temporary shelter" 6 "Lodge, dharamshala or ashram" 7 "In the open, or a verandah" 8 "Somewhere else", replace
 label define activity 1 "Yatra work, or getting ready for the season" 2 "Farming (crops)" 3 "Livestock (animals)" 4 "Casual or daily wage labour" 5 "Construction work" 6 "Own small shop, stall or trade" 7 "Salaried job" 8 "No paid work", replace
+label define birthattend 1 "Doctor" 2 "Nurse, ANM or LHV" 3 "ASHA or Anganwadi worker only" 4 "Dai (traditional birth attendant)" 5 "Nobody trained; family only", replace
 label define collat 1 "Jewellery or ornaments" 2 "Land" 3 "Animals" 4 "A vehicle" 5 "Shop stock or business goods" 6 "House or building" 7 "Something else", replace
 label define comereason 1 "No work at home" 2 "Pay is better here" 3 "Family or people from my village were already here" 4 "Land at home is too little to live on" 5 "Debt to repay" 6 "A contractor or agent brought me" 7 "Married into / moved with family" 8 "Some other reason", replace
 label define contract 1 "Yes, signed" 2 "Yes, but not yet signed" 3 "No contract", replace
-label define coping 1 "Used savings" 2 "Borrowed money" 3 "Sold or pawned assets" 4 "Cut consumption" 5 "Help from relatives/community" 6 "Did nothing/other", replace
+label define coping 1 "Used savings" 2 "Borrowed money" 3 "Sold or pawned assets" 4 "Cut consumption" 5 "Help from relatives/community" 6 "Paid it out of normal earnings, nothing given up" 7 "Something else (say what)", replace
 label define credit 1 "Nationalised or public-sector bank" 2 "Private bank" 3 "Cooperative bank or RRB" 4 "Microfinance institution or SHG" 5 "Moneylender" 6 "Relative or friend" 7 "Employer or contractor (advance)" 8 "Other", replace
 label define distress 9 "Nothing of this kind happened" 1 "Serious illness or death of an earning member" 2 "Crop failure or livestock loss" 3 "Damage from a natural disaster (flood, landslide, fire)" 4 "Loss of business, goods or assets" 5 "Road or bridge blocked, route closed" 6 "Yatra stopped early or badly disrupted" 7 "Sharp fall in customers or prices" 8 "Lost the work or the work stopped", replace
 label define edu2 1 "No formal education" 2 "Some schooling, did not complete primary" 3 "Completed primary but not secondary" 4 "Completed secondary or higher" 98 "Prefer not to say", replace
@@ -15,7 +16,6 @@ label define enum 1 "Raman" 2 "Rishit" 3 "Tanmay" 4 "Anuj", replace
 label define famstruct 1 "Nuclear (you, spouse and unmarried children only)" 2 "Joint (living with parents, married siblings or other extended family)" 3 "Single-member household", replace
 label define floor 1 "Mud/kaccha" 2 "Cement/mud-cement" 3 "Tile/mosaic/marble", replace
 label define fuel 1 "LPG or cylinder gas" 2 "Piped natural gas" 3 "Electricity" 4 "Biogas (gobar gas plant)" 5 "Kerosene" 6 "Firewood" 7 "Dung cakes (gobar)" 8 "Crop residue, straw or shrubs" 9 "Charcoal" 10 "Coal or lignite", replace
-label define govtscheme 1 "Ration card / PDS food grain" 2 "MGNREGA work or job card" 3 "Old-age, widow or disability pension" 4 "PM-KISAN (farmer cash transfer)" 5 "Ujjwala LPG connection" 6 "PM-SYM or Atal Pension Yojana" 7 "Ayushman Bharat / health insurance card" 8 "Housing scheme (PMAY or state)" 9 "Some other scheme" 10 "None of these", replace
 label define hohrel 1 "Self (respondent is the head)" 2 "Husband" 3 "Wife" 4 "Father" 5 "Mother" 6 "Son" 7 "Daughter" 8 "Brother" 9 "Sister" 10 "Other male relative" 11 "Other female relative" 12 "Other, non-relative (male)" 13 "Other, non-relative (female)", replace
 label define jobperm 1 "Permanent" 2 "Seasonal or temporary" 3 "Occasional or casual" 4 "On probation" 5 "Fixed-term", replace
 label define jobsit 1 "Works for pay full-time" 2 "Works for pay part-time or occasional jobs" 3 "Studies and works" 4 "Only studies" 5 "Being trained for work only" 6 "Retired or pensioned" 7 "Unpaid household tasks or caring for others" 8 "Unemployed, actively seeking work" 9 "Sick or disabled, cannot work" 10 "Neither studying, working nor seeking work" 97 "Does not know", replace
@@ -28,7 +28,7 @@ label define nativelang 1 "Garhwali" 2 "Kumaoni" 3 "Hindi" 4 "Nepali" 5 "Bhojpur
 label define occ 1 "Pony/mule worker (works the animals, does not own them)" 2 "Pony/mule owner (owns the animals)" 3 "Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)" 4 "Palki / dandi bearer (carries a person on a palanquin, as part of a team)" 5 "Dhaba, tea stall or food stall WORKER (prepared food or tea)" 6 "Dhaba, tea stall or food stall OWNER (prepared food or tea)" 7 "Shop WORKER (goods: prasad, puja items, clothes, general store)" 8 "Shop OWNER (goods, not prepared food)" 9 "Hotel / lodge WORKER" 10 "Hotel / lodge OWNER" 11 "Driver (any motor vehicle)" 12 "Guide" 13 "Wage labourer (construction, loading, odd jobs)" 14 "Other", replace
 label define origin 1 "Local (same district)" 2 "Other Uttarakhand district" 3 "Other Indian state" 4 "Nepal", replace
 label define pension 1 "Yes, employer deducts it" 2 "Yes, contributes voluntarily" 3 "No", replace
-label define portable 1 "Yes, can draw it here" 2 "No, only at the home place" 3 "Has never tried" 97 "Does not know", replace
+label define portable 1 "Yes, can draw it here" 2 "No, only at the home place" 3 "Has never tried" 4 "We have no ration card" 97 "Does not know", replace
 label define prevreason 1 "Better income" 2 "Lost the previous work" 3 "Work ended with the season" 4 "Family reasons" 5 "Health or injury" 6 "Other", replace
 label define recall 1 "Month by month" 0 "One total for the whole year", replace
 label define referral 1 "A family member already working here" 2 "A friend or someone from the village" 3 "A thekedar or contractor I now work for" 4 "An agent or middleman who placed me (usually for a fee)" 5 "No one; I found it myself" 6 "The employer called me directly" 7 "Someone else", replace
@@ -85,7 +85,7 @@ label values family_structure famstruct
 label variable n_earners "Number of household members who earn money"
 label variable main_income_earner "Respondent is the main income earner in the household"
 label values main_income_earner yn
-label variable n_children_u15 "Household children under 15"
+label variable n_children_u6 "Household children under 6"
 label variable n_children_6_14 "Household children aged 6 to 14"
 label variable n_children_out_school "Children aged 6 to 14 not attending school"
 label variable occupation "Main work in the Yatra season (14 groups)"
@@ -176,10 +176,6 @@ label variable left_here_month "Month the respondent last left the Yatra route"
 label values left_here_month month
 label variable returned_here_month "Month the respondent came back to the Yatra route"
 label values returned_here_month month
-label variable months_away_for_work "Months spent working away from both bases"
-label variable worked_other_places "Has gone elsewhere for work before coming here"
-label values worked_other_places yn
-label variable other_places_detail "Where, and what work (verbatim, optional)"
 label variable would_move_for_work "Would go away for work in the coming year if this ended"
 label values would_move_for_work yndk
 label variable migration_referral "Who arranged or helped get this work"
@@ -287,8 +283,9 @@ label variable n_health_insured "Household members covered by health insurance o
 label variable n_life_insured "Household members with life insurance"
 label variable has_crop_insurance "Household has crop insurance"
 label values has_crop_insurance yn
-label variable govt_schemes "Government schemes the household received from in the last 12 months"
-label variable govt_scheme_other "Which other scheme (verbatim, optional)"
+label variable govt_any_benefit "Household received from any government scheme, last 12 months"
+label values govt_any_benefit yn
+label variable govt_schemes_detail "Which schemes, in the respondent's words (coded in the office)"
 label variable ration_portable_here "Can draw the ration entitlement at the worksite"
 label values ration_portable_here portable
 label variable smartphone_owned "Owns a smartphone"
@@ -312,11 +309,12 @@ label values child_death_5y yn
 label variable birth_last_5y "A woman in the household gave birth in the last 5 years"
 label values birth_last_5y yn
 label variable anc_4_visits "Mother had at least 4 antenatal check-ups for the most recent birth"
-label values anc_4_visits yndk
-label variable skilled_birth_attendant "Most recent birth was assisted by trained health personnel"
-label values skilled_birth_attendant yndk
+label values anc_4_visits yn
+label variable skilled_birth_attendant "Who conducted the most recent delivery"
+label values skilled_birth_attendant birthattend
 label variable distress_event_last365d "Shocks in the last 12 months (check all that apply)"
-label variable shock_loss_amount "Money lost or spent because of the worst shock (Rs)"
+label variable shock_work_lost_weeks "Weeks of work lost because of the worst shock"
+label variable shock_money_spent "Money the household had to spend because of the worst shock (Rs)"
 label variable shock_month "Month the worst shock happened"
 label values shock_month month
 label variable shock_coping "How the household coped (check all that apply)"
@@ -396,8 +394,6 @@ label variable education_years "Years of schooling completed"
 label variable hoh_female "Sex of the household head"
 label values hoh_female sex
 label variable months_here "Months living on the Yatra route in the past year"
-label variable months_home_base "Months living at the home place in the past year"
-label variable months_third_place "Months living away from both bases for work"
 label variable closure_labour_migrant "Sold labour away from both bases during the closure"
 label values closure_labour_migrant yn
 label variable cons_pc_denom_season "People the Yatra-season consumption figures cover"
@@ -455,6 +451,7 @@ label variable cons_durables_12m_pm "Durables spending per month (Rs)"
 label variable total_cons_pm "Household consumption per month (Rs)"
 label variable cons_pc_pm "Per-capita monthly consumption (Rs)"
 label variable cons_pc_pm_narrow "Per-capita monthly consumption, narrow (Rs)"
+label variable n_children_u15 "Household children under 15"
 label variable cons_pc_ae_pm "Consumption per adult equivalent per month (Rs)"
 label variable poverty_line "Poverty line applying to this respondent (Rs per capita per month)"
 label variable poor "Poor: consumption below the applicable line"
@@ -500,8 +497,10 @@ label variable cope_4 "Coping: Cut consumption"
 label values cope_4 yn
 label variable cope_5 "Coping: Help from relatives/community"
 label values cope_5 yn
-label variable cope_6 "Coping: Did nothing/other"
+label variable cope_6 "Coping: Paid it out of normal earnings, nothing given up"
 label values cope_6 yn
+label variable cope_7 "Coping: Something else (say what)"
+label values cope_7 yn
 label variable shock_count "Number of distinct shocks reported (0-8)"
 label variable shock_any "Suffered any shock in the last 12 months"
 label values shock_any yn
@@ -529,7 +528,7 @@ label variable mpi_electricity_dep "MPI: electricity"
 label values mpi_electricity_dep yn
 label variable mpi_bank_dep "MPI: bank account"
 label values mpi_bank_dep yn
-label variable mpi_score "MPI deprivation score (10 of NITI's 12 indicators, reweighted)"
+label variable mpi_score "MPI deprivation score (11 of NITI's 12 indicators, reweighted)"
 label variable mpi_poor "MPI-poor (deprivation score at or above 1/3)"
 label values mpi_poor yn
 label variable rcsi_yatra_wk "rCSI, Yatra-season usual week"
@@ -537,6 +536,13 @@ label variable rcsi_offseason_wk "rCSI, off-season usual week"
 label variable rcsi_score "Reduced Coping Strategy Index (rCSI), annual average"
 label variable food_coping_deprived "Food-coping deprived (rCSI above 20)"
 label values food_coping_deprived yn
+label variable shock_earnings_lost "Earnings lost to the worst shock, at measured wages (Rs)"
+label variable shock_loss_total "Total cost of the worst shock: earnings lost plus money spent (Rs)"
+label variable mpi_nutrition_proxy_dep "MPI nutrition SUBSTITUTE: food-coping deprived (not anthropometry)"
+label values mpi_nutrition_proxy_dep yn
+label variable mpi_score_lyons "MPI deprivation score, 12 of 12 with the Lyons food-coping substitute"
+label variable mpi_poor_lyons "MPI-poor under the substituted score (score at or above 1/3)"
+label values mpi_poor_lyons yn
 label variable hours_week_yatra "Hours worked per week in the Yatra season"
 label variable hours_week_offseason "Hours worked per week outside the Yatra season"
 label variable hours_week_annual "Average weekly hours across the months actually worked"
@@ -686,8 +692,11 @@ notes hhsize: Question: How many members live in your household, including you?
 notes hhsize: Source: Chaudhuri et al. 2002; used to get per-capita consumption
 notes any_member_6yr_schooling: Module A - Respondent and household; origin: asked
 notes any_member_6yr_schooling: Meaning: NITI's Years of Schooling indicator is defined on the HOUSEHOLD -- 'not even one member aged 10 years or older has completed six years of schooling' -- not on the respondent. Using the respondent's own education_years in its
-notes any_member_6yr_schooling: Meaning (cont.): place, as this instrument previously did, measures a different thing and is not comparable to any published National MPI figure. One question, and it needs no roster.
+notes any_member_6yr_schooling: Meaning (cont.): place, as this instrument previously did, measures a different thing and is not comparable to any published National MPI figure. NOT ASKED where the respondent's own schooling already settles it: the respondent is himself a member
+notes any_member_6yr_schooling: Meaning (cont.): aged 10 or over, so six years or more of his own is a Yes by entailment and Stata fills it. The bracket route can only settle it at 'completed secondary or higher' -- 'completed primary but not secondary' spans 5 to 9 years and
+notes any_member_6yr_schooling: Meaning (cont.): straddles the threshold, so it does not, and the question is asked.
 notes any_member_6yr_schooling: Question: Counting everyone in your household aged 10 or above, has at least one of them finished six years of schooling or more?
+notes any_member_6yr_schooling: Skip rule: Ask only if the respondent's own schooling does not already settle it: years_schooling < 6, or the bracket is not 'completed secondary or higher'
 notes any_member_6yr_schooling: Source: NITI Aayog National MPI, Years of Schooling (weight 1/6)
 notes family_structure: Module A - Respondent and household; origin: asked
 notes family_structure: Meaning: Household composition type.
@@ -702,13 +711,14 @@ notes main_income_earner: Meaning: Whether the respondent is the household's mai
 notes main_income_earner: Question: Among those who earn money, are you the main income earner in your household?
 notes main_income_earner: Skip rule: Ask only if n_earners > 1 (if the respondent is the only earner, this is automatic)
 notes main_income_earner: Source: Apablaza et al. 2026, Appendix 2 Q4 (adapted to a single-respondent report: 'who is the main contributor' becomes 'are you the main contributor')
-notes n_children_u15: Module A - Respondent and household; origin: asked
-notes n_children_u15: Meaning: Count of children under 15; allows an adult-equivalent sensitivity check on per-capita consumption.
-notes n_children_u15: Question: How many of them are children under 15?
-notes n_children_u15: Source: Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023)
+notes n_children_u6: Module A - Respondent and household; origin: asked
+notes n_children_u6: Meaning: Count of children under 6. With n_children_6_14 this partitions the under-15s into two disjoint bands, so neither question asks the respondent to subtract one from the other. Also the age band NITI's Nutrition indicator covers
+notes n_children_u6: Meaning (cont.): (0-59 months), which is why the band is drawn at 6 rather than 5.
+notes n_children_u6: Question: How many of them are children under 6 years old?
+notes n_children_u6: Source: Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023); NITI Aayog National MPI nutrition age range
 notes n_children_6_14: Module A - Respondent and household; origin: asked
-notes n_children_6_14: Meaning: Count of school-age children.
-notes n_children_6_14: Question: How many of them are children aged 6 to 14?
+notes n_children_6_14: Meaning: Count of school-age children. Disjoint from n_children_u6 above, so the two add to the under-15 count rather than overlapping it.
+notes n_children_6_14: Question: And how many are aged 6 to 14?
 notes n_children_6_14: Source: NITI Aayog National MPI school-attendance indicator
 notes n_children_out_school: Module A - Respondent and household; origin: asked
 notes n_children_out_school: Meaning: Count of school-age children not attending.
@@ -838,80 +848,82 @@ notes status_m4: Meaning: Main activity in April of the past year; code 1 is the
 notes status_m4: Question: In April, what was your main work or activity?
 notes status_m4: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
 notes knows_monthly_income: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. Worded as a genuine choice between two ways of answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a
-notes knows_monthly_income: Meaning (cont.): yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
+notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. LEFT BLANK IF THE RESPONDENT DECLINES TO DISCUSS EARNINGS AT ALL: both routes then stay shut and the interview continues. Earnings are a control in
+notes knows_monthly_income: Meaning (cont.): the vulnerability models, not an identifying variable, so refusing them costs a covariate rather than the case -- and a required earnings question would have ended interviews. Worded as a genuine choice between two ways of
+notes knows_monthly_income: Meaning (cont.): answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
 notes knows_monthly_income: Question: Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
+notes knows_monthly_income: Skip rule: May be left blank if the respondent declines to discuss earnings; both earnings routes then stay shut
 notes knows_monthly_income: Source: Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)
 notes income_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m5: Meaning: Net earnings in May. Filled by the tablet as 0 when status_m5 is No paid work.
 notes income_m5: Question: How much did you earn from all your work in May, after costs? (Rs)
-notes income_m5: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m5 = 8 (no paid work)
+notes income_m5: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m5 = 8 (no paid work); may be left blank
 notes income_m5: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m6: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m6: Meaning: Net earnings in June. Filled by the tablet as 0 when status_m6 is No paid work.
 notes income_m6: Question: How much did you earn from all your work in June, after costs? (Rs)
-notes income_m6: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m6 = 8 (no paid work)
+notes income_m6: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m6 = 8 (no paid work); may be left blank
 notes income_m6: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m7: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m7: Meaning: Net earnings in July. Filled by the tablet as 0 when status_m7 is No paid work.
 notes income_m7: Question: How much did you earn from all your work in July, after costs? (Rs)
-notes income_m7: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m7 = 8 (no paid work)
+notes income_m7: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m7 = 8 (no paid work); may be left blank
 notes income_m7: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m8: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m8: Meaning: Net earnings in August. Filled by the tablet as 0 when status_m8 is No paid work.
 notes income_m8: Question: How much did you earn from all your work in August, after costs? (Rs)
-notes income_m8: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m8 = 8 (no paid work)
+notes income_m8: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m8 = 8 (no paid work); may be left blank
 notes income_m8: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m9: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m9: Meaning: Net earnings in September. Filled by the tablet as 0 when status_m9 is No paid work.
 notes income_m9: Question: How much did you earn from all your work in September, after costs? (Rs)
-notes income_m9: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m9 = 8 (no paid work)
+notes income_m9: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m9 = 8 (no paid work); may be left blank
 notes income_m9: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m10: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m10: Meaning: Net earnings in October. Filled by the tablet as 0 when status_m10 is No paid work.
 notes income_m10: Question: How much did you earn from all your work in October, after costs? (Rs)
-notes income_m10: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m10 = 8 (no paid work)
+notes income_m10: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m10 = 8 (no paid work); may be left blank
 notes income_m10: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m11: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m11: Meaning: Net earnings in November. Filled by the tablet as 0 when status_m11 is No paid work.
 notes income_m11: Question: How much did you earn from all your work in November, after costs? (Rs)
-notes income_m11: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m11 = 8 (no paid work)
+notes income_m11: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m11 = 8 (no paid work); may be left blank
 notes income_m11: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m12: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m12: Meaning: Net earnings in December. Filled by the tablet as 0 when status_m12 is No paid work.
 notes income_m12: Question: How much did you earn from all your work in December, after costs? (Rs)
-notes income_m12: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m12 = 8 (no paid work)
+notes income_m12: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m12 = 8 (no paid work); may be left blank
 notes income_m12: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m1: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m1: Meaning: Net earnings in January. Filled by the tablet as 0 when status_m1 is No paid work.
 notes income_m1: Question: How much did you earn from all your work in January, after costs? (Rs)
-notes income_m1: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m1 = 8 (no paid work)
+notes income_m1: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m1 = 8 (no paid work); may be left blank
 notes income_m1: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m2: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m2: Meaning: Net earnings in February. Filled by the tablet as 0 when status_m2 is No paid work.
 notes income_m2: Question: How much did you earn from all your work in February, after costs? (Rs)
-notes income_m2: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m2 = 8 (no paid work)
+notes income_m2: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m2 = 8 (no paid work); may be left blank
 notes income_m2: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m3: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m3: Meaning: Net earnings in March. Filled by the tablet as 0 when status_m3 is No paid work.
 notes income_m3: Question: How much did you earn from all your work in March, after costs? (Rs)
-notes income_m3: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m3 = 8 (no paid work)
+notes income_m3: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m3 = 8 (no paid work); may be left blank
 notes income_m3: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_m4: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m4: Meaning: Net earnings in April. Filled by the tablet as 0 when status_m4 is No paid work.
 notes income_m4: Question: How much did you earn from all your work in April, after costs? (Rs)
-notes income_m4: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m4 = 8 (no paid work)
+notes income_m4: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m4 = 8 (no paid work); may be left blank
 notes income_m4: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
 notes income_annual_total: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_annual_total: Meaning: Annual total, asked only of respondents who could not give month-by-month figures. Combined with pct_income_yatra and the work calendar to rebuild monthly earnings in Stata.
 notes income_annual_total: Question: Thinking of the whole past year, about how much did you earn in total from all your work, after costs? (Rs)
-notes income_annual_total: Skip rule: Ask only if knows_monthly_income = 0
+notes income_annual_total: Skip rule: Ask only if knows_monthly_income = 0; may be left blank
 notes income_annual_total: Source: Apablaza et al. 2026 Q15 (fallback when monthly earnings are not known), adapted to an annual total for a seasonal workforce
 notes pct_income_yatra: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes pct_income_yatra: Meaning: Yatra / non-Yatra split of the annual total, used to reweight it onto the calendar. Asked as 'out of every 100 rupees' rather than as a percentage: the same number, in a form that does not ask the respondent to hold an abstract
 notes pct_income_yatra: Meaning (cont.): percentage scale. This is a quantity being divided, not a rating scale.
 notes pct_income_yatra: Question: Out of every 100 rupees you earned in the whole year, how many came from your Yatra work? (The rest is counted as coming from your other work.)
-notes pct_income_yatra: Skip rule: Ask only if knows_monthly_income = 0
+notes pct_income_yatra: Skip rule: Ask only if knows_monthly_income = 0; may be left blank
 notes pct_income_yatra: Source: Project design (the Yatra / non-Yatra split needed to reweight an annual total onto the work calendar)
 notes remit_out_yatra_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes remit_out_yatra_pm: Meaning: Outward remittances, Yatra-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
@@ -999,12 +1011,14 @@ notes came_here_reason: Question: What was the main reason you first came here t
 notes came_here_reason: Skip rule: Ask only if origin is not Local (same district)
 notes came_here_reason: Source: Project design (push/pull as a vulnerability covariate)
 notes worked_away_in_closure: Module D - Migration; origin: asked
-notes worked_away_in_closure: Meaning: Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the gate for months_away_for_work in Module C, which puts a length on it.
-notes worked_away_in_closure: Question: Last year, in the months when the Yatra was closed, did you go somewhere else for work?
+notes worked_away_in_closure: Meaning: Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the ONLY thing in the instrument that says so: the work calendar (status_m1-m12) records the ACTIVITY in each month and not the place, and
+notes worked_away_in_closure: Meaning (cont.): the absence spell (left_here_month, returned_here_month) says the respondent went to the home place, not past it. Without this item a winter spent labouring in Dehradun and a winter spent idle at home are the same twelve rows.
+notes worked_away_in_closure: Meaning (cont.): Reworded 2026-10-01: 'did you go somewhere else for work' left 'somewhere else' than WHAT ambiguous when it followed the spell questions, which are about coming and going from HERE. Carries closure_labour_migrant, which is in the
+notes worked_away_in_closure: Meaning (cont.): VEP exposure vector.
+notes worked_away_in_closure: Question: Last year, in the months when the Yatra was closed, did you work away from your home place?
 notes worked_away_in_closure: Source: Project design (off-season labour migration)
 notes closure_work_detail: Module D - Migration; origin: asked
-notes closure_work_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail, target_occ and other_places_detail, so the off-season destination occupation enters the same classification as everything else and can be
-notes closure_work_detail: Meaning (cont.): given a task vector.
+notes closure_work_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail and target_occ, so the off-season destination occupation enters the same classification as everything else and can be given a task vector.
 notes closure_work_detail: Question: Where did you go, and what work did you do there? Write what they say.
 notes closure_work_detail: Skip rule: Ask only if worked_away_in_closure = 1; may be left blank
 notes closure_work_detail: Source: Project design; coded to NCO-2015 in the office
@@ -1019,22 +1033,6 @@ notes returned_here_month: Meaning: End of the absence. A returned month EARLIER
 notes returned_here_month: Question: And which month did you come back here?
 notes returned_here_month: Skip rule: Ask only if resp_returns_at_closure = 1
 notes returned_here_month: Source: Project design (measured seasonal base, asked as a spell)
-notes months_away_for_work: Module D - Migration; origin: asked
-notes months_away_for_work: Meaning: Off-season labour migration, in months. Gives months_third_place, which loc_m* used to carry as code 3, and is the quantity behind closure_labour_migrant -- the mobility variable that actually separates a household with a winter
-notes months_away_for_work: Meaning (cont.): income from one without. 0 is a normal answer: it means the whole absence was spent at the home place.
-notes months_away_for_work: Question: In those months away, how many months did you spend working somewhere other than your home place?
-notes months_away_for_work: Skip rule: Ask only if worked_away_in_closure = 1
-notes months_away_for_work: Source: Project design (off-season labour migration)
-notes worked_other_places: Module D - Migration; origin: asked
-notes worked_other_places: Meaning: Prior mobility, over the whole working life rather than the last closure. A worker who has already moved between labour markets has revealed he can, which is exactly what the transferability analysis is trying to establish from
-notes worked_other_places: Meaning (cont.): task data alone. Ungated: it was previously asked only of non-local respondents, which assumed a local worker has no mobility history -- the pilot's 22 of 45 who had worked in another occupation says otherwise.
-notes worked_other_places: Question: Before you started coming here, had you gone anywhere else for work?
-notes worked_other_places: Source: Project design (revealed mobility, for the transferability paper)
-notes other_places_detail: Module D - Migration; origin: asked
-notes other_places_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail and target_occ, so a prior destination enters the same occupational classification as everything else.
-notes other_places_detail: Question: Where did you go, and what work did you do? Write what they say.
-notes other_places_detail: Skip rule: Ask only if worked_other_places = 1; may be left blank
-notes other_places_detail: Source: Project design; coded to NCO-2015 in the office
 notes would_move_for_work: Module D - Migration; origin: asked
 notes would_move_for_work: Meaning: Stated mobility, which is the constraint the task-distance measure cannot see: a worker whose skills fit a destination perfectly but who will not leave is structurally displaced just the same. Pairs with target_occ -- that asks
 notes would_move_for_work: Meaning (cont.): WHAT they would do, this asks whether they would move to do it -- and is read against worked_away_in_closure, the revealed version. Given a concrete horizon ('in the coming year') rather than left as an open hypothetical,
@@ -1462,23 +1460,22 @@ notes has_crop_insurance: Meaning: Asked only of households with cultivable land
 notes has_crop_insurance: Question: Is your crop insured?
 notes has_crop_insurance: Skip rule: Ask only if land_cultivable_acres > 0
 notes has_crop_insurance: Source: Standard household-survey item
-notes govt_schemes: Module G - Finance, insurance and schemes; origin: asked
-notes govt_schemes: Meaning: Named schemes rather than 'any government scheme', which asked the respondent to recall a category -- people reliably fail at that, and the old binary almost certainly undercounted. A check-all rather than a count of recipients,
-notes govt_schemes: Meaning (cont.): because the schemes sit at different levels: ration is per household, pensions per person, MGNREGA a job card, PM-KISAN per landholding, so a count across them is not a coherent quantity. Code 10 (None of these) is the explicit
-notes govt_schemes: Meaning (cont.): negative, so a blank is a missing answer rather than a no.
-notes govt_schemes: Question: In the last 12 months, did your household get anything from any of these? Read the list out and check every one they say yes to.
-notes govt_schemes: Source: Project design; scheme names as administered in Uttarakhand
-notes govt_scheme_other: Module G - Finance, insurance and schemes; origin: asked
-notes govt_scheme_other: Meaning: Free text, NOT required, for a scheme the named list does not hold. The list replaced a bare yes/no precisely because a binary cannot separate a ration card from a widow pension from MGNREGA wages, and those imply very different
-notes govt_scheme_other: Meaning (cont.): protection -- so this now catches only the residual rather than carrying the whole burden.
-notes govt_scheme_other: Question: Which scheme was that? Write what they say.
-notes govt_scheme_other: Skip rule: Ask only if govt_schemes includes 9 (Some other scheme); may be left blank
-notes govt_scheme_other: Source: Standard household-survey item
+notes govt_any_benefit: Module G - Finance, insurance and schemes; origin: asked
+notes govt_any_benefit: Meaning: Whether the household touched the public safety net at all. The enumerator hint carries the eight-scheme probe list that is read out; the names themselves go in the free-text item below. A No here, AFTER the list has been read, is
+notes govt_any_benefit: Meaning (cont.): a real No -- which is the job the old code 10 was doing.
+notes govt_any_benefit: Question: In the last 12 months, did your household get anything from any government scheme? Read the list out before you take an answer.
+notes govt_any_benefit: Source: Project design; scheme names as administered in Uttarakhand
+notes govt_schemes_detail: Module G - Finance, insurance and schemes; origin: asked
+notes govt_schemes_detail: Meaning: Verbatim scheme names, office-coded afterwards against the Uttarakhand scheme list. IMPORTANT ITEM: this is now the ONLY place the identity of a benefit is recorded, so an answer left at 'a government scheme' loses the distinction
+notes govt_schemes_detail: Meaning (cont.): between a ration card, a widow pension and MGNREGA wages -- which protect against entirely different things. Required when govt_any_benefit = 1, unlike the other verbatim fields, for that reason.
+notes govt_schemes_detail: Question: Which ones? Write down every scheme they name, in their own words.
+notes govt_schemes_detail: Skip rule: Ask only if govt_any_benefit = 1
+notes govt_schemes_detail: Source: Project design; coded in the office against the Uttarakhand scheme list
 notes ration_portable_here: Module G - Finance, insurance and schemes; origin: asked
 notes ration_portable_here: Meaning: Portability of the food entitlement under One Nation One Ration Card, and the closest real analogue to the legal-residency indicator in Lyons et al. (2023): a migrant whose entitlement works only at his home place is outside the
-notes ration_portable_here: Meaning (cont.): food safety net for the half of the year he is earning, which is exactly when a shock would bite. Asked only of households that named a ration card, so a non-cardholder is deprived by having no card rather than by this item.
+notes ration_portable_here: Meaning (cont.): food safety net for the half of the year he is earning, which is exactly when a shock would bite. UNGATED as of 2026-10-01: it was gated on the ration-card code in the scheme check-all, and that code no longer exists as a code --
+notes ration_portable_here: Meaning (cont.): so 'no ration card' is an OPTION here instead of a gate. One question in place of a question plus a gate, and the non-cardholder is now recorded explicitly rather than by absence.
 notes ration_portable_here: Question: Can you draw your ration here, or only at your home place?
-notes ration_portable_here: Skip rule: Ask only if govt_schemes includes 1 (ration card)
 notes ration_portable_here: Source: Lyons et al. 2023, Table 2 (legal residency), adapted; One Nation One Ration Card
 notes smartphone_owned: Module G - Finance, insurance and schemes; origin: asked
 notes smartphone_owned: Meaning: Smartphone ownership.
@@ -1534,29 +1531,37 @@ notes birth_last_5y: Meaning (cont.): interview at a worksite cannot produce tha
 notes birth_last_5y: Question: In the last five years, did any woman in your household give birth?
 notes birth_last_5y: Source: NITI Aayog National MPI, Maternal Health (weight 1/12)
 notes anc_4_visits: Module H - Health; origin: asked
-notes anc_4_visits: Meaning: First limb of NITI's Maternal Health indicator. 'Don't know' is kept deliberately -- a male respondent reporting on a daughter-in-law's delivery may genuinely not know, and forcing yes/no would manufacture precision. It does NOT
-notes anc_4_visits: Meaning (cont.): create missing data: the indicator tests anc != 1, so a don't-know counts as DEPRIVED, which is the conservative direction. Verified: 0 missing.
+notes anc_4_visits: Meaning: First limb of NITI's Maternal Health indicator. 'Don't know' was REMOVED 2026-10-01. The old reasoning was that a don't-know is conservative because the indicator tests anc != 1, so it counts as deprived -- but that is exactly the
+notes anc_4_visits: Meaning (cont.): danger: a male respondent who cannot recall is then recorded as a deprived household, and a sample with many such respondents reports a maternal-health deprivation rate built out of ignorance rather than out of care not received.
+notes anc_4_visits: Meaning (cont.): The item is now a plain yes/no and the burden moves to the probe (see the hint): ask the mother if she is there, and otherwise ask how many times she went and code four or more.
 notes anc_4_visits: Question: For the most recent birth, did she have at least four check-ups before the delivery?
 notes anc_4_visits: Skip rule: Ask only if birth_last_5y = 1
 notes anc_4_visits: Source: NITI Aayog National MPI, Maternal Health (antenatal care limb)
 notes skilled_birth_attendant: Module H - Health; origin: asked
-notes skilled_birth_attendant: Meaning: Second limb of NITI's Maternal Health indicator. NITI counts the household deprived if EITHER limb fails.
-notes skilled_birth_attendant: Question: Was that delivery done with the help of a doctor, nurse or trained midwife?
+notes skilled_birth_attendant: Meaning: Second limb of NITI's Maternal Health indicator; NITI counts the household deprived if EITHER limb fails. Asked as the CADRE rather than as yes/no: 'a doctor, nurse or trained midwife' named no cadre anybody here uses, and an ASHA
+notes skilled_birth_attendant: Meaning (cont.): or Anganwadi worker -- who commonly does accompany a birth in these districts -- would have been heard as a yes. NFHS and NITI count only a doctor, nurse, ANM, LHV or qualified midwife as skilled; an ASHA, an Anganwadi worker and
+notes skilled_birth_attendant: Meaning (cont.): a dai are explicitly NOT, so putting them in the list as their own codes is what keeps the indicator correct. Deprived unless code 1 or 2.
+notes skilled_birth_attendant: Question: Who conducted that delivery -- a doctor, a nurse or ANM, an ASHA or Anganwadi worker, a dai, or nobody trained?
 notes skilled_birth_attendant: Skip rule: Ask only if birth_last_5y = 1
-notes skilled_birth_attendant: Source: NITI Aayog National MPI, Maternal Health (assisted delivery limb)
+notes skilled_birth_attendant: Source: NITI Aayog National MPI, Maternal Health (assisted delivery limb); skilled-provider definition per NFHS
 notes distress_event_last365d: Module I - Food security, shocks and coping; origin: asked
 notes distress_event_last365d: Meaning: Check-all, replacing 'record the most serious one'. That instruction asked the enumerator to rank another household's misfortunes against each other, which they are in no position to do and which threw away every shock but one.
 notes distress_event_last365d: Meaning (cont.): The list also gains four COVARIATE shocks (codes 5-8) that hit the whole route at once; every code in the old list was household-idiosyncratic, so the covariate-versus-idiosyncratic decomposition could not be identified from this
 notes distress_event_last365d: Meaning (cont.): data at all.
 notes distress_event_last365d: Question: In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.
 notes distress_event_last365d: Source: VEP exposure covariate (Azeem et al. 2016); shock inventory following Gunther and Harttgen 2009, via Fujii 2016 section 4
-notes shock_loss_amount: Module I - Food security, shocks and coping; origin: asked
-notes shock_loss_amount: Meaning: Shock MAGNITUDE, for whichever event the respondent names as the hardest -- the framing is carried in the question wording rather than in a separate coding screen, which was one tap per interview for a variable nothing used.
-notes shock_loss_amount: Meaning (cont.): Incidence alone cannot support a vulnerability-as-uninsured-exposure-to-risk analysis: VER asks how far consumption moves per unit of shock, and without a size there is no per unit. A rough figure is expected -- the quantity of
-notes shock_loss_amount: Meaning (cont.): interest is the order of magnitude against household consumption, not the rupee.
-notes shock_loss_amount: Question: Thinking of whichever of those hit you hardest -- what did it cost your household in all? Count both earnings lost and money spent because of it. (Rs)
-notes shock_loss_amount: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
-notes shock_loss_amount: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)
+notes shock_work_lost_weeks: Module I - Food security, shocks and coping; origin: asked
+notes shock_work_lost_weeks: Meaning: The TIME limb of the shock. Asked in weeks rather than months because this is a six-month earning season: three weeks lost at the peak is a large shock and would round to zero months, while weeks divide cleanly into the monthly
+notes shock_work_lost_weeks: Meaning (cont.): calendar afterwards. Valued at the respondent's own measured earnings in shock_loss_total rather than at his estimate of them.
+notes shock_work_lost_weeks: Question: Thinking of whichever of those hit you hardest -- about how many weeks of work did you lose because of it? (0 if none)
+notes shock_work_lost_weeks: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
+notes shock_work_lost_weeks: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)
+notes shock_money_spent: Module I - Food security, shocks and coping; origin: asked
+notes shock_money_spent: Meaning: The CASH limb of the shock: money that actually left the household, separate from earnings it never received. A rough figure is expected -- the quantity of interest is the order of magnitude against household consumption, not the
+notes shock_money_spent: Meaning (cont.): rupee.
+notes shock_money_spent: Question: And about how much money did your household have to spend because of it -- treatment, repairs, replacing what was lost? (Rs, 0 if nothing)
+notes shock_money_spent: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
+notes shock_money_spent: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)
 notes shock_month: Module I - Food security, shocks and coping; origin: asked
 notes shock_month: Meaning: Shock TIMING, which is what matches the event to the monthly income calendar in Module C and to the season the household was in. A shock during the Yatra season and the same shock during the closure are different events for a
 notes shock_month: Meaning (cont.): household earning its whole year in six months.
@@ -1828,17 +1833,10 @@ notes hoh_female: Formula: from hoh_relation; = female if hoh_relation==1
 notes hoh_female: Source: Constructed
 notes months_here: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes months_here: Meaning: Derived from the absence spell: 12 minus the months between left_here_month and returned_here_month, or 12 for a respondent who never leaves. This is the measured length of the respondent OWN season, in place of a constant applied
-notes months_here: Meaning (cont.): to everyone, and it is what the mid-month Yatra-start problem resolves to -- the boundary is the month they reported, not one we chose.
-notes months_here: Formula: 12 - months_home_base - months_third_place
+notes months_here: Meaning (cont.): to everyone, and it is what the mid-month Yatra-start problem resolves to -- the boundary is the month they reported, not one we chose. Built straight from the spell as of 2026-10-01; it used to be 12 minus months_home_base minus
+notes months_here: Meaning (cont.): months_third_place, which routed the season weight -- the weight on every consumption and income figure in the study -- through the months_away_for_work answer. It no longer depends on it.
+notes months_here: Formula: 12 - months_away_total
 notes months_here: Source: Project design (measured from the absence spell, Module C)
-notes months_home_base: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes months_home_base: Meaning: Months in the absence spell that were NOT spent working elsewhere. The spell straddles the new year -- the Yatra closes in November and reopens in April or May -- so the arithmetic wraps, which is handled in Stata.
-notes months_home_base: Formula: spell length minus months_away_for_work
-notes months_home_base: Source: Project design (measured from the absence spell, Module C)
-notes months_third_place: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes months_third_place: Meaning: months_away_for_work as reported, 0 for anyone who did not work away. Off-season labour migration with a length on it, which the old yes/no could not give.
-notes months_third_place: Formula: months_away_for_work, else 0
-notes months_third_place: Source: Project design (off-season labour migration)
 notes closure_labour_migrant: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes closure_labour_migrant: Meaning: 1 if the respondent reported working away during the closure. Type B in the closure-regime typology and the mobility variable that actually carries information in this population, in place of a migrant dummy built on district
 notes closure_labour_migrant: Meaning (cont.): boundaries -- which the pilot shows would classify 11 of 20 seasonal movers as non-movers.
@@ -2045,6 +2043,11 @@ notes cons_pc_pm_narrow: Meaning: Only the non-lumpy items (food incl. packaged,
 notes cons_pc_pm_narrow: Meaning (cont.): robustness of the variance model; not comparable with the poverty line.
 notes cons_pc_pm_narrow: Formula: (food_pm + pan_tobacco_pm + fuel_pm + routine_misc_pm + transport_comm_pm + rent_pm) / hhsize
 notes cons_pc_pm_narrow: Source: Dercon and Krishnan 2000 (narrow non-food to avoid seasonal lumps)
+notes n_children_u15: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes n_children_u15: Meaning: The two asked bands added: children under 6 plus children aged 6 to 14. Asked directly until 2026-10-01, alongside the 6-to-14 count that is a subset of it -- which made the respondent subtract one from the other and let the two
+notes n_children_u15: Meaning (cont.): contradict. Two disjoint bands partition it exactly, so this is now arithmetic and the contradiction cannot arise.
+notes n_children_u15: Formula: n_children_u6 + n_children_6_14
+notes n_children_u15: Source: Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023)
 notes cons_pc_ae_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_pc_ae_pm: Meaning: Household consumption divided by (adults + 0.5 x children under 15), where adults = household size minus children under 15. One simple scale; the choice of scale is a sensitivity check.
 notes cons_pc_ae_pm: Formula: total_cons_pm / (hhsize - n_children_u15 + 0.5*n_children_u15)
@@ -2150,9 +2153,13 @@ notes cope_5: Meaning: 1 if 'Help from relatives/community' was ticked.
 notes cope_5: Formula: shock_coping contains 5
 notes cope_5: Source: Split from the select_multiple export
 notes cope_6: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes cope_6: Meaning: 1 if 'Did nothing/other' was ticked.
+notes cope_6: Meaning: 1 if 'Paid it out of normal earnings, nothing given up' was ticked.
 notes cope_6: Formula: shock_coping contains 6
 notes cope_6: Source: Split from the select_multiple export
+notes cope_7: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes cope_7: Meaning: 1 if 'Something else (say what)' was ticked.
+notes cope_7: Formula: shock_coping contains 7
+notes cope_7: Source: Split from the select_multiple export
 notes shock_count: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes shock_count: Meaning: Count of shock types ticked. The old single-answer item could only ever be 0 or 1.
 notes shock_count: Formula: sum of shock_1..8
@@ -2212,8 +2219,9 @@ notes mpi_bank_dep: Meaning: NITI: no household member has a bank account or a p
 notes mpi_bank_dep: Formula: has_bank_account == 0
 notes mpi_bank_dep: Source: NITI Aayog National MPI (1/21)
 notes mpi_score: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes mpi_score: Meaning: Weighted sum of the ten collected indicators. Nutrition (1/6) cannot be collected without anthropometry, so the remaining weights are scaled up proportionally to sum to 1. REPORT THIS AS AN ADAPTATION, never as the National MPI --
-notes mpi_score: Meaning (cont.): and state which indicator is absent.
+notes mpi_score: Meaning: Weighted sum of the eleven collected indicators -- mortality, maternal health, years of schooling, school attendance, cooking fuel, sanitation, drinking water, electricity, housing, assets and bank account. Nutrition (1/6) cannot
+notes mpi_score: Meaning (cont.): be collected without anthropometry, so the remaining weights are scaled up proportionally to sum to 1. REPORT THIS AS AN ADAPTATION, never as the National MPI, and name the absent indicator. mpi_score_lyons is the companion that
+notes mpi_score: Meaning (cont.): substitutes rather than omits. (The label said TEN until 2026-10-01; eleven of the twelve are collected, and the formula always summed eleven.)
 notes mpi_score: Formula: (1/12*mortality + 1/12*maternal + 1/6*schooling + 1/6*attendance + 1/21*(fuel+sanitation+water+electricity+housing+assets+bank)) / (1 - 1/6)
 notes mpi_score: Source: NITI Aayog National MPI structure, nutrition omitted
 notes mpi_poor: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
@@ -2236,6 +2244,29 @@ notes food_coping_deprived: Module X - Constructed variables (built in Stata fro
 notes food_coping_deprived: Meaning: 1 if annual-average rCSI exceeds 20, the cutoff used by Lyons et al. 2023 (from VASyR).
 notes food_coping_deprived: Formula: rcsi_score > 20
 notes food_coping_deprived: Source: Lyons et al. 2023 Table 2 indicator 3 cutoff
+notes shock_earnings_lost: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes shock_earnings_lost: Meaning: Weeks of work lost times the respondent's own weekly earnings in the season the shock fell in -- Yatra-season weekly earnings if shock_month is inside the measured season, off-season weekly earnings otherwise. The respondent is
+notes shock_earnings_lost: Meaning (cont.): never asked to value his own forgone work: he reports the weeks, and the wage is the one this instrument already measured from him.
+notes shock_earnings_lost: Formula: shock_work_lost_weeks * (season-matched weekly earnings)
+notes shock_earnings_lost: Source: Project design (the time limb of shock magnitude, valued at measured earnings)
+notes shock_loss_total: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes shock_loss_total: Meaning: The two limbs added. This is what shock_loss_amount used to ask the respondent to add up in his head -- including valuing his own lost work -- and it replaces it everywhere, including in shock_loss_share. Report the limbs
+notes shock_loss_total: Meaning (cont.): separately too: a shock that costs only time and a shock that costs only cash are different events for a household with no savings.
+notes shock_loss_total: Formula: shock_earnings_lost + shock_money_spent
+notes shock_loss_total: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000
+notes mpi_nutrition_proxy_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes mpi_nutrition_proxy_dep: Meaning: food_coping_deprived, standing in for NITI's Nutrition indicator in mpi_score_lyons only. NOT a measure of undernourishment and must never be labelled as one: it is the Lyons et al. (2023) food-coping indicator, rCSI above 20,
+notes mpi_nutrition_proxy_dep: Meaning (cont.): occupying the 1/6 weight NITI gives to a measurement this instrument cannot take.
+notes mpi_nutrition_proxy_dep: Formula: food_coping_deprived == 1
+notes mpi_nutrition_proxy_dep: Source: Lyons et al. 2023 Table 2 indicator 3, substituted for NITI Aayog Nutrition (1/6); Alkire and Foster 2011 on indicator substitution
+notes mpi_score_lyons: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes mpi_score_lyons: Meaning: All twelve NITI weights filled, with the food-coping indicator in the Nutrition slot at 1/6 and no reweighting. Report alongside mpi_score, never instead of it, and state the substitution.
+notes mpi_score_lyons: Formula: mpi_score with (1/6)*mpi_nutrition_proxy_dep in place of the reweighting
+notes mpi_score_lyons: Source: NITI Aayog National MPI structure; Lyons et al. 2023 nutrition substitute
+notes mpi_poor_lyons: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes mpi_poor_lyons: Meaning: Alkire-Foster identification at k = 33.3 percent on mpi_score_lyons. The gap between this headcount and mpi_poor is the sensitivity of the result to the nutrition substitution.
+notes mpi_poor_lyons: Formula: mpi_score_lyons >= 1/3
+notes mpi_poor_lyons: Source: Alkire and Foster 2011; NITI Aayog National MPI
 notes hours_week_yatra: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes hours_week_yatra: Meaning: Hours per day times days per week.
 notes hours_week_yatra: Formula: hours_day_yatra * days_week_yatra
@@ -2397,7 +2428,7 @@ capture notes retained: Module Z - Synthetic-design variables (not collected); o
 capture notes retained: Meaning: 1 if the synthetic respondent stayed in the fielded sample.
 capture notes retained: Source: Synthetic design
 
-order resp_id enum_id site form_build interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u15 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 status_m1 status_m2 status_m3 status_m4 knows_monthly_income income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_m1 income_m2 income_m3 income_m4 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban resp_returns_at_closure hh_at_home_place n_here_season years_coming_here came_here_reason worked_away_in_closure closure_work_detail left_here_month returned_here_month months_away_for_work worked_other_places other_places_detail would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_unit land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account took_loan_12m credit_source loan_purpose loan_amount_borrowed loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_schemes govt_scheme_other ration_portable_here smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_loss_amount shock_month shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here months_home_base months_third_place closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 no_shock_reported cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
+order resp_id enum_id site form_build interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u6 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 status_m1 status_m2 status_m3 status_m4 knows_monthly_income income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_m1 income_m2 income_m3 income_m4 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban resp_returns_at_closure hh_at_home_place n_here_season years_coming_here came_here_reason worked_away_in_closure closure_work_detail left_here_month returned_here_month would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_unit land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account took_loan_12m credit_source loan_purpose loan_amount_borrowed loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_any_benefit govt_schemes_detail ration_portable_here smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_work_lost_weeks shock_money_spent shock_month shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow n_children_u15 cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 no_shock_reported cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 cope_7 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived shock_earnings_lost shock_loss_total mpi_nutrition_proxy_dep mpi_score_lyons mpi_poor_lyons hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
 capture order dropout_prob, last
 capture order dropout_score, last
 capture order flagged_contradiction, last

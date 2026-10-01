@@ -71,17 +71,21 @@ gen byte urban = (home_rural_urban==2)
 global X_adapt  education_years has_bank_account credit_institutional training_received ///
                 smartphone_owned insured_any debt_stock_months_r
 global X_sens   age hhsize i.employment_type years_in_yatra_work dep_func_limit health_shock_any
-global X_expo   migrant closure_labour_migrant shock_any yatra_income_share ///
-                income_seasonality_cv urban trek_dependent i.site
+* yatra_income_share_r / income_seasonality_cv_r, not the raw forms: the earnings calendar is
+* optional as of 2026-10-01, so the raw variables are missing for anyone who declined it, and a
+* gated covariate in a covariate list is how the FGLS sample went from 104 to 4 once already.
+* income_declined rides alongside so the neutral zero is never read as a measured zero.
+global X_expo   migrant closure_labour_migrant shock_any yatra_income_share_r ///
+                income_seasonality_cv_r income_declined urban trek_dependent i.site
 global X        $X_adapt $X_sens $X_expo
 
 * The extended set adds the covariates that are informative but not core. Reported
 * as one alternative specification rather than carried through all three stages,
 * which keeps the headline model interpretable and still puts every collected
 * variable to work. All are regression-safe.
-global X_extra  has_cultivable_land secondary_income_share lang_local first_job_ever ///
+global X_extra  has_cultivable_land secondary_income_share_r lang_local first_job_ever ///
                 i.marital_status stays_all_year i.health_access_tier years_coming_here_r ///
-                came_for_push_r placed_by_agent worked_other_places home_outside_state ///
+                came_for_push_r placed_by_agent home_outside_state ///
                 health_cost_share_r debt_service_ratio_r
 
 di as result "{hline 78}"
@@ -321,7 +325,7 @@ foreach g in 0.25 0.50 0.75 1.00 {
 * than pooled silently.
 *-----------------------------------------------------------------------------
 di as result " 4d. By earnings measurement mode"
-bysort income_from_fallback: summarize Vh income_seasonality_cv
+bysort income_from_fallback: summarize Vh income_seasonality_cv if income_declined==0
 di as result "{hline 78}"
 
 *=============================================================================

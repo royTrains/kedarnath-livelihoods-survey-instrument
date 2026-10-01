@@ -139,7 +139,11 @@ print("\n(B) ANALYSIS READINESS -- does the instrument generate what each analys
 
 XVARS = ["education_years", "has_bank_account", "credit_institutional", "training_received", "smartphone_owned",
          "age", "hhsize", "employment_type", "years_in_yatra_work", "migrant",
-         "shock_any", "yatra_income_share", "income_seasonality_cv", "health_access_tier"]
+         # the _r forms, not the raw ones: the earnings calendar is optional as of 2026-10-01, so
+         # the raw variables are missing for anyone who declined it, and what the models actually
+         # put in $X is the regression-safe form plus the income_declined indicator.
+         "shock_any", "yatra_income_share_r", "income_seasonality_cv_r", "income_declined",
+         "health_access_tier"]
 NEEDS = {
     "Monetary VEP (Chaudhuri 3-stage FGLS)":
         ["cons_pc_pm", "poor", "poor_sensitivity_cpi", "cons_pc_pm_narrow", "cons_pc_ae_pm"] + XVARS,
@@ -166,8 +170,10 @@ NEEDS = {
          "n_life_insured", "home_rural_urban"],
     "Mobility and the closure regime":
         ["resp_returns_at_closure", "hh_at_home_place", "closure_labour_migrant", "stays_all_year",
-         "split_household", "months_here", "months_home_base", "months_third_place",
-         "months_away_total", "worked_away_in_closure", "worked_other_places",
+         # months_home_base, months_third_place and worked_other_places dropped 2026-10-01 with
+         # months_away_for_work; none reached a covariate vector or a deprivation indicator.
+         "split_household", "months_here",
+         "months_away_total", "worked_away_in_closure",
          "would_move_for_work", "migrant", "cons_pc_denom_season", "cons_pc_onsite_pm"],
 }
 # variables that are legitimately missing for most rows because they are skip-gated, with the
@@ -178,7 +184,16 @@ GATED = {# job_permanence and its Module K siblings are gated on job_situation 1
          # so the handful of respondents who are not working are correctly missing, not thin.
          "job_permanence": 0.85, "contract_status": 0.85, "workplace_registered": 0.85,
          "prev_occ": 0.20, "target_occ": 0.50, "best_alt_occupation": 0.90, "task_cover_best": 0.90,
-         "task_retain_best": 0.90, "skill_move_type": 0.90, "child_school_dep": 0.20}
+         "task_retain_best": 0.90, "skill_move_type": 0.90, "child_school_dep": 0.20,
+         # Earnings are optional from 2026-10-01, so these four are missing for exactly the
+         # respondents who declined them. That is the intended behaviour, not thinness: a declined
+         # answer leaves the variable MISSING rather than a fabricated zero, because a zero would
+         # read as destitution. emp_dep_comp going missing takes emp_dep_count with it, which is
+         # Alkire-Foster identification working as specified -- an observation with an unmeasured
+         # indicator is dropped, not scored as non-deprived. The threshold is set at 0.85 so a real
+         # collapse still fails the check; the build reports the exact count as a NOTE.
+         "work_income_pm": 0.85, "emp_dep_comp": 0.85, "emp_dep_count": 0.85,
+         "emp_dep_score": 0.85, "emp_poor_k2": 0.85}
 
 for analysis, cols in NEEDS.items():
     missing = [c for c in cols if c not in d.columns]
@@ -204,7 +219,7 @@ if fb.sum() == 0:
     bad("income fallback: nobody took it -- the route is never exercised")
 elif d.loc[fb, "income_m1"].notna().any():
     bad("income fallback: monthly earnings present for a fallback respondent")
-elif d.income_seasonality_cv.isna().any():
+elif d.loc[d.income_declined != 1, "income_seasonality_cv"].isna().any():
     bad("income fallback: income_seasonality_cv missing for some rows (they would drop out of the FGLS)")
 else:
     cv_fb, cv_cal = d.loc[fb, "income_seasonality_cv"].mean(), d.loc[~fb, "income_seasonality_cv"].mean()

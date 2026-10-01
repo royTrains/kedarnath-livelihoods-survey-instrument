@@ -107,7 +107,16 @@ o["hhsize"] = d.hhsize
 # NITI's Years of Schooling is a HOUSEHOLD indicator: has ANY member aged 10+ finished 6 years?
 # More likely true than the respondent's own schooling, since it takes only one educated member.
 _p_any6 = expit(0.55 + 0.30 * (np.nan_to_num(true_years, nan=4.0) - 5) + 0.22 * (d.hhsize.values - 4))
-o["any_member_6yr_schooling"] = (rng.random(n) < np.clip(_p_any6, .04, .985)).astype(int)
+_any6 = (rng.random(n) < np.clip(_p_any6, .04, .985)).astype(float)
+# NOT ASKED where the respondent's own schooling already settles it: he is himself a member aged 10
+# or over, so six years of his own entails a household Yes. The form skips those rows and Kobo
+# returns an empty cell, so the raw file must too -- Stata fills them back to 1. Writing a value
+# here instead would hide the fill and let a broken fill pass unnoticed.
+_settled = ((o["knows_years_schooling"].values == 1)
+            & (np.nan_to_num(o["years_schooling"].values, nan=-1) >= 6)) \
+         | ((o["knows_years_schooling"].values == 0)
+            & (np.nan_to_num(o["education_level_cat"].values, nan=-1) == 4))
+o["any_member_6yr_schooling"] = np.where(_settled, np.nan, _any6)
 fam = np.where(d.hhsize.values == 1, 3, rng.choice([1, 2], size=n, p=[.58, .42]))
 o["family_structure"] = fam
 n_earn = np.minimum(1 + rng.poisson(0.7, n), d.hhsize.values)
@@ -119,9 +128,12 @@ o["n_earners"] = n_earn
 # hoh_female above: the raw file must match what the form can actually produce.
 o["main_income_earner"] = np.where(n_earn > 1, (rng.random(n) < 0.55).astype(float), np.nan)
 lam = np.where((o.marital_status == 1) & (d.age.between(27, 50)), 1.0, 0.15)
+# Two disjoint bands, drawn to partition the under-15s rather than nest inside each other:
+# n_children_u15 is now CONSTRUCTED in Stata as their sum, so it is not written here at all.
 n_u15 = np.minimum(d.hhsize.values - 1, rng.poisson(lam))
-o["n_children_u15"] = n_u15
 n_6_14 = rng.binomial(n_u15, 0.55)
+n_u6 = n_u15 - n_6_14
+o["n_children_u6"] = n_u6
 o["n_children_6_14"] = n_6_14
 o["n_children_out_school"] = np.where(n_6_14 > 0, rng.binomial(n_6_14, 0.05 + 0.10 * d.poor.values), np.nan)
 
@@ -272,7 +284,13 @@ _recall_x = (-0.35 * (d.age.values - 40) / 15
              - 0.45 * (_n_distinct_act - 2))
 _p_knows = 1 / (1 + np.exp(-(1.15 + _recall_x)))
 knows_monthly = (rng.random(n) < _p_knows).astype(int)
-o["knows_monthly_income"] = knows_monthly
+# The earnings calendar is not compulsory as of 2026-10-01: a blank knows_monthly_income means the
+# respondent declined to discuss earnings at all and BOTH routes stay shut. Generated at 6%, which
+# is a guess -- replace it with the real refusal rate once the pretest gives one. It is here so the
+# pipeline is exercised on the declined path rather than meeting it first in the field.
+_declined = rng.random(n) < 0.06
+o["knows_monthly_income"] = np.where(_declined, np.nan, knows_monthly).astype(float)
+knows_monthly = np.where(_declined, -1, knows_monthly)   # -1: neither route, so nothing is filled
 
 # the true underlying annual figures, used both to fill the calendar and to build the fallback
 _yatra_true = np.where(status == 1, inc, 0).sum(1)
@@ -345,10 +363,6 @@ o["returned_here_month"] = _back
 _span = np.where(_moves, np.mod(_back - _left, 12), 0)
 _away = np.where(_moves, (rng.random(n) < .34).astype(int), (rng.random(n) < .06).astype(int))
 o["worked_away_in_closure"] = _away
-# months of that absence spent working elsewhere rather than at the home place; never more than the
-# spell itself, which is the one cross-field rule the form enforces here
-o["months_away_for_work"] = np.where(_away == 1,
-                                     np.maximum(1, np.minimum(_span, rng.poisson(2.2, n) + 1)), np.nan)
 o["years_coming_here"] = np.where(
     _moves, np.minimum(d.years_in_yatra_work.values + rng.poisson(2.0, n),
                        (d.age.values - 14).clip(1)), np.nan)
@@ -357,11 +371,6 @@ o["came_here_reason"] = np.where(orig > 1, rng.choice([1, 2, 3, 4, 5, 6, 7, 8], 
 AWAY_PLACES = ["Delhi mein construction", "Dehradun mein hotel ka kaam", "Punjab mein kheti",
                "Mumbai mein security guard", "Haridwar mein dukan par"]
 o["closure_work_detail"] = [str(rng.choice(AWAY_PLACES)) if v == 1 else "" for v in _away]
-o["worked_other_places"] = (rng.random(n) < 0.33).astype(int)
-OTHER_PLACES = ["Shimla mein dhaba", "Delhi mein factory", "Ludhiana mein mazdoori",
-                "Rishikesh mein raft ka kaam", "Nepal mein kheti"]
-o["other_places_detail"] = [str(rng.choice(OTHER_PLACES)) if v == 1 else ""
-                            for v in o["worked_other_places"].values]
 o["would_move_for_work"] = np.where(rng.random(n) < .04, 97, (rng.random(n) < .56).astype(int))
 # who placed the respondent in this work. Ungated as of 2026-09-28: it is a question about the
 # employment relationship, not about migration, so a local worker gets it too.
@@ -573,14 +582,32 @@ o["has_crop_insurance"] = np.where(_has_land,
 # grain every month routinely say no to it. Conditioning the named list on the binary would rebuild
 # the undercount the change was made to remove, and it did: ration-card coverage came out at 19%
 # against a real Uttarakhand figure far above that, leaving the portability indicator 95% constant.
-_SCH_P = {1: .71, 2: .26, 3: .14, 4: .12, 5: .49, 6: .05, 7: .33, 8: .09, 9: .04}
-_gs = []
+# The ten named schemes stopped being OPTIONS on 2026-10-01 and became the enumerator's probe list;
+# what is recorded is a yes/no plus the names in the respondent's own words, coded in the office.
+# The per-scheme rates are kept here all the same, because they are what makes the simulated yes/no
+# and the simulated free text agree with each other -- a household drawn as holding a ration card
+# should say so in the text, and the office coding step has to have something real to code.
+_SCH_P = {1: .71, 2: .26, 3: .14, 4: .12, 5: .49, 6: .05, 7: .33, 8: .09}
+_SCH_WORDS = {1: "ration card", 2: "manrega ka job card", 3: "vidhwa pension",
+              4: "pm kisan", 5: "ujjwala gas", 6: "atal pension",
+              7: "ayushman card", 8: "awas yojana"}
+_EXTRA_WORDS = ["gaon ki samiti se", "mandir trust se madad", "kisan credit card"]
+_benefit, _detail, _has_ration = [], [], []
 for _ in range(n):
-    picked = [str(k) for k, pr in _SCH_P.items() if rng.random() < pr]
-    _gs.append(" ".join(picked) if picked else "10")
-o["govt_schemes"] = _gs
-SCHEME_OTHER = ["gaon ki samiti se", "mandir trust se madad", "kisan credit card"]
-o["govt_scheme_other"] = [str(rng.choice(SCHEME_OTHER)) if "9" in g.split() else "" for g in _gs]
+    picked = [k for k, pr in _SCH_P.items() if rng.random() < pr]
+    if rng.random() < .04:
+        picked_words = [_SCH_WORDS[k] for k in picked] + [str(rng.choice(_EXTRA_WORDS))]
+    else:
+        picked_words = [_SCH_WORDS[k] for k in picked]
+    _has_ration.append(1 in picked)
+    if picked_words:
+        _benefit.append(1)
+        _detail.append(", ".join(picked_words))
+    else:
+        _benefit.append(0)
+        _detail.append("")
+o["govt_any_benefit"] = _benefit
+o["govt_schemes_detail"] = _detail
 o["smartphone_owned"] = d.smartphone_owned
 _dig_old = code(d.digital_payment_use, {"Never": 0, "Sometimes": 1, "Often": 2})
 o["uses_digital_payment"] = (_dig_old > 0).astype(int)
@@ -593,11 +620,28 @@ o["n_can_transact_online"] = np.minimum(
 # both are raised for poorer households -- the gradient the indicators exist to pick up.
 _p_death = np.clip(.035 + .045 * d.poor.values, 0, .2)
 o["child_death_5y"] = (rng.random(n) < _p_death).astype(int)
-_p_birth = np.clip(.16 + .34 * (o.n_children_u15.values > 0), 0, .8)
+# n_children_u15 is constructed in Stata now, so the two asked bands are summed here instead.
+_p_birth = np.clip(.16 + .34 * ((o.n_children_u6.values + o.n_children_6_14.values) > 0), 0, .8)
 _birth = (rng.random(n) < _p_birth).astype(int)
 o["birth_last_5y"] = _birth
+# "Don't know" (97) is gone from both limbs as of 2026-10-01, so neither is generated with it.
 o["anc_4_visits"] = np.where(_birth == 1, (rng.random(n) < np.clip(.78 - .20*d.poor.values, .2, .97)).astype(float), np.nan)
-o["skilled_birth_attendant"] = np.where(_birth == 1, (rng.random(n) < np.clip(.86 - .18*d.poor.values, .3, .99)).astype(float), np.nan)
+# skilled_birth_attendant is the CADRE now: 1 doctor, 2 nurse/ANM/LHV, 3 ASHA or Anganwadi only,
+# 4 dai, 5 nobody trained. Only 1 and 2 count as skilled under NFHS and NITI, so the ASHA and dai
+# codes carry real weight in the indicator -- and in these districts they are common, which is the
+# whole reason the item stopped being a yes/no. Poorer households shift toward 3, 4 and 5.
+_att_p = np.stack([
+    np.clip(.34 - .16*d.poor.values, .05, .60),   # doctor
+    np.clip(.42 - .06*d.poor.values, .15, .60),   # nurse / ANM / LHV
+    np.clip(.13 + .10*d.poor.values, .03, .40),   # ASHA or Anganwadi only
+    np.clip(.08 + .09*d.poor.values, .02, .35),   # dai
+    np.clip(.03 + .03*d.poor.values, .01, .20),   # nobody trained
+])
+_att_p = _att_p / _att_p.sum(0)
+o["skilled_birth_attendant"] = np.where(
+    _birth == 1,
+    [float(rng.choice([1, 2, 3, 4, 5], p=_att_p[:, i])) for i in range(n)],
+    np.nan)
 for v in ["morbidity_15d", "hospitalization_365d"]: o[v] = d[v]
 ill = d.morbidity_15d.values == 1
 copeP = np.array([.28, .30, .10, .15, .12, .05])
@@ -656,7 +700,9 @@ for i in range(n):
         _cope_sets.append("")
         continue
     picks = {int(coping[i])} if not np.isnan(coping[i]) else set()
-    for c, pr in ((1, .30), (2, .34), (3, .18), (4, .40), (5, .26), (6, .10)):
+    # Code 6 is now "paid it out of normal earnings, nothing given up" and is EXCLUSIVE on the
+    # form; code 7 is the unlisted-strategy residual the old code 6 was conflating it with.
+    for c, pr in ((1, .30), (2, .34), (3, .18), (4, .40), (5, .26), (7, .05)):
         if rng.random() < pr:
             picks.add(c)
     _cope_sets.append(" ".join(str(v) for v in sorted(picks)) if picks else "6")
@@ -781,10 +827,11 @@ o["func_limitation"] = [int(rng.choice([1, 2, 3, 4], p=[1 - q - q * .45, q, q * 
                                        / np.sum([1 - q - q * .45, q, q * .33, q * .12])))
                         for q in _wg_p]
 
-# ration portability, asked only of households that named a ration card (code 1 in govt_schemes)
-_has_ration = np.array(["1" in str(g).split() for g in o["govt_schemes"].values])
+# Ration portability is UNGATED now: "we have no ration card" is code 4 on the item itself rather
+# than an absence, so every respondent answers and the non-cardholder is recorded explicitly.
+_hr = np.array(_has_ration)
 o["ration_portable_here"] = np.where(
-    _has_ration, rng.choice([1, 2, 3, 97], n, p=[.31, .46, .17, .06]), np.nan)
+    _hr, rng.choice([1, 2, 3, 97], n, p=[.31, .46, .17, .06]), 4)
 
 # shock magnitude and timing, asked only of households reporting at least one shock. The worst shock
 # is drawn from the ones they actually reported, never from the whole list.
@@ -792,8 +839,12 @@ _shk = [str(v).split() for v in o["distress_event_last365d"].values]
 _real = [[x for x in v if x not in ("", "nan", "9")] for v in _shk]
 _any_real = [bool(v) for v in _real]
 _any_shock = np.array(_any_real)
-o["shock_loss_amount"] = np.where(
-    _any_shock, (np.round(rng.gamma(1.9, 9000, n) / 500) * 500).clip(500, 200000), np.nan)
+# Two limbs, not one summed figure: weeks of work lost, and money that left the household. Stata
+# values the weeks at the respondent's own measured wage, so nothing here has to price them.
+o["shock_work_lost_weeks"] = np.where(
+    _any_shock, np.minimum(52, rng.poisson(2.1, n)).astype(float), np.nan)
+o["shock_money_spent"] = np.where(
+    _any_shock, (np.round(rng.gamma(1.5, 5200, n) / 500) * 500).clip(0, 200000), np.nan)
 # shocks cluster in the Yatra months, when there is income to lose and crowds to be disrupted
 o["shock_month"] = np.where(
     _any_shock, rng.choice(range(1, 13), n,
