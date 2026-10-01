@@ -19,32 +19,79 @@
 
    [read aloud] First, a few things about you and the people who live in your household.
 
-         1   age                        number  
-         2   female                     choose 1 of 2  
-         3   hoh_relation               choose 1 of 13  
-         4 **native_language            choose 1 of 27  
+         1   age                        NUMBER  
+             "How old are you? (completed years)"
+         2   female                     CHOOSE 1 (2 options)  
+             "Record sex; ask if unsure: are you male or female?"
+             0=Male  |  1=Female
+         3   hoh_relation               CHOOSE 1 (13 options)  
+             "Who is the head of your household -- is it you, or someone else? If
+              someone else, how are they related to you?"
+             1=Self (respondent is the head)  |  2=Husband  |  3=Wife  |  4=Father
+             5=Mother  |  6=Son  |  7=Daughter  |  8=Brother  |  9=Sister
+             10=Other male relative  |  11=Other female relative
+             12=Other, non-relative (male)  |  13=Other, non-relative (female)
+         4 **native_language            CHOOSE 1 (27 options)  
+             "What is your native language, the language you first learned at home?"
+             1=Garhwali  |  2=Kumaoni  |  3=Hindi  |  4=Nepali  |  5=Bhojpuri
+             6=Assamese  |  7=Bengali  |  8=Bodo  |  9=Dogri  |  10=Gujarati
+             11=Kannada  |  12=Kashmiri  |  13=Konkani  |  14=Maithili  |  15=Malayalam
+             16=Manipuri (Meitei)  |  17=Marathi  |  18=Odia  |  19=Punjabi
+             20=Sanskrit  |  21=Santali  |  22=Sindhi  |  23=Tamil  |  24=Telugu
+             25=Urdu  |  96=Other Indian language  |  97=Other / foreign language
            \__ opens/closes: Q5
    |-> if Q4 = 96 OR Q4 = 97
-   |      5   native_language_other      free text  
-         6   marital_status             choose 1 of 3  
-         7 **knows_years_schooling      choose 1 of 2  
+   |      5   native_language_other      FREE TEXT  
+   |         "Which language is it? Write down exactly what they say."
+         6   marital_status             CHOOSE 1 (3 options)  
+             "Are you currently married, never married, or
+              widowed/divorced/separated?"
+             1=Currently married  |  2=Never married  |  3=Widowed/divorced/separated
+         7 **knows_years_schooling      CHOOSE 1 (2 options)  
+             "Do you know exactly how many years of schooling you completed,
+              counting from class 1?"
+             0=No  |  1=Yes
            \__ opens/closes: Q8, Q9
    |-> if Q7 = 1
-   |      8   years_schooling            number  
+   |      8   years_schooling            NUMBER  
+   |         "How many years of schooling did you complete in total? (0 if none)"
    |-> if Q7 = 0
-   |      9   education_level_cat        choose 1 of 5  
-        10   hhsize                     number  
-        11   any_member_6yr_schooling   choose 1 of 2  
-        12   family_structure           choose 1 of 3  
-        13 **n_earners                  number  
+   |      9   education_level_cat        CHOOSE 1 (5 options)  
+   |         "Which is closest: no formal education; some schooling but did not
+   |          finish primary; finished primary but not secondary; or finished
+   |          secondary or higher?"
+   |         1=No formal education  |  2=Some schooling, did not complete primary
+   |         3=Completed primary but not secondary  |  4=Completed secondary or higher
+   |         98=Prefer not to say
+        10   hhsize                     NUMBER  
+             "How many members live in your household, including you?"
+        11   any_member_6yr_schooling   CHOOSE 1 (2 options)  
+             "Counting everyone in your household aged 10 or above, has at least one
+              of them finished six years of schooling or more?"
+             0=No  |  1=Yes
+        12   family_structure           CHOOSE 1 (3 options)  
+             "Is your family nuclear -- just you, your spouse and unmarried children
+              -- or joint, living with parents, married siblings or other extended
+              family? (Say single-member if you live alone.)"
+             1=Nuclear (you, spouse and unmarried children only)
+             2=Joint (living with parents, married siblings or other extended family)
+             3=Single-member household
+        13 **n_earners                  NUMBER  
+             "How many of them, including you, earn money?"
            \__ opens/closes: Q14
    |-> if Q13 > 1
-   |     14   main_income_earner         choose 1 of 2  
-        15   n_children_u15             number  
-        16 **n_children_6_14            number  
+   |     14   main_income_earner         CHOOSE 1 (2 options)  
+   |         "Among those who earn money, are you the main income earner in your
+   |          household?"
+   |         0=No  |  1=Yes
+        15   n_children_u15             NUMBER  
+             "How many of them are children under 15?"
+        16 **n_children_6_14            NUMBER  
+             "How many of them are children aged 6 to 14?"
            \__ opens/closes: Q17
    |-> if Q16 > 0
-   |     17   n_children_out_school      number  
+   |     17   n_children_out_school      NUMBER  
+   |         "How many of these children do not go to school now?"
 
 +------------------------------------------------------------------------------------------+
 | MODULE B — Work and work history                                                         |
@@ -53,28 +100,85 @@
 
    [read aloud] Now about the work you do here on the Yatra route, and the work you did be...
 
-        18 **occupation                 choose 1 of 14  
+        18 **occupation                 CHOOSE 1 (14 options)  
+             "What is your main work during the Yatra season? Ask what they do and
+              code the closest group; do not read the list aloud unless needed."
+             1=Pony/mule worker (works the animals, does not own them)
+             2=Pony/mule owner (owns the animals)
+             3=Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)
+             4=Palki / dandi bearer (carries a person on a palanquin, as part of a team)
+             5=Dhaba, tea stall or food stall WORKER (prepared food or tea)
+             6=Dhaba, tea stall or food stall OWNER (prepared food or tea)
+             7=Shop WORKER (goods: prasad, puja items, clothes, general store)
+             8=Shop OWNER (goods, not prepared food)  |  9=Hotel / lodge WORKER
+             10=Hotel / lodge OWNER  |  11=Driver (any motor vehicle)  |  12=Guide
+             13=Wage labourer (construction, loading, odd jobs)  |  14=Other
            \__ this answer is removed from the options of: Q22
-        19   occupation_detail          free text  
-        20   employment_type            choose 1 of 5  
-        21 **n_other_activities         number  
+        19   occupation_detail          FREE TEXT  
+             "In your own words, what exactly is your main work here? Write down
+              what they say -- what they actually do, and who for. Do not tick a box
+              for this one."
+        20   employment_type            CHOOSE 1 (5 options)  
+             "In this main work, are you: working on your own account without hired
+              workers; running a business with hired workers; a regular monthly
+              wage-earner; or a daily/casual wage-earner?"
+             1=Own-account (self-employed, no hired workers)
+             2=Employer/business owner (self-employed)  |  3=Regular wage or salary
+             4=Casual or daily wage labour  |  5=Unpaid family worker
+        21 **n_other_activities         NUMBER  
+             "Besides your main work, how many OTHER paid activities or
+              income-generating activities do you have? (0 if none. For example, a
+              shop owner who also rents out a pony and drives in the off-season
+              would say 2.)"
            \__ opens/closes: Q22, Q23
    |-> if Q21 > 0
-   |     22   other_activity_types       check-all of 14  
+   |     22   other_activity_types       CHECK ALL (14 options)  
+   |         "Which ones are they? Check every one that applies. Ask and code the
+   |          closest group for each; do not read the list aloud unless needed."
+   |         1=Pony/mule worker (works the animals, does not own them)
+   |         2=Pony/mule owner (owns the animals)
+   |         3=Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)
+   |         4=Palki / dandi bearer (carries a person on a palanquin, as part of a team)
+   |         5=Dhaba, tea stall or food stall WORKER (prepared food or tea)
+   |         6=Dhaba, tea stall or food stall OWNER (prepared food or tea)
+   |         7=Shop WORKER (goods: prasad, puja items, clothes, general store)
+   |         8=Shop OWNER (goods, not prepared food)  |  9=Hotel / lodge WORKER
+   |         10=Hotel / lodge OWNER  |  11=Driver (any motor vehicle)  |  12=Guide
+   |         13=Wage labourer (construction, loading, odd jobs)  |  14=Other
            \__ options exclude whatever was answered at Q18
    |-> if Q21 > 0
-   |     23   other_activity_income_pm   amount in Rs  
-        24   years_in_yatra_work        number  
-        25   hours_day_yatra            number  
-        26   days_week_yatra            number  
-        27 **prev_occ_change            choose 1 of 2  
+   |     23   other_activity_income_pm   AMOUNT IN RS  
+   |         "Taking all of that other work together, about how much do you usually
+   |          earn from it in a month? (Rs)"
+        24   years_in_yatra_work        NUMBER  
+             "How many Yatra seasons have you worked in this kind of work?"
+        25   hours_day_yatra            NUMBER  
+             "In the Yatra season, on a normal working day, how many hours do you
+              work in total, across all your work?"
+        26   days_week_yatra            NUMBER  
+             "How many days a week do you usually work in the season?"
+        27 **prev_occ_change            CHOOSE 1 (2 options)  
+             "In the last ten years, did you change your main kind of work?"
+             0=No  |  1=Yes
            \__ opens/closes: Q28, Q30
    |-> if Q27 = 1
-   |     28   prev_occ                   free text  
-        29   target_occ                 free text  
+   |     28   prev_occ                   FREE TEXT  
+   |         "What was your previous main work? Write down exactly what they say, in
+   |          their words -- do not pick from a list."
+        29   target_occ                 FREE TEXT  
+             "If you could not continue this work at all, what work would you move
+              to instead? Write down exactly what they say, in their words -- do not
+              pick from a list, and do not prompt with examples."
    |-> if Q27 = 1
-   |     30   prev_occ_reason            choose 1 of 6  
-        31   training_received          choose 1 of 2  
+   |     30   prev_occ_reason            CHOOSE 1 (6 options)  
+   |         "What was the main reason you changed?"
+   |         1=Better income  |  2=Lost the previous work
+   |         3=Work ended with the season  |  4=Family reasons  |  5=Health or injury
+   |         6=Other
+        31   training_received          CHOOSE 1 (2 options)  
+             "Apart from school and college, have you ever completed any training
+              course or apprenticeship?"
+             0=No  |  1=Yes
 
 +------------------------------------------------------------------------------------------+
 | MODULE C — Monthly calendar of work and income; remittances                              |
@@ -83,59 +187,159 @@
 
    [read aloud] Now I want to go through the last twelve months, one month at a time. For ...
 
-        32   status_m5                  choose 1 of 8  
-        33   status_m6                  choose 1 of 8  
-        34   status_m7                  choose 1 of 8  
-        35   status_m8                  choose 1 of 8  
-        36   status_m9                  choose 1 of 8  
-        37   status_m10                 choose 1 of 8  
-        38   status_m11                 choose 1 of 8  
-        39   status_m12                 choose 1 of 8  
-        40   status_m1                  choose 1 of 8  
-        41   status_m2                  choose 1 of 8  
-        42   status_m3                  choose 1 of 8  
-        43   status_m4                  choose 1 of 8  
-        44 **knows_monthly_income       choose 1 of 2  
+        32   status_m5                  CHOOSE 1 (8 options)  
+             "In May, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        33   status_m6                  CHOOSE 1 (8 options)  
+             "In June, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        34   status_m7                  CHOOSE 1 (8 options)  
+             "In July, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        35   status_m8                  CHOOSE 1 (8 options)  
+             "In August, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        36   status_m9                  CHOOSE 1 (8 options)  
+             "In September, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        37   status_m10                 CHOOSE 1 (8 options)  
+             "In October, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        38   status_m11                 CHOOSE 1 (8 options)  
+             "In November, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        39   status_m12                 CHOOSE 1 (8 options)  
+             "In December, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        40   status_m1                  CHOOSE 1 (8 options)  
+             "In January, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        41   status_m2                  CHOOSE 1 (8 options)  
+             "In February, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        42   status_m3                  CHOOSE 1 (8 options)  
+             "In March, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        43   status_m4                  CHOOSE 1 (8 options)  
+             "In April, what was your main work or activity?"
+             1=Yatra work, or getting ready for the season  |  2=Farming (crops)
+             3=Livestock (animals)  |  4=Casual or daily wage labour
+             5=Construction work  |  6=Own small shop, stall or trade
+             7=Salaried job  |  8=No paid work
+        44 **knows_monthly_income       CHOOSE 1 (2 options)  
+             "Can you tell me roughly what you earned in each month of the past
+              year, or would it be easier to give one total for the whole year?"
+             1=Month by month  |  0=One total for the whole year
            \__ opens/closes: Q57, Q58, Q45, Q46, Q47, Q48, Q49, Q50, Q51, Q52, Q53, Q54, Q55, Q56
    |-> if Q44 = 1 AND Q40 != 8
-   |     45   income_m1                  amount in Rs  
+   |     45   income_m1                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in January, after costs? (Rs)"
    |-> if Q44 = 1 AND Q41 != 8
-   |     46   income_m2                  amount in Rs  
+   |     46   income_m2                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in February, after costs?
+   |          (Rs)"
    |-> if Q44 = 1 AND Q42 != 8
-   |     47   income_m3                  amount in Rs  
+   |     47   income_m3                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in March, after costs? (Rs)"
    |-> if Q44 = 1 AND Q43 != 8
-   |     48   income_m4                  amount in Rs  
+   |     48   income_m4                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in April, after costs? (Rs)"
    |-> if Q44 = 1 AND Q32 != 8
-   |     49   income_m5                  amount in Rs  
+   |     49   income_m5                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in May, after costs? (Rs)"
    |-> if Q44 = 1 AND Q33 != 8
-   |     50   income_m6                  amount in Rs  
+   |     50   income_m6                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in June, after costs? (Rs)"
    |-> if Q44 = 1 AND Q34 != 8
-   |     51   income_m7                  amount in Rs  
+   |     51   income_m7                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in July, after costs? (Rs)"
    |-> if Q44 = 1 AND Q35 != 8
-   |     52   income_m8                  amount in Rs  
+   |     52   income_m8                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in August, after costs? (Rs)"
    |-> if Q44 = 1 AND Q36 != 8
-   |     53   income_m9                  amount in Rs  
+   |     53   income_m9                  AMOUNT IN RS  
+   |         "How much did you earn from all your work in September, after costs?
+   |          (Rs)"
    |-> if Q44 = 1 AND Q37 != 8
-   |     54   income_m10                 amount in Rs  
+   |     54   income_m10                 AMOUNT IN RS  
+   |         "How much did you earn from all your work in October, after costs? (Rs)"
    |-> if Q44 = 1 AND Q38 != 8
-   |     55   income_m11                 amount in Rs  
+   |     55   income_m11                 AMOUNT IN RS  
+   |         "How much did you earn from all your work in November, after costs?
+   |          (Rs)"
    |-> if Q44 = 1 AND Q39 != 8
-   |     56   income_m12                 amount in Rs  
+   |     56   income_m12                 AMOUNT IN RS  
+   |         "How much did you earn from all your work in December, after costs?
+   |          (Rs)"
    |-> if Q44 = 0
-   |     57   income_annual_total        amount in Rs  
+   |     57   income_annual_total        AMOUNT IN RS  
+   |         "Thinking of the whole past year, about how much did you earn in total
+   |          from all your work, after costs? (Rs)"
    |-> if Q44 = 0
-   |     58   pct_income_yatra           number  
-        59 **remit_out_yatra_pm         amount in Rs  
+   |     58   pct_income_yatra           NUMBER  
+   |         "Out of every 100 rupees you earned in the whole year, how many came
+   |          from your Yatra work? (The rest is counted as coming from your other
+   |          work.)"
+        59 **remit_out_yatra_pm         AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much money do you
+              usually send to family or others living elsewhere? (Rs, 0 if none)"
            \__ opens/closes: Q61
-        60   remit_out_offseason_pm     amount in Rs  
+        60   remit_out_offseason_pm     AMOUNT IN RS  
+             "In a normal month when the Yatra is closed, how much do you usually
+              send? (Rs, 0 if none)"
    |-> if Q59 > 0 OR Q60 > 0
-   |     61   remit_mode                 choose 1 of 7  
-        62   remit_in_yatra_pm          amount in Rs  
-        63   remit_in_offseason_pm      amount in Rs  
+   |     61   remit_mode                 CHOOSE 1 (7 options)  
+   |         "How do you usually send it?"
+   |         1=From my own phone (UPI or net banking)
+   |         2=In person at a bank branch or bank mitra / CSP
+   |         3=Money order or post office  |  4=Sent with someone going home
+   |         5=Carried it myself  |  6=Through an agent or middleman  |  7=Other
+        62   remit_in_yatra_pm          AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much money do you
+              usually receive from family or others? (Rs, 0 if none)"
+        63   remit_in_offseason_pm      AMOUNT IN RS  
+             "In a normal month when the Yatra is closed, how much do you usually
+              receive? (Rs, 0 if none)"
    :-> if calc_offseason_work > 0
-   |     64   hours_day_offseason        number  
+   |     64   hours_day_offseason        NUMBER  
+   |         "In the months when the Yatra is closed and you are doing other work,
+   |          on a normal working day, how many hours do you work in total?"
    :-> if calc_offseason_work > 0
-   |     65   days_week_offseason        number  
+   |     65   days_week_offseason        NUMBER  
+   |         "In those months, how many days a week do you usually work?"
 
 +------------------------------------------------------------------------------------------+
 | MODULE D — Migration                                                                     |
@@ -144,39 +348,100 @@
 
    [read aloud] Now a few questions about where your home is, and what you do when the Yat...
 
-        66 **origin                     choose 1 of 4  
+        66 **origin                     CHOOSE 1 (4 options)  
+             "Where is your permanent home?"
+             1=Local (same district)  |  2=Other Uttarakhand district
+             3=Other Indian state  |  4=Nepal
            \__ opens/closes: Q73
-        67   home_state                 choose 1 of 37  
-        68   home_rural_urban           choose 1 of 2  
-        69 **resp_returns_at_closure    choose 1 of 2  
+        67   home_state                 CHOOSE 1 (37 options)  
+             "Which state is your permanent home in? (If it is outside India, say
+              so.)"
+             1=Andhra Pradesh  |  2=Arunachal Pradesh  |  3=Assam  |  4=Bihar
+             5=Chhattisgarh  |  6=Goa  |  7=Gujarat  |  8=Haryana
+             9=Himachal Pradesh  |  10=Jharkhand  |  11=Karnataka  |  12=Kerala
+             13=Madhya Pradesh  |  14=Maharashtra  |  15=Manipur  |  16=Meghalaya
+             17=Mizoram  |  18=Nagaland  |  19=Odisha  |  20=Punjab  |  21=Rajasthan
+             22=Sikkim  |  23=Tamil Nadu  |  24=Telangana  |  25=Tripura
+             26=Uttar Pradesh  |  27=Uttarakhand  |  28=West Bengal
+             29=Andaman and Nicobar Islands  |  30=Chandigarh
+             31=Dadra and Nagar Haveli and Daman and Diu  |  32=Delhi
+             33=Jammu and Kashmir  |  34=Ladakh  |  35=Lakshadweep  |  36=Puducherry
+             99=Outside India
+        68   home_rural_urban           CHOOSE 1 (2 options)  
+             "Is that home in a village, or in a town or city?"
+             1=Village (rural)  |  2=Town or city (urban)
+        69 **resp_returns_at_closure    CHOOSE 1 (2 options)  
+             "When the Yatra closes for the season, do YOU go to your home place?"
+             0=No  |  1=Yes
            \__ opens/closes: Q72, Q76, Q77
-        70 **hh_at_home_place           choose 1 of 2  
+        70 **hh_at_home_place           CHOOSE 1 (2 options)  
+             "And do the rest of your household live at your home place all year, or
+              are they here with you during the season?"
+             0=No  |  1=Yes
            \__ opens/closes: Q71
    |-> if Q70 = 1
-   |     71   n_here_season              number  
+   |     71   n_here_season              NUMBER  
+   |         "During the Yatra season, how many people are you feeding and spending
+   |          on here, counting yourself?"
    |-> if Q69 = 1
-   |     72   years_coming_here          number  
+   |     72   years_coming_here          NUMBER  
+   |         "How many years have you been coming here for the Yatra season?"
    |-> if Q66 != 1
-   |     73   came_here_reason           choose 1 of 8  
-        74 **worked_away_in_closure     choose 1 of 2  
+   |     73   came_here_reason           CHOOSE 1 (8 options)  
+   |         "What was the main reason you first came here to work?"
+   |         1=No work at home  |  2=Pay is better here
+   |         3=Family or people from my village were already here
+   |         4=Land at home is too little to live on  |  5=Debt to repay
+   |         6=A contractor or agent brought me  |  7=Married into / moved with family
+   |         8=Some other reason
+        74 **worked_away_in_closure     CHOOSE 1 (2 options)  
+             "Last year, in the months when the Yatra was closed, did you go
+              somewhere else for work?"
+             0=No  |  1=Yes
            \__ opens/closes: Q78, Q75
    |-> if Q74 = 1
-   |     75   closure_work_detail        free text..
+   |     75   closure_work_detail        FREE TEXT..
+   |         "Where did you go, and what work did you do there? Write what they say."
    |-> if Q69 = 1
-   |     76   left_here_month            choose 1 of 12  
+   |     76   left_here_month            CHOOSE 1 (12 options)  
+   |         "In the past year, which month did you last leave here and go to your
+   |          home place?"
+   |         1=January  |  2=February  |  3=March  |  4=April  |  5=May  |  6=June
+   |         7=July  |  8=August  |  9=September  |  10=October  |  11=November
+   |         12=December
    |-> if Q69 = 1
-   |     77   returned_here_month        choose 1 of 12  
+   |     77   returned_here_month        CHOOSE 1 (12 options)  
+   |         "And which month did you come back here?"
+   |         1=January  |  2=February  |  3=March  |  4=April  |  5=May  |  6=June
+   |         7=July  |  8=August  |  9=September  |  10=October  |  11=November
+   |         12=December
    |-> if Q74 = 1
-   |     78   months_away_for_work       number  
-        79 **worked_other_places        choose 1 of 2  
+   |     78   months_away_for_work       NUMBER  
+   |         "In those months away, how many months did you spend working somewhere
+   |          other than your home place?"
+        79 **worked_other_places        CHOOSE 1 (2 options)  
+             "Before you started coming here, had you gone anywhere else for work?"
+             0=No  |  1=Yes
            \__ opens/closes: Q80
    |-> if Q79 = 1
-   |     80   other_places_detail        free text..
-        81   would_move_for_work        choose 1 of 3  
-        82 **migration_referral         choose 1 of 7  
+   |     80   other_places_detail        FREE TEXT..
+   |         "Where did you go, and what work did you do? Write what they say."
+        81   would_move_for_work        CHOOSE 1 (3 options)  
+             "If this work here ended, would you go away from your home place to
+              look for work in the coming year?"
+             0=No  |  1=Yes  |  97=Don't know
+        82 **migration_referral         CHOOSE 1 (7 options)  
+             "Who mainly helped you get this work, or arranged it for you?"
+             1=A family member already working here
+             2=A friend or someone from the village
+             3=A thekedar or contractor I now work for
+             4=An agent or middleman who placed me (usually for a fee)
+             5=No one; I found it myself  |  6=The employer called me directly
+             7=Someone else
            \__ opens/closes: Q83
    |-> if Q82 = 7
-   |     83   migration_referral_other   free text..
+   |     83   migration_referral_other   FREE TEXT..
+   |         "Who was it? Write what they say."
 
 +------------------------------------------------------------------------------------------+
 | MODULE E — Household consumption                                                         |
@@ -185,45 +450,128 @@
 
    [read aloud] Now about what your household usually spends in a month. For each thing I ...
 
-        84 **spend_differs_by_season    choose 1 of 2  
+        84 **spend_differs_by_season    CHOOSE 1 (2 options)  
+             "Leaving aside money you send home -- is what your household spends in
+              a normal month during the Yatra season different from what it spends
+              when the Yatra is closed?"
+             0=No  |  1=Yes
            \__ opens/closes: Q86, Q88, Q90, Q92, Q104, Q106, Q94, Q96, Q98, Q100, Q102
-        85   cons_staples_yatra_pm      amount in Rs  
+        85   cons_staples_yatra_pm      AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on cereals (rice, wheat, other grains),
+              pulses, sugar and salt, bought or from your own stock? (Rs)"
    |-> if Q84 = 1
-   |     86   cons_staples_offseason_pm  amount in Rs  
-        87   cons_perishables_yatra_pm  amount in Rs  
+   |     86   cons_staples_offseason_pm  AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on cereals (rice, wheat, other grains), pulses, sugar
+   |          and salt, bought or from your own stock? (Rs)"
+        87   cons_perishables_yatra_pm  AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on milk and milk products, vegetables,
+              fruit, egg/fish/meat, cooking oil, spices, and tea or coffee, bought
+              or from your own stock? (Rs)"
    |-> if Q84 = 1
-   |     88   cons_perishables_offseason_pm amount in Rs  
-        89   cons_food_own_yatra_pm     amount in Rs  
+   |     88   cons_perishables_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on milk and milk products, vegetables, fruit,
+   |          egg/fish/meat, cooking oil, spices, and tea or coffee, bought or from
+   |          your own stock? (Rs)"
+        89   cons_food_own_yatra_pm     AMOUNT IN RS  
+             "If you (and anyone staying with you here) had not grown, raised or
+              been given any of your food, about how much would it have cost to buy
+              in a normal month during the Yatra season? (Rs, 0 if you buy
+              everything)"
    |-> if Q84 = 1
-   |     90   cons_food_own_offseason_pm amount in Rs  
-        91   cons_food_out_yatra_pm     amount in Rs  
+   |     90   cons_food_own_offseason_pm AMOUNT IN RS  
+   |         "If your household had not grown, raised or been given any of your
+   |          food, about how much would it have cost to buy in a normal month when
+   |          the Yatra is closed? (Rs, 0 if you buy everything)"
+        91   cons_food_out_yatra_pm     AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on meals, tea and snacks eaten outside
+              the home, including any an employer gave free, at their market value?
+              (Rs)"
    |-> if Q84 = 1
-   |     92   cons_food_out_offseason_pm amount in Rs  
-        93   cons_fuel_yatra_pm         amount in Rs  
+   |     92   cons_food_out_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on meals, tea and snacks eaten outside the home,
+   |          including any an employer gave free, at their market value? (Rs)"
+        93   cons_fuel_yatra_pm         AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on fuel and light: cooking fuel,
+              firewood, electricity, kerosene, candles? (Rs)"
    |-> if Q84 = 1
-   |     94   cons_fuel_offseason_pm     amount in Rs  
-        95   cons_routine_misc_yatra_pm amount in Rs  
+   |     94   cons_fuel_offseason_pm     AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on fuel and light: cooking fuel, firewood,
+   |          electricity, kerosene, candles? (Rs)"
+        95   cons_routine_misc_yatra_pm AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on soap, toiletries, cleaning goods and
+              other small household items? (Rs)"
    |-> if Q84 = 1
-   |     96   cons_routine_misc_offseason_pm amount in Rs  
-        97   cons_transport_comm_yatra_pm amount in Rs  
+   |     96   cons_routine_misc_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on soap, toiletries, cleaning goods and other small
+   |          household items? (Rs)"
+        97   cons_transport_comm_yatra_pm AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on local transport (bus, shared jeep,
+              auto) and phone or internet charges? (Rs)"
    |-> if Q84 = 1
-   |     98   cons_transport_comm_offseason_pm amount in Rs  
-        99   cons_rent_yatra_pm         amount in Rs  
+   |     98   cons_transport_comm_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on local transport (bus, shared jeep, auto) and phone
+   |          or internet charges? (Rs)"
+        99   cons_rent_yatra_pm         AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on rent for the home (0 if owned, and 0
+              for any period spent living for free)? (Rs)"
    |-> if Q84 = 1
-   |    100   cons_rent_offseason_pm     amount in Rs  
-       101   cons_med_nonhosp_yatra_pm  amount in Rs  
+   |    100   cons_rent_offseason_pm     AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on rent for the home (0 if owned, and 0 for any period
+   |          spent living for free)? (Rs)"
+       101   cons_med_nonhosp_yatra_pm  AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on medicine, doctor's or clinic fees and
+              tests, not counting a hospital stay? (Rs)"
    |-> if Q84 = 1
-   |    102   cons_med_nonhosp_offseason_pm amount in Rs  
-       103   cons_packaged_food_yatra_pm amount in Rs  
+   |    102   cons_med_nonhosp_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on medicine, doctor's or clinic fees and tests, not
+   |          counting a hospital stay? (Rs)"
+       103   cons_packaged_food_yatra_pm AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on biscuits, namkeen, chips, packaged
+              snacks, cold drinks or bottled water? (Rs)"
    |-> if Q84 = 1
-   |    104   cons_packaged_food_offseason_pm amount in Rs  
-       105   cons_pan_tobacco_yatra_pm  amount in Rs  
+   |    104   cons_packaged_food_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on biscuits, namkeen, chips, packaged snacks, cold
+   |          drinks or bottled water? (Rs)"
+       105   cons_pan_tobacco_yatra_pm  AMOUNT IN RS  
+             "In a normal month during the Yatra season, how much do you (and anyone
+              staying with you here) spend on pan, gutka, bidi, cigarettes, tobacco
+              or alcohol? (Rs)"
    |-> if Q84 = 1
-   |    106   cons_pan_tobacco_offseason_pm amount in Rs  
-       107   cons_clothing_12m          amount in Rs  
-       108   cons_education_12m         amount in Rs  
-       109   cons_medical_hosp_12m      amount in Rs  
-       110   cons_durables_12m          amount in Rs  
+   |    106   cons_pan_tobacco_offseason_pm AMOUNT IN RS  
+   |         "In a normal month when the Yatra is closed, how much does your
+   |          household spend on pan, gutka, bidi, cigarettes, tobacco or alcohol?
+   |          (Rs)"
+       107   cons_clothing_12m          AMOUNT IN RS  
+             "In the last 12 months, how much did your household spend on clothes
+              and footwear? (Rs)"
+       108   cons_education_12m         AMOUNT IN RS  
+             "In the last 12 months, how much on education: fees, books, uniforms,
+              tuition? (Rs)"
+       109   cons_medical_hosp_12m      AMOUNT IN RS  
+             "In the last 12 months, how much did your household pay for any
+              hospital admission or stay? (Rs, 0 if none)"
+       110   cons_durables_12m          AMOUNT IN RS  
+             "In the last 12 months, how much on durable goods: furniture, utensils,
+              cooking appliances, phone, jewellery or ornaments, bicycle or vehicle
+              parts? (Rs)"
 
 +------------------------------------------------------------------------------------------+
 | MODULE F — Housing, amenities and assets                                                 |
@@ -232,38 +580,106 @@
 
    [read aloud] Now some questions about your house and the things your household has.
 
-       111   floor_material             choose 1 of 3  
-       112   roof_material              choose 1 of 3  
-       113   wall_material              choose 1 of 3  
-       114   accom_type_here            choose 1 of 8  
-       115   electricity                choose 1 of 2  
-       116   toilet_type                choose 1 of 4  
-       117   drinking_water             choose 1 of 9  
-       118 **water_on_premises          choose 1 of 2  
+       111   floor_material             CHOOSE 1 (3 options)  
+             "What is the main material of the floor at your usual home?"
+             1=Mud/kaccha  |  2=Cement/mud-cement  |  3=Tile/mosaic/marble
+       112   roof_material              CHOOSE 1 (3 options)  
+             "What is the main material of the roof at your usual home?"
+             1=Thatch/wood/mud  |  2=Tin/GI sheet  |  3=Concrete/RCC
+       113   wall_material              CHOOSE 1 (3 options)  
+             "What are the walls of your usual home mainly made of?"
+             1=Mud, thatch, bamboo or other natural material
+             2=Unburnt brick, wood or tin  |  3=Burnt brick, cement, concrete or stone
+       114   accom_type_here            CHOOSE 1 (8 options)  
+             "While you are here for the season, where do you sleep?"
+             1=Own house here  |  2=Rented room or house
+             3=Room or dormitory the employer provides
+             4=Sleeps at the shop, dhaba or workplace  |  5=Tent or temporary shelter
+             6=Lodge, dharamshala or ashram  |  7=In the open, or a verandah
+             8=Somewhere else
+       115   electricity                CHOOSE 1 (2 options)  
+             "Does your usual home have an electricity connection?"
+             0=No  |  1=Yes
+       116   toilet_type                CHOOSE 1 (4 options)  
+             "What kind of toilet does your household use at your usual home?"
+             1=No toilet / open defecation  |  2=Pit latrine without slab or open pit
+             3=Improved toilet, but shared with other households
+             4=Improved toilet, used only by this household
+       117   drinking_water             CHOOSE 1 (9 options)  
+             "What is your main source of drinking water at your usual home?"
+             1=Piped into the house or yard  |  2=Public tap or standpipe
+             3=Handpump, tubewell or borewell  |  4=Protected well or protected spring
+             5=Rainwater collection  |  6=Bottled, packaged or community RO
+             7=Unprotected well or unprotected spring
+             8=River, stream, pond or canal  |  9=Tanker truck or cart with drum
+       118 **water_on_premises          CHOOSE 1 (2 options)  
+             "Is the drinking water available at the house itself?"
+             0=No  |  1=Yes
            \__ opens/closes: Q119
    |-> if Q118 = 0
-   |    119   water_fetch_minutes        number  
-       120   cooking_fuel               choose 1 of 10  
-       121   owns_tv                    choose 1 of 2  
-       122   owns_radio                 choose 1 of 2  
-       123   owns_bicycle               choose 1 of 2  
-       124   owns_motorcycle            choose 1 of 2  
-       125   owns_car                   choose 1 of 2  
-       126   owns_phone                 choose 1 of 2  
-       127   owns_computer              choose 1 of 2  
-       128   owns_animal_cart           choose 1 of 2  
-       129   owns_fridge                choose 1 of 2  
-       130 **land_cultivable_acres      number  
+   |    119   water_fetch_minutes        NUMBER  
+   |         "How long does it take to go there, get the water and come back?
+   |          (minutes, round trip)"
+       120   cooking_fuel               CHOOSE 1 (10 options)  
+             "What does your household mainly use to cook at your usual home?"
+             1=LPG or cylinder gas  |  2=Piped natural gas  |  3=Electricity
+             4=Biogas (gobar gas plant)  |  5=Kerosene  |  6=Firewood
+             7=Dung cakes (gobar)  |  8=Crop residue, straw or shrubs  |  9=Charcoal
+             10=Coal or lignite
+       121   owns_tv                    CHOOSE 1 (2 options)  
+             "Does your household own: a television?"
+             0=No  |  1=Yes
+       122   owns_radio                 CHOOSE 1 (2 options)  
+             "... a radio?"
+             0=No  |  1=Yes
+       123   owns_bicycle               CHOOSE 1 (2 options)  
+             "... a bicycle?"
+             0=No  |  1=Yes
+       124   owns_motorcycle            CHOOSE 1 (2 options)  
+             "... a motorcycle or scooter?"
+             0=No  |  1=Yes
+       125   owns_car                   CHOOSE 1 (2 options)  
+             "... a car, jeep or truck?"
+             0=No  |  1=Yes
+       126   owns_phone                 CHOOSE 1 (2 options)  
+             "... a telephone of any kind, mobile or landline?"
+             0=No  |  1=Yes
+       127   owns_computer              CHOOSE 1 (2 options)  
+             "... a computer or laptop?"
+             0=No  |  1=Yes
+       128   owns_animal_cart           CHOOSE 1 (2 options)  
+             "... a cart pulled by an animal?"
+             0=No  |  1=Yes
+       129   owns_fridge                CHOOSE 1 (2 options)  
+             "... a refrigerator?"
+             0=No  |  1=Yes
+       130 **land_cultivable_acres      NUMBER  
+             "How much CULTIVABLE land does your household own or cultivate, in
+              acres? Do not count the land the house stands on. (0 if none)"
            \__ opens/closes: Q148
-       131   owns_cow_buffalo           choose 1 of 2  
-       132   owns_goat_sheep            choose 1 of 2  
-       133   owns_pony_mule             choose 1 of 2  
-       134   owns_shop_stall            choose 1 of 2  
-       135   owns_work_vehicle          choose 1 of 2  
-       136 **owns_work_equipment        choose 1 of 2  
+       131   owns_cow_buffalo           CHOOSE 1 (2 options)  
+             "Does your household own any cows or buffaloes?"
+             0=No  |  1=Yes
+       132   owns_goat_sheep            CHOOSE 1 (2 options)  
+             "Does your household own any goats or sheep?"
+             0=No  |  1=Yes
+       133   owns_pony_mule             CHOOSE 1 (2 options)  
+             "Does your household own any ponies or mules?"
+             0=No  |  1=Yes
+       134   owns_shop_stall            CHOOSE 1 (2 options)  
+             "Does your household own a shop or stall that you use to earn?"
+             0=No  |  1=Yes
+       135   owns_work_vehicle          CHOOSE 1 (2 options)  
+             "Does your household own a vehicle you use to earn (for example a jeep,
+              truck or taxi)?"
+             0=No  |  1=Yes
+       136 **owns_work_equipment        CHOOSE 1 (2 options)  
+             "Does your household own equipment or tools that you use to earn?"
+             0=No  |  1=Yes
            \__ opens/closes: Q137
    |-> if Q136 = 1
-   |    137   work_equipment_detail      free text..
+   |    137   work_equipment_detail      FREE TEXT..
+   |         "What are they? Write what they say. Leave blank if they cannot say."
 
 +------------------------------------------------------------------------------------------+
 | MODULE G — Finance, insurance and schemes                                                |
@@ -272,36 +688,83 @@
 
    [read aloud] Now about savings, loans, insurance and government schemes.
 
-       138   has_bank_account           choose 1 of 2  
-       139 **took_loan_12m              choose 1 of 2  
+       138   has_bank_account           CHOOSE 1 (2 options)  
+             "Does anyone in your household have a bank account or a post office
+              account?"
+             0=No  |  1=Yes
+       139 **took_loan_12m              CHOOSE 1 (2 options)  
+             "In the last 12 months, did you or anyone in your household borrow
+              money?"
+             0=No  |  1=Yes
            \__ opens/closes: Q140, Q141, Q144, Q142
    |-> if Q139 = 1
-   |    140   credit_source              choose 1 of 8  
+   |    140   credit_source              CHOOSE 1 (8 options)  
+   |         "Who was the main lender?"
+   |         1=Nationalised or public-sector bank  |  2=Private bank
+   |         3=Cooperative bank or RRB  |  4=Microfinance institution or SHG
+   |         5=Moneylender  |  6=Relative or friend
+   |         7=Employer or contractor (advance)  |  8=Other
    |-> if Q139 = 1
-   |    141   loan_amount                amount in Rs  
+   |    141   loan_amount                AMOUNT IN RS  
+   |         "How much of that loan is still left to repay? (Rs)"
    |-> if Q139 = 1
-   |    142 **pays_interest              choose 1 of 2  
+   |    142 **pays_interest              CHOOSE 1 (2 options)  
+   |         "Do you pay interest on it?"
+   |         0=No  |  1=Yes
            \__ opens/closes: Q143
    |-> if Q142 = 1
-   |    143   loan_interest_per100_pm    number..
+   |    143   loan_interest_per100_pm    NUMBER..
+   |         "On every 100 rupees you borrowed, about how much interest do you pay
+   |          in a month? (Rs; 0 if none, leave blank if not known)"
    |-> if Q139 = 1
-   |    144 **loan_against_asset         choose 1 of 2  
+   |    144 **loan_against_asset         CHOOSE 1 (2 options)  
+   |         "Did you have to give something as security for it -- an animal, a
+   |          vehicle, jewellery, land or your business?"
+   |         0=No  |  1=Yes
            \__ opens/closes: Q145
    |-> if Q144 = 1
-   |    145   loan_collateral            choose 1 of 7  
-       146   n_health_insured           number  
-       147   n_life_insured             number  
+   |    145   loan_collateral            CHOOSE 1 (7 options)  
+   |         "What did you have to give as security?"
+   |         1=Jewellery or ornaments  |  2=Land  |  3=Animals  |  4=A vehicle
+   |         5=Shop stock or business goods  |  6=House or building
+   |         7=Something else
+       146   n_health_insured           NUMBER  
+             "How many people in your household are covered by any health insurance
+              or health scheme, including government ones? (0 if none)"
+       147   n_life_insured             NUMBER  
+             "How many people in your household have life insurance? (0 if none)"
    :-> if Q130 > 0
-   |    148   has_crop_insurance         choose 1 of 2  
-       149 **govt_schemes               check-all of 10  
+   |    148   has_crop_insurance         CHOOSE 1 (2 options)  
+   |         "Is your crop insured?"
+   |         0=No  |  1=Yes
+       149 **govt_schemes               CHECK ALL (10 options)  
+             "In the last 12 months, did your household get anything from any of
+              these? Read the list out and check every one they say yes to."
+             1=Ration card / PDS food grain  |  2=MGNREGA work or job card
+             3=Old-age, widow or disability pension
+             4=PM-KISAN (farmer cash transfer)  |  5=Ujjwala LPG connection
+             6=PM-SYM or Atal Pension Yojana
+             7=Ayushman Bharat / health insurance card
+             8=Housing scheme (PMAY or state)  |  9=Some other scheme
+             10=None of these
            \__ opens/closes: Q150, Q151
    |-> if selected(Q149, '9')
-   |    150   govt_scheme_other          free text..
+   |    150   govt_scheme_other          FREE TEXT..
+   |         "Which scheme was that? Write what they say."
    |-> if selected(Q149, '1')
-   |    151   ration_portable_here       choose 1 of 4  
-       152   smartphone_owned           choose 1 of 2  
-       153   uses_digital_payment       choose 1 of 2  
-       154   n_can_transact_online      number  
+   |    151   ration_portable_here       CHOOSE 1 (4 options)  
+   |         "Can you draw your ration here, or only at your home place?"
+   |         1=Yes, can draw it here  |  2=No, only at the home place
+   |         3=Has never tried  |  97=Does not know
+       152   smartphone_owned           CHOOSE 1 (2 options)  
+             "Do you own a smartphone?"
+             0=No  |  1=Yes
+       153   uses_digital_payment       CHOOSE 1 (2 options)  
+             "Do you ever use UPI or another way of paying by phone?"
+             0=No  |  1=Yes
+       154   n_can_transact_online      NUMBER  
+             "How many people in your household can make a payment by phone
+              themselves, without help? (0 if none)"
 
 +------------------------------------------------------------------------------------------+
 | MODULE H — Health                                                                        |
@@ -310,22 +773,52 @@
 
    [read aloud] Now a few questions about health in your household. You may leave out any ...
 
-       155 **morbidity_15d              choose 1 of 2  
+       155 **morbidity_15d              CHOOSE 1 (2 options)  
+             "In the last 15 days, was anyone in your household ill?"
+             0=No  |  1=Yes
            \__ opens/closes: Q156, Q157
    |-> if Q155 = 1
-   |    156   morbidity_coping_15d       choose 1 of 6  
+   |    156   morbidity_coping_15d       CHOOSE 1 (6 options)  
+   |         "How did the household mainly cope with the cost of this: used savings;
+   |          borrowed money; sold or pawned assets; cut other consumption; got help
+   |          from relatives or community; or something else?"
+   |         1=Used savings  |  2=Borrowed money  |  3=Sold or pawned assets
+   |         4=Cut consumption  |  5=Help from relatives/community
+   |         6=Did nothing/other
    |-> if Q155 = 1
-   |    157   morbidity_cost_15d         amount in Rs  
-       158   func_limitation            choose 1 of 4  
-       159   hospitalization_365d       choose 1 of 2  
-       160   health_access_barrier_3m   choose 1 of 2  
-       161   child_death_5y             choose 1 of 2  
-       162 **birth_last_5y              choose 1 of 2  
+   |    157   morbidity_cost_15d         AMOUNT IN RS  
+   |         "About how much did the household spend on this in the last 15 days
+   |          (medicine, doctor or clinic fees, travel for care)? (Rs)"
+       158   func_limitation            CHOOSE 1 (4 options)  
+             "Do you have difficulty walking or climbing steps?"
+             1=No difficulty  |  2=Some difficulty  |  3=A lot of difficulty
+             4=Cannot do it at all
+       159   hospitalization_365d       CHOOSE 1 (2 options)  
+             "In the last 12 months, was anyone in your household admitted to
+              hospital overnight?"
+             0=No  |  1=Yes
+       160   health_access_barrier_3m   CHOOSE 1 (2 options)  
+             "In the last 3 months, was there a time when someone in your household
+              needed medical care but could not get it?"
+             0=No  |  1=Yes
+       161   child_death_5y             CHOOSE 1 (2 options)  
+             "In the last five years, has any child or young person under 18 in your
+              household died?"
+             0=No  |  1=Yes
+       162 **birth_last_5y              CHOOSE 1 (2 options)  
+             "In the last five years, did any woman in your household give birth?"
+             0=No  |  1=Yes
            \__ opens/closes: Q163, Q164
    |-> if Q162 = 1
-   |    163   anc_4_visits               choose 1 of 3  
+   |    163   anc_4_visits               CHOOSE 1 (3 options)  
+   |         "For the most recent birth, did she have at least four check-ups before
+   |          the delivery?"
+   |         0=No  |  1=Yes  |  97=Don't know
    |-> if Q162 = 1
-   |    164   skilled_birth_attendant    choose 1 of 3  
+   |    164   skilled_birth_attendant    CHOOSE 1 (3 options)  
+   |         "Was that delivery done with the help of a doctor, nurse or trained
+   |          midwife?"
+   |         0=No  |  1=Yes  |  97=Don't know
 
 +------------------------------------------------------------------------------------------+
 | MODULE I — Food security, shocks and coping                                              |
@@ -334,24 +827,77 @@
 
    [read aloud] Now about food, and about any difficult times in the last year and how you...
 
-       165 **distress_event_last365d    check-all of 9  
+       165 **distress_event_last365d    CHECK ALL (9 options)  
+             "In the last 12 months, did any of these happen -- to your household,
+              or to the Yatra route you work on? Check every one that applies."
+             9=Nothing of this kind happened
+             1=Serious illness or death of an earning member
+             2=Crop failure or livestock loss
+             3=Damage from a natural disaster (flood, landslide, fire)
+             4=Loss of business, goods or assets
+             5=Road or bridge blocked, route closed
+             6=Yatra stopped early or badly disrupted
+             7=Sharp fall in customers or prices
+             8=Lost the work or the work stopped
            \__ opens/closes: Q166, Q167, Q168
    |-> if not(selected(Q165, '9')) AND count(Q165) > 0
-   |    166   shock_loss_amount          amount in Rs  
+   |    166   shock_loss_amount          AMOUNT IN RS  
+   |         "Thinking of whichever of those hit you hardest -- about how much did
+   |          your household lose in earnings, or have to spend because of it? (Rs)"
    |-> if not(selected(Q165, '9')) AND count(Q165) > 0
-   |    167   shock_month                choose 1 of 12  
+   |    167   shock_month                CHOOSE 1 (12 options)  
+   |         "And in which month did that one happen?"
+   |         1=January  |  2=February  |  3=March  |  4=April  |  5=May  |  6=June
+   |         7=July  |  8=August  |  9=September  |  10=October  |  11=November
+   |         12=December
    |-> if not(selected(Q165, '9')) AND count(Q165) > 0
-   |    168   shock_coping               check-all of 6  
-       169   cope_less_pref_food_yatra_wk number  
-       170   cope_less_pref_food_offseason_wk number  
-       171   cope_borrow_food_yatra_wk  number  
-       172   cope_borrow_food_offseason_wk number  
-       173   cope_reduce_meals_yatra_wk number  
-       174   cope_reduce_meals_offseason_wk number  
-       175   cope_reduce_portion_yatra_wk number  
-       176   cope_reduce_portion_offseason_wk number  
-       177   cope_restrict_adult_yatra_wk number  
-       178   cope_restrict_adult_offseason_wk number  
+   |    168   shock_coping               CHECK ALL (6 options)  
+   |         "How did your household manage? Check every one they used."
+   |         1=Used savings  |  2=Borrowed money  |  3=Sold or pawned assets
+   |         4=Cut consumption  |  5=Help from relatives/community
+   |         6=Did nothing/other
+       169   cope_less_pref_food_yatra_wk NUMBER  
+             "In a normal week during the Yatra season, to cope with a lack of food
+              or money to buy it, how many days did your household rely on less
+              expensive/less preferred food? (0-7 days)"
+       170   cope_less_pref_food_offseason_wk NUMBER  
+             "In a normal week when the Yatra is closed, to cope with a lack of food
+              or money to buy it, how many days did your household rely on less
+              expensive/less preferred food? (0-7 days)"
+       171   cope_borrow_food_yatra_wk  NUMBER  
+             "In a normal week during the Yatra season, to cope with a lack of food
+              or money to buy it, how many days did your household borrow food
+              and/or rely on help from friends/relatives? (0-7 days)"
+       172   cope_borrow_food_offseason_wk NUMBER  
+             "In a normal week when the Yatra is closed, to cope with a lack of food
+              or money to buy it, how many days did your household borrow food
+              and/or rely on help from friends/relatives? (0-7 days)"
+       173   cope_reduce_meals_yatra_wk NUMBER  
+             "In a normal week during the Yatra season, to cope with a lack of food
+              or money to buy it, how many days did your household reduce the number
+              of meals eaten per day? (0-7 days)"
+       174   cope_reduce_meals_offseason_wk NUMBER  
+             "In a normal week when the Yatra is closed, to cope with a lack of food
+              or money to buy it, how many days did your household reduce the number
+              of meals eaten per day? (0-7 days)"
+       175   cope_reduce_portion_yatra_wk NUMBER  
+             "In a normal week during the Yatra season, to cope with a lack of food
+              or money to buy it, how many days did your household reduce portion
+              size of meals? (0-7 days)"
+       176   cope_reduce_portion_offseason_wk NUMBER  
+             "In a normal week when the Yatra is closed, to cope with a lack of food
+              or money to buy it, how many days did your household reduce portion
+              size of meals? (0-7 days)"
+       177   cope_restrict_adult_yatra_wk NUMBER  
+             "In a normal week during the Yatra season, to cope with a lack of food
+              or money to buy it, how many days did your household restrict
+              consumption of adults/mothers in order for young children to eat? (0-7
+              days)"
+       178   cope_restrict_adult_offseason_wk NUMBER  
+             "In a normal week when the Yatra is closed, to cope with a lack of food
+              or money to buy it, how many days did your household restrict
+              consumption of adults/mothers in order for young children to eat? (0-7
+              days)"
 
 +------------------------------------------------------------------------------------------+
 | MODULE J — Ropeway                                                                       |
@@ -360,8 +906,14 @@
 
    [read aloud] Now two questions about the ropeway that has been proposed between Gauriku...
 
-       179   ropeway_stance             choose 1 of 4  
-       180   trek_dependent             choose 1 of 2  
+       179   ropeway_stance             CHOOSE 1 (4 options)  
+             "A ropeway is proposed between Gaurikund and Kedarnath. Are you in
+              favour, neutral, or against?"
+             1=Support  |  2=Neutral  |  3=Oppose  |  98=Prefer not to say
+       180   trek_dependent             CHOOSE 1 (2 options)  
+             "Is your main Yatra work carrying, transporting or guiding people or
+              goods on the Gaurikund to Kedarnath trek?"
+             0=No  |  1=Yes
 
 +------------------------------------------------------------------------------------------+
 | MODULE K — Job quality (Apablaza et al. 2026 questions)                                  |
@@ -370,32 +922,75 @@
 
    [read aloud] Now a set of questions about the conditions of your work -- hours, pay, co...
 
-       181 **job_situation              choose 1 of 11  
+       181 **job_situation              CHOOSE 1 (11 options)  
+             "Which best describes your situation during the last month: you work
+              for pay full-time; you work for pay part-time or do occasional jobs;
+              you study and work; you only study; you are only being trained for
+              work; you are retired or pensioned; you do unpaid household tasks or
+              care for others; you are unemployed and actively looking for work; you
+              are sick or disabled and cannot work; or none of these?"
+             1=Works for pay full-time  |  2=Works for pay part-time or occasional jobs
+             3=Studies and works  |  4=Only studies  |  5=Being trained for work only
+             6=Retired or pensioned  |  7=Unpaid household tasks or caring for others
+             8=Unemployed, actively seeking work  |  9=Sick or disabled, cannot work
+             10=Neither studying, working nor seeking work  |  97=Does not know
            \__ opens/closes: Q182, Q183, Q184, Q185, Q186, Q187, Q188, Q189, Q190
    |-> if Q181 <= 3
-   |    182   job_permanence             choose 1 of 5  
+   |    182   job_permanence             CHOOSE 1 (5 options)  
+   |         "Is your job: permanent; seasonal or temporary; occasional or casual;
+   |          on probation; or fixed-term?"
+   |         1=Permanent  |  2=Seasonal or temporary  |  3=Occasional or casual
+   |         4=On probation  |  5=Fixed-term
    |-> if (Q181 <= 3) AND (Q20 = 3 OR Q20 = 4)
-   |    183   contract_status            choose 1 of 3  
+   |    183   contract_status            CHOOSE 1 (3 options)  
+   |         "Do you have a signed contract? Yes, signed; yes but not yet signed; no
+   |          contract."
+   |         1=Yes, signed  |  2=Yes, but not yet signed  |  3=No contract
    |-> if Q181 <= 3
-   |    184   workplace_registered       choose 1 of 2  
+   |    184   workplace_registered       CHOOSE 1 (2 options)  
+   |         "Is your workplace or business registered, for example with a taxpayer
+   |          or GST number, a shop or trade licence, the Yatra registration, or a
+   |          union?"
+   |         0=No  |  1=Yes
    |-> if Q181 <= 3
-   |    185   pension_contrib            choose 1 of 3  
+   |    185   pension_contrib            CHOOSE 1 (3 options)  
+   |         "Do you contribute to any pension system? Yes, the employer deducts it;
+   |          yes, voluntarily; no."
+   |         1=Yes, employer deducts it  |  2=Yes, contributes voluntarily  |  3=No
    |-> if Q181 <= 3
-   |    186   work_health_ins            choose 1 of 4  
+   |    186   work_health_ins            CHOOSE 1 (4 options)  
+   |         "Do you have health insurance through your work? Yes; only private or
+   |          other insurance; none; don't know."
+   |         1=Yes, through work  |  2=Only private or other insurance  |  3=None
+   |         4=Don't know
    |-> if Q181 <= 3
-   |    187   leave_rights               choose 1 of 3  
+   |    187   leave_rights               CHOOSE 1 (3 options)  
+   |         "Do you have the right to paid holiday, sick or maternity leave?"
+   |         0=No  |  1=Yes  |  97=Don't know
    |-> if Q181 <= 3
-   |    188   injured_ever               choose 1 of 3  
+   |    188   injured_ever               CHOOSE 1 (3 options)  
+   |         "Have you ever been physically injured at your workplace?"
+   |         0=No  |  1=Yes  |  97=Don't know
    |-> if Q181 <= 3
-   |    189   workplace_injury_12m       choose 1 of 3  
+   |    189   workplace_injury_12m       CHOOSE 1 (3 options)  
+   |         "In the last 12 months, was anyone physically injured or killed at your
+   |          workplace because of work?"
+   |         0=No  |  1=Yes  |  97=Don't know
    |-> if Q181 <= 7
-   |    190 **wants_more_work            choose 1 of 3  
+   |    190 **wants_more_work            CHOOSE 1 (3 options)  
+   |         "Would you like to work more hours than you do?"
+   |         0=No  |  1=Yes  |  97=Don't know
            \__ opens/closes: Q191
    |-> if Q190 = 1 OR Q181 = 8
-   |    191   more_hours_day             number  
+   |    191   more_hours_day             NUMBER  
+   |         "On a working day, how many MORE hours would you like to work?"
    :-> if calc_months_no_work > 0 OR Q181 = 8
-   |    192   months_looked_for_work     number  
-       193   first_job_ever             choose 1 of 3  
+   |    192   months_looked_for_work     NUMBER  
+   |         "Across the months when you had no paid work, about how many MONTHS in
+   |          total were you looking for work?"
+       193   first_job_ever             CHOOSE 1 (3 options)  
+             "Was your current work the first paid job you ever had?"
+             0=No  |  1=Yes  |  97=Don't know
 
 +------------------------------------------------------------------------------------------+
 | MODULE L — Tasks and skills (short block)                                                |
@@ -404,27 +999,89 @@
 
    [read aloud] Last, I will read out some kinds of work-tasks and ask whether you do them...
 
-       194   tk_load                    choose 1 of 3  
-       195 **tk_drive                   choose 1 of 3  
+       194   tk_load                    CHOOSE 1 (3 options)  
+             "Do you load, unload, stack or count goods? (1 regularly in my main
+              Yatra work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       195 **tk_drive                   CHOOSE 1 (3 options)  
+             "Do you drive a motor vehicle? (1 regularly in my main Yatra work; 2
+              not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
            \__ opens/closes: Q206, Q207, Q208
-       196   tk_engine                  choose 1 of 3  
-       197   tk_electric                choose 1 of 3  
-       198   tk_safety                  choose 1 of 3  
-       199   tk_sell                    choose 1 of 3  
-       200   tk_cash                    choose 1 of 3  
-       201   tk_cook                    choose 1 of 3  
-       202   tk_serve                   choose 1 of 3  
-       203   tk_clean                   choose 1 of 3  
-       204   tk_guide                   choose 1 of 3  
-       205   tk_coord                   choose 1 of 3  
+       196   tk_engine                  CHOOSE 1 (3 options)  
+             "Do you operate an engine or machine? (1 regularly in my main Yatra
+              work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       197   tk_electric                CHOOSE 1 (3 options)  
+             "Do you do electrical or wiring work? (1 regularly in my main Yatra
+              work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       198   tk_safety                  CHOOSE 1 (3 options)  
+             "Do you check equipment or the route for safety? (1 regularly in my
+              main Yatra work; 2 not in my main work, but done before elsewhere; 3
+              never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       199   tk_sell                    CHOOSE 1 (3 options)  
+             "Do you sell goods or services? (1 regularly in my main Yatra work; 2
+              not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       200   tk_cash                    CHOOSE 1 (3 options)  
+             "Do you handle cash and payments? (1 regularly in my main Yatra work; 2
+              not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       201   tk_cook                    CHOOSE 1 (3 options)  
+             "Do you cook or prepare food or drink? (1 regularly in my main Yatra
+              work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       202   tk_serve                   CHOOSE 1 (3 options)  
+             "Do you serve guests or customers? (1 regularly in my main Yatra work;
+              2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       203   tk_clean                   CHOOSE 1 (3 options)  
+             "Do you clean rooms or public areas? (1 regularly in my main Yatra
+              work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       204   tk_guide                   CHOOSE 1 (3 options)  
+             "Do you guide or explain things to visitors? (1 regularly in my main
+              Yatra work; 2 not in my main work, but done before elsewhere; 3 never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
+       205   tk_coord                   CHOOSE 1 (3 options)  
+             "Do you coordinate work by phone, radio or signals? (1 regularly in my
+              main Yatra work; 2 not in my main work, but done before elsewhere; 3
+              never)"
+             1=Yes, regularly in my main Yatra work
+             2=Not in my main work, but done before elsewhere  |  3=Never done
    |-> if Q195 = 1 OR Q195 = 2
-   |    206   drove_twowheeler           choose 1 of 2  
+   |    206   drove_twowheeler           CHOOSE 1 (2 options)  
+   |         "Have you ever driven a motorcycle or scooter, with or without a
+   |          licence?"
+   |         0=No  |  1=Yes
    |-> if Q195 = 1 OR Q195 = 2
-   |    207   drove_car                  choose 1 of 2  
+   |    207   drove_car                  CHOOSE 1 (2 options)  
+   |         "... a car or jeep?"
+   |         0=No  |  1=Yes
    |-> if Q195 = 1 OR Q195 = 2
-   |    208   drove_heavy                choose 1 of 2  
-       209   read_at_work               choose 1 of 2  
-       210   calc_at_work               choose 1 of 2  
+   |    208   drove_heavy                CHOOSE 1 (2 options)  
+   |         "... a truck or bus?"
+   |         0=No  |  1=Yes
+       209   read_at_work               CHOOSE 1 (2 options)  
+             "In your work, do you read anything (notes, rate lists, tickets,
+              messages)?"
+             0=No  |  1=Yes
+       210   calc_at_work               CHOOSE 1 (2 options)  
+             "In your work, do you work out prices or costs?"
+             0=No  |  1=Yes
 
 ============================================================================================
                                      CROSS-MODULE GATES                                     
@@ -437,46 +1094,46 @@
                              THE BRANCH POINTS THAT MATTER MOST                             
 ============================================================================================
 
-   Q44 knows_monthly_income (choose 1 of 2)
+   Q44 knows_monthly_income (CHOOSE 1 (2 options))
       controls 14 questions: Q45, Q46, Q47, Q48, Q49, Q50, Q51, Q52, Q53, Q54, Q55, Q56, Q57, Q58
 
-   Q84 spend_differs_by_season (choose 1 of 2)
+   Q84 spend_differs_by_season (CHOOSE 1 (2 options))
       controls 11 questions: Q86, Q88, Q90, Q92, Q94, Q96, Q98, Q100, Q102, Q104, Q106
 
-   Q181 job_situation (choose 1 of 11)
+   Q181 job_situation (CHOOSE 1 (11 options))
       controls 9 questions: Q182, Q183, Q184, Q185, Q186, Q187, Q188, Q189, Q190
 
-   Q139 took_loan_12m (choose 1 of 2)
+   Q139 took_loan_12m (CHOOSE 1 (2 options))
       controls 4 questions: Q140, Q141, Q142, Q144
 
-   Q195 tk_drive (choose 1 of 3)
+   Q195 tk_drive (CHOOSE 1 (3 options))
       controls 3 questions: Q206, Q207, Q208
 
-   Q69 resp_returns_at_closure (choose 1 of 2)
+   Q69 resp_returns_at_closure (CHOOSE 1 (2 options))
       controls 3 questions: Q72, Q76, Q77
 
-   Q165 distress_event_last365d (check-all of 9)
+   Q165 distress_event_last365d (CHECK ALL (9 options))
       controls 3 questions: Q166, Q167, Q168
 
-   Q27 prev_occ_change (choose 1 of 2)
+   Q27 prev_occ_change (CHOOSE 1 (2 options))
       controls 2 questions: Q28, Q30
 
-   Q21 n_other_activities (number)
+   Q21 n_other_activities (NUMBER)
       controls 2 questions: Q22, Q23
 
-   Q7 knows_years_schooling (choose 1 of 2)
+   Q7 knows_years_schooling (CHOOSE 1 (2 options))
       controls 2 questions: Q8, Q9
 
-   Q155 morbidity_15d (choose 1 of 2)
+   Q155 morbidity_15d (CHOOSE 1 (2 options))
       controls 2 questions: Q156, Q157
 
-   Q74 worked_away_in_closure (choose 1 of 2)
+   Q74 worked_away_in_closure (CHOOSE 1 (2 options))
       controls 2 questions: Q75, Q78
 
-   Q149 govt_schemes (check-all of 10)
+   Q149 govt_schemes (CHECK ALL (10 options))
       controls 2 questions: Q150, Q151
 
-   Q162 birth_last_5y (choose 1 of 2)
+   Q162 birth_last_5y (CHOOSE 1 (2 options))
       controls 2 questions: Q163, Q164
 
 ============================================================================================

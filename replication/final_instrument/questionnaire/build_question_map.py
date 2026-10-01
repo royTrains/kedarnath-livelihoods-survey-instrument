@@ -61,11 +61,45 @@ def cond(rule):
 
 def kind_of(r):
     if r["kind"] == "multi":
-        return f"check-all of {len(LSETS[r['lset']])}"
+        return f"CHECK ALL ({len(LSETS[r['lset']])} options)"
     if r["lset"]:
-        return f"choose 1 of {len(LSETS[r['lset']])}"
+        return f"CHOOSE 1 ({len(LSETS[r['lset']])} options)"
     return {"count": "number", "num": "number", "money": "amount in Rs",
-            "text": "free text", "date": "date", "id": "id"}.get(r["kind"], r["kind"])
+            "text": "free text", "date": "date", "id": "id"}.get(r["kind"], r["kind"]).upper()
+
+
+def wrap(text, indent, width=None):
+    """The question as the enumerator reads it, wrapped. A map that names only the variable sends the
+    reader back to the dictionary, which defeats the point of having a map."""
+    width = width or (W - 4)
+    out, line, first = [], indent + '"', True
+    for word in text.split():
+        if len(line) + len(word) + 1 > width and not first:
+            out.append(line)
+            line = indent + " "          # continuation lines align under the opening quote
+            first = True
+        line += ("" if first else " ") + word
+        first = False
+    if line.strip():
+        out.append(line + '"')
+    return out
+
+
+def options(r, indent):
+    """Every option, in full, wrapped to the page. The whole point of the map is that nothing has to
+    be looked up somewhere else, so no list is abbreviated however long it runs."""
+    if not r["lset"]:
+        return []
+    out, line = [], indent
+    for k, v in LSETS[r["lset"]].items():
+        bit = f"{k}={v}"
+        if len(line) + len(bit) + 3 > W - 2 and line.strip() != indent.strip():
+            out.append(line.rstrip(" |"))
+            line = indent
+        line += bit + "  |  "
+    if line.strip():
+        out.append(line.rstrip(" |"))
+    return out
 
 W = 92
 lines = []
@@ -105,6 +139,7 @@ for code, title in MODULES:
         opt = ".." if "may be left blank" in r["skip"] else "  "
         opens = "**" if (name in children or name in cfilter_children) else "  "
         gated = name in gates
+        qt = r["question"]
 
         if gated:
             src, rule = gates[name]
@@ -113,8 +148,16 @@ for code, title in MODULES:
             lead = "   |-> " if same else "   :-> "
             A(f"{lead}if {cond(rule)}")
             A(f"   |    {n:>3} {opens}{name:<26} {kind_of(r)}{opt}")
+            for ln in wrap(qt, "   |         ", W - 8):
+                A(ln)
+            for ln in options(r, "   |         "):
+                A(ln)
         else:
             A(f"       {n:>3} {opens}{name:<26} {kind_of(r)}{opt}")
+            for ln in wrap(qt, "             ", W - 8):
+                A(ln)
+            for ln in options(r, "             "):
+                A(ln)
 
         if name in children:
             kids = ", ".join(f"Q{num[c]}" for c in children[name] if c in num)
