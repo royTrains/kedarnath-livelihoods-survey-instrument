@@ -83,6 +83,72 @@ is load-bearing for the multidimensional arm.
 
 ---
 
+## Stage two: screened to implementations
+
+The 135 were then screened against their indexed abstracts, because a work appearing in the harvest
+proves its bibliographic details, not that it runs the procedure. Each is labelled with what the
+abstract actually supports:
+
+| Label | Count | What it means |
+|---|---|---|
+| **CONFIRMED** | 18 | The abstract names the estimator — FGLS, three-stage, or Chaudhuri |
+| **LIKELY** | 49 | Names a vulnerability-to-poverty measure but not the estimator |
+| **UNCLEAR** | 32 | Neither appears; the matching phrase sits in the full text |
+| **NO ABSTRACT** | 36 | None indexed; cannot be screened this way |
+
+Table: `research_notes/Chaudhuri FGLS derivative studies/08_screened_comparison_table.md`, with
+setting, journal, every percentage the abstract reports, and any threshold figure, per entry.
+
+### The 18 confirmed implementations
+
+These can be cited as definite applications on the evidence gathered.
+
+| Year | Authors | Setting | Journal | DOI |
+|---|---|---|---|---|
+| 2025 | Xu et al. | China | Archives of Public Health | 10.1186/s13690-025-01821-y |
+| 2024 | Khosla and Jena | India | Margin: Journal of Applied Economic Research | 10.1177/00252921241308210 |
+| 2023 | Wei et al. | China | Global Health Action | 10.1080/16549716.2023.2260142 |
+| 2023 | De and Som | India | Research Square (preprint) | 10.21203/rs.3.rs-3185956/v1 |
+| 2022 | Khosla and Jena | India | Review of Development Economics | 10.1111/rode.12928 |
+| 2022 | Su and Guo | China | Discrete Dynamics in Nature and Society | 10.1155/2022/3960691 |
+| 2022 | Ma et al. | China | Frontiers in Public Health | 10.3389/fpubh.2022.776901 |
+| 2021 | Xiang et al. | China | Global Health Journal | 10.1016/j.glohj.2021.07.004 |
+| 2020 | Ouoya et al. | Congo | Humanities and Social Sciences Communications | 10.1057/s41599-020-00674-w |
+| 2019 | Adepoju et al. | Nigeria | Int. Journal of Scientific Research in Sci. and Tech. | 10.32628/ijsrst19668 |
+| 2019 | Ouoya | — | Studies and Scientific Researches: Economics | 10.29358/sceco.v0i30.441 |
+| 2018 | Atake | Burkina Faso, Niger, Togo | Health Economics Review | 10.1186/s13561-018-0210-x |
+| 2018 | Zhang et al. | China | Int. Journal of Environmental Research and Public Health | 10.3390/ijerph15061253 |
+| 2018 | Hohberg et al. | Germany | Journal of Economic Inequality | 10.1007/s10888-017-9374-6 |
+| 2016 | Zereyesus et al. | Ghana | World Development | 10.1016/j.worlddev.2016.10.015 |
+| 2015 | Haq | Pakistan | Pakistan Development Review | 10.30541/v54i4i-iipp.915-929 |
+| 2012 | Novignon et al. | Ghana | Health Economics Review | 10.1186/2191-1991-2-11 |
+| 2012 | Islam et al. | Bangladesh | Journal of Statistical Computation and Simulation | 10.1080/00949655.2012.656310 |
+
+One of these is new to the project and worth having: **Khosla and Jena (2024)**, *Margin: The Journal
+of Applied Economic Research*, doi:10.1177/00252921241308210 — a fourth Khosla paper beyond the three
+already on the shelf.
+
+### Where the method has actually been used
+
+Settings across the confirmed and likely sets, counted from indexed abstracts:
+
+| Setting | Works |
+|---|---|
+| China | 17 |
+| Ethiopia | 7 |
+| India | 3 |
+| Nigeria | 3 |
+| Indonesia | 3 |
+| Ghana, Malawi | 2 each |
+| Congo, Burkina Faso, Niger, Togo, Germany, Bangladesh, South Africa | 1 each |
+
+**This is a finding in its own right.** The estimator's recent empirical centre of gravity is China,
+by a factor of five over India. For an Indian application the implication is favourable: the method is
+well established, and the Indian evidence base using it is thin enough that a careful application adds
+to it rather than repeating it.
+
+---
+
 ## What this did not cover, and why
 
 The research ran as six parallel topic searches — the estimator and its critics, South Asia, East and
@@ -90,31 +156,26 @@ Southeast Asia, Africa, non-monetary extensions, and rest-of-world plus recent m
 terminated by an API rate limit before any wrote output.** Their final messages did establish the route
 that worked, and this report is built on it: the bibliographic APIs rather than web search.
 
-Consequently this inventory is **complete for what the citation graph and those search phrases can
-reach**, and incomplete in three specific ways:
+Three specific limits remain:
 
-1. **No full-text screening.** A work appears here because its indexed metadata or abstract carries an
-   FGLS phrase. Confirming that each one runs the three-stage procedure rather than merely naming it
-   requires reading the methods sections. The 135 are candidates with verified bibliographic details,
-   not 135 confirmed implementations.
-2. **The 37 unverified entries are unresolved.** Several are likely genuine older working papers whose
-   DOIs predate registration. They need a direct check at the issuing institution.
-3. **No regional or thematic synthesis.** Grouping the 135 by setting, dataset, poverty line,
-   vulnerability threshold and headline rate — the comparison table a methods section wants — was the
-   job of the six topic researchers and did not happen.
-
-Each of the three is a bounded, resumable task against the file that now exists.
+1. **117 of the 135 are not confirmed implementations.** 49 are likely, 32 unclear, 36 have no indexed
+   abstract. Confirming each requires opening its methods section. The screening narrows that job from
+   135 papers to a labelled queue, but does not do it.
+2. **The 37 unverified entries are unresolved.** Mostly older RePEc and MPRA working papers OpenAlex
+   records without a DOI. They may well be genuine and need a direct check at the issuing institution.
+3. **The percentage columns are unlabelled.** The table carries every figure each abstract reports, in
+   order, as candidates for the vulnerability-rate and poverty-rate columns. Which is which has to be
+   read off the paper. No figure in that table should be quoted without that check.
 
 ---
 
 ## Recommended next step
 
-Screen the 135 verified entries down to confirmed implementations, and extract for each the setting,
-the poverty line, the vulnerability threshold and the headline vulnerability rate against measured
-poverty. That turns this inventory into the comparison table the methods section needs, and it is
-mechanical work on a file of DOIs rather than open-ended searching.
+Work the CONFIRMED 18 first: they are already citable, and reading 18 methods sections yields the
+poverty line, the vulnerability threshold and the headline rates for a comparison table that would
+stand in a methods section. Then take the 49 LIKELY as the second pass.
 
 ---
 
-*Sources: the OpenAlex and Crossref public APIs, queried 2026-10-01. Every DOI in the inventory can be
-re-resolved at https://doi.org/ to re-check it independently.*
+*Sources: the OpenAlex and Crossref public APIs, queried 2026-10-01. Every DOI in the inventory and the
+screened table can be re-resolved at https://doi.org/ to re-check it independently.*
