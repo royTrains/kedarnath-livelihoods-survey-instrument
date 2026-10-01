@@ -1,0 +1,373 @@
+# Works citing Chaudhuri, Jalan & Suryahadi (2002) that signal three-stage FGLS use
+
+Harvested from the OpenAlex citation graph of the seed work, then each DOI confirmed
+independently against Crossref. Two sources had to agree on the title for an entry to
+appear as verified.
+
+**Seed work.** Shubham Chaudhuri, Jyotsna Jalan and Asep Suryahadi (2002). *Assessing
+household vulnerability to poverty from cross-sectional data: A methodology and estimates
+from Indonesia.* Columbia University Department of Economics Discussion Paper.
+doi:10.7916/d85149gf · OpenAlex W1515753611 · 474 citations recorded.
+
+Search terms used against the citing set: "feasible generalized least squares"; "feasible generalised least squares"; "three-step feasible"; "three-stage feasible"; "vulnerability as expected poverty"; "expected poverty FGLS"; "vulnerability to poverty cross-sectional".
+
+Candidates found: **172**. Confirmed by both sources: **135**. Not confirmed: **37**.
+
+---
+
+## Verified
+
+- Junxia Liu and Yayun Ren (2026). Can household inclusive finance alleviate the relative poverty of rural residents? Evidence from static and dynamic perspectives. *Humanities and Social Sciences Communications 13(1)*. doi:10.1057/s41599-026-06569-6
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W7127330759`
+- Xinyu Xu et al. (2025). Can health poverty alleviation policies simultaneously mitigate current and future medical-related poverty? Evidence from four waves (2011–2018) of the China health and retirement longitudinal study (CHARLS). *Archives of Public Health 84(1), 23-23*. doi:10.1186/s13690-025-01821-y
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W7117545488`
+- Zhichao Yin, Jiayi Liu and Feng He (2025). Economic Risk of Chinese Households: Measurement, Trends, and Implications. *Journal of Economic Surveys 40(1), 3-19*. doi:10.1111/joes.12695
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4409765209`
+- Debebe Cheber et al. (2025). Rural Households’ Vulnerability to Food Insecurity and Its Determinants in North Shewa Zone of Ethiopia. *The Scientific World Journal 2025(1)*. doi:10.1155/tswj/5522028
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4407107480`
+- Xiaonan Zhao et al. (2025). The impact of health shocks on poverty vulnerability: evidence from rural households in China. *Frontiers in Public Health 13, 1657269-1657269*. doi:10.3389/fpubh.2025.1657269
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4413803330`
+- Yali Li et al. (2024). A Systematic Bibliometric Review of Fiscal Redistribution Policies Addressing Poverty Vulnerability. *Sustainability 16(23), 10618*. doi:10.3390/su162310618
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4405004715`
+- Basil Msuha and Luitfred Kissoly (2024). Analysis of vulnerability to poverty and food insecurity among productive social safety net program participants in Tanzania. *Cogent Social Sciences 10(1)*. doi:10.1080/23311886.2024.2329807
+  - cited 9 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4393384359`
+- Sunil Kumar Khosla and Pradyot Ranjan Jena (2024). Can a Universal Public Health Insurance Policy Dent Vulnerability to Poverty? Empirical Evidence from Rural India. *Margin: The Journal of Applied Economic Research 18(3-4), 255-281*. doi:10.1177/00252921241308210
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4406613955`
+- Vivek Pandey et al. (2024). Covariate Shocks, Women’s Bargaining Power, and Household Vulnerability. *Research Square*. doi:10.21203/rs.3.rs-4178899/v1
+  - cited 0 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W4393434837`
+- Xiaonan Zhao et al. (2024). Differences in the impact of land transfer on poverty vulnerability among households with different livelihood structures. *Frontiers in Sustainable Food Systems 8*. doi:10.3389/fsufs.2024.1425762
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4401345830`
+- Ningze Yang et al. (2024). Impacts of Internet Information Literacy on Farmers’ Relative Poverty Vulnerability: Evidence from CGSS Survey Data in China. *Social Indicators Research 178(3), 1169-1200*. doi:10.1007/s11205-024-03377-w
+  - cited 15 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4400035642`
+- David Garcés Urzainqui (2024). Poverty Dynamics and Vulnerability During a Growth Episode. Evidence from Bangladesh: 2000–2016. *The Journal of Development Studies 61(5), 797-818*. doi:10.1080/00220388.2024.2434257
+  - cited 3 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4405248224`
+- Lin Li, Jingyi Xu and Yunjuan Liang (2024). The formation and evolution of vulnerability risk of rural poor groups under the perspective of social support —— based on the analysis of “sensitivity-resilience”. *Heliyon 10(9), e30305*. doi:10.1016/j.heliyon.2024.e30305
+  - cited 14 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4395692553`
+- Min Zhang and Mu Wu (2024). The impact of rural health insurance on vulnerability to chronic poverty among rural residents in China: analysis using Probit and IVprobit models. *Frontiers in Public Health 12, 1481019-1481019*. doi:10.3389/fpubh.2024.1481019
+  - cited 10 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4403659253`
+- [author not recorded] (2024). Translating health economics research into public health action: Towards an economy of wellbeing. *Frontiers Research Topics*. doi:10.3389/978-2-8325-4747-2
+  - cited 0 times; OpenAlex type `book`, Crossref type `edited-book`; OpenAlex `W4394569010`
+- Hamed Khalili (2023). Can Machine Learning Change the Future of Basic Income Model by Predicting Future Vulnerability to Poverty?. *Preprints.org*. doi:10.20944/preprints202309.0335.v2
+  - cited 1 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W4389149751`
+- Pradyot Ranjan Jena, Sunil Khosla and Dil Bahadur Rahut (2023). Can farmers with higher capabilities fend off falling into future Poverty? Empirical evidence from a tribal region in eastern India. *World Development Perspectives 33, 100544*. doi:10.1016/j.wdp.2023.100544
+  - cited 6 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4389472194`
+- Xiaojun Lu, Qun Wang and Yunan Wang (2023). Can farmland transfer reduce vulnerability to poverty among the mid-aged and elderly in rural China?. *Heliyon 9(11), e21970*. doi:10.1016/j.heliyon.2023.e21970
+  - cited 11 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4388461871`
+- Yan Wei, Zhaochi Zhang and Mingjian Zhang (2023). Effects of health poverty alleviation project from the perspective of vulnerability to poverty: evidence from five Chinese prefectures. *Global Health Action 16(1), 2260142-2260142*. doi:10.1080/16549716.2023.2260142
+  - cited 12 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4387242104`
+- Wenbo Shao, Qin Li and Gui Ren (2023). Household Income Structure and Poverty Vulnerability: A differential Analysis Based on Chinese Families. *Research Square*. doi:10.21203/rs.3.rs-3576767/v1
+  - cited 0 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W4388552210`
+- Gilang Wirakusuma, Imade Yoga Prasada and Ilmas Abdurofi (2023). IMPACT OF MIGRATION ON THE VULNERABILITY OF POVERTY: A CASE STUDY ON THE AGRICULTURAL HOUSEHOLDS IN WEST JAVA PROVINCE, INDONESIA. *International Journal of Business and Society 24(2), 576-590*. doi:10.33736/ijbs.5945.2023
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4386149803`
+- Zhipeng Li, Yuqian Chen and Jing Ding (2023). Impact of health insurance equity on poverty vulnerability: evidence from urban–rural health insurance integration in rural China. *Frontiers in Public Health 11, 1328265-1328265*. doi:10.3389/fpubh.2023.1328265
+  - cited 21 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4389237218`
+- Mebratu Negera et al. (2023). Impacts of climate-smart agricultural practices on farm households’ climate resilience and vulnerability in Bale-Eco Region, Ethiopia. *Environment, Development and Sustainability 27(1), 2187-2216*. doi:10.1007/s10668-023-03962-y
+  - cited 18 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4387617314`
+- Shasha Zhang et al. (2023). Internet Use and the Poverty Vulnerability of Rural Households: From the Perspective of Risk Response. *Sustainability 15(2), 1289*. doi:10.3390/su15021289
+  - cited 13 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4315628494`
+- Wenxiu Li, Ke Jin and Fei Sun (2023). Long-term care insurance and multidimensional poverty of middle-aged and elderly: Evidence from China. *Frontiers in Public Health 11, 1100146-1100146*. doi:10.3389/fpubh.2023.1100146
+  - cited 13 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4319984998`
+- Ayesha Tantriana (2023). Poverty and vulnerability transitions in Indonesia before and during the COVID-19: insights from synthetic panels. *Quality &amp; Quantity 58(4), 3215-3249*. doi:10.1007/s11135-023-01785-7
+  - cited 3 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4389862108`
+- Emmanuel Skoufias, Katja Vinha and Berhe Mekonnen Beyene (2023). Quantifying Vulnerability to Poverty in the Drought-prone Lowlands of Ethiopia. *Journal of African Economies 33(2), 167-184*. doi:10.1093/jae/ejad003
+  - cited 7 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4362641056`
+- Utpal Kumar De and S. Solomon (2023). The Anchoring Role of Social Safety Nets and Coping Strategies: A Study on the Rural Households of Manipur in North-East India. *Research Square*. doi:10.21203/rs.3.rs-3185956/v1
+  - cited 0 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W4385250207`
+- Xu Li, Xiaobing Peng and Yu Peng (2023). Unravelling the influence and mechanism of agricultural inputs on rural poverty vulnerability: Evidence from China. *Heliyon 9(12), e22851*. doi:10.1016/j.heliyon.2023.e22851
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4389010007`
+- Zhi Hao Chen, Han Yan and Chao Yang (2022). A study on the impact of extreme weather on the poverty vulnerability of farming households—evidence from six counties in the hubei and yunnan provinces of china. *Frontiers in Environmental Science 10*. doi:10.3389/fenvs.2022.942857
+  - cited 10 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4286717360`
+- Sunil Khosla and Pradyot Ranjan Jena (2022). Analyzing vulnerability to poverty and assessing the role of universal public works and food security programs to reduce it: Evidence from an eastern Indian state. *Review of Development Economics 26(4), 2296-2316*. doi:10.1111/rode.12928
+  - cited 12 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4293833981`
+- Chung Thanh Phan, Thang Tat Vo and Diem Thi Hong Vo (2022). Can microcredit reduce vulnerability to poverty? Evidence from rural Vietnam. *Review of Development Economics 27(1), 608-629*. doi:10.1111/rode.12951
+  - cited 29 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4304762611`
+- Sunil Khosla, Pradyot Ranjan Jena and Dil Bahadur Rahut (2022). Can rural livelihood programs enhance capabilities and reduce vulnerability to poverty? Evidence from a tribal region of eastern India. *Economic Analysis and Policy 77, 85-98*. doi:10.1016/j.eap.2022.10.018
+  - cited 31 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4308289267`
+- Youxue Jiang and Yangyi Liu (2022). Does financial inclusion help alleviate household poverty and vulnerability in China?. *PLOS ONE 17(10), e0275577*. doi:10.1371/journal.pone.0275577
+  - cited 27 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4306248188`
+- Sweta Sen, Narayan Chandra Nayak and William Kumar Mohanty (2022). Estimating household vulnerability to tropical cyclones: An investigation of tropical cyclone shocks in coastal villages of eastern India. *International Journal of Disaster Risk Reduction 83, 103404*. doi:10.1016/j.ijdrr.2022.103404
+  - cited 9 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4308487351`
+- Fikru Beyene and Marisennayya Senapathy (2022). Household Resilience to Food Insecurity in Southern Ethiopia. *Primedia eLaunch LLC eBooks*. doi:10.36074/hrtfiise-monograph.2022
+  - cited 4 times; OpenAlex type `book`, Crossref type `monograph`; OpenAlex `W4309241388`
+- Jianfeng Su and Shurui Guo (2022). Human Capital and Rural Households’ Vulnerability to Relative Poverty: Evidence from China. *Discrete Dynamics in Nature and Society 2022(1)*. doi:10.1155/2022/3960691
+  - cited 18 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4281258889`
+- Honggang Lu et al. (2022). Impact of Natural Disaster Shocks on Farm Household Poverty Vulnerability—A Threshold Effect Based on Livelihood Resilience. *Frontiers in Ecology and Evolution 10*. doi:10.3389/fevo.2022.860745
+  - cited 22 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4292180124`
+- Omar Stabridis Arana (2022). La semilla de la vulnerabilidad: desventajas acumuladas en jornaleros de la agroindustria mexicana de exportación. *región y sociedad 34, e1656*. doi:10.22198/rys2022/34/1656
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4307636002`
+- Ying Ma et al. (2022). Poverty Vulnerability and Health Risk Action Path of Families of Rural Elderly With Chronic Diseases: Empirical Analysis of 1,852 Families in Central and Western China. *Frontiers in Public Health 10, 776901-776901*. doi:10.3389/fpubh.2022.776901
+  - cited 34 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4212910732`
+- Sungyoon Lee, Jennifer E. Dodge and Gang Chen (2022). The cost of social vulnerability: an integrative conceptual framework and model for assessing financial risks in natural disaster management. *Natural Hazards 114(1), 691-712*. doi:10.1007/s11069-022-05408-6
+  - cited 19 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4281568207`
+- Anita Rath (2022). Urban poverty and vulnerability in global South: An alternative multidimensional framework for measurement and targeting. *Regional Science Policy &amp; Practice 14(2), 376-396*. doi:10.1111/rsp3.12511
+  - cited 11 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4206991077`
+- Jhon Edwar Hernández and Blanca Zuluaga (2022). Vulnerability to Multidimensional Poverty: An Application to Colombian Households. *Social Indicators Research 164(1), 345-371*. doi:10.1007/s11205-022-02961-2
+  - cited 31 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4283523636`
+- Angela Christine Lyons, Joséphine Kass-Hanna and Alejandro Montoya Castano (2021). A Multidimensional Approach to Measuring Vulnerability to Poverty of Syrian Refugees in Lebanon. *SSRN Electronic Journal*. doi:10.2139/ssrn.3787795
+  - cited 9 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W3133111496`
+- Sayema Haque Bidisha, Tanveer Mahmood and Md. Biplob Hossain (2021). Assessing Food Poverty, Vulnerability and Food Consumption Inequality in the Context of COVID-19: A Case of Bangladesh. *Social Indicators Research 155(1), 187-210*. doi:10.1007/s11205-020-02596-1
+  - cited 39 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3119589648`
+- Yali Li (2021). Assessing the Effect of Public Transfer Payments on the Vulnerability of Health Care Poverty in Rural Households in China. *Research Square*. doi:10.21203/rs.3.rs-764110/v1
+  - cited 0 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W3189868039`
+- Qin Xiang et al. (2021). Classification and influencing factors of rural elderly's vulnerability to health-related poverty in central and western regions of China. *Global Health Journal 5(3), 135-143*. doi:10.1016/j.glohj.2021.07.004
+  - cited 19 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3185305419`
+- Linh Bui Khac and Thanh Hang Bui (2021). Does Rural Credit Mediate Vulnerability Under Idiosyncratic and Covariate Shocks? Empirical Evidence from Vietnam Using a Multilevel Model. *The European Journal of Development Research 34(1), 172-224*. doi:10.1057/s41287-021-00368-2
+  - cited 6 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3130610610`
+- Anh Thu Quang Pham, Pundarik Mukhopadhaya and Ha Vu (2021). Estimating poverty and vulnerability to monetary and non-monetary poverty: the case of Vietnam. *Empirical Economics 61(6), 3125-3177*. doi:10.1007/s00181-020-01991-4
+  - cited 18 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3119998253`
+- Sayema Haque Bidisha, Md. Biplob Hossain and Tanveer Mahmood (2021). Occupation Based Poverty & Vulnerability In Bangladesh: Insights From COVID-19. *Journal of Poverty 26(5), 403-423*. doi:10.1080/10875549.2021.1925805
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3164886850`
+- Zrakpa Melaine Ouoya (2021). Poverty And Vulnerability To Poverty: Conceptual Overview, Measurements And Causes. *International Journal of Scientific and Research Publications (IJSRP) 11(8), 378-394*. doi:10.29322/ijsrp.11.08.2021.p11649
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3203020860`
+- Zulfikar Hasan (2021). THE EFFECT OF ECONOMIC GROWTH AND HUMAN DEVELOPMENT INDEX ON POVERTY IN INDONESIA. *Journal of Economics and Sustainability 3(1), 12*. doi:10.32890/jes2021.3.1.5
+  - cited 21 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3152664440`
+- Ratual Mahanta and Daisy Das (2021). Vulnerability To Poverty: A Survey. *Journal of Business Strategies 32(2), 151-172*. doi:10.54155/jbs.32.2.151-172
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3123246355`
+- Titay Zeleke et al. (2021). Vulnerability of Smallholder Farmers to Climate Change-Induced Shocks in East Hararghe Zone, Ethiopia. *Sustainability 13(4), 2162*. doi:10.3390/su13042162
+  - cited 69 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3130628648`
+- Mousumi Das (2021). Vulnerability to Food Insecurity: A Decomposition Exercise for Rural India using the Expected Utility Approach. *Social Indicators Research 156(1), 167-199*. doi:10.1007/s11205-021-02625-7
+  - cited 9 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3132547452`
+- Guntur Wahyu Kusuma and Ika Yuni Wulansari (2020). ANALISIS KEMISKINAN DAN KERENTANAN KEMISKINAN DENGAN REGRESI RIDGE, LASSO, DAN ELASTIC-NET DI PROVINSI JAWA TENGAH TAHUN 2017. *Seminar Nasional Official Statistics 2019(1), 503-513*. doi:10.34123/semnasoffstat.v2019i1.189
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3025823235`
+- Assa M. Maganga, Levison Stanely Chiwaula and Patrick Kambewa (2020). Climate induced vulnerability to poverty among smallholder farmers: Evidence from Malawi. *World Development Perspectives 21, 100273*. doi:10.1016/j.wdp.2020.100273
+  - cited 40 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3112216191`
+- Fassil Eshetu and Adem Guye (2020). Determinants of Households Vulnerability to Food Insecurity: Evidence from Southern Ethiopia. *Journal of Land and Rural Studies 9(1), 35-61*. doi:10.1177/2321024920967843
+  - cited 24 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3111427921`
+- Isaac Koomson, Renato Andrin Villano and David J. Hadley (2020). Effect of Financial Inclusion on Poverty and Vulnerability to Poverty: Evidence Using a Multidimensional Measure of Financial Inclusion. *Social Indicators Research 149(2), 613-639*. doi:10.1007/s11205-019-02263-0
+  - cited 370 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2998326865`
+- Xiaofan Zuo and Jixia LU (2020). Effects of agricultural land transfer on rural poverty reduction from the perspective of poverty vulnerability. *资源科学 42(2), 274-285*. doi:10.18402/resci.2020.02.07
+  - cited 5 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3036841710`
+- Séverin Aimé Blanchard Ouadika (2020). Health shocks and vulnerability to poverty in Congo. *Humanities and Social Sciences Communications 7(1)*. doi:10.1057/s41599-020-00674-w
+  - cited 24 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3113192866`
+- Pheeha Morudu and Umakrishnan Kollamparambil (2020). Health shocks, medical insurance and household vulnerability: Evidence from South Africa. *PLOS ONE 15(2), e0228034*. doi:10.1371/journal.pone.0228034
+  - cited 35 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3004933993`
+- Qinman Li (2020). The Impact of Fiscal Expenditures on Vulnerability to Poverty of Rural Households and Its Mechanism-based on Evidence from CHIP Data. *International Journal of Economics, Finance and Management Sciences 8(1), 20*. doi:10.11648/j.ijefm.20200801.13
+  - cited 3 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3000427240`
+- Maike Hohberg, Peter Pütz and Thomas Kneib (2020). Treatment effects beyond the mean using distributional regression: Methods and guidance. *PLOS ONE 15(2), e0226514*. doi:10.1371/journal.pone.0226514
+  - cited 22 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3005828485`
+- Ömer LİMANLI (2020). Türkiye'de Yoksulluğa Karşı Kırılganlık. *Ekonomi, Politika &amp; Finans Araştırmaları Dergisi, 210-227*. doi:10.30784/epfad.740715
+  - cited 2 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3082269994`
+- Sandra Baquié and Habtamu Fuje (2020). Vulnerability to Poverty following Extreme Weather Events in Malawi. *World Bank, Washington, DC eBooks*. doi:10.1596/1813-9450-9435
+  - cited 11 times; OpenAlex type `report`, Crossref type `book`; OpenAlex `W3092996029`
+- Otu W. Ibok, Henny Osbahr and C. S. Srinivasan (2019). Advancing a new index for measuring household vulnerability to food insecurity. *Food Policy 84, 10-20*. doi:10.1016/j.foodpol.2019.01.011
+  - cited 51 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2914948014`
+- Adebusola Adenike Adepoju et al. (2019). Analysis of Vulnerability to Poverty and Income Shocks of Households in Rural Nigeria. *International Journal of Scientific Research in Science and Technology, 06-19*. doi:10.32628/ijsrst19668
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2989298331`
+- Million Sileshi et al. (2019). Analysis of households’ vulnerability to food insecurity and its influencing factors in East Hararghe, Ethiopia. *Journal of Economic Structures 8(1)*. doi:10.1186/s40008-019-0174-y
+  - cited 57 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2984682726`
+- Melaine Zrakpa Ouoya (2019). BUSINESS SECTOR, LEVEL OF EDUCATION AND ACCESS TO CREDIT: WHAT INFLUENCES ON VULNERABILITY TO RURAL HOUSEHOLDS POVERTY IN CÔTE D'IVOIRE?. *STUDIES AND SCIENTIFIC RESEARCHES. ECONOMICS EDITION(30)*. doi:10.29358/sceco.v0i30.441
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W3032561483`
+- Noah Kibet, Gideon Aiko Obare and Job K. Lagat (2019). Determinants of Vulnerability to Expected Poverty among French Bean Farmers in Kenya. *Journal of Economics and Sustainable Development*. doi:10.7176/jesd/10-10-14
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2947485147`
+- Million Sileshi et al. (2019). Impact of soil and water conservation practices on household vulnerability to food insecurity in eastern Ethiopia: endogenous switching regression and propensity score matching approach. *Food Security 11(4), 797-815*. doi:10.1007/s12571-019-00943-w
+  - cited 69 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2959972461`
+- María del Pilar Fernández, María Sol Gaspe and Ricardo E. Gürtler (2019). Inequalities in the social determinants of health and Chagas disease transmission risk in indigenous and creole households in the Argentine Chaco. *Parasites &amp; Vectors 12(1), 184-184*. doi:10.1186/s13071-019-3444-5
+  - cited 99 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2942556423`
+- Rebecca Pietrelli and Pasquale Scaramozzino (2019). Internal Migration and Vulnerability to Poverty in Tanzania. *Population and Development Review 45(3), 525-547*. doi:10.1111/padr.12247
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2549368365`
+- Mauricio Gallardo (2019). Measuring Vulnerability to Multidimensional Poverty. *Social Indicators Research 148(1), 67-103*. doi:10.1007/s11205-019-02192-y
+  - cited 71 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2974651268`
+- Vinita Kanwal, Vishal Thorat and Prem Chand (2019). Vulnerability of rural households to food and nutritional insecurity in arid regions of India: some evidence from Rajasthan. *Agricultural Economics Research Review 32(conf), 183*. doi:10.5958/0974-0279.2019.00027.2
+  - cited 2 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W4245560513`
+- Carlos Herrera, Ruerd Ruben and Geske Dijkstra (2018). Climate variability and vulnerability to poverty in Nicaragua. *Journal of Environmental Economics and Policy 7(3), 324-344*. doi:10.1080/21606544.2018.1433070
+  - cited 26 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2788868054`
+- Esso‐Hanam Atake (2018). Health shocks in Sub-Saharan Africa: are the poor and uninsured households more vulnerable?. *Health Economics Review 8(1), 26-26*. doi:10.1186/s13561-018-0210-x
+  - cited 82 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2898023264`
+- Thang Tat Vo (2018). Household vulnerability as expected poverty in Vietnam. *World Development Perspectives 10-12, 1-14*. doi:10.1016/j.wdp.2018.04.002
+  - cited 20 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2900712758`
+- Emiliano Magrini, Pierluigi Montalbano and L. Alan Winters (2018). Households’ vulnerability from trade in Vietnam. *World Development 112, 46-58*. doi:10.1016/j.worlddev.2018.07.018
+  - cited 20 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2887235675`
+- Juan Miguel Villa and Miguel Niño‐Zarazúa (2018). Poverty dynamics and graduation from conditional cash transfers: a transition model for Mexico’s Progresa-Oportunidades-Prospera program. *The Journal of Economic Inequality 17(2), 219-251*. doi:10.1007/s10888-018-9399-5
+  - cited 9 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2893017987`
+- Zhaohua Zhang, Yuxi Luo and Derrick Robinson (2018). Reducing Food Poverty and Vulnerability among the Rural Elderly with Chronic Diseases: The Role of the New Rural Pension Scheme in China. *International Journal of Environmental Research and Public Health 15(6), 1253*. doi:10.3390/ijerph15061253
+  - cited 31 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2808563955`
+- Sagarika Dey (2018). The Role of Employment Diversification in Reducing Vulnerability to Poverty among Marginal and Small-holder Agricultural Households in India. *Margin: The Journal of Applied Economic Research 12(1), 88-112*. doi:10.1177/0973801017740661
+  - cited 20 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2791089798`
+- Amare Mabrie Yemata (2018). Urban Households‘ Vulnerability to Multidimensional Poverty in Eastern Ethiopia. *Turkish Journal of Agriculture - Food Science and Technology 6(11), 1522-1529*. doi:10.24925/turjaf.v6i11.1522-1529.1752
+  - cited 3 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2898253365`
+- Maike Hohberg et al. (2018). Vulnerability to poverty revisited: Flexible modeling and better predictive performance. *The Journal of Economic Inequality 16(3), 439-454*. doi:10.1007/s10888-017-9374-6
+  - cited 21 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2788150453`
+- Mauricio Gallardo (2017). IDENTIFYING VULNERABILITY TO POVERTY: A CRITICAL SURVEY. *Journal of Economic Surveys 32(4), 1074-1105*. doi:10.1111/joes.12216
+  - cited 103 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2626564742`
+- Richard Kofi Asravor (2017). Livelihood Diversification Strategies to Climate Change among Smallholder Farmers in Northern Ghana. *Journal of International Development 30(8), 1318-1338*. doi:10.1002/jid.3330
+  - cited 93 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2761522795`
+- Alejandro de la Fuente, Eduardo Ortiz-Juárez and Carlos Rodríguez‐Castelán (2017). Living on the edge: vulnerability to poverty and public transfers in Mexico. *Oxford Development Studies 46(1), 10-27*. doi:10.1080/13600818.2017.1328047
+  - cited 8 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1564075103`
+- Birhan Sisay Demissie and Tesfahun Asmamaw Kasie (2017). Rural Households’ Vulnerability to Poverty in Ethiopia. *Journal of Poverty 21(6), 528-542*. doi:10.1080/10875549.2017.1348425
+  - cited 41 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2751691239`
+- Kimleng Sa (2017). Urban Climate Vulnerability in Cambodia: A Case Study in Koh Kong Province. *Economies 5(4), 41*. doi:10.3390/economies5040041
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2767714678`
+- Muhammad Masood Azeem et al. (2016). An Assessment of Vulnerability to Poverty in Punjab, Pakistan: Subjective Choices of Poverty Indicators. *Social Indicators Research 134(1), 117-152*. doi:10.1007/s11205-016-1419-x
+  - cited 35 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2506049975`
+- Tomoki Fujii (2016). Climate change and vulnerability to poverty: an empirical investigation in rural Indonesia. *The Asian ‘Poverty Miracle’*. doi:10.4337/9781785369155.00012
+  - cited 6 times; OpenAlex type `book-chapter`, Crossref type `book-chapter`; OpenAlex `W2826990173`
+- Mkhululi Ncube et al. (2016). Climate change, household vulnerability and smart agriculture: The case of two South African provinces. *Jàmbá: Journal of Disaster Risk Studies 8(2), 182-182*. doi:10.4102/jamba.v8i2.182
+  - cited 53 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2258838787`
+- Tomoki Fujii (2016). Concepts and measurement of vulnerability to poverty and other issues: a review of literature. *The Asian ‘Poverty Miracle’*. doi:10.4337/9781785369155.00010
+  - cited 11 times; OpenAlex type `book-chapter`, Crossref type `book-chapter`; OpenAlex `W2527095578`
+- Christian D. Mina and Katsushi S. Imai (2016). Estimation of Vulnerability to Poverty Using a Multilevel Longitudinal Model: Evidence from the Philippines. *The Journal of Development Studies 53(12), 2118-2144*. doi:10.1080/00220388.2016.1265942
+  - cited 31 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2278527105`
+- Huafeng Zhang (2016). Household vulnerability and economic status during disaster recovery and its determinants: a case study after the Wenchuan earthquake. *Natural Hazards*. doi:10.1007/s11069-016-2373-2
+  - cited 21 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2410849107`
+- Yacob Abrehe Zereyesus et al. (2016). Implications of Non-Farm Work to Vulnerability to Food Poverty-Recent Evidence From Northern Ghana. *World Development 91, 113-124*. doi:10.1016/j.worlddev.2016.10.015
+  - cited 142 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2549988074`
+- Sanghamitra Bandyopadhyay (2016). The Vulnerable Are Not (Necessarily) the Poor. *Inequality after the 20th Century: Papers from the Sixth ECINEQ Meeting, 29-57*. doi:10.1108/s1049-258520160000024003
+  - cited 2 times; OpenAlex type `book-chapter`, Crossref type `book-chapter`; OpenAlex `W2135036901`
+- Eliana Wulandari (2016). The relation between finance utilisation and business performance in Indonesian horticulture. *[venue not recorded]*. doi:10.18174/399659
+  - cited 0 times; OpenAlex type `dissertation`, Crossref type `dissertation`; OpenAlex `W2586971850`
+- Jamie Kim Arias et al. (2016). Vulnerability Assessment to Climate Change of Households from Mabacan, Sta. Cruz and Balanac Watersheds in Laguna, Philippines. *Journal of Environmental Science and Management 19(1), 9*. doi:10.47125/jesam/2016_1/02
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2529511888`
+- Nancy McCarthy, Josh Brubaker and Alejandro de la Fuente (2016). Vulnerability to Poverty in Rural Malawi. *World Bank, Washington, DC eBooks*. doi:10.1596/1813-9450-7769
+  - cited 18 times; OpenAlex type `report`, Crossref type `book`; OpenAlex `W2479577466`
+- Eko Ruddy Cahyadi and Hermann Waibel (2015). Contract Farming and Vulnerability to Poverty among Oil Palm Smallholders in Indonesia. *The Journal of Development Studies 52(5), 681-695*. doi:10.1080/00220388.2015.1098627
+  - cited 96 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2194186023`
+- Kade Finnoff (2015). Decomposing inequality and poverty in post-war Rwanda: The roles of gender, education, wealth and location. *Development Southern Africa 32(2), 209-228*. doi:10.1080/0376835x.2014.984375
+  - cited 9 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2118951997`
+- Robert Lensink, Roselia Servín Juárez and Marrit van den Berg (2015). Do Savings and Credit Institutions Reduce Vulnerability? New Evidence From M exico. *Review of Income and Wealth 63(2), 335-352*. doi:10.1111/roiw.12213
+  - cited 15 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1909767496`
+- Rashida Haq (2015). Quantifying Vulnerability to Poverty in a Developing Economy. *The Pakistan Development Review, 915-929*. doi:10.30541/v54i4i-iipp.915-929
+  - cited 10 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2567013579`
+- Patrick S. Ward (2015). Transient Poverty, Poverty Dynamics, and Vulnerability to Poverty: An Empirical Analysis Using a Balanced Panel from Rural China. *World Development 78, 541-553*. doi:10.1016/j.worlddev.2015.10.022
+  - cited 169 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2179429700`
+- Simon Feeny and Lachlan McDonald (2015). Vulnerability to Multidimensional Poverty: Findings from Households in Melanesia. *The Journal of Development Studies 52(3), 447-464*. doi:10.1080/00220388.2015.1075974
+  - cited 73 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2172481612`
+- Adama Bah (2014). Estimating Vulnerability to Poverty using Panel Data: Evidence from Indonesia. *SSRN Electronic Journal, 26-*. doi:10.2139/ssrn.2411921
+  - cited 7 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W1606143744`
+- Uche M. Ozughalu (2014). Relationship Between Household Food Poverty and Vulnerability to Food Poverty: Evidence from Nigeria. *Social Indicators Research 125(2), 567-587*. doi:10.1007/s11205-014-0845-x
+  - cited 34 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2104141157`
+- Satya Ranjan Chakravarty, Nachiketa Chattopadhyay and Liu Qingbin (2014). Vulnerability Orderings for Expected Poverty Indices. *Japanese Economic Review 66(3), 300-310*. doi:10.1111/jere.12048
+  - cited 2 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2146455762`
+- Martina Celidoni (2013). Decomposing Vulnerability to Poverty. *Review of Income and Wealth 61(1), 59-74*. doi:10.1111/roiw.12074
+  - cited 24 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2112714451`
+- Damien Échevin (2013). Measuring Vulnerability to Asset-Poverty in Sub-Saharan Africa. *World Development 46, 211-222*. doi:10.1016/j.worlddev.2013.02.001
+  - cited 35 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1988093841`
+- Mohammad Mahmudul Islam and Ratana Chuenpagdee (2013). Negotiating risk and poverty in mangrove fishing communities of the Bangladesh Sundarbans. *Maritime Studies 12(1)*. doi:10.1186/2212-9790-12-7
+  - cited 47 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2116156924`
+- Patrick Eozenou, Dorsati H. Madani and Rob Swinkels (2013). Poverty, Malnutrition and Vulnerability in Mali. *World Bank, Washington, DC eBooks*. doi:10.1596/1813-9450-6561
+  - cited 13 times; OpenAlex type `report`, Crossref type `book`; OpenAlex `W1902853090`
+- Oscar Maria Caccavale (2012). Addressing High Food Prices: A Household Vulnerability Analysis in Rural Burundi. *SSRN Electronic Journal*. doi:10.2139/ssrn.2117287
+  - cited 1 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W2270991170`
+- Ranjula Bali Swain and Maria S. Floro (2012). Assessing the Effect of Microfinance on Vulnerability and Poverty among Low Income Households. *Journal of Development Studies 48(5), 605-618*. doi:10.1080/00220388.2011.615917
+  - cited 72 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1990014360`
+- Raghbendra Jha and Tu Ngoc Dang (2012). Education and the Vulnerability to Food Inadequacy in Timor-Leste. *Oxford Development Studies 40(3), 341-357*. doi:10.1080/13600818.2012.706275
+  - cited 4 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2018924941`
+- Jacob Novignon et al. (2012). Health and vulnerability to poverty in Ghana: evidence from the Ghana Living Standards Survey Round 5. *Health Economics Review 2(1), 11-11*. doi:10.1186/2191-1991-2-11
+  - cited 82 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2161458710`
+- Md. Ershadul Islam, Ulrike A.H. Grote and Md. Israt Rayhan (2012). Income vulnerability of rural households in Bangladesh: a comparison between Bayesian and classical methods. *Journal of Statistical Computation and Simulation 83(6), 1179-1187*. doi:10.1080/00949655.2012.656310
+  - cited 1 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1987357523`
+- Woojin Kang and Katsushi S. Imai (2012). Pro-poor growth, poverty and inequality in rural Vietnam. *Journal of Asian Economics 23(5), 527-539*. doi:10.1016/j.asieco.2012.04.004
+  - cited 48 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2117446963`
+- Pierluigi Montalbano and Emiliano Magrini (2012). Trade Openness and Vulnerability to Poverty: Vietnam in the Long-Run (1992-2008). *SSRN Electronic Journal*. doi:10.2139/ssrn.2122454
+  - cited 1 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W2138321884`
+- Motiur Rahman, Noriatsu Matsui and Yukio Ikemoto (2012). Vulnerability to Poverty: Conceptual Framework and Measurement. *Dynamics of Poverty in Rural Bangladesh, 197-219*. doi:10.1007/978-4-431-54285-8_15
+  - cited 1 times; OpenAlex type `book-chapter`, Crossref type `book-chapter`; OpenAlex `W29534558`
+- Thitiwan Sricharoen (2011). A Quantitative Assessment on Vulnerability to Poverty and Risk Management of Rural Farm Household in Northeastern of Thailand. *International Journal of Trade, Economics and Finance, 331-340*. doi:10.7763/ijtef.2011.v2.127
+  - cited 7 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2317835479`
+- Levison Stanely Chiwaula, Rudolf Witt and Hermann Waibel (2011). An Asset-Based Approach to Vulnerability: The Case of Small-Scale Fishing Areas in Cameroon and Nigeria. *The Journal of Development Studies 47(2), 338-353*. doi:10.1080/00220381003599410
+  - cited 41 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2031719937`
+- Indranil Dutta, James Foster and Ajit Kumar Mishra (2011). On measuring vulnerability to poverty. *Social Choice and Welfare 37(4), 743-761*. doi:10.1007/s00355-011-0570-1
+  - cited 92 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2112251432`
+- Abimbola Oluyemisi Adepoju et al. (2011). Vulnerability Profile of Rural Households in South West Nigeria. *Journal of Agricultural Science 3(1)*. doi:10.5539/jas.v3n1p128
+  - cited 19 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W1979820183`
+- Ethan A. Ligon (2010). Measuring Risk by Looking at Changes in Inequality: Vulnerability in Ecuador. *SSRN Electronic Journal*. doi:10.2139/ssrn.1774020
+  - cited 7 times; OpenAlex type `preprint`, Crossref type `journal-article`; OpenAlex `W2159593360`
+- Sombounmy Phomtavong (2010). The Impact of Rural Road Investment on Poverty Reduction in the Lao PDR. *Journal of Rural Problems 46(3), 325-333*. doi:10.7310/arfe.46.325
+  - cited 0 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2328618955`
+- Md. Israt Rayhan (2009). Assessing poverty, risk and vulnerability: a study on flooded households in rural Bangladesh. *Journal of Flood Risk Management 3(1), 18-24*. doi:10.1111/j.1753-318x.2009.01051.x
+  - cited 30 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2038860377`
+- Raghbendra Jha, Tu Ngoc Dang and Yusuf Tashrifov (2009). Economic vulnerability and poverty in Tajikistan. *Economic Change and Restructuring 43(2), 95-112*. doi:10.1007/s10644-009-9079-3
+  - cited 39 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2113010173`
+- Isabel Günther and Kenneth Harttgen (2009). Estimating Households Vulnerability to Idiosyncratic and Covariate Shocks: A Novel Method Applied in Madagascar. *World Development 37(7), 1222-1234*. doi:10.1016/j.worlddev.2008.11.006
+  - cited 266 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2041190065`
+- Kenneth Harttgen (2008). Empirical Analysis of Determinants, Distribution and Dynamics of Poverty. *Peter Lang D eBooks*. doi:10.3726/b13880
+  - cited 4 times; OpenAlex type `book`, Crossref type `monograph`; OpenAlex `W577227510`
+- Guillermo Cruces and Quentin T. Wodon (2007). Risk-adjusted poverty in Argentina: measurement and determinants. *The Journal of Development Studies 43(7), 1189-1214*. doi:10.1080/00220380701526329
+  - cited 40 times; OpenAlex type `article`, Crossref type `journal-article`; OpenAlex `W2127089631`
+- Pierluigi Montalbano et al. (2007). Trade Openness and Vulnerability in Central and Eastern Europe. *The Impact of Globalization on the World's Poor, 204-234*. doi:10.1057/9780230625501_9
+  - cited 10 times; OpenAlex type `book-chapter`, Crossref type `book-chapter`; OpenAlex `W1519766667`
+- Raghbendra Jha (2006). Vulnerability of Consumption Growth in Rural India. *SSRN Electronic Journal*. doi:10.2139/ssrn.902263
+  - cited 3 times; OpenAlex type `preprint`, Crossref type `posted-content`; OpenAlex `W2153656509`
+
+---
+
+## UNVERIFIED - DO NOT CITE
+
+- Mekonnen Sime Kidane (2019). The nexus of crop and income diversification, commercialisation and household welfare: empirical evidence from Ethiopia.. *ResearchSpace (University of KwaZulu-Natal)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Emiliano Magrini; Pierluigi Montalbano; L. Alan Winters (2017). Vulnerability from trade in Vietnam. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Woojin Kang (2015). An Investigation of the Determinants of Household Vulnerability and Poverty in Korea. *Korea and the World Economy*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Ben Selengia Dandi (2015). Foreign aid, economic growth, and poverty reduction in Tanzania. *Institutional Repository of Leibniz Universität Hannover (Leibniz Universität Hannover)*
+  - reason: DOI did not resolve at Crossref
+- Solomon Asfaw; Nancy McCarthy; Adriana Paolantonio (2015). Livelihood diversification and vulnerability to poverty in rural Malawi. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- Agbaje; Folusho Y. Okunmadewa; O. A. Oni (2014). Spatial Dimension of Vulnerability to Poverty in Rural Nigeria. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- Federico Ciani; Donato Romano; Ciani, Federico (2014). Testing for Household Resilience to Food Insecurity: Evidence from Nicaragua. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- Mohiburrahman Iqbal (2013). Vulnerability to expected poverty in Afghanistan 1. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Katja Landau; Stephan Klasen; Walter Zucchini (2012). Measuring Vulnerability to Poverty Using Long-Term Panel Data. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Abrham Seyoum Tsehay; Bauer, Siegfried; Tsehay, Abrham Seyoum (2012). Poverty Dynamics and Vulnerability: Empirical Evidence from Smallholders in Northern Highlands of Ethiopia. *AgEcon Search (University of Minnesota, USA)*
+  - reason: DOI did not resolve at Crossref
+- Abrham Seyoum Tsehay; Bauer, Siegfried; Tsehay, Abrham Seyoum (2012). Poverty and Vulnerability Dynamics: Empirical Evidence from Smallholders in Northern Highlands of Ethiopia. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- Rudolf Witt; Hermann Waibel; Witt, Rudolf (2011). Constraints to diversification of poor fishery-dependent households in Cameroon. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- Levison Stanely Chiwaula; Hermann Waibel (2011). Does seasonal vulnerability to poverty matter? A case study from the Hadejia-Nguru Wetlands in Nigeria. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Levison Stanely Chiwaula; Hermann Waibel (2011). Seasonal bias in household vulnerability to poverty stimates: insights from a natural experiment. *Munich Personal RePEc Archive (Ludwig Maximilian University of Munich)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Sudarno Sumarto; Samuel Bazzi (2011). Social Protection in Indonesia:Past Experiences and Lessons for the Future. *Munich Personal RePEc Archive (Ludwig Maximilian University of Munich)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Isabel Fischer (2011). Vulnerability and Risk Management of Rural Farm Households in Northern Vietnam. *University writing server of the University of Hohenheim (Universität Hohenheim)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Damien Échevin (2011). Vulnerability to asset-poverty in Sub-Saharan Africa. *Munich Personal RePEc Archive (Ludwig Maximilian University of Munich)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Celia Reyes; Aubrey Tabuga; Christian D. Mina (2010). Chronic and Transient Poverty. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Md. Israt Rayhan; Ulrike A.H. Grote (2010). Crop Diversification to Mitigate Flood Vulnerability in Bangladesh: An Economic Approach. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Jacob Novignon (2010). Estimating household vulnerability to poverty from cross section data: an empirical evidence from Ghana. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Felix Povel (2010). Perceived Vulnerability to Downside Risk. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Ranjula Bali Swain; Maria S. Floro (2010). Reducing Vulnerability through Microfinance : Evidence from Indian Self Help Group Program. *Econstor (Econstor)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Stephan Klasen; Tobias Lechtenfeld; Felix Povel (2010). What about the Women? Female Headship, Poverty and Vulnerability in Thailand and Vietnam. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Haroon Jamal (2009). Assessing Vulnerability to Poverty:Evidence from Pakistan. *Munich Personal RePEc Archive (Ludwig Maximilian University of Munich)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Rudolf Witt; Hermann Waibel (2009). Lower Partial Moments as a measure of vulnerability to poverty in Cameroon. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Raghbendra Jha; Ngoc Dang (2009). Vulnerability to poverty in selected Central Asian countries. *ANU Open Research (Australian National University)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Yuan Zhang; Guanghua Wan (2008). Can We Predict Vulnerability to Poverty. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Raghav Gaiha; Katsushi S. Imai (2008). Measuring vulnerability and poverty estimates for rural India. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Donald Makoka (2008). The impact of drought on household vulnerability: The case of rural Malawi. *Munich Personal RePEc Archive (Ludwig Maximilian University of Munich)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Raghbendra Jha; Ngoc Dang; Krishna Lal Sharma (2008). Vulnerability to Poverty in Fiji. *ANU Open Research (Australian National University)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Sanghamitra Bandyopadhyay; Frank Cowell (2007). Modelling Vulnerability in the UK. *Oxford University Research Archive (ORA) (University of Oxford)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- César Calvo; Stefan Dercon (2007). Vulnerability to poverty. *Oxford University Research Archive (ORA) (University of Oxford)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Abebe Shimeles (2006). Essays on Poverty, Risk and Consumption Dynamics in Ethiopia. *Gothenburg University Publications Electronic Archive (Gothenburg University)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Ugo Gentilini; Gentilini, Ugo (2005). Mainstreaming Safety Nets in the Social Protection Policy Agenda: A New Vision or the Same Old Perspective?. *RePEc: Research Papers in Economics*
+  - reason: DOI did not resolve at Crossref
+- César Calvo; Stefan Dercon (2005). Measuring Individual Vulnerability. *Oxford University Research Archive (ORA) (University of Oxford)*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Isaac Busayo Oluwatayo (2004). Income risk and welfare status of rural households in Nigeria: Ekiti State as a test case. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+- Ethan A. Ligon; Laura Schechter (2002). Measuring Vulnerability: The Director's Cut. *RePEc: Research Papers in Economics*
+  - reason: no DOI in OpenAlex; could not confirm against Crossref
+
+---
+
+*Generated from the OpenAlex and Crossref public APIs. Every DOI above can be
+re-resolved at https://doi.org/ to re-check it.*
