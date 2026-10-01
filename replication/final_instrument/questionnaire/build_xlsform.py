@@ -348,7 +348,8 @@ for mod in modules_in_order:
         constraint, cmsg = CONSTRAINT.get(name, ("", ""))
         # a dictionary skip note ending "may be left blank" marks a genuinely optional field --
         # usually a verbatim "other, specify". Forcing those would make enumerators invent answers.
-        req = "" if "may be left blank" in r["skip"] else "yes"
+        # Case-insensitive: see the note on the same test in build_webform.py.
+        req = "" if "may be left blank" in r["skip"].lower() else "yes"
         add(type_, name, r["question"], required=req, relevant=relevant, constraint=constraint, constraint_msg=cmsg)
         if name == "status_m12":   # last month of the calendar -> insert the hidden calculate right after
             add("calculate", "calc_months_no_work", "months with no paid work (hidden)", calc=MONTHS_NO_WORK_CALC)

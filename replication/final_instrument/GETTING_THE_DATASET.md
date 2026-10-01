@@ -19,7 +19,18 @@ downstream expects it.
 
 **Check the build stamp first.** Every row carries `form_build`, like `2026-10-01.1537a6`. If rows
 disagree, some tablets were running an older form — sort that out before analysing, because the older
-build may be missing questions or carrying ones since dropped.
+build may be missing questions or carrying ones since dropped. The web form and the Kobo form stamp
+the same value for the same question set, so a disagreement always means a stale tablet and never a
+difference between the two ways of collecting.
+
+**A blank `knows_monthly_income` is an answer, not a gap.** The earnings calendar is deliberately
+not compulsory: it is a control in the vulnerability models, not the dependent variable, and a
+required earnings question ends interviews. A blank means the respondent declined earnings
+altogether. The build sets `income_declined = 1` and leaves every income variable MISSING rather
+than zero — a zero would read as destitution, put him under the poverty line, mark him deprived on
+Apablaza's compensation domain, and drag the sample median down for everybody else. The build prints
+the count as a NOTE; watch it. If it is large, the income covariates are worth less than the
+regressions imply, and `checks/11_estimation_samples.py` is where that shows up.
 
 ---
 
@@ -34,15 +45,29 @@ Nothing automatic can do this. Each needs a human with the NCO volumes
 | `prev_occ` | the previous main work |
 | `target_occ` | what they would move to if this work ended |
 | `closure_work_detail` | where they went and what they did in the closure |
-| `other_places_detail` | prior work elsewhere, before coming here |
 
 Add one column per field, named `<field>_nco`, holding the **4-digit NCO-2015 code**. Leave blank
 where the text is too vague to code — blank is a usable answer, a guessed code is not. Keep a tally
 of how many you left blank; it belongs in the methods section.
 
-Three others are coded as free text too but do not need NCO: `native_language_other`,
-`govt_scheme_other`, `migration_referral_other`, `work_equipment_detail`. Code these only if you want
-them as categories; the analyses do not require it.
+### `govt_schemes_detail` is coded too, but not to NCO
+
+The ten named government schemes stopped being tick-boxes on 2026-10-01. The enumerator reads the
+list out as a probe and writes down what the respondent says, so the scheme NAMES arrive as free
+text and are coded here instead. Add `govt_schemes_detail_coded` holding the codes the respondent
+named, space-separated, from the list in the enumerator hint:
+
+`1` ration/PDS · `2` MGNREGA · `3` old-age, widow or disability pension · `4` PM-KISAN ·
+`5` Ujjwala · `6` PM-SYM or Atal Pension · `7` Ayushman Bharat · `8` housing (PMAY or state) ·
+`9` anything else
+
+One respondent can name several. `govt_any_benefit = 0` means no schemes at all and needs no coding.
+This is the one coding step the analyses genuinely need: without it there is a yes/no where there
+used to be eight indicators, and a ration card and a widow pension protect against different things.
+
+Three others are free text too and need no coding at all: `native_language_other`,
+`migration_referral_other`, `work_equipment_detail`. Code these only if you want them as categories;
+the analyses do not require it.
 
 ---
 

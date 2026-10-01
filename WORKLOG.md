@@ -4,9 +4,9 @@ Updated as work happens. **Committed locally; never pushed unless explicitly ask
 
 | | |
 |---|---|
-| Local HEAD | field review done; committed locally, **not pushed** |
-| Remote `main` | `0c534fd` — pushed without being asked; **awaiting keep-or-revert** |
-| Questions asked | 213 |
+| Local HEAD | survey revisions done and **pushed** (asked for, 2026-10-01) |
+| Remote `main` | up to date; `0c534fd` superseded, no revert needed |
+| Questions asked | 211 |
 
 ---
 
@@ -104,3 +104,62 @@ Still untested by the reviewer and now constrained anyway: pony-owner against ow
 
 Verified: 0 Stata errors across all three do-files · 05 06 09 10 11 clean · 07 17/17 · 08 50/50 ·
 **12 13/13 in a live Edge instance** · pyxform validates. 213 asked.
+
+---
+
+## Survey revisions from the review pass — 2026-10-01 (pushed, `066ee9d` + follow-up)
+
+Sixteen question-level notes, worked through in order. Three were questions rather than
+instructions and are answered in chat, not in the instrument.
+
+### Changed
+- [x] q7 · enumerator hint converting a LEVEL to a year count. A level is not a "don't know":
+      class 1-12 = that number, ITI/diploma after 10th = 12, BA 15 or 16 (ask the course length),
+      MA 17 or 18. EN and HI.
+- [x] q11 · skipped where the respondent's own schooling entails Yes. He is himself a member aged
+      10+, so six years of his own settles the household indicator. Stata fills those rows and
+      asserts none is left missing. The bracket route can only settle it at "secondary or higher" —
+      "primary but not secondary" spans 5 to 9 years and straddles the threshold.
+- [x] q15/q16 · two DISJOINT bands, under-6 and 6-to-14, replacing under-15 and a 6-to-14 subset of
+      it. `n_children_u15` is now constructed as their sum. Under-6 is also NITI's nutrition range.
+- [x] q44-58 · the earnings calendar is no longer required, gate included. A blank gate = declined.
+- [x] q74 · reworded to "away from your home place". KEPT: the calendar records the activity in each
+      month, not the place, and the spell says he went to the home place, not past it.
+- [x] q78 · `months_away_for_work` cut. Nothing regressed on it; `closure_labour_migrant` comes off
+      the yes/no. The proposed replacement was not added — origin, resp_returns_at_closure and
+      hh_at_home_place already answer it.
+- [x] q79/q80 · `worked_other_places` and its verbatim cut; removed from X_extra.
+- [x] q152 · the ten schemes become the PROBE LIST in the hint; a yes/no plus verbatim names,
+      office-coded. `ration_portable_here` ungated, "we have no ration card" is now code 4.
+- [x] q159 · coping code 6 split: "paid it out of normal earnings" (not stressed) from "something
+      else" (stressed, unlisted). Code 6 exclusive on the check-all.
+- [x] q166 · "Don't know" removed from both maternal limbs, with a probe hint.
+- [x] q167 · asks the CADRE now. An ASHA is its own code and does NOT count as skilled under
+      NFHS/NITI — the old wording would have had an accompanying ASHA read as a yes.
+- [x] q169 · split into weeks of work lost and money spent; the weeks are valued at his OWN measured
+      wage in Stata rather than at his estimate of it.
+- [x] MPI · all 12 audited. Eleven collected; nutrition needs anthropometry. `mpi_score` stays
+      strict and reweighted, `mpi_score_lyons` substitutes the Lyons food-coping indicator into the
+      1/6 slot. The index was labelled "ten of twelve" everywhere and summed eleven.
+
+### Answered, not changed
+- home_state vs native_language — different variables, so no move. See chat.
+- q72 `years_coming_here` — in the VEP covariate list; kept. See chat.
+- q171-179 — kept, and the nutrition substitution makes the rCSI block MORE load-bearing.
+
+### Bugs found while making the changes
+- `form_build` reached the Kobo form as a REQUIRED TEXT QUESTION labelled "Recorded
+  automatically." — an unanswerable required field, the same failure the last review hit. Now a
+  hidden calculate, and BUILD moved into dictionary.py so both forms stamp one value.
+- The optional-question test read `"may be left blank" in skip` case-SENSITIVELY, so a rule opening
+  "May be left blank" left the question required with nothing saying so. That is how the optional
+  earnings gate was still compulsory in the first build. Match is case-insensitive now.
+- `home_outside_state` was missing for 178 of 200 rows and sat in a covariate list — the
+  n=104-to-4 failure mode, still live from when home_state was gated. Filled from origin instead.
+- `egen rowtotal` read an unmeasured employment domain as a NON-deprivation. Alkire-Foster drops
+  the observation; the count is now reported.
+- `income_declined` was defined after the block that reads it. The build caught it.
+
+Verified: 0 Stata errors across all three do-files · 05 06 09 10 11 clean · 07 17/17 · 08 50/50 ·
+**12 13/13 in a live Edge instance** · pyxform validates · Hindi complete for every question and
+every choice. **211 asked.**

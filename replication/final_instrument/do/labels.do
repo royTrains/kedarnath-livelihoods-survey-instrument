@@ -852,7 +852,7 @@ notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures 
 notes knows_monthly_income: Meaning (cont.): the vulnerability models, not an identifying variable, so refusing them costs a covariate rather than the case -- and a required earnings question would have ended interviews. Worded as a genuine choice between two ways of
 notes knows_monthly_income: Meaning (cont.): answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
 notes knows_monthly_income: Question: Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
-notes knows_monthly_income: Skip rule: May be left blank if the respondent declines to discuss earnings; both earnings routes then stay shut
+notes knows_monthly_income: Skip rule: Ask everyone; may be left blank if the respondent declines to discuss earnings, and both earnings routes then stay shut
 notes knows_monthly_income: Source: Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)
 notes income_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
 notes income_m5: Meaning: Net earnings in May. Filled by the tablet as 0 when status_m5 is No paid work.

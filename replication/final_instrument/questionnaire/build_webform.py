@@ -121,7 +121,10 @@ for r in ROWS:
     q = {
         "n": r["name"], "m": r["module"], "t": typ,
         "en": r["question"], "hi": HI.get(r["name"], r["question"]),
-        "opt": "may be left blank" in r["skip"],
+        # Case-INSENSITIVE on purpose. This read r["skip"] literally until 2026-10-01, so a skip
+        # rule that opened with "May be left blank" left the question REQUIRED, with nothing
+        # anywhere saying so -- which is how the optional earnings gate shipped still compulsory.
+        "opt": "may be left blank" in r["skip"].lower(),
     }
     # the XLSForm's choice_filter has no equivalent in this form, so carry the one rule it needs as
     # data: exclude whatever `occupation` holds from the other-activities list, so a pony owner is not
