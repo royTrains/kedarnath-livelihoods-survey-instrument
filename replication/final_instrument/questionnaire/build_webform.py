@@ -19,6 +19,7 @@ not subject to that. Mitigations built in below:
   * export writes CSV in exactly the raw_asked.csv column order the Stata build already reads
 None of that removes the need for a daily export. It just makes forgetting it visible.
 """
+import datetime as _dt
 import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -160,7 +161,15 @@ for r in ROWS:
     _hs = HI_LSETS.get(r["lset"], {})
     LABS[r["name"]] = {str(k): {"e": str(v), "h": str(_hs.get(k, v))} for k, v in LSETS[r["lset"]].items()}
 
-CFG = {"q": questions, "mods": modules, "cols": export_cols, "labs": LABS}
+# A build stamp, shown in the header and written into every exported row. A stale service-worker
+# copy of this page is indistinguishable from the current one otherwise, and a field report against
+# the wrong build costs more time than the bug does: three issues in one review had already been
+# fixed, and the reporter had no way to know.
+import hashlib as _h
+BUILD = (_dt.date.today().isoformat() + "." +
+         _h.sha1(json.dumps([q["n"] for q in questions], sort_keys=True).encode()).hexdigest()[:6])
+export_cols.append("form_build")
+CFG = {"q": questions, "mods": modules, "cols": export_cols, "labs": LABS, "build": BUILD}
 
 # The consent script now comes from dictionary.CONSENT_SCRIPT. This file used to hold its own shorter
 # paraphrase, which is how two versions of an informed-consent statement came to exist in one repo.
@@ -195,6 +204,7 @@ header b{font-size:15px}.grow{flex:1}
 button{font:inherit;padding:10px 14px;border:1px solid var(--line);background:var(--card);border-radius:8px;cursor:pointer}
 button.p{background:var(--acc);color:#fff;border-color:var(--acc)}
 button:disabled{opacity:.45}
+#bld{font-size:10px;color:var(--mut);letter-spacing:.04em;margin-left:6px;opacity:.75}
 #pend{font-size:13px;padding:4px 9px;border-radius:99px;background:#eef1f5;color:var(--mut)}
 #pend.hot{background:#fee4e2;color:var(--warn);font-weight:600}
 main{max-width:680px;margin:0 auto;padding:14px 14px 96px}
@@ -239,7 +249,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td{padding:7px 4px;bord
 <body class="notranslate" translate="no">
 <header>
   <b id="ttl">केदारनाथ सर्वेक्षण</b>
-  <span id="pend">0</span>
+  <span id="pend">0</span><span id="bld" title="build"></span>
   <span class="grow"></span>
   <button id="lang">EN</button>
   <button id="menu">☰</button>
@@ -306,9 +316,16 @@ function paint(){
   const p = pending(), e = document.getElementById("pend");
   e.textContent = p + " " + t("pend");
   e.className = p > 5 ? "hot" : "";
+  // The completion screen shows the same count. It used to be written into the HTML once and never
+  // refreshed, so exporting from that screen dropped the header badge to 0 while the paragraph
+  // underneath still claimed 2 were waiting.
+  const e2 = document.getElementById("pend2");
+  if (e2) e2.textContent = p;
   document.getElementById("ttl").textContent = L ? "Kedarnath Survey" : "केदारनाथ सर्वेक्षण";
   document.querySelectorAll("[data-t]").forEach(n => n.textContent = t(n.dataset.t));
   document.getElementById("lang").textContent = L ? "हिं" : "EN";
+  const b = document.getElementById("bld");
+  if (b) b.textContent = CFG.build;
 }
 
 // ---- the values a relevance expression can see
@@ -572,7 +589,7 @@ function showDone(){
   document.getElementById("nav").style.display = "none";
   document.getElementById("app").innerHTML =
     "<div class=mid><div class=big>" + (lastRefused ? t("stop") : t("done")) + "</div>" +
-    "<p>" + pending() + " " + t("pend") + "</p>" +
+    "<p><span id=pend2>" + pending() + "</span> " + t("pend") + "</p>" +
     "<p><button class=p onclick='start()'>" + t("start") + "</button></p>" +
     "<p><button onclick='exportCsv()'>" + t("exp") + "</button></p>" +
     "<p><button onclick='exportCsv(1)'>" + t("expl") + "</button></p></div>";
@@ -586,6 +603,7 @@ function start(){
     p => { D.gps_lat = p.coords.latitude.toFixed(5); D.gps_lon = p.coords.longitude.toFixed(5); save(DKEY, D) },
     () => {}, {timeout: 20000, enableHighAccuracy: true});
   D.interview_date = new Date().toISOString().slice(0,10);
+  D.form_build = CFG.build;
   curMod = null; save(DKEY, D); render();
 }
 
@@ -610,6 +628,7 @@ function exportCsv(labelled){
   let out = cols.join(",") + "\\n";
   rows.forEach((r,i) => {
     r.resp_id = r.resp_id || (Date.now() + "" + i).slice(-9);
+    r.form_build = r.form_build || CFG.build;
     out += cols.map(c => csvCell(labelled ? labelOf(c, r[c]) : r[c])).join(",") + "\\n";
   });
   const blob = new Blob(["\\ufeff" + out], {type:"text/csv;charset=utf-8"});

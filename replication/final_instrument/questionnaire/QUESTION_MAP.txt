@@ -9,7 +9,7 @@
     ..   optional; may be left blank
     **   this answer opens or closes other questions
 
-  213 questions asked · 82 of them gated · 31 questions act as gates
+  213 questions asked · 83 of them gated · 32 questions act as gates
 
 
 +------------------------------------------------------------------------------------------+
@@ -923,13 +923,14 @@
 
    [read aloud] Now two questions about the ropeway that has been proposed between Gauriku...
 
-       182   ropeway_stance             CHOOSE 1 (4 options)  
-             "A ropeway is proposed between Gaurikund and Kedarnath. Are you in
-              favour, neutral, or against?"
-             1=Support  |  2=Neutral  |  3=Oppose  |  98=Prefer not to say
+   :-> if site = 1
+   |    182   ropeway_stance             CHOOSE 1 (4 options)  
+   |         "A ropeway is proposed between Gaurikund and Kedarnath. Are you in
+   |          favour, neutral, or against?"
+   |         1=Support  |  2=Neutral  |  3=Oppose  |  98=Prefer not to say
        183   trek_dependent             CHOOSE 1 (2 options)  
-             "Is your main Yatra work carrying, transporting or guiding people or
-              goods on the Gaurikund to Kedarnath trek?"
+             "Is your main work carrying, transporting or guiding people or goods on
+              foot along the pilgrimage trek?"
              0=No  |  1=Yes
 
 +------------------------------------------------------------------------------------------+

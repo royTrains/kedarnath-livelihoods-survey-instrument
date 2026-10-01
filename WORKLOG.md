@@ -73,3 +73,34 @@ Four bugs surfaced while fixing, each caught by a check rather than by reading:
 
 Verified: 0 Stata errors across all three do-files · 05 06 09 10 11 clean · 07 17/17 ·
 08 50/50 · **12 13/13 in a live Edge instance** · pyxform validates.
+
+---
+
+## Second field review (14 personas) — closed 2026-10-01
+
+**Three of the five reported issues were already fixed** in `2fbf158`, after the build that was
+tested: home_state for local respondents, pension/insurance/leave for own-account workers, and the
+"hardest shock" question, which is in neither the pushed build nor local HEAD. That last one means a
+**stale service-worker copy** was being tested, which is now addressed directly.
+
+- [x] Ropeway module read to Hemkund respondents — gated to `site = 1`. Module J names the
+      Gaurikund-Kedarnath proposal specifically; `trek_dependent` reworded to be route-neutral.
+      If Hemkund needs its own ropeway question it needs its own wording and gate, not this one widened.
+- [x] "not exported" badge disagreed with the completion page — the completion count was written into
+      the HTML once and never refreshed, so exporting from that screen dropped the header to 0 while
+      the paragraph still claimed 2. Now the same live element.
+- [x] **Build stamp added.** Header shows it, and `form_build` is written into every exported row.
+      A stale cached page was indistinguishable from the current one, which cost this review three
+      already-fixed issues.
+- [x] Negative monthly income, negative land, negative loan amounts — non-negative constraints
+- [x] 30 years of schooling at age 20 — `years_schooling <= age - 4`
+- [x] 40 Yatra seasons at age 30 — `years_in_yatra_work <= age - 10`
+- [x] Extra hours wanted beyond a day — `more_hours_day + hours_day_yatra <= 18`
+- [x] "Local" home with the state set to Assam — closed by the home_state gate in `2fbf158`
+- [x] `GETTING_THE_DATASET.md` — how to get from collected interviews to the analysis file
+
+Still untested by the reviewer and now constrained anyway: pony-owner against owning no ponies
+(a cross-check flag, not a block), and negative loan amounts.
+
+Verified: 0 Stata errors across all three do-files · 05 06 09 10 11 clean · 07 17/17 · 08 50/50 ·
+**12 13/13 in a live Edge instance** · pyxform validates. 213 asked.

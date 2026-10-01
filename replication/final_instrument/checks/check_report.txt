@@ -1,30 +1,30 @@
-Rows 200, variables 405; dictionary variables 357
+Rows 200, variables 406; dictionary variables 358
 Every dictionary variable is in the file, in dictionary order: False
 Variables without a label: ['months_away_total', 'cons_annual_pm', '_wage_worker', '_has_real_shock']
 Value-label sets defined: 45 of 47 expected
-Missing counts for always-asked variables (should be empty): {'land_cultivable_acres': 117}
-Poverty and employment quality: poor 0.46, poor(sensitivity) 0.09, employment-poor (2 of 5) 0.48
-Consumption: cons_pc_pm mean 2894 (narrow 2484, adult-equiv 3215); income_seasonality_cv mean 1.17
+Missing counts for always-asked variables (should be empty): {'land_cultivable_acres': 114, 'ropeway_stance': 44}
+Poverty and employment quality: poor 0.48, poor(sensitivity) 0.10, employment-poor (2 of 5) 0.49
+Consumption: cons_pc_pm mean 2816 (narrow 2405, adult-equiv 3112); income_seasonality_cv mean 1.19
 On/off-season consumption ratio (off-season usual month / Yatra-season usual month), by item:
-  staples: 0.77
-  perishables: 0.77
+  staples: 0.78
+  perishables: 0.78
   food_own: 1.14
-  food_out: 0.77
-  fuel: 0.77
-  routine_misc: 0.77
-  transport_comm: 0.77
-  rent: 0.61
-  med_nonhosp: 0.76
-Off-season food_own > Yatra-season food_own (expected mainly for farming/animal-husbandry off-season workers): 48% of respondents
-Off-season rent near zero for non-local migrants: mean off-season rent, local origin=205, non-local origin=50
-Remittances: mean annual outward Rs 5376, inward Rs 263; outward Yatra-season share of annual 0.70
-Employment deprivation rates (share): {'emp_dep_access': 0.14, 'emp_dep_comp': 0.43, 'emp_dep_sec': 0.49, 'emp_dep_stab': 0.22, 'emp_dep_cond': 0.31}
-Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.5, food_coping_deprived (rCSI>20) 0.08; unmet health-care need (3m) 0.17
-Education: knows exact years 0.79; mean years_schooling (of those who know) 7.8; education_level_cat used for 42 respondents
-Multiple work-holding: 0.34 hold at least one other activity; mean count among them 1.32 (max 4); mean income Rs 1868/mo; ticked-vs-stated mismatch 0.000
-Ex-ante skill-move direction (Nawakitphaitoon & Ormiston asymmetry): {1: 73, 2: 41, 3: 13, 4: 73}; mean coverage 0.65, mean retention 0.53
-Productive assets (mean count of 6, and migration referral distribution): count 1.01; referral {1: 17, 2: 19, 3: 8, 4: 3, 5: 6, 6: 1}
-Employment-poor count distribution: {0: 30, 1: 73, 2: 61, 3: 25, 4: 8, 5: 3}
+  food_out: 0.78
+  fuel: 0.78
+  routine_misc: 0.79
+  transport_comm: 0.79
+  rent: 0.60
+  med_nonhosp: 0.79
+Off-season food_own > Yatra-season food_own (expected mainly for farming/animal-husbandry off-season workers): 45% of respondents
+Off-season rent near zero for non-local migrants: mean off-season rent, local origin=196, non-local origin=113
+Remittances: mean annual outward Rs 5377, inward Rs 263; outward Yatra-season share of annual 0.62
+Employment deprivation rates (share): {'emp_dep_access': 0.18, 'emp_dep_comp': 0.42, 'emp_dep_sec': 0.52, 'emp_dep_stab': 0.19, 'emp_dep_cond': 0.29}
+Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI 8.6, food_coping_deprived (rCSI>20) 0.09; unmet health-care need (3m) 0.15
+Education: knows exact years 0.80; mean years_schooling (of those who know) 7.4; education_level_cat used for 41 respondents
+Multiple work-holding: 0.36 hold at least one other activity; mean count among them 1.40 (max 4); mean income Rs 1897/mo; ticked-vs-stated mismatch 0.000
+Ex-ante skill-move direction (Nawakitphaitoon & Ormiston asymmetry): {1: 71, 2: 40, 3: 14, 4: 75}; mean coverage 0.65, mean retention 0.52
+Productive assets (mean count of 6, and migration referral distribution): count 0.95; referral {1: 16, 2: 20, 3: 6, 4: 4, 5: 6, 6: 1, 7: 1}
+Employment-poor count distribution: {0: 38, 1: 64, 2: 55, 3: 29, 4: 12, 5: 2}
 Interview minutes: not simulated -- measured from Kobo start/end at the pretest
 Max interviews per enumerator per day: 5
 Tasks: mean regular 3.7 of 12, mean done-before 0.7; trek_dependent share 0.34

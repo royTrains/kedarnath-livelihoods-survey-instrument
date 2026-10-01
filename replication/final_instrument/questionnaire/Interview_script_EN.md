@@ -900,7 +900,7 @@ Now two questions about the ropeway that has been proposed between Gaurikund and
 
 > **ENUMERATOR:** Options: 1 Support · 2 Neutral · 3 Oppose · 98 Prefer not to say
 
-**183.** Is your main Yatra work carrying, transporting or guiding people or goods on the Gaurikund to Kedarnath trek?
+**183.** Is your main work carrying, transporting or guiding people or goods on foot along the pilgrimage trek?
 
 > **ENUMERATOR:** Options: 0 No · 1 Yes
 

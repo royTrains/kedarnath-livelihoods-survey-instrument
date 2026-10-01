@@ -42,7 +42,7 @@ import delimited "data/raw_asked.csv", clear varnames(1) case(preserve)
 *-----------------------------------------------------------------------------
 foreach v in other_activity_types distress_event_last365d shock_coping ///
              occupation_detail prev_occ target_occ native_language_other ///
-             govt_schemes govt_scheme_other work_equipment_detail migration_referral_other ///
+             govt_schemes govt_scheme_other work_equipment_detail migration_referral_other form_build ///
              closure_work_detail other_places_detail {
     capture confirm variable `v'
     if !_rc {
@@ -818,6 +818,8 @@ assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
 * migration_referral and worked_other_places are ungated now -- asked of everyone, including local
 * respondents, because who placed you in a job is not a question about migration.
 assert inlist(site,1,2)
+* Module J is Kedarnath-only: it names a specific proposal.
+assert missing(ropeway_stance) == (site!=1)
 assert inrange(accom_type_here,1,8)
 assert inrange(func_limitation,1,4)
 assert missing(ration_portable_here) == !strpos(" " + govt_schemes + " ", " 1 ")

@@ -66,6 +66,11 @@ K_TAIL = "${job_situation} <= 7"
 K_SEEKING = "${job_situation} = 8"
 RELEVANT = {
     "home_state": "${origin} = 3",
+    # Module J names the Gaurikund-Kedarnath ropeway, so it is asked only on that route. A Hemkund
+    # respondent was being read a question about a proposal that does not concern him. If the Hemkund
+    # route gets its own ropeway question later it needs its own wording and its own gate, not this
+    # one widened -- the two proposals are different projects.
+    "ropeway_stance": "${site} = 1",
     "land_cultivable_acres": "${land_unit} != 5",
     "n_children_out_school": "${n_children_6_14} > 0",
     "main_income_earner": "${n_earners} > 1",
@@ -161,6 +166,34 @@ CONSTRAINT = {
     "distress_event_last365d": ("not(selected(., '9') and count-selected(.) > 1)",
                                 "'Nothing of this kind happened' cannot be ticked with a shock. Choose one or the other."),
     "age": (". >= 10 and . <= 90", "Age must be between 10 and 90."),
+    # ---- caught by the stress test: values the form accepted that cannot be true ----------------
+    # Money and land cannot be negative. Obvious, and absent until a reviewer typed a minus sign.
+    "income_m1": (". >= 0", "Earnings cannot be negative."),
+    "income_m2": (". >= 0", "Earnings cannot be negative."),
+    "income_m3": (". >= 0", "Earnings cannot be negative."),
+    "income_m4": (". >= 0", "Earnings cannot be negative."),
+    "income_m5": (". >= 0", "Earnings cannot be negative."),
+    "income_m6": (". >= 0", "Earnings cannot be negative."),
+    "income_m7": (". >= 0", "Earnings cannot be negative."),
+    "income_m8": (". >= 0", "Earnings cannot be negative."),
+    "income_m9": (". >= 0", "Earnings cannot be negative."),
+    "income_m10": (". >= 0", "Earnings cannot be negative."),
+    "income_m11": (". >= 0", "Earnings cannot be negative."),
+    "income_m12": (". >= 0", "Earnings cannot be negative."),
+    "land_cultivable_acres": (". >= 0", "Land cannot be negative."),
+    "loan_amount": (". >= 0", "An amount cannot be negative."),
+    "loan_amount_borrowed": (". >= 0", "An amount cannot be negative."),
+    "shock_loss_amount": (". >= 0", "An amount cannot be negative."),
+    "other_activity_income_pm": (". >= 0", "Earnings cannot be negative."),
+    # Schooling cannot exceed a life. Four is the earliest a child starts class 1 here.
+    "years_schooling": (". >= 0 and . <= ${age} - 4",
+                        "Years of schooling cannot be more than the respondent's age allows."),
+    # Nor can Yatra seasons. Ten is the youngest this instrument will record as working.
+    "years_in_yatra_work": (". >= 0 and . <= ${age} - 10",
+                            "More Yatra seasons than the respondent's age allows."),
+    # Extra hours wanted, on top of hours already worked, cannot exceed a day.
+    "more_hours_day": (". >= 0 and . + ${hours_day_yatra} <= 18",
+                       "Hours wanted plus hours already worked cannot exceed 18 in a day."),
     "hours_day_yatra": (". >= 1 and . <= 18", "Hours a day must be between 1 and 18."),
     "days_week_yatra": (". >= 1 and . <= 7", "Days a week must be between 1 and 7."),
     "hhsize": (". >= 1 and . <= 30", "Household size must be between 1 and 30."),

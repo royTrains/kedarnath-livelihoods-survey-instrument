@@ -30,6 +30,11 @@ def code(series, mapping):
     return np.array(out, dtype=float)
 
 o = pd.DataFrame(index=d.index)
+# paradata the enumerator sets before approaching anyone. Assigned FIRST because questions
+# downstream are gated on the route -- Module J names the Gaurikund-Kedarnath proposal.
+o["site"] = rng.choice([1, 2], n, p=[.72, .28])
+o["form_build"] = "synthetic"
+
 o["resp_id"] = d.resp_id
 # ---- P: paradata ---------------------------------------------------------
 o["enum_id"] = rng.permutation(np.repeat([1, 2, 3, 4], n // 4))
@@ -656,7 +661,10 @@ for i in range(n):
             picks.add(c)
     _cope_sets.append(" ".join(str(v) for v in sorted(picks)) if picks else "6")
 o["shock_coping"] = _cope_sets
-o["ropeway_stance"] = code(d.ropeway_stance, {"Support": 1, "Neutral": 2, "Oppose": 3, "Don't": 98})
+# Module J names the Gaurikund-Kedarnath proposal, so it is asked on that route only.
+o["ropeway_stance"] = np.where(
+    o["site"].values == 1,
+    code(d.ropeway_stance, {"Support": 1, "Neutral": 2, "Oppose": 3, "Don't": 98}), np.nan)
 TREK = np.isin(occ, [1, 2, 3, 4])
 # Open follow-up to the stance. Reasons are drawn conditional on the stance so the two agree, the
 # way they would in a real interview; recorded as romanised Hindi the way an enumerator would type it.
@@ -750,7 +758,6 @@ for v in ["flagged_contradiction", "dropout_score", "dropout_prob", "flagged_dro
 
 # ---- variables added 2026-09-30 for the four analysis arms --------------------------------------
 # site: paradata the enumerator sets. Kedarnath is the larger route of the two.
-o["site"] = rng.choice([1, 2], n, p=[.72, .28])
 
 
 # loan purpose and principal, for the households that borrowed
