@@ -260,8 +260,12 @@ gen double yatra_income_share  = round(yatra_income/total_annual_income, 0.001)
 * construction, so its CV measures only the between-season swing and is a LOWER BOUND on true
 * seasonality. income_seasonality_cv is an Exposure covariate in all three VEP arms, so always
 * split or interact on income_from_fallback -- the two paths are not the same measurement.
-egen double _mean12 = rowmean(income_m1-income_m12)
-egen double _sd12   = rowsd(income_m1-income_m12)
+* An explicit varlist, not the range income_m1-income_m12. A dash range in Stata means "every
+* variable BETWEEN these two in dataset order", and the earnings questions are asked season-first
+* now (May through April), so the range no longer spans the twelve months -- it errored outright,
+* which was the lucky case. Spelled out, the order of the columns cannot matter.
+egen double _mean12 = rowmean(income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12)
+egen double _sd12   = rowsd(income_m1 income_m2 income_m3 income_m4 income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12)
 gen double income_seasonality_cv = _sd12/_mean12 if income_from_fallback==0
 drop _mean12 _sd12
 
@@ -382,6 +386,16 @@ label var debt_secured_on_asset "Loan is secured on a household asset"
 gen byte debt_on_productive_asset = inlist(loan_collateral,3,4,5) if loan_against_asset==1
 label var debt_on_productive_asset "Loan secured on the asset the livelihood depends on"
 gen double debt_stock_months = loan_amount/(total_annual_income/12) if took_loan_12m==1 & total_annual_income>0
+* What the loan was FOR separates investment from distress. Codes 2 and 3 buy a productive asset or
+* stock; 1, 4, 5 and 8 cover a shock, daily needs, a ceremony, or another loan.
+gen byte loan_for_investment = inlist(loan_purpose,2,3) if took_loan_12m==1
+gen byte loan_for_distress   = inlist(loan_purpose,1,4,5,8) if took_loan_12m==1
+label var loan_for_investment "Borrowed to buy a productive asset or stock"
+label var loan_for_distress   "Borrowed to cover a shock, daily needs, a ceremony or another loan"
+* How much of the principal is still owed. Neither figure alone could show this.
+gen double loan_share_repaid = 1 - loan_amount/loan_amount_borrowed ///
+    if took_loan_12m==1 & loan_amount_borrowed>0
+label var loan_share_repaid "Share of the principal already repaid"
 label var debt_stock_months "Outstanding loan, in months of household income"
 
 * ---- health. Five items were collected and none reached an estimate, although morbidity and
@@ -409,7 +423,16 @@ replace  secondary_income_share = 0 if n_other_activities==0
 label var secondary_income_share "Share of annual income from work other than the main occupation"
 
 * ---- remaining adaptive-capacity and stratifier variables that fed nothing
-gen byte has_cultivable_land = (land_cultivable_acres>0) if !missing(land_cultivable_acres)
+* Land arrives in the unit the household actually uses. Convert to acres for the asset index.
+* Uttarakhand hill conversions: 1 nali is about 1/50 acre, 1 bigha about 1/5, 1 hectare 2.471.
+gen double land_acres = .
+replace land_acres = land_cultivable_acres * 0.020  if land_unit==1    // nali
+replace land_acres = land_cultivable_acres * 0.200  if land_unit==2    // bigha
+replace land_acres = land_cultivable_acres          if land_unit==3    // already acres
+replace land_acres = land_cultivable_acres * 2.471  if land_unit==4    // hectares
+replace land_acres = 0                              if land_unit==5    // no land
+label var land_acres "Cultivable land in acres, converted from the unit reported"
+gen byte has_cultivable_land = (land_acres>0) if !missing(land_acres)
 label var has_cultivable_land "Household owns or cultivates any land"
 gen byte insured_any = (n_health_insured>0 | n_life_insured>0 | has_crop_insurance==1)
 label var insured_any "Household holds any insurance at all"
@@ -738,8 +761,15 @@ gen byte k_tail    = inrange(job_situation,1,7)         // 1-7: also routed to Q
 gen byte k_seeking = (job_situation==8)                 // 8:   routed straight to Q22/Q23
 * skip rules: answered exactly when the filter says so
 assert missing(contract_status)   == !(k_working==1 & inlist(employment_type,3,4))
-assert missing(leave_rights)      == (k_working!=1)   // asked of everyone still working, not wage-only
-foreach v in workplace_registered pension_contrib work_health_ins injured_ever workplace_injury_12m {
+* These three ask what an EMPLOYER provides, so they are wage-worker only now -- an own-account
+* worker has no employer to answer about.
+gen byte _wage_worker = (k_working==1 & inlist(employment_type,3,4))
+foreach v in pension_contrib work_health_ins leave_rights {
+    assert missing(`v') == !_wage_worker
+}
+assert missing(home_state) == (origin!=3)
+* pension_contrib and work_health_ins moved to the wage-worker gate above and are checked there.
+foreach v in workplace_registered injured_ever workplace_injury_12m {
     assert missing(`v') == (k_working!=1)
 }
 * wants_more_work is gated at codes 1-7, not 1-3: Apablaza routes the studying, in-training,
@@ -762,7 +792,11 @@ assert inrange(mpi_score,0,1)
 assert (credit_source==.)            == (took_loan_12m==0)
 assert (loan_amount==.)              == (took_loan_12m==0)
 assert (loan_against_asset==.)       == (took_loan_12m==0)
-assert (has_crop_insurance==.)       == (land_cultivable_acres==0)
+* Land is now reported in the household's own unit, and the amount is MISSING rather than 0 for a
+* household that said it has none -- so the old test against ==0 no longer describes the gate.
+* Note the Stata trap being avoided: missing sorts as +infinity, so a bare land_acres>0 would be
+* TRUE for a missing value and silently invert this.
+assert (has_crop_insurance==.) == !(land_acres>0 & !missing(land_acres))
 
 assert inrange(drinking_water,1,9)
 assert inlist(cooking_fuel,1,2,3,4,5,6,7,8,9,10)
@@ -792,6 +826,27 @@ assert missing(shock_month) == !_has_real_shock
 * the worst shock must be one of the shocks actually reported, not any code from the list
 * Code 9 is exclusive. Ticked with a real shock it is a contradiction the form permits, so it is a
 * data-quality flag rather than an assert.
+* ---- cross-checks raised in the field review -------------------------------------------------
+* Each is a contradiction the FORM permits, so each is a flag and not an assert.
+gen byte dq_hosp_no_spend = (hospitalization_365d==1 & cons_medical_hosp_12m==0)
+label var dq_hosp_no_spend "Reports a hospital stay but zero hospital spending"
+gen byte dq_upi_no_phone = (uses_digital_payment==1 & smartphone_owned==0)
+label var dq_upi_no_phone "Uses digital payment but owns no smartphone"
+* The occupation list already separates owner from worker, and employment_type asks status again.
+* An owner who then reports casual wage labour, or a worker who reports being an employer, is a
+* contradiction neither question could catch alone. occ codes 2,6,8,10 are the owner categories.
+gen byte dq_owner_but_wage = (inlist(occupation,2,6,8,10) & inlist(employment_type,3,4))
+gen byte dq_worker_but_employer = (inlist(occupation,1,3,4,5,7,9,13) & employment_type==2)
+label var dq_owner_but_wage     "Occupation is an owner category but employment status is wage work"
+label var dq_worker_but_employer "Occupation is a worker category but employment status is employer"
+* Apablaza's Q5 offers retired, only-studies and not-seeking. Any of those from a respondent
+* intercepted at work on the route contradicts the main-work answers already given.
+gen byte dq_status_vs_work = inlist(job_situation,4,5,6,7,9,10)
+label var dq_status_vs_work "Work status contradicts having given a main Yatra occupation"
+* Under 18 and working. Not blocked -- the form must record what is there -- but never silent.
+gen byte dq_minor_working = (age < 18)
+label var dq_minor_working "Respondent is under 18"
+
 gen byte dq_shock_none_and_some = (no_shock_reported==1 & shock_count>0)
 label var dq_shock_none_and_some "Ticked 'nothing happened' alongside a real shock"
 assert !missing(migration_referral)
@@ -904,6 +959,16 @@ if r(N) > 0 {
 * The stated off-season migration item against the calendar's location row. Two reports of the same
 * fact, asked minutes apart; a real respondent can and will disagree with himself. Counted, never
 * asserted -- an assert here would halt the build on data the form is perfectly happy to emit.
+foreach c in dq_minor_working dq_hosp_no_spend dq_upi_no_phone dq_owner_but_wage ///
+             dq_worker_but_employer dq_status_vs_work {
+    quietly count if `c'==1
+    if r(N) > 0 {
+        local lbl : variable label `c'
+        di as error "  DATA QUALITY: " r(N) " record(s) -- `lbl'"
+        quietly replace _dq_flag = 1 if `c'==1
+        local dq_total = `dq_total' + r(N)
+    }
+}
 quietly count if dq_shock_none_and_some==1
 if r(N) > 0 {
     di as error "  DATA QUALITY: " r(N) " record(s) -- ticked 'nothing happened' alongside a real shock"

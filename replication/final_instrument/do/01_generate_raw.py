@@ -81,7 +81,9 @@ hstate = np.full(n, 27)
 _m = orig == 3
 hstate[_m] = rng.choice(MIG_STATES[0], size=_m.sum(), p=MIG_STATES[1])
 hstate[orig == 4] = 99
-o["home_state"] = hstate
+# home_state is asked ONLY when the origin is another Indian state; the other three codes already
+# give the answer (local and other-Uttarakhand-district are Uttarakhand, Nepal is Nepal).
+o["home_state"] = np.where(orig == 3, hstate, np.nan)
 # rural/urban of the USUAL home -- decides which poverty line applies to this respondent, and now
 # ASKED rather than derived from a village/town/city tier the respondent could not reliably classify
 o["home_rural_urban"] = rng.choice([1, 2], n, p=[.81, .19])
@@ -487,7 +489,12 @@ o["cooking_fuel"] = np.where(_lpg == 1, 1,
 for v in ["owns_tv", "owns_radio", "owns_bicycle", "owns_motorcycle", "owns_car", "owns_fridge"]:
     o[v] = d[v]
 # land is now explicitly CULTIVABLE land, excluding the homestead plot
-o["land_cultivable_acres"] = d.land_acres
+# land unit: hill households overwhelmingly count in nali
+_has_land = d.land_area.values > 0 if "land_area" in d else (rng.random(n) < .41)
+o["land_unit"] = np.where(_has_land, rng.choice([1, 2, 3, 4], n, p=[.71, .14, .13, .02]), 5)
+o["land_cultivable_acres"] = np.where(
+    o["land_unit"].values == 5, np.nan,
+    np.round(rng.gamma(1.6, 4.0, n), 1).clip(0.1, 60))
 # three assets NITI counts that the instrument was not asking for at all
 o["owns_phone"] = (rng.random(n) < np.clip(.82 + .12 * d.smartphone_owned.values, 0, .99)).astype(int)
 o["owns_computer"] = (rng.random(n) < .04).astype(int)
@@ -545,7 +552,10 @@ o["n_health_insured"] = np.where(_health_any,
                                  np.minimum(_hh, 1 + rng.poisson(1.6, n)), 0).astype(float)
 _life_any = np.isin(_ins_old, [2, 4])
 o["n_life_insured"] = np.where(_life_any, np.minimum(_hh, 1 + rng.poisson(0.4, n)), 0).astype(float)
-_has_land = d.land_acres.values > 0
+# Must follow the FORM's gate, which is land_cultivable_acres > 0 -- and that is now missing, not
+# zero, for a household that reported no land at all (land_unit = 5).
+_land_amt = o["land_cultivable_acres"].values.astype(float)
+_has_land = (~np.isnan(_land_amt)) & (_land_amt > 0)
 o["has_crop_insurance"] = np.where(_has_land,
                                    ((np.isin(_ins_old, [3, 4])) & (rng.random(n) < .7)).astype(float), np.nan)
 
@@ -684,7 +694,8 @@ CON = {3: [.30, .10, .60], 4: [.02, .03, .95]}
 o["contract_status"] = [rng.choice([1, 2, 3], p=CON[e]) if (e in (3, 4) and w) else np.nan for e, w in zip(et, working)]
 regp = np.where(et == 1, np.where(TREK, .85, .60), np.where(et == 2, .55, np.where(et == 3, .60, .25)))
 o["workplace_registered"] = np.where(working, (rng.random(n) < regp).astype(float), np.nan)
-o["pension_contrib"] = np.where(working, [rng.choice([1, 2, 3], p=[.10, .05, .85]) if e == 3 else rng.choice([2, 3], p=[.04, .96]) for e in et], np.nan)
+_wage = working & np.isin(emp_t if "emp_t" in dir() else o["employment_type"].values, [3, 4])
+o["pension_contrib"] = np.where(_wage, [rng.choice([1, 2, 3], p=[.10, .05, .85]) if e == 3 else rng.choice([2, 3], p=[.04, .96]) for e in et], np.nan)
 wi = []
 for i in range(n):
     pw = {3: .25, 4: .02}.get(et[i], .03)
@@ -692,11 +703,11 @@ for i in range(n):
     if u < pw: wi.append(1)
     elif u < pw + .03: wi.append(4)
     else: wi.append(2 if (d.health_insurance_covered.values[i] == 1 and rng.random() < .8) else 3)
-o["work_health_ins"] = np.where(working, wi, np.nan)
+o["work_health_ins"] = np.where(_wage, wi, np.nan)
 # leave rights: asked of everyone still in the block, not only wage workers (Apablaza Q18 has no
 # wage-only skip) -- self-employed mostly answer no, with a small yes/don't-know tail
 LEA = {3: [.35, .60, .05], 4: [.02, .93, .05], 1: [.03, .90, .07], 2: [.08, .85, .07]}
-o["leave_rights"] = np.where(working, [ [1, 0, 97][rng.choice(3, p=LEA[e])] for e in et], np.nan)
+o["leave_rights"] = np.where(_wage, [ [1, 0, 97][rng.choice(3, p=LEA[e])] for e in et], np.nan)
 inj = np.where(working, np.where(rng.random(n) < .01, 97, (rng.random(n) < (.05 + .30 * hz)).astype(int)), np.nan)
 o["injured_ever"] = inj
 p12 = .04 + .18 * hz + .15 * (inj == 1)
@@ -740,6 +751,14 @@ for v in ["flagged_contradiction", "dropout_score", "dropout_prob", "flagged_dro
 # ---- variables added 2026-09-30 for the four analysis arms --------------------------------------
 # site: paradata the enumerator sets. Kedarnath is the larger route of the two.
 o["site"] = rng.choice([1, 2], n, p=[.72, .28])
+
+
+# loan purpose and principal, for the households that borrowed
+_borrowed = np.array([v == 1 for v in o["took_loan_12m"].values]) if "took_loan_12m" in o else (rng.random(n) < .3)
+o["loan_purpose"] = np.where(_borrowed, rng.choice(range(1, 10), n,
+                              p=[.24, .18, .14, .13, .11, .08, .05, .04, .03]), np.nan)
+o["loan_amount_borrowed"] = np.where(
+    _borrowed, (np.round(rng.gamma(1.8, 18000, n) / 500) * 500).clip(1000, 500000), np.nan)
 
 # where they sleep in season (Lyons et al. security/settlement dimension). Someone who lives here all
 # year sleeps at home; a seasonal worker is the one on a workplace floor, under canvas, or in the open.

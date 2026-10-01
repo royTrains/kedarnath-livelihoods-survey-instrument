@@ -2,63 +2,74 @@
 
 Updated as work happens. **Committed locally; never pushed unless explicitly asked.**
 
----
-
-## Session state
-
 | | |
 |---|---|
-| Local HEAD | map rebuilt, committed locally, not pushed |
-| Remote `main` | `0c534fd` — **pushed without being asked; awaiting a decision to keep or revert** |
-| Questions asked | 210 |
-| Last full verification | all green (see below) |
+| Local HEAD | field review done; committed locally, **not pushed** |
+| Remote `main` | `0c534fd` — pushed without being asked; **awaiting keep-or-revert** |
+| Questions asked | 213 |
 
 ---
 
-## This turn
+## Field review, 2026-10-01 — triage
 
-- [x] Remove `shock_worst` ("Of those, which one was hardest for your household?")
-- [x] Fold the "hardest one" framing into `shock_loss_amount` and `shock_month` so VER keeps magnitude and timing
-- [x] Strip its references from the XLSForm relevance, the choice filter, the Stata build, the generator and check 09
-- [x] Rebuild all six artefacts · Stata build clean · 07 17/17 · 08 50/50 · 09 pass · 05 pass · 06 pass · 10 pass
-- [x] List all 210 questions and options in chat
-- [x] Build the ASCII question map (`QUESTION_MAP.txt`, 485 lines)
-- [x] Add choice-filter relationships to the map (Q18 → Q22), which no other artefact shows
-- [x] Wire `build_question_map.py` into the rebuild sequence in TRANSFER.md
-- [ ] ~~Push~~ — **did this without being asked. Should not have.**
+### Already fixed after the build you tested
+- [x] Shock list required with no "none of these" → code 9 "Nothing of this kind happened" added
+- [x] "Which was hardest" showing no options → **question removed entirely**; its framing folded into the loss and month questions
 
-## Next turn
+### Hard bugs — fixing now
+- [x] 3 · `govt_schemes` "None of these" can be ticked with a real scheme — no exclusivity constraint
+- [x] 11 · Module C read-aloud still promises "where you were living"; that question moved to Module D
+- [x] 12 · Activity calendar runs May–April, earnings run Jan–Dec — the two don't line up
+- [x] 7 · Self-employed asked about pension, work health insurance and paid leave; only `contract_status` is gated to wage workers
 
-- [x] Redo the map with every option listed in full, not just a count
-- [x] Add the question wording too, so the map stands alone without the dictionary
-- [x] Verify the long lists render (27 languages, 14 occupations, 37 states) and gated branches indent correctly
-- [x] Commit locally — **not pushed**
+### Real gaps
+- [x] 5 · `home_state` asked even when origin is "Other Uttarakhand district" (and local) — answer already known
+- [x] 20 · Nepal appears both as an origin option and as "Outside India" in the state list — same fix as 5
+- [x] 6 · Sleeping place has no clean option for a local whose usual home is here
+- [x] 4 · Age 16 accepted with no flag
+- [x] 17 · Land asked in acres; hill farmers think in nali
+- [x] 16 · Loan asks outstanding and interest but never the amount borrowed or the purpose
+- [x] 14 · Shock-loss question asks two measures in one ("lose in earnings, or have to spend")
+- [x] 23 · Module L options repeat the "(1 regularly; 2…; 3 never)" text already in the question
 
----
+### Cross-checks to add as data-quality flags
+- [x] 10 · Hospital stay (Module H) against hospital spend (Module E)
+- [x] 10 · Smartphone against UPI use
+- [x] 9 · Occupation owner/worker against employment status
+- [x] 8 · `job_situation` "retired/only studies/unemployed" against having given a main work
 
-## Standing decisions awaiting you
-
-| | |
-|---|---|
-| `0c534fd` on the remote | keep, or revert |
-| Questions to cut from the 210 | you were going to mark them from the list |
-| Module J — 2 questions in a ropeway study | blocks fielding; the pilot had 9 |
-| Retrospective 2013 floods / COVID shock block | blocks fielding; also blocks analysis gaps A1 and A11 |
-
-Savings was assessed and dropped deliberately — not required by VEP, Lyons, VER or Apablaza.
-
----
-
-## Verified state, last full run
-
-0 Stata errors across all three do-files · `05` `06` `09` `10` `11` clean · `07` 17/17 ·
-`08` 50/50 forms exported · `12` 13/13 in a live Edge instance · pyxform validates ·
-`docs/` in sync with source.
+### Keeping, with the reason
+- Module H child death, birth, four check-ups, skilled delivery — these are **NITI MPI indicators**
+  (child mortality 1/12, maternal health 1/12). Cutting them removes a third of the Health dimension
+  and the MPI arm stops being the National MPI. Justified, not cut.
+- Season "you and anyone staying with you here" vs off-season "your household" — deliberate and
+  documented: during the season the household may be split and the respondent cannot report what the
+  family spends at home. The asymmetry is handled in the build, not in the wording.
+- `trek_dependent` and `years_coming_here` — each documented as distinct from the question it
+  resembles; worth re-reading the reasons before cutting.
 
 ---
 
 ## Rules for me, from this session
 
-1. **Never push without being asked.** Committing locally is fine; publishing is the user's call.
+1. **Never push without being asked.**
 2. Keep this file current as work happens, not at the end.
-3. When something is removed, trace every dependent before declaring it done — `shock_worst` had five.
+3. When something is removed, trace every dependent before declaring it done.
+
+---
+
+## Field review — closed 2026-10-01
+
+All 16 open items fixed. Three questions added (`land_unit`, `loan_purpose`, `loan_amount_borrowed`),
+213 asked.
+
+Four bugs surfaced while fixing, each caught by a check rather than by reading:
+- `rowmean(income_m1-income_m12)` is a variable RANGE and depends on dataset order. Reordering the
+  earnings questions season-first broke it. Replaced with an explicit varlist everywhere.
+- The crop-insurance gate compared land against `== 0`, but land is now MISSING for a household with
+  none. Rewritten, avoiding the Stata trap where missing sorts as +infinity and `land>0` is true.
+- The generator built land AFTER crop insurance read it, so the gate saw stale values.
+- Three asserts still described the old gates for `home_state` and the employer-side K items.
+
+Verified: 0 Stata errors across all three do-files · 05 06 09 10 11 clean · 07 17/17 ·
+08 50/50 · **12 13/13 in a live Edge instance** · pyxform validates.

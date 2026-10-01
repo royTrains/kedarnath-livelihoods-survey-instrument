@@ -65,6 +65,8 @@ K_WORKING = "${job_situation} <= 3"
 K_TAIL = "${job_situation} <= 7"
 K_SEEKING = "${job_situation} = 8"
 RELEVANT = {
+    "home_state": "${origin} = 3",
+    "land_cultivable_acres": "${land_unit} != 5",
     "n_children_out_school": "${n_children_6_14} > 0",
     "main_income_earner": "${n_earners} > 1",
     "prev_occ": "${prev_occ_change} = 1",
@@ -78,9 +80,12 @@ RELEVANT = {
     "job_permanence": K_WORKING,
     "contract_status": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
     "workplace_registered": K_WORKING,
-    "pension_contrib": K_WORKING,
-    "work_health_ins": K_WORKING,
-    "leave_rights": K_WORKING,
+    # Gated to WAGE WORKERS as of 2026-10-01, the same way contract_status already was. All three ask
+    # about something an employer provides -- a pension deduction, insurance through work, paid leave --
+    # and an own-account pony owner has no employer. He was being asked all three.
+    "pension_contrib": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
+    "work_health_ins": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
+    "leave_rights": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
     "injured_ever": K_WORKING,
     "workplace_injury_12m": K_WORKING,
     "wants_more_work": K_TAIL,
@@ -106,6 +111,8 @@ RELEVANT = {
     "other_places_detail": "${worked_other_places} = 1",
     "native_language_other": "${native_language} = 96 or ${native_language} = 97",
     "credit_source": "${took_loan_12m} = 1",
+    "loan_purpose": "${took_loan_12m} = 1",
+    "loan_amount_borrowed": "${took_loan_12m} = 1",
     "loan_amount": "${took_loan_12m} = 1",
     "loan_interest_per100_pm": "${pays_interest} = 1",
     "loan_against_asset": "${took_loan_12m} = 1",
@@ -147,6 +154,10 @@ CONSTRAINT = {
     # it alongside a real shock is a contradiction, so the form refuses it rather than letting the
     # build flag it afterwards. Enforceable in XLSForm and in the web form alike, which keeps the two
     # saying the same thing.
+    # Same exclusivity as the shock list. "None of these" with a ration card ticked beside it is a
+    # contradiction the form should refuse rather than the build flag afterwards.
+    "govt_schemes": ("not(selected(., '10') and count-selected(.) > 1)",
+                     "'None of these' cannot be ticked with a scheme. Choose one or the other."),
     "distress_event_last365d": ("not(selected(., '9') and count-selected(.) > 1)",
                                 "'Nothing of this kind happened' cannot be ticked with a shock. Choose one or the other."),
     "age": (". >= 10 and . <= 90", "Age must be between 10 and 90."),
