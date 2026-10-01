@@ -502,7 +502,11 @@ gen byte durables_count = owns_tv + owns_radio + owns_bicycle + owns_motorcycle 
 * Kobo exports a select_multiple as a space-separated string of chosen codes.
 * The " k " padding stops code 5 matching inside code 15.
 *=============================================================================
-gen str _sh = " " + trim(distress_event_last365d) + " "
+* Code 9 means nothing happened. It is an answer, not a shock, so it is stripped before the shock
+* dummies are built -- otherwise shock_count would read 1 for a household that reported no shock.
+gen str _sh = " " + trim(subinstr(distress_event_last365d, "9", "", .)) + " "
+gen byte no_shock_reported = strpos(" " + trim(distress_event_last365d) + " ", " 9 ") > 0
+label var no_shock_reported "Explicitly reported that nothing of this kind happened"
 forvalues k = 1/8 {
     gen byte shock_`k' = strpos(_sh, " `k' ") > 0
 }
@@ -774,7 +778,10 @@ assert missing(prev_occ_reason)   == (prev_occ_change!=1)
 assert !missing(n_other_activities)          // count, asked of everyone (0 = none)
 assert (other_activity_types=="") == (n_other_activities==0)
 assert missing(other_activity_income_pm) == (n_other_activities==0)
-assert (shock_coping=="")         == (distress_event_last365d=="")
+* The shock follow-ups are gated on a REAL shock, so they are missing both when the list is empty
+* and when it holds only code 9.
+gen byte _has_real_shock = !(distress_event_last365d=="" | no_shock_reported==1)
+assert (shock_coping=="") == !_has_real_shock
 assert missing(morbidity_coping_15d) == (morbidity_15d==0)
 assert missing(morbidity_cost_15d)   == (morbidity_15d==0)
 * migration_referral and worked_other_places are ungated now -- asked of everyone, including local
@@ -783,11 +790,15 @@ assert inlist(site,1,2)
 assert inrange(accom_type_here,1,8)
 assert inrange(func_limitation,1,4)
 assert missing(ration_portable_here) == !strpos(" " + govt_schemes + " ", " 1 ")
-assert missing(shock_worst)       == (distress_event_last365d=="")
-assert missing(shock_loss_amount) == (distress_event_last365d=="")
-assert missing(shock_month)       == (distress_event_last365d=="")
+assert missing(shock_worst) == !_has_real_shock
+assert missing(shock_loss_amount) == !_has_real_shock
+assert missing(shock_month) == !_has_real_shock
 * the worst shock must be one of the shocks actually reported, not any code from the list
 assert strpos(" " + distress_event_last365d + " ", " " + string(shock_worst) + " ") if !missing(shock_worst)
+* Code 9 is exclusive. Ticked with a real shock it is a contradiction the form permits, so it is a
+* data-quality flag rather than an assert.
+gen byte dq_shock_none_and_some = (no_shock_reported==1 & shock_count>0)
+label var dq_shock_none_and_some "Ticked 'nothing happened' alongside a real shock"
 assert !missing(migration_referral)
 assert !missing(worked_other_places)
 assert !missing(resp_returns_at_closure)
@@ -898,6 +909,12 @@ if r(N) > 0 {
 * The stated off-season migration item against the calendar's location row. Two reports of the same
 * fact, asked minutes apart; a real respondent can and will disagree with himself. Counted, never
 * asserted -- an assert here would halt the build on data the form is perfectly happy to emit.
+quietly count if dq_shock_none_and_some==1
+if r(N) > 0 {
+    di as error "  DATA QUALITY: " r(N) " record(s) -- ticked 'nothing happened' alongside a real shock"
+    quietly replace _dq_flag = 1 if dq_shock_none_and_some==1
+    local dq_total = `dq_total' + r(N)
+}
 quietly count if dq_away_exceeds_spell==1
 if r(N) > 0 {
     di as error "  DATA QUALITY: " r(N) " record(s) -- months worked away exceed the reported absence from the route"

@@ -815,21 +815,21 @@ Now about food, and about any difficult times in the last year and how your hous
 
 **165.** In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.
 
-> **ENUMERATOR:** select all that apply: 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
+> **ENUMERATOR:** select all that apply: 9 Nothing of this kind happened · 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
 
 **166.** Of those, which one was hardest for your household?
 
-> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
-> Options: 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
+> **ENUMERATOR:** Ask only if: distress_event_last365d names a real shock (not code 9, nothing happened)  
+> Options: 9 Nothing of this kind happened · 1 Serious illness or death of an earning member · 2 Crop failure or livestock loss · 3 Damage from a natural disaster (flood, landslide, fire) · 4 Loss of business, goods or assets · 5 Road or bridge blocked, route closed · 6 Yatra stopped early or badly disrupted · 7 Sharp fall in customers or prices · 8 Lost the work or the work stopped
 
 **167.** Because of that, about how much did your household lose in earnings, or have to spend? (Rs)
 
-> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
+> **ENUMERATOR:** Ask only if: distress_event_last365d names a real shock (not code 9, nothing happened)  
 > Record: amount in rupees, whole number
 
 **168.** In which month did that happen?
 
-> **ENUMERATOR:** Ask only if: distress_event_last365d is not empty  
+> **ENUMERATOR:** Ask only if: distress_event_last365d names a real shock (not code 9, nothing happened)  
 > Options: 1 January · 2 February · 3 March · 4 April · 5 May · 6 June · 7 July · 8 August · 9 September · 10 October · 11 November · 12 December
 
 **169.** How did your household manage? Check every one they used.

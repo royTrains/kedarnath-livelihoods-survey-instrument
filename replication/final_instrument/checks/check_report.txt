@@ -1,6 +1,6 @@
-Rows 200, variables 390; dictionary variables 354
+Rows 200, variables 393; dictionary variables 355
 Every dictionary variable is in the file, in dictionary order: False
-Variables without a label: ['months_away_total', 'cons_annual_pm']
+Variables without a label: ['months_away_total', 'cons_annual_pm', '_has_real_shock']
 Value-label sets defined: 44 of 45 expected
 Missing counts for always-asked variables (should be empty): {}
 Poverty and employment quality: poor 0.46, poor(sensitivity) 0.09, employment-poor (2 of 5) 0.67

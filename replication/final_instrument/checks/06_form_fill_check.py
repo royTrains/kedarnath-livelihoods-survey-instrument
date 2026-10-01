@@ -66,6 +66,9 @@ def to_py(expr):
     e = e.replace("!==", "!=").replace("<==", "<=").replace(">==", ">=")
     e = re.sub(r"S\['\w+'\]\s*(?:[<>!=]=|[<>])\s*-?\d+(?:\.\d+)?", lambda m: f"({m.group(0)})", e)
     e = e.replace(" and ", " & ").replace(" or ", " | ")
+    # not(X) -> ~(X). pandas needs the bitwise operator on a Series, and the parentheses matter: ~
+    # binds tighter than the comparison operators, so a bare ~ would attach to the wrong operand.
+    e = e.replace("not(", "~(")
     # count-selected() on a select_multiple: non-empty export string means at least one box ticked
     e = re.sub(r"count-selected\(S\['(\w+)'\]\)\s*>\s*0",
                lambda m: "(S['" + m.group(1) + "'].astype(str).str.strip().replace('nan','') != '')", e)

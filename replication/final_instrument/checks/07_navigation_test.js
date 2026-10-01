@@ -24,7 +24,7 @@ global.URL = { createObjectURL: () => "blob:x" };
 global.setTimeout = f => f;
 
 js = js.replace(/^const draft[\s\S]*$/m, "");
-eval(js + "\n;module.exports={get D(){return D},set D(v){D=v},get curMod(){return curMod},set curMod(v){curMod=v},get screen(){return screen},CFG,QBY,visible,validate,moduleErrors,modList,start,next,back,render,setL:v=>{L=v}};");
+eval(js + "\n;module.exports={get D(){return D},set D(v){D=v},get curMod(){return curMod},set curMod(v){curMod=v},get screen(){return screen},CFG,QBY,visible,validate,moduleErrors,modList,start,next,back,render,applyGates,refilter,pruneFiltered,setL:v=>{L=v}};");
 const A = module.exports;
 
 let pass = 0, fail = 0;
@@ -88,6 +88,49 @@ A.CFG.q.filter(q => q.m === calMod && A.visible(q)).forEach(q => {
 });
 ok(hiddenBlank.length > 0 && A.moduleErrors().length === 0,
    `${hiddenBlank.length} gated-off required questions do not block the module`);
+
+// ---- the two defects reported from live use, 2026-10-01 ---------------------------------------
+
+// (1) other_activity_types shares the 14-option occupation list with `occupation`, so the primary
+// occupation was being offered again as a second activity. A choice filter existed but ran only at
+// render time, and with a whole module on one screen `occupation` is answered on the SAME screen --
+// so the list built at render carried the primary occupation for the entire pass. It only ever
+// looked fixed because leaving the module and returning re-rendered it. refilter() now re-runs the
+// filter on every change; this asserts the resulting list.
+const occMod = A.CFG.q.find(q => q.n === "occupation").m;
+A.curMod = occMod;
+A.render();
+const oat = A.QBY["other_activity_types"];
+ok(!!oat.cfx, "other_activity_types declares a choice filter");
+A.D.n_other_activities = "2";                      // open the gate on the list
+A.D.occupation = String(oat.c[2][0]);              // choose the third occupation
+const drop = String(A.D[oat.cfx] ?? "");
+const shown = oat.c.filter(c => String(c[0]) !== drop);
+ok(shown.length === oat.c.length - 1,
+   `the chosen occupation is removed from the other-activities list (${oat.c.length} options -> ${shown.length})`);
+ok(!shown.some(c => String(c[0]) === String(A.D.occupation)),
+   "and it is specifically the occupation that was chosen which is absent");
+// an answer already given must not survive becoming unavailable
+A.D.other_activity_types = String(oat.c[2][0]) + " " + String(oat.c[5][0]);
+A.applyGates();
+ok(!String(A.D.other_activity_types || "").split(/\s+/).includes(String(A.D.occupation)),
+   "an other-activity answer equal to the occupation is dropped when the filter re-runs");
+
+// (2) distress_event_last365d was a REQUIRED multi-select with no option meaning "nothing happened",
+// so a household with no shock in twelve months had nothing it could legitimately tick and the form
+// would not advance. This was the blocking question.
+const dis = A.QBY["distress_event_last365d"];
+const esc = dis.c.filter(c => /nothing|none/i.test(c[1]));
+ok(esc.length === 1,
+   `the shock list offers exactly one no-shock escape ("${esc.length ? esc[0][1] : "MISSING"}")`);
+if (esc.length){
+  A.D.distress_event_last365d = String(esc[0][0]);
+  ok(A.validate(dis) === null, "ticking the escape alone validates, so the interview can advance");
+  const real = dis.c.find(c => !/nothing|none/i.test(c[1]));
+  A.D.distress_event_last365d = esc[0][0] + " " + real[0];
+  ok(A.validate(dis) !== null,
+     "ticking the escape alongside a real shock is refused by the constraint");
+}
 
 console.log(`\n  ${pass} passed, ${fail} failed\n`);
 process.exit(fail ? 1 : 0);

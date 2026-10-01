@@ -622,7 +622,10 @@ for i in range(n):
     if rng.random() < .09:
         picks.add(8)
     _shock_sets.append(picks)
-o["distress_event_last365d"] = [" ".join(str(v) for v in sorted(p)) for p in _shock_sets]
+# Code 9, "nothing of this kind happened", is what a no-shock household ticks. The list is a REQUIRED
+# multi-select, so an empty string is a value the form cannot emit any more -- it had no escape option
+# until 2026-10-01 and the interview could not advance past it.
+o["distress_event_last365d"] = [" ".join(str(v) for v in sorted(p)) if p else "9" for p in _shock_sets]
 cred = o.credit_source.values
 coping = np.full(n, np.nan)
 for i in np.where(dis > 0)[0]:
@@ -760,7 +763,8 @@ o["ration_portable_here"] = np.where(
 # shock magnitude and timing, asked only of households reporting at least one shock. The worst shock
 # is drawn from the ones they actually reported, never from the whole list.
 _shk = [str(v).split() for v in o["distress_event_last365d"].values]
-o["shock_worst"] = [int(rng.choice(v)) if v and v != [""] and v != ["nan"] else np.nan for v in _shk]
+_real = [[x for x in v if x not in ("", "nan", "9")] for v in _shk]
+o["shock_worst"] = [int(rng.choice(v)) if v else np.nan for v in _real]
 _any_shock = np.array([not (np.isnan(x) if isinstance(x, float) else False)
                        for x in o["shock_worst"].values])
 o["shock_loss_amount"] = np.where(

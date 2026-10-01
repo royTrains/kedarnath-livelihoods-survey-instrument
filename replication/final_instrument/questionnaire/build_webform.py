@@ -45,18 +45,27 @@ def to_js(expr):
     bind more loosely than comparison in JS but the parenthesisation also keeps the intent readable
     when debugging a rule on a tablet at 11pm."""
     e = expr.replace("${", "V('").replace("}", "')")
-    # count-selected() must become .length, NOT a bare array comparison: in JS ['1'] > 0 is true but
-    # ['1','5'] > 0 coerces to NaN > 0 and is FALSE, so a respondent reporting two shocks would have
-    # had the coping question silently hidden. Caught by the Node harness against the XLSForm.
-    e = e.replace("count-selected(V('", "SEL('").replace("'))", "').length")
-    # selected(${multi}, 'code') -> membership in the split code list. Must be the split tokens, not a
-    # substring: a substring test for '1' would also match the code 10.
-    # A lambda, not a replacement template: a "\1" backreference written into this file through
-    # a Python string became a control character, and the rule then compiled to SEL('\x01').includes('\x02'),
-    # which never throws and never matches -- so the gated question was silently never asked.
-    e = re.sub(r"selected\(V\('(\w+)'\),\s*'(\w+)'\)",
+    # Both multi-select helpers are matched as whole calls, with a regex each. An earlier version
+    # substituted the bare string "'))" to close count-selected(), which also matched the tail of
+    # selected(V('x'), '9')) and produced ".includes('9').length" with the parentheses unbalanced --
+    # broken JS, which throws, and visible() shows a question whose rule throws. The gate was
+    # therefore always open. Order matters too: selected() is a SUBSTRING of count-selected(), so the
+    # count form is taken first and the plain form guarded with (?<!-) against matching inside it.
+    #
+    # count-selected() must become .length and not a bare array comparison: in JS ['1'] > 0 is true
+    # but ['1','5'] > 0 coerces to NaN > 0 and is FALSE, so a respondent reporting two shocks would
+    # have had the coping question silently hidden.
+    e = re.sub(r"count-selected\(V\('(\w+)'\)\)",
+               lambda m: "SEL('%s').length" % m.group(1), e)
+    # selected(${multi}, 'code') -> membership in the split code list, never a substring test: a
+    # substring test for '1' would also match the code 10.
+    # A lambda, not a replacement template: a "\1" backreference written into this file through a
+    # Python string became a control character, and the rule compiled to SEL('\x01').includes('\x02'),
+    # which never throws and never matches -- so that gated question was silently never asked.
+    e = re.sub(r"(?<!-)selected\(V\('(\w+)'\),\s*'(\w+)'\)",
                lambda m: "SEL('%s').includes('%s')" % (m.group(1), m.group(2)), e)
     e = e.replace(" and ", " && ").replace(" or ", " || ")
+    e = e.replace("not(", "!(")             # XPath not() -> JS !
     out, i = [], 0
     while i < len(e):                      # single '=' is equality in XPath, '==' in JS
         if e[i] == "=" and (i == 0 or e[i - 1] not in "<>!=") and (i + 1 >= len(e) or e[i + 1] != "="):
@@ -75,6 +84,13 @@ def constraint_js(expr):
     literal ${...} still in it, throws, and the throw is swallowed by validate()'s try/catch, so the
     constraint silently does nothing. That is worse than never having added it: the form looks like
     it is validating and is not."""
+    # A multi-select constraint speaks about the selected CODES, not a number, so the "." that means
+    # "this answer" has to become the code list rather than the numeric x. Handled before the numeric
+    # path, which would otherwise turn selected(., '9') into selected(x, '9') and throw.
+    if "selected(" in expr:
+        e = expr.replace("count-selected(.)", "SELF.length").replace("selected(., ", "SELF.includes(")
+        e = e.replace(" and ", " && ").replace(" or ", " || ").replace("not(", "!(")
+        return e
     e = expr.replace("${", "@REF@").replace("}", "@END@")   # park refs before the dot substitution
     e = e.replace(".", "x").replace(" and ", " && ").replace(" or ", " || ")
     return e.replace("@REF@", "NUM('").replace("@END@", "')")
@@ -368,9 +384,87 @@ function clearHidden(){
   return changed;
 }
 
+// Rebuild the option list of a question whose choices depend on another answer. This has to happen
+// as answers land, not only at render: the whole module is on one screen, so `occupation` is answered
+// on the SAME screen as other_activity_types, and a list built once at render still carried the
+// primary occupation through the entire pass. It only ever looked fixed because leaving the module
+// and coming back re-rendered it.
+// Only the dependent question's own card is rewritten, never the one being typed into, so nothing
+// loses focus or the caret.
+// Drop an answer that its own filter has made unavailable -- say the enumerator ticks an activity as
+// a second occupation and then names that same activity as the primary one. Done over CFG.q from the
+// DATA, not by walking the DOM: a card for a module the enumerator has not opened does not exist, and
+// pruning that depended on the card existing would leave the stale answer in the export. Same lesson
+// as next() deciding from data rather than from the rendered page.
+function pruneFiltered(){
+  CFG.q.forEach(q => {
+    if (!q.cfx && !q.cfo) return;
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    const avail = opts.map(c => String(c[0]));
+    if (q.t === "multi"){
+      const keep = SEL(q.n).filter(v => avail.includes(v));
+      if (keep.join(" ") !== String(D[q.n] ?? "")){ D[q.n] = keep.join(" "); save(DKEY, D) }
+    } else if (D[q.n] !== undefined && D[q.n] !== "" && !avail.includes(String(D[q.n]))){
+      delete D[q.n]; save(DKEY, D);
+    }
+  });
+}
+
+function refilter(){
+  document.querySelectorAll("#app .card[data-q]").forEach(card => {
+    const q = QBY[card.dataset.q];
+    if (!q || (!q.cfx && !q.cfo)) return;
+    const key = (q.cfx ? String(D[q.cfx] ?? "") : "") + "|" + (q.cfo ? String(D[q.cfo] ?? "") : "");
+    if (card.dataset.filterKey === key) return;          // source unchanged; leave the DOM alone
+    card.dataset.filterKey = key;
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    const sel = q.t === "multi" ? SEL(q.n) : [String(D[q.n] ?? "")];
+    let h = "";
+    opts.forEach(c => {
+      const on = sel.includes(String(c[0]));
+      h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
+           " name='q_" + q.n + "' value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" +
+           (L ? c[1] : c[2]) + "</span></label>";
+    });
+    card.querySelectorAll("label.ch").forEach(n => n.remove());
+    const err = card.querySelector(".err");
+    if (err) err.insertAdjacentHTML("beforebegin", h);
+    bindCard(card, q);
+  });
+}
+
+// Attach the write-on-every-change handler. Called from render() and again from refilter() whenever a
+// list is rebuilt, since replacing the inputs drops their listeners with them.
+function bindCard(card, q){
+  if (!q) return;
+  card.querySelectorAll("input").forEach(el => {
+    if (el.dataset.bound) return;
+    el.dataset.bound = "1";
+    el.addEventListener("input", () => {
+      if (q.t === "multi"){
+        D[q.n] = [...card.querySelectorAll("input:checked")].map(x => x.value).sort((a,b)=>a-b).join(" ");
+      } else { D[q.n] = el.value }
+      save(DKEY, D);
+      card.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
+      const e = card.querySelector(".err"); if (e) e.textContent = "";
+      applyGates();
+    });
+  });
+}
+
 function applyGates(){
   calc();
   clearHidden();
+  pruneFiltered();
+  refilter();
   let n = 0;
   document.querySelectorAll("#app .card[data-q]").forEach(el => {
     const q = QBY[el.dataset.q];
@@ -402,18 +496,7 @@ function render(){
     (L ? "Module " : "खंड ") + (modPos(curMod)+1) + " / " + mods.length;
 
   // write on EVERY change, never only on submit
-  app.querySelectorAll(".card[data-q]").forEach(card => {
-    const q = QBY[card.dataset.q];
-    card.querySelectorAll("input").forEach(el => el.addEventListener("input", () => {
-      if (q.t === "multi"){
-        D[q.n] = [...card.querySelectorAll("input:checked")].map(x => x.value).sort((a,b)=>a-b).join(" ");
-      } else { D[q.n] = el.value }
-      save(DKEY, D);
-      card.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
-      card.querySelector(".err").textContent = "";
-      applyGates();
-    }));
-  });
+  app.querySelectorAll(".card[data-q]").forEach(card => bindCard(card, QBY[card.dataset.q]));
   applyGates();
   paint();
 }
@@ -422,7 +505,11 @@ function validate(q){
   const v = D[q.n];
   const blank = v === undefined || v === null || String(v).trim() === "";
   if (blank) return q.opt ? null : t("req");
-  if (q.con){ const x = +v; try { if (!eval(q.con)) return L ? q.cmsg_en : q.cmsg_hi } catch(e){} }
+  if (q.con){
+    const x = +v;                      // numeric constraints read x
+    const SELF = SEL(q.n);             // multi-select constraints read the code list
+    try { if (!eval(q.con)) return L ? q.cmsg_en : q.cmsg_hi } catch(e){}
+  }
   return null;
 }
 

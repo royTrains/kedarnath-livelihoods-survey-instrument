@@ -114,13 +114,13 @@ RELEVANT = {
     "has_crop_insurance": "${land_cultivable_acres} > 0",
     "govt_scheme_other": "selected(${govt_schemes}, '9')",
     "ration_portable_here": "selected(${govt_schemes}, '1')",
-    "shock_worst": "count-selected(${distress_event_last365d}) > 0",
-    "shock_loss_amount": "count-selected(${distress_event_last365d}) > 0",
-    "shock_month": "count-selected(${distress_event_last365d}) > 0",
+    "shock_worst": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
+    "shock_loss_amount": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
+    "shock_month": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "work_equipment_detail": "${owns_work_equipment} = 1",
     "migration_referral_other": "${migration_referral} = 7",
     "remit_mode": "${remit_out_yatra_pm} > 0 or ${remit_out_offseason_pm} > 0",
-    "shock_coping": "count-selected(${distress_event_last365d}) > 0",
+    "shock_coping": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "anc_4_visits": "${birth_last_5y} = 1",
     "skilled_birth_attendant": "${birth_last_5y} = 1",
     "cons_staples_offseason_pm": "${spend_differs_by_season} = 1",
@@ -144,6 +144,12 @@ for _n in range(1, 13):
 
 # a few cheap, high-value range constraints (kept short on purpose -- not every item)
 CONSTRAINT = {
+    # Code 9 is "nothing of this kind happened" -- the escape option on a required check-all. Ticking
+    # it alongside a real shock is a contradiction, so the form refuses it rather than letting the
+    # build flag it afterwards. Enforceable in XLSForm and in the web form alike, which keeps the two
+    # saying the same thing.
+    "distress_event_last365d": ("not(selected(., '9') and count-selected(.) > 1)",
+                                "'Nothing of this kind happened' cannot be ticked with a shock. Choose one or the other."),
     "age": (". >= 10 and . <= 90", "Age must be between 10 and 90."),
     "hours_day_yatra": (". >= 1 and . <= 18", "Hours a day must be between 1 and 18."),
     "days_week_yatra": (". >= 1 and . <= 7", "Days a week must be between 1 and 7."),
