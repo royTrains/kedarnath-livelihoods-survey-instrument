@@ -153,11 +153,6 @@ main { max-width: 680px; margin: 0 auto; padding: 20px 16px 104px; }
 .err { color: var(--warn); font-size: 13.5px; margin-top: 8px; }
 .opt { font-size: 12px; color: var(--mut); margin-top: 6px; }
 
-/* ── Menu pickers (enumerator, route): same label and select style as the questions ── */
-.pick { margin: 0 0 16px; }
-.pick:last-child { margin-bottom: 6px; }
-.pick .qn { margin-bottom: 6px; }
-
 /* ── Text inputs ── */
 input[type=text], input[type=number] {
   width: 100%;
@@ -420,9 +415,29 @@ button.danger:hover { background: var(--warn-bg); }
   box-shadow: 0 12px 40px rgba(0, 0, 0, .22);
 }
 
-/* Long single-choice lists render as a dropdown rather than 35 radio rows. Sized to the same touch
-   target as a .ch row so the two do not read as different kinds of control, and left as a native
-   select so Android and iOS draw their own full-screen pickers, which beat anything reimplemented
-   here on a phone held in one hand. */
-select.dd{width:100%;padding:13px;font:inherit;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);min-height:48px}
-select.dd:focus{outline:2px solid var(--acc);border-color:var(--acc)}
+/* ── Carried forward from the previous template.css, 2026-10-05 ──────────────────────────────
+   The design above was uploaded to main as a built style.css on an earlier build of the form and
+   predates two rules the current template.html depends on. A straight swap dropped both, and
+   `select.dd` is not cosmetic: it is EVERY dropdown on the form -- each categorical question, the
+   enumerator selector, the route selector and obs_environment -- and it carries the 48px minimum
+   touch target. Losing it on a tablet held at arm's length in a queue is a field problem, not a
+   styling one. Appended rather than merged into the blocks above so the uploaded design stays
+   readable as the single thing it is, and so the next design pass can see exactly what was added. */
+
+/* choice blocks: spacing between the options of one question */
+.pick { margin: 0 0 16px; }
+.pick:last-child { margin-bottom: 6px; }
+.pick .qn { margin-bottom: 6px; }
+
+/* dropdowns: every select on the form */
+select.dd {
+  width: 100%;
+  padding: 13px;
+  font: inherit;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--ink);
+  min-height: 48px;
+}
+select.dd:focus { outline: 2px solid var(--acc); border-color: var(--acc); }
