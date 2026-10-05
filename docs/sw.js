@@ -1,5 +1,5 @@
-const CACHE = "kedarnath-6eb976292757";
-const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
+const CACHE = "kedarnath-616c6a887d4e";
+const ASSETS = ["./", "./index.html", "./style.css", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 // Cache the whole app up front, so the FIRST offline open works rather than the second.
 self.addEventListener("install", e => {

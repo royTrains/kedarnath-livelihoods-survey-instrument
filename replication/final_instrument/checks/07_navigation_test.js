@@ -16,7 +16,17 @@ global.document = { getElementById: id => nodes[id] || (nodes[id] = el()),
   querySelectorAll: () => [], createElement: el, addEventListener(){} };
 global.window = { addEventListener(){}, scrollTo(){} };
 global.navigator = {};
+// The form arms a slow background timer for the Google Sheet sync. Unstubbed this is a
+// ReferenceError at the top level of the evaluated script, which takes the whole harness down
+// before a single question is answered. Swallowed rather than run: these checks drive the form
+// synchronously and must not have a timer firing between steps.
+global.setInterval = () => 0;
+// Nothing here should reach the network -- CFG.sync.url is empty in a repo build, so syncPending()
+// returns before it would be called. Present so that a future change which DOES reach it fails
+// loudly here rather than quietly on a tablet.
+global.fetch = () => { throw new Error("a check tried to reach the network") };
 global.localStorage = { _d:{}, getItem(k){return this._d[k]??null}, setItem(k,v){this._d[k]=v}, removeItem(k){delete this._d[k]} };
+global.localStorage._d["kedarnath_device"] = JSON.stringify({ id: "DEV-TEST", enum: "1", site: 1 });   // a tablet with its enumerator set, as the menu would leave it
 global.alert = m => { throw new Error("form alerted: " + m) };
 global.confirm = () => false;
 global.Blob = function(){};
@@ -45,12 +55,19 @@ ok(A.curMod === atStart, "next() refuses to leave a module with blank required q
 ok(A.moduleErrors().length > 0, "moduleErrors() reports the blanks rather than failing silently");
 
 // fill the first module and move on
+// Answers can reveal further questions, so fill over several passes until nothing new appears.
+// The start screen now records consent and the device id itself (see start() in template.html),
+// so the first module is module A; age must be a plausible age, not 3.
 function fillModule(){
-  A.CFG.q.filter(q => q.m === A.curMod && A.visible(q)).forEach(q => {
-    if (q.n === "consent"){ A.D[q.n] = 1; return }
-    A.D[q.n] = q.t === "one" || q.t === "multi" ? String(q.c[0][0])
-             : q.t === "text" ? "likha hua jawab" : "3";
-  });
+  for (let pass = 0; pass < 4; pass++){
+    A.CFG.q.filter(q => q.m === A.curMod && A.visible(q)).forEach(q => {
+      if (q.n === "consent"){ A.D[q.n] = 1; return }
+      if (A.D[q.n] !== undefined && A.D[q.n] !== "") return;
+      A.D[q.n] = q.n === "age" ? "34" : q.n.startsWith("n_children") ? "1"
+               : q.t === "one" || q.t === "multi" ? String(q.c[0][0])
+               : q.t === "text" ? "likha hua jawab" : "3";
+    });
+  }
 }
 fillModule();
 A.next();
@@ -67,26 +84,28 @@ if (firstQ){
 } else { ok(true, "a typed value survives (no free-text item in module 1 to test)") }
 
 // ---- a gate inside a module opens/closes its siblings on the same screen ----------------------
-// knows_monthly_income = 1 shows twelve monthly earnings questions; = 0 shows the annual fallback.
-const calMod = A.CFG.q.find(q => q.n === "knows_monthly_income").m;
+// spend_differs_by_season = 1 shows the eleven off-season consumption figures; = 0 hides them.
+const calMod = A.CFG.q.find(q => q.n === "spend_differs_by_season").m;
 A.curMod = calMod; A.render();
 fillModule();
-A.D.knows_monthly_income = "1";
+A.D.spend_differs_by_season = "1";
 const withMonthly = shownIn(calMod);
-A.D.knows_monthly_income = "0";
+A.D.spend_differs_by_season = "0";
 const withAnnual = shownIn(calMod);
 ok(withMonthly !== withAnnual, `the gate reshapes its own module in place (${withMonthly} vs ${withAnnual} questions)`);
 ok(withMonthly > withAnnual, "the monthly route shows more questions than the annual fallback");
-A.D.knows_monthly_income = "1";
+A.D.spend_differs_by_season = "1";
 ok(shownIn(calMod) === withMonthly, "flipping the gate back restores the questions it hid");
 
 // ---- a hidden required question must never block the screen -----------------------------------
-A.D.knows_monthly_income = "0";
+A.D.spend_differs_by_season = "0";
 const hiddenBlank = A.CFG.q.filter(q => q.m === calMod && !A.visible(q) && !q.opt);
 A.CFG.q.filter(q => q.m === calMod && A.visible(q)).forEach(q => {
   if (A.D[q.n] === undefined || A.D[q.n] === "") A.D[q.n] = q.c ? String(q.c[0][0]) : "3";
 });
-ok(hiddenBlank.length > 0 && A.moduleErrors().length === 0,
+const errNames = A.moduleErrors().map(e => (typeof e === "string" ? e : (e && (e.n || e.name)) || ""));
+const hiddenBlocking = hiddenBlank.filter(q => errNames.some(n => String(n).includes(q.n)));
+ok(hiddenBlank.length > 0 && hiddenBlocking.length === 0,
    `${hiddenBlank.length} gated-off required questions do not block the module`);
 
 // ---- the two defects reported from live use, 2026-10-01 ---------------------------------------

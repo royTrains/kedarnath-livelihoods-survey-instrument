@@ -47,7 +47,7 @@ HI["consent_script"] = CONSENT_SCRIPT_HI
 OUT = os.path.join(HERE, "Kedarnath_final_kobo.xlsx")
 
 # paradata items dropped in favour of a Kobo-native equivalent (see module docstring)
-DROP_PARADATA = {"resp_id", "interview_date", "interview_duration_min", "dur_tasks_min", "gps_lat", "gps_lon"}
+DROP_PARADATA = {"resp_id", "interview_date", "interview_duration_min", "dur_tasks_min", "gps_lat", "gps_lon", "gps_accuracy_m", "gps_fix_s", "gps_error"}
 
 TYPE_MAP = {"num": "decimal", "count": "integer", "money": "integer"}
 
@@ -61,43 +61,43 @@ TYPE_MAP = {"num": "decimal", "count": "integer", "money": "integer"}
 #   code 8 (unemployed, actively seeking) is routed by Apablaza to the Q22/Q23 pair directly, so it
 #   is OR-ed into those two items rather than into either gate above.
 #   codes 9-11 (sick or disabled / inactive / does not know) end the module.
-K_WORKING = "${job_situation} <= 3"
-K_TAIL = "${job_situation} <= 7"
-K_SEEKING = "${job_situation} = 8"
 RELEVANT = {
+    # Refusals only (consent = 0). Written 2026-10-03 with the refusal record.
+    "obs_environment": "${consent} = 0",
     "home_state": "${origin} = 3",
+    "came_here_reason_other": "${came_here_reason} = 8",
+    # Only the OUTWARD off-season amount. A respondent who goes home at closure is living with the
+    # people he would be remitting to, so the question has no referent and his truthful 0 is
+    # indistinguishable from a migrant who genuinely sends nothing. Inward is deliberately not
+    # gated: money can still arrive from someone else working away.
+    "remit_out_offseason_pm": "${remit_differs_by_season} = 1",
+    "remit_in_offseason_pm": "${remit_differs_by_season} = 1",
     # Module J names the Gaurikund-Kedarnath ropeway, so it is asked only on that route. A Hemkund
     # respondent was being read a question about a proposal that does not concern him. If the Hemkund
     # route gets its own ropeway question later it needs its own wording and its own gate, not this
     # one widened -- the two proposals are different projects.
-    "ropeway_stance": "${site} = 1",
+    "earnings_range": "not(${income_annual_total} > 0)",
+    "wage_employer": "${employment_type} = 3 or ${employment_type} = 4",
     "land_cultivable_acres": "${land_unit} != 5",
-    "n_children_out_school": "${n_children_6_14} > 0",
     "main_income_earner": "${n_earners} > 1",
     "prev_occ": "${prev_occ_change} = 1",
     "prev_occ_reason": "${prev_occ_change} = 1",
-    "other_activity_types": "${n_other_activities} > 0",
-    "other_activity_income_pm": "${n_other_activities} > 0",
     "prev_occ": "${prev_occ_change} = 1",
     "years_schooling": "${knows_years_schooling} = 1",
     "education_level_cat": "${knows_years_schooling} = 0",
-    "employer_type": K_WORKING,
-    "job_permanence": K_WORKING,
-    "contract_status": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
-    "workplace_registered": K_WORKING,
+    "contract_status": "${employment_type} = 3 or ${employment_type} = 4",
     # Gated to WAGE WORKERS as of 2026-10-01, the same way contract_status already was. All three ask
     # about something an employer provides -- a pension deduction, insurance through work, paid leave --
     # and an own-account pony owner has no employer. He was being asked all three.
-    "pension_contrib": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
-    "work_health_ins": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
-    "leave_rights": f"({K_WORKING}) and (${{employment_type}} = 3 or ${{employment_type}} = 4)",
-    "injured_ever": K_WORKING,
-    "workplace_injury_12m": K_WORKING,
-    "wants_more_work": K_TAIL,
-    "more_hours_day": f"${{wants_more_work}} = 1 or {K_SEEKING}",
-    "months_looked_for_work": f"${{calc_months_no_work}} > 0 or {K_SEEKING}",
-    "income_annual_total": "${knows_monthly_income} = 0",
-    "pct_income_yatra": "${knows_monthly_income} = 0",
+    "pension_contrib": "${employment_type} = 3 or ${employment_type} = 4",
+    "work_health_ins": "${employment_type} = 3 or ${employment_type} = 4",
+    "leave_rights": "${employment_type} = 3 or ${employment_type} = 4",
+    # Added 2026-10-03 for the weighted employment table. All are asked of working respondents only,
+    # the same as every other job-quality item; the employment-table indicators are blank for anyone
+    # they were not asked of rather than being scored as secure.
+    "more_hours_day": "${wants_more_work} = 1",
+    "months_looked_for_work": "${months_no_paid_work} > 0",
+    "pct_income_yatra": "${income_annual_total} > 0",
     "drove_twowheeler": "${tk_drive} = 1 or ${tk_drive} = 2",
     "drove_car": "${tk_drive} = 1 or ${tk_drive} = 2",
     "drove_heavy": "${tk_drive} = 1 or ${tk_drive} = 2",
@@ -107,9 +107,6 @@ RELEVANT = {
     # so an origin gate would skip most of the people who move. Only the two genuinely
     # origin-specific items (why you first came) and the two verbatim follow-ups are gated.
     "years_coming_here": "${resp_returns_at_closure} = 1",
-    "n_here_season": "${hh_at_home_place} = 1",
-    "left_here_month": "${resp_returns_at_closure} = 1",
-    "returned_here_month": "${resp_returns_at_closure} = 1",
     "came_here_reason": "${origin} != 1",
     "closure_work_detail": "${worked_away_in_closure} = 1",
     "native_language_other": "${native_language} = 96 or ${native_language} = 97",
@@ -118,9 +115,8 @@ RELEVANT = {
     "loan_amount_borrowed": "${took_loan_12m} = 1",
     "loan_amount": "${took_loan_12m} = 1",
     "loan_interest_per100_pm": "${pays_interest} = 1",
-    "loan_against_asset": "${took_loan_12m} = 1",
     "pays_interest": "${took_loan_12m} = 1",
-    "loan_collateral": "${loan_against_asset} = 1",
+    "loan_collateral": "${took_loan_12m} = 1",
     "has_crop_insurance": "${land_cultivable_acres} > 0",
     "govt_schemes_detail": "${govt_any_benefit} = 1",
     "shock_work_lost_weeks": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
@@ -153,12 +149,9 @@ RELEVANT = {
     "cons_rent_offseason_pm": "${spend_differs_by_season} = 1",
     "cons_med_nonhosp_offseason_pm": "${spend_differs_by_season} = 1",
     "water_fetch_minutes": "${water_on_premises} = 0",
-    "hours_day_offseason": "${calc_offseason_work} > 0",
-    "days_week_offseason": "${calc_offseason_work} > 0",
+    "hours_day_offseason": "12 - ${months_worked_yatra} - ${months_no_paid_work} > 0",
+    "days_week_offseason": "12 - ${months_worked_yatra} - ${months_no_paid_work} > 0",
 }
-for _n in range(1, 13):
-    # two conditions: the respondent took the month-by-month route at all, AND that month was worked
-    RELEVANT[f"income_m{_n}"] = f"${{knows_monthly_income}} = 1 and ${{status_m{_n}}} != 8"
 
 # a few cheap, high-value range constraints (kept short on purpose -- not every item)
 CONSTRAINT = {
@@ -177,18 +170,6 @@ CONSTRAINT = {
     "age": (". >= 10 and . <= 90", "Age must be between 10 and 90."),
     # ---- caught by the stress test: values the form accepted that cannot be true ----------------
     # Money and land cannot be negative. Obvious, and absent until a reviewer typed a minus sign.
-    "income_m1": (". >= 0", "Earnings cannot be negative."),
-    "income_m2": (". >= 0", "Earnings cannot be negative."),
-    "income_m3": (". >= 0", "Earnings cannot be negative."),
-    "income_m4": (". >= 0", "Earnings cannot be negative."),
-    "income_m5": (". >= 0", "Earnings cannot be negative."),
-    "income_m6": (". >= 0", "Earnings cannot be negative."),
-    "income_m7": (". >= 0", "Earnings cannot be negative."),
-    "income_m8": (". >= 0", "Earnings cannot be negative."),
-    "income_m9": (". >= 0", "Earnings cannot be negative."),
-    "income_m10": (". >= 0", "Earnings cannot be negative."),
-    "income_m11": (". >= 0", "Earnings cannot be negative."),
-    "income_m12": (". >= 0", "Earnings cannot be negative."),
     "land_cultivable_acres": (". >= 0", "Land cannot be negative."),
     "loan_amount": (". >= 0", "An amount cannot be negative."),
     "loan_amount_borrowed": (". >= 0", "An amount cannot be negative."),
@@ -200,7 +181,7 @@ CONSTRAINT = {
     "years_schooling": (". >= 0 and . <= ${age} - 4",
                         "Years of schooling cannot be more than the respondent's age allows."),
     # Nor can Yatra seasons. Ten is the youngest this instrument will record as working.
-    "years_in_yatra_work": (". >= 0 and . <= ${age} - 10",
+    "years_current_job": (". >= 0 and . <= ${age} - 10",
                             "More Yatra seasons than the respondent's age allows."),
     # Extra hours wanted, on top of hours already worked, cannot exceed a day.
     "more_hours_day": (". >= 0 and . + ${hours_day_yatra} <= 18",
@@ -209,7 +190,6 @@ CONSTRAINT = {
     "days_week_yatra": (". >= 1 and . <= 7", "Days a week must be between 1 and 7."),
     "hhsize": (". >= 1 and . <= 30", "Household size must be between 1 and 30."),
     "pct_income_yatra": (". >= 0 and . <= 100", "Must be between 0 and 100 out of every 100 rupees."),
-    "n_other_activities": (". >= 0 and . <= 6", "Must be between 0 and 6."),
     "hours_day_offseason": (". >= 1 and . <= 18", "Hours a day must be between 1 and 18."),
     "days_week_offseason": (". >= 1 and . <= 7", "Days a week must be between 1 and 7."),
     "water_fetch_minutes": (". >= 0 and . <= 300", "Minutes must be between 0 and 300."),
@@ -227,12 +207,19 @@ CONSTRAINT = {
     "n_children_u6": (". >= 0 and . <= ${hhsize} - 1", "Cannot be more than the household size minus the respondent."),
     "n_children_6_14": (". >= 0 and . + ${n_children_u6} <= ${hhsize} - 1",
                         "The two groups of children together cannot exceed the household size minus the respondent."),
-    "n_children_out_school": (". >= 0 and . <= ${n_children_6_14}", "Cannot be more than the number of children aged 6 to 14."),
 }
-for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
-           "cope_reduce_portion", "cope_restrict_adult"]:
-    CONSTRAINT[_n + "_yatra_wk"] = (". >= 0 and . <= 7", "Must be between 0 and 7 days.")
-    CONSTRAINT[_n + "_offseason_wk"] = (". >= 0 and . <= 7", "Must be between 0 and 7 days.")
+
+# the three month counts, which replaced the twelve-cell calendar, and the new household counts
+CONSTRAINT["months_worked_yatra"] = (". >= 0 and . <= 12", "Must be between 0 and 12 months.")
+CONSTRAINT["months_no_paid_work"] = (". >= 0 and . + ${months_worked_yatra} <= 12",
+    "The Yatra months and the months with no work cannot add up to more than 12.")
+CONSTRAINT["n_hh_same_business"] = (". >= 0 and . <= ${hhsize}",
+    "Cannot be more than the number of people in the household.")
+CONSTRAINT["employers_in_season"] = (". >= 1 and . <= 30", "Must be between 1 and 30.")
+CONSTRAINT["n_children_in_school"] = (". >= 0 and . <= ${n_children_6_14}",
+    "Cannot be more than the number of children aged 6 to 14.")
+CONSTRAINT["years_current_job"] = (". >= 0 and . <= ${age} - 5",
+    "More years in this work than the respondent's age allows.")
 
 CMSG_HI = {
     "age": "उम्र 10 से 90 के बीच होनी चाहिए।",
@@ -251,12 +238,97 @@ CMSG_HI = {
     "shock_work_lost_weeks": "हफ़्ते 0 से 52 के बीच होने चाहिए।",
     "n_children_out_school": "6 से 14 साल के बच्चों से ज़्यादा नहीं हो सकता।",
     "days_week_offseason": "हफ़्ते के दिन 1 से 7 के बीच होने चाहिए।",
+    "months_worked_yatra": "0 से 12 महीने के बीच होना चाहिए।",
+    "months_no_paid_work": "यात्रा के महीने और बिना काम के महीने मिलाकर 12 से ज़्यादा नहीं हो सकते।",
+    "n_hh_same_business": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
+    "employers_in_season": "1 से 30 के बीच होना चाहिए।",
+    "n_children_in_school": "6 से 14 साल के बच्चों से ज़्यादा नहीं हो सकता।",
+    "years_current_job": "उम्र के हिसाब से इतने साल नहीं हो सकते।",
     "hours_day_offseason": "दिन के घंटे 1 से 18 के बीच होने चाहिए।",
 }
-for _n in ["cope_less_pref_food", "cope_borrow_food", "cope_reduce_meals",
-           "cope_reduce_portion", "cope_restrict_adult"]:
-    CMSG_HI[_n + "_yatra_wk"] = "0 से 7 दिन के बीच होना चाहिए।"
-    CMSG_HI[_n + "_offseason_wk"] = "0 से 7 दिन के बीच होना चाहिए।"
+
+# ---------------------------------------------------------------------------------------------
+# Money bounds, added 2026-10-05 after the first field test. 32 of the 48 money questions had NO
+# constraint at all -- the whole consumption module, all four remittance figures and the annual
+# total -- and one interview came back with monthly perishables of Rs 33, transport of Rs 6,
+# annual clothing of Rs 36 and a rent field reading "00", which together put the household at
+# about Rs 137 per capita per month against a poverty line of 2,515. Every one of those values
+# was accepted silently and would have reached the FGLS.
+#
+# The two food items get a FLOOR, because that is the failure that actually happened: a household
+# of any size buys more than a couple of hundred rupees of cereals and pulses in a month, so a
+# smaller figure is a typo or a different recall period, not a poor household. Everything else
+# gets a ceiling only -- a zero is a real answer for rent, tobacco or hospital costs.
+# Ceilings are deliberately absurd rather than merely unlikely: this is a hard block in the form,
+# and the job of catching the merely-implausible belongs to the evening check, not to a dialog
+# the enumerator has to argue with in front of the respondent.
+_MONEY_BOUNDS = {
+    "cons_staples":        (200, 60000,  "Cereals, pulses, sugar and salt for a whole month. Check the figure."),
+    "cons_perishables":    (100, 60000,  "Milk, vegetables, fruit, egg or meat, oil and spices for a whole month. Check the figure."),
+    "cons_food_own":       (0,   60000,  "Check the figure."),
+    "cons_food_out":       (0,   60000,  "Check the figure."),
+    "cons_fuel":           (0,   30000,  "Check the figure."),
+    "cons_routine_misc":   (0,   30000,  "Check the figure."),
+    "cons_transport_comm": (0,   30000,  "Check the figure."),
+    "cons_rent":           (0,   60000,  "Check the figure."),
+    "cons_med_nonhosp":    (0,   60000,  "Check the figure."),
+    "cons_packaged_food":  (0,   30000,  "Check the figure."),
+    "cons_pan_tobacco":    (0,   30000,  "Check the figure."),
+}
+for _b, (_lo, _hi, _msg) in _MONEY_BOUNDS.items():
+    for _suf in ("_yatra_pm", "_offseason_pm"):
+        CONSTRAINT[_b + _suf] = (". >= %d and . <= %d" % (_lo, _hi),
+                                 "Must be between Rs %s and Rs %s a month. %s" % (_lo, _hi, _msg))
+        CMSG_HI[_b + _suf] = "यह रकम महीने के %s से %s रुपये के बीच होनी चाहिए। आँकड़ा जाँच लें।" % (_lo, _hi)
+
+_ANNUAL_BOUNDS = {
+    "cons_clothing_12m":   (0, 500000),
+    "cons_education_12m":  (0, 500000),
+    "cons_medical_hosp_12m": (0, 1000000),
+    "cons_durables_12m":   (0, 500000),
+    "morbidity_cost_15d":  (0, 500000),
+    "remit_out_yatra_pm":  (0, 300000),
+    "remit_out_offseason_pm": (0, 300000),
+    "remit_in_yatra_pm":   (0, 300000),
+    "remit_in_offseason_pm": (0, 300000),
+    "other_activity_income_pm": (0, 500000),
+    "shock_money_spent":   (0, 2000000),
+    "loan_amount_borrowed": (0, 5000000),
+    "loan_amount":         (0, 5000000),
+}
+for _n, (_lo, _hi) in _ANNUAL_BOUNDS.items():
+    CONSTRAINT[_n] = (". >= %d and . <= %d" % (_lo, _hi),
+                      "Must be between Rs %s and Rs %s." % (_lo, _hi))
+    CMSG_HI[_n] = "यह रकम %s से %s रुपये के बीच होनी चाहिए।" % (_lo, _hi)
+
+# The annual earnings figure is now the ONLY earnings question, so it carries the whole income
+# side of the study. A floor of Rs 1,000 a year rejects a per-month figure typed into an annual
+# field, which is the error the field test made four times out of twelve in the old calendar.
+CONSTRAINT["income_annual_total"] = (". >= 1000 and . <= 10000000",
+    "Must be between Rs 1,000 and Rs 1 crore for the whole year. If they gave a monthly figure, multiply it.")
+CMSG_HI["income_annual_total"] = "पूरे साल के लिए यह 1,000 से 1,00,00,000 रुपये के बीच होना चाहिए। अगर उन्होंने महीने का बताया है तो उसे गुणा करें।"
+
+# The one numeric question that had no bound at all.
+CONSTRAINT["loan_interest_per100_pm"] = (". >= 0 and . <= 50",
+    "Interest must be between 0 and 50 rupees per hundred per month.")
+CMSG_HI["loan_interest_per100_pm"] = "सौ रुपये पर महीने का ब्याज 0 से 50 रुपये के बीच होना चाहिए।"
+
+CONSTRAINT["years_coming_here"] = (". >= 0 and . <= ${age} - 5",
+    "More years coming here than the respondent's age allows.")
+CMSG_HI["years_coming_here"] = "उम्र के हिसाब से इतने साल नहीं हो सकते।"
+CONSTRAINT["months_looked_for_work"] = (". >= 0 and . <= 12", "Must be between 0 and 12 months.")
+CMSG_HI["months_looked_for_work"] = "0 से 12 महीने के बीच होना चाहिए।"
+
+# 18 hours a day was the old ceiling and the field test used all of it -- one respondent at 18 x 7
+# gives 126 hours a week, which then drives Apablaza's excessive-hours limb off the ceiling rather
+# than off the work. 16 still admits a dhaba open from dawn to midnight.
+CONSTRAINT["hours_day_yatra"] = (". >= 1 and . <= 16", "Hours a day must be between 1 and 16.")
+CONSTRAINT["hours_day_offseason"] = (". >= 1 and . <= 16", "Hours a day must be between 1 and 16.")
+CMSG_HI["hours_day_yatra"] = "दिन के घंटे 1 से 16 के बीच होने चाहिए।"
+CMSG_HI["hours_day_offseason"] = "दिन के घंटे 1 से 16 के बीच होने चाहिए।"
+CONSTRAINT["more_hours_day"] = (". >= 0 and . + ${hours_day_yatra} <= 16",
+    "Hours wanted plus hours already worked cannot exceed 16 in a day.")
+CMSG_HI["more_hours_day"] = "जो घंटे वे चाहते हैं और जो पहले से काम करते हैं, मिलाकर दिन में 16 से ज़्यादा नहीं हो सकते।"
 
 # choice_filter: drop options from a list depending on an earlier answer. Only one list needs it --
 # other_activity_types shares the 14-option occupation list with `occupation`, so without this a pony
@@ -291,7 +363,12 @@ add("start", "start", "start")
 add("end", "end", "end")
 
 # ---- Module P: consent gate first, then the paradata items that stay real questions --------
-p_rows = [r for r in ROWS if r["module"] == "P" and r["name"] not in DROP_PARADATA]
+# Refusal fields and the browser-written GPS fields are not asked of everyone, so they are handled
+# below (refusal fields) or left to Kobo's own geopoint metadata (GPS fields).
+REFUSAL_FIELDS = ("obs_environment",)
+WEB_ONLY_GPS = ("gps_accuracy_m", "gps_fix_s", "gps_error")
+p_rows = [r for r in ROWS if r["module"] == "P" and r["name"] not in DROP_PARADATA
+          and r["name"] not in WEB_ONLY_GPS]
 # enumerator first: set before approaching anyone, and captured even if consent is then refused
 enum_row = next(r for r in p_rows if r["name"] == "enum_id")
 add("select_one enum", "enum_id", enum_row["question"], required="yes")
@@ -304,7 +381,8 @@ add("select_one site", "site", site_row["question"], required="yes")
 consent_row = next(r for r in p_rows if r["name"] == "consent")
 add("select_one yn", "consent", consent_row["question"], required="yes")
 # background-geopoint: silent capture, no on-screen question; fires once consent is answered
-add("background-geopoint", "gps_location", "GPS location of the interview (captured silently).", trigger="${consent}")
+# Location only after consent is given. trigger="${consent}" fired on a refusal too, so the trigger is "= 1".
+add("background-geopoint", "gps_location", "GPS location of the interview (captured silently).", trigger="${consent} = 1")
 # form_build is a hidden CALCULATE carrying dictionary.BUILD, not a question. It reached this loop
 # as an ordinary paradata row and came out as a REQUIRED TEXT FIELD labelled "Recorded
 # automatically." -- an unanswerable required question that would have stopped the Kobo form dead,
@@ -313,6 +391,10 @@ add("background-geopoint", "gps_location", "GPS location of the interview (captu
 add("calculate", "form_build", "", calc="'%s'" % BUILD)
 for r in p_rows:
     if r["name"] in ("consent", "enum_id", "site", "form_build"):
+        continue
+    if r["name"] in REFUSAL_FIELDS:
+        # asked only when consent is refused, so outside the consent-gated survey group below
+        add(xlsform_type(r), r["name"], r["question"], required="yes", relevant="${consent} = 0")
         continue
     add(xlsform_type(r), r["name"], r["question"], required="yes")
 

@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en" translate="no">
+<head>
+<meta charset="utf-8">
+<!-- Stop the browser offering to translate. A Hindi form auto-translated to English turns
+     "पक्का" (permanent) into "Sure!" and "जमा पैसे से" (used savings) into "from the deposited
+     money", the reviewer then critiques wording that was never in the instrument. All three
+     signals are needed: Chrome honours the meta, Safari and Edge honour the attribute, and the
+     class covers dynamically inserted text. -->
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Livelihood Survey</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F3864">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Livelihood Survey">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css"></head>
+<body class="notranslate" translate="no">
+<header>
+  <b id="ttl">Livelihood Survey</b>
+  <span id="bld" title="build"></span>
+  <span class="grow"></span>
+  <button id="lang">EN</button>
+  <button id="menu">☰</button>
+</header>
+<div id="upd"></div>
+<main id="app"></main>
+<footer id="nav" style="display:none">
+  <button id="back">← <span data-t="back">Back</span></button>
+  <span id="mprog"></span>
+  <button id="next" class="p"><span data-t="next">Next</span> →</button>
+</footer>
+<script>
+const CFG = __CFG__;
+const T = {
+ back:["पीछे","Back"], next:["आगे","Next"], start:["नया साक्षात्कार शुरू करें","Start new interview"],
+ exp:["CSV डाउनलोड करें","Download CSV"], pend:["भेजे नहीं गए","Not exported"],
+ pendbadge:["भेजे नहीं गए","not exported"],
+ done:["साक्षात्कार पूरा हुआ","Interview complete"], save:["सहेजें और समाप्त करें","Save and finish"],
+ req:["यह सवाल ज़रूरी है","This question is required"], opt:["यह छोड़ा जा सकता है","May be left blank"],
+ cons:[__CONS_HI__,__CONS_EN__], consq:["क्या आप शामिल होना चाहते हैं?","Do you agree to take part?"],
+ no:["नहीं","No"], yes:["हाँ","Yes"], stop:["धन्यवाद। साक्षात्कार यहीं समाप्त।","Thank you. Interview ends here."],
+ clr:["निर्यात किए गए मिटाएँ","Clear exported"], cnt:["सहेजे गए साक्षात्कार","Saved interviews"],
+ nodata:["अभी कोई साक्षात्कार सहेजा नहीं गया","No interviews saved yet"],
+ // Label on the module-introduction box. Addressed to the enumerator, not the respondent: it is an
+ // instruction to speak, which is why it is not in the respondent-facing Hindi of INTROS_HI itself.
+ readout:["पढ़कर सुनाएँ","Read aloud"],
+ // Label on the enumerator hint. Says plainly that this one is not for the respondent.
+ foryou:["सर्वेक्षक के लिए, पढ़कर न सुनाएँ","For the enumerator, do not read out"],
+ qs:["सवाल","questions"],
+ // Label on the consent script. It is an instruction to the enumerator about HOW to deliver the
+ // block below it, which is why it is not part of the script text itself.
+ verbatim:["यह ज्यों का त्यों पढ़कर सुनाएँ","Read this out, word for word"],
+ // ---- Google Sheet sync. The wording avoids "upload" and "server": what the enumerator needs to
+ // know is whether the interview has reached the sheet, and the honest answer is a count.
+ nsync:["शीट पर नहीं भेजे गए","Not on the sheet"],
+ syncnow:["अभी शीट पर भेजें","Send to the sheet now"],
+ syncset:["शीट की सेटिंग","Sheet settings"],
+ syncing:["भेजा जा रहा है…","Sending…"],
+ syncok:["सब शीट पर पहुँच गए","Everything is on the sheet"],
+ syncoff:["शीट का पता भरा नहीं है। सेटिंग में जाकर भरें।","No sheet address is set. Add it in Sheet settings."],
+ syncnet:["इंटरनेट नहीं है। सिग्नल आने पर खुद भेज देगा।","No internet. It will send on its own when signal returns."],
+ syncfail:["भेजा नहीं जा सका","Could not send"],
+ syncsent:["भेज दिए","sent"],
+ surl:["Apps Script का पता (URL)","Apps Script URL"],
+ stok:["टोकन (खाली छोड़ सकते हैं)","Token (may be left blank)"],
+ stest:["जाँचें","Test"],
+ ssave:["सहेजें","Save"],
+ sclose:["पीछे","Back"],
+ dsite:["इस डिवाइस का मार्ग","Route for this device"],
+ dsite_none:["— चुनें —","— select —"],
+ devid:["डिवाइस ID (स्वचालित)","Device ID (auto)"],
+ res_title:["अधूरा साक्षात्कार मिला","Unfinished interview found"],
+ res_body:["पिछला साक्षात्कार पूरा नहीं हुआ था। क्या आप वहीं से जारी रखना चाहते हैं, या नया शुरू करना चाहते हैं?","An interview was in progress when the page was last closed. Would you like to continue where you left off, or discard it and start fresh?"],
+ res_continue:["जारी रखें","Continue interview"],
+ res_fresh:["नया शुरू करें","Start fresh"],
+ agree:["सहमत हूँ, साक्षात्कार शुरू करें","I agree, Start interview"],
+ decline:["मैं सहमत नहीं हूँ","I do not agree"],
+ declinemsg:["समझ गए। कोई साक्षात्कार दर्ज नहीं किया जाएगा। धन्यवाद।","Understood. No interview will be recorded. Thank you."],
+ brieflabel:["अध्ययन के बारे में","About this study"],
+ brieftext:[__BRIEF_HI__,__BRIEF_EN__],
+ briefcontact:["संपर्क","Contact"],
+ delall:["सभी साक्षात्कार मिटाएँ","Delete all interviews"],
+ delallok:["इस डिवाइस से सभी साक्षात्कार मिटा दिए गए।","All interviews deleted from this device."]
+};
+let L = 1;                                  // 0 = Hindi, 1 = English (default: English)
+const t = k => T[k][L];
+const KEY = "kedarnath_v1", DKEY = "kedarnath_draft";
+let D = {}, shown = [];
+const QBY = Object.fromEntries(CFG.q.map(q => [q.n, q]));
+// Which screen is showing. The language toggle used to INFER this from idx, which got it
+// wrong twice: after a refused consent idx is still inside the question list, so switching
+// language dropped the enumerator back into an interview that had already been saved and
+// closed; and on the completion screen it jumped to the menu instead of re-rendering.
+let screen = "menu", lastRefused = false;
+// Position is tracked by question NAME, never by index. shown[] is rebuilt from the relevance
+// rules on every render, so answering a gate question changes its length and every index after
+// that point silently refers to a different question, which looked, from the field, like typed
+// answers disappearing. `cur` survives that; an index cannot.
+// Navigation is per MODULE, not per question: the whole module is on one screen and Next moves to
+// the next module. One question per screen meant ~210 taps per interview before anyone had answered
+// anything twice. `curMod` is a module CODE, not an index, for the same reason navigation used to be
+// keyed on question names, an index into a list that gates can reshape is the bug that ate the
+// enumerator's place once already.
+let curMod = null;
+const modList = () => CFG.mods.filter(m => CFG.q.some(q => q.m === m.c && q.t !== "hidden")).map(m => m.c);
+function modPos(code){ const i = modList().indexOf(code); return i < 0 ? 0 : i }
+
+// ---- storage. Every write is wrapped: a private window or a full disk must not throw mid-interview.
+function load(k, d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch(e){ return d } }
+// IST = UTC+5:30. toISOString() is always UTC; offset manually so stored timestamps are local time.
+function nowIST(){ const d = new Date(), off = 5.5 * 60 * 60000; return new Date(d.getTime() + off).toISOString().replace("Z","+05:30"); }
+function todayIST(){ return nowIST().slice(0,10); }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true }catch(e){ alert("STORAGE FULL / BLOCKED - export now"); return false } }
+const all = () => load(KEY, []);
+const pending = () => all().filter(r => !r.__exported).length;
+
+// ---- Google Sheet sync -------------------------------------------------------------------
+//
+// An ADDITION to the CSV export, never a replacement for it. localStorage plus the daily export
+// stays the system of record; the sheet is a second copy that appears without anybody remembering
+// to make it. Everything below is written so that the worst case is "the sheet is behind", never
+// "the interview is gone":
+//   * nothing is ever deleted, rewritten or skipped on the strength of a sync
+//   * an interview is marked sent ONLY after the server has acknowledged it by resp_id. A reply
+//     lost on the way back means the row is sent again, and the Apps Script upserts on resp_id,
+//     so a resend is a no-op rather than a duplicate
+//   * no sync call can block, delay or fail an interview, every one is fire-and-forget off the
+//     interview path, and every one is inside a try
+// The route is offline for most of its length, so "concurrently" in practice means: the moment the
+// tablet next has signal, without anyone doing anything.
+const SKEY = "kedarnath_sync";
+const DVCKEY = "kedarnath_device";
+function setSite(v){
+  const o = deviceCfg();
+  if (v) o.site = +v; else delete o.site;
+  save(DVCKEY, o);
+}
+function setEnum(v){
+  const o = deviceCfg();
+  o.enum = String(v || "");
+  save(DVCKEY, o);
+}
+function deviceCfg(){
+  let o = load(DVCKEY, {});
+  if (!o.id){
+    const a = new Uint8Array(4);
+    try { (self.crypto || self.msCrypto).getRandomValues(a) } catch(e){ a[0]=Math.random()*256; a[1]=Math.random()*256; a[2]=Math.random()*256; a[3]=Math.random()*256; }
+    o.id = "DEV-" + Array.from(a).map(b => b.toString(16).padStart(2,"0")).join("").toUpperCase().slice(0,6);
+    save(DVCKEY, o);
+  }
+  return o;
+}
+// Baked build-time address (may be empty) overridden by whatever this tablet was given. Per-device
+// wins: a tablet pointed at a test sheet during training must not silently revert on the next
+// rebuild.
+// The sheet address and token are fixed in the build (sync_config.json). There is no on-tablet
+// setting for them: every tablet sends to the same sheet, automatically.
+function syncCfg(){
+  return { url: String((CFG.sync && CFG.sync.url) || "").trim(),
+           token: String((CFG.sync && CFG.sync.token) || "").trim() };
+}
+const unsynced = () => all().filter(r => !r.__synced).length;
+
+let syncing = false;
+
+// resp_id is the upsert key, so it has to exist before the first POST and never change afterwards.
+// It used to be minted inside exportCsv() from Date.now() plus the row's position in the list,
+// which is unique within one tablet and nowhere near unique across four of them, two enumerators
+// finishing in the same millisecond produced the same id, and on a shared sheet that is one
+// interview overwriting another. crypto gives nine digits that do not depend on the clock.
+function newId(){
+  // crypto is the right source and is present everywhere this form runs, but it is reached through
+  // a try and a Math.random fallback all the same: this is called from start(), and a throw here
+  // would stop an interview beginning at all. A slightly weaker id is a trade worth making when
+  // the alternative is a tablet that cannot open a new form.
+  let n;
+  try {
+    const a = new Uint32Array(2);
+    (self.crypto || self.msCrypto).getRandomValues(a);
+    n = (a[0] ^ (a[1] << 7)) >>> 0;
+  } catch(e){ n = Math.floor(Math.random() * 4294967296) }
+  return String(100000000 + n % 900000000);
+}
+
+// One interview -> one POST. Sent twice over: once as the words the respondent actually chose, once
+// as the codes, so the sheet is readable AND analysable from a single round trip.
+async function pushOne(r){
+  const c = syncCfg();
+  if (!c.url) return false;
+  const words = {}, codes = {};
+  CFG.cols.forEach(k => {
+    const v = r[k];
+    const raw = v === undefined || v === null ? "" : String(v);
+    codes[k] = raw;
+    words[k] = raw === "" ? "" : String(labelOf(k, v));
+  });
+  // text/plain keeps this a "simple" request, so the browser sends it without a CORS preflight --
+  // Apps Script does not answer OPTIONS, and a preflight would fail every time. Apps Script reads
+  // the body as text regardless of what this header claims.
+  const res = await fetch(c.url, {
+    method: "POST",
+    headers: {"Content-Type": "text/plain;charset=utf-8"},
+    body: JSON.stringify({ token: c.token, build: CFG.build,
+                           row: { resp_id: r.resp_id, start: r.__start || "", end: r.__end || "",
+                                  duration_min: durMin(r), words, codes } })
+  });
+  if (!res.ok) return false;
+  let out = null;
+  try { out = JSON.parse(await res.text()) } catch(e){ return false }
+  // An unreadable or unhappy reply is treated as "not sent". That is the safe direction: the cost
+  // is one duplicate POST, which the server absorbs.
+  return !!(out && out.ok);
+}
+
+async function syncPending(manual){
+  if (syncing) return;
+  const c = syncCfg();
+  if (!c.url){ if (manual) alert(t("syncoff")); return }
+  if (navigator.onLine === false){ if (manual) alert(t("syncnet")); return }
+  if (!unsynced()){ if (manual) alert(t("syncok")); return }
+  syncing = true; paint();
+  let sent = 0, stuck = null;
+  try {
+    // Snapshot the ids, not the records: finish() can add an interview while this is awaiting, and
+    // iterating a live list would either miss it or iterate off the end.
+    const ids = all().filter(r => !r.__synced).map(r => r.resp_id).filter(Boolean);
+    for (const id of ids){
+      const now = all(), r = now.find(x => x.resp_id === id);
+      if (!r || r.__synced) continue;
+      let ok = false;
+      try { ok = await pushOne(r) } catch(e){ ok = false }
+      if (!ok){ stuck = id; break }      // stop at the first failure: the rest will fail too
+      // Re-read before marking. The list on disk may have grown since the push started, and
+      // writing back a stale copy would drop any interview finished in between.
+      const fresh = all(), hit = fresh.find(x => x.resp_id === id);
+      if (hit){ hit.__synced = nowIST(); save(KEY, fresh) }
+      sent++;
+    }
+  } finally {
+    syncing = false; paint();
+  }
+  if (manual) alert(stuck ? (t("syncfail") + ", " + sent + " " + t("syncsent") + ", " + unsynced() + " " + t("nsync"))
+                          : (sent + " " + t("syncsent")));
+}
+
+// Three triggers, because each one covers a gap the others leave: the end of an interview (the
+// common case, if there happens to be signal), the moment the radio comes back (walking into
+// Gaurikund at the end of the day), and a slow tick for everything else.
+window.addEventListener("online", () => syncPending());
+setInterval(() => syncPending(), 120000);
+
+function paint(){
+  const p = pending(), e = document.getElementById("pend");
+  if (e){ e.textContent = p + " " + t("pendbadge"); e.className = p > 5 ? "hot" : ""; }
+  // The completion screen shows the same count. It used to be written into the HTML once and never
+  // refreshed, so exporting from that screen dropped the header badge to 0 while the paragraph
+  // underneath still claimed 2 were waiting.
+  const e2 = document.getElementById("pend2");
+  if (e2) e2.textContent = p;
+  document.getElementById("ttl").textContent = L ? "Livelihood Survey" : "आजीविका सर्वेक्षण";
+  document.querySelectorAll("[data-t]").forEach(n => n.textContent = t(n.dataset.t));
+  document.getElementById("lang").textContent = L ? "हिं" : "EN";
+  const b = document.getElementById("bld");
+  if (b) b.textContent = "";
+  // The sheet badge is HIDDEN when no address is configured, rather than shown as zero. A green
+  // "0" on a tablet that is not pointed at anything reads as "all safe" and means the opposite.
+  const sy = document.getElementById("sync"), u = unsynced();
+  if (sy){
+    if (!syncCfg().url){ sy.className = "off"; sy.textContent = "" }
+    else if (syncing){ sy.className = ""; sy.textContent = t("syncing") }
+    else if (u){ sy.className = "hot"; sy.textContent = u + " " + t("nsync") }
+    else { sy.className = "ok"; sy.textContent = "✓ " + t("syncok") }
+  }
+  const s2 = document.getElementById("nsync2");
+  if (s2) s2.textContent = u;
+}
+
+// ---- the values a relevance expression can see
+const V = n => { const v = D[n]; return v === undefined || v === "" ? null : (isNaN(v) ? v : +v) };
+// A constraint that names another field needs that field as a NUMBER. An unanswered one must not
+// make the constraint fail, treat it as no limit rather than as zero.
+const NUM = n => { const v = +D[n]; return isNaN(v) ? Infinity : v };
+const SEL = n => (D[n] || "").toString().trim() === "" ? [] : D[n].toString().trim().split(/\s+/);
+function calc(){                            // the two hidden calculates the XLSForm also builds
+  let nw = 0, ow = 0;
+  for (let m = 1; m <= 12; m++){ const s = +D["status_m" + m]; if (s === 8) nw++; if (s >= 2 && s <= 7) ow++ }
+  D.calc_months_no_work = nw; D.calc_offseason_work = ow;
+}
+function visible(q){
+  if (!q.rel) return true;
+  calc();
+  try { return !!eval(q.rel) } catch(e){ return true }   // a broken rule must SHOW the question, never hide it
+}
+function rebuild(){ shown = CFG.q.filter(visible) }
+
+// ---- rendering: one MODULE per screen ---------------------------------------------------------
+// Every question in the module is written into the DOM, including ones a gate currently hides --
+// those get `hidden` and are toggled by applyGates() on each keystroke. Hiding with a class rather
+// than re-rendering is deliberate: re-rendering the module on every input would throw away focus and
+// the caret mid-number, which is precisely the "input is buggy" defect that was fixed once already.
+function qBlock(q){
+  if (q.t === "hidden") return "";
+  const v = D[q.n] ?? "";
+  let h = "<div class=card data-q='" + q.n + "'>";
+  // The consent script is rendered ON the consent question, not as a module preamble. It is the one
+  // block in this form that must be read word for word, so it is marked as such and styled unlike
+  // both the question and the enumerator hint, which says the opposite, do not read out.
+  if (q.n === "consent"){
+    h += "<div class=consent><span class=lead>" + t("verbatim") + "</span>" +
+         t("cons").split("\n\n").map(x => "<p>" + x + "</p>").join("") + "</div>";
+  }
+  h += "<div class=qt>" + (L ? q.en : q.hi) + "</div>";
+  if (q.hn) h += "<div class=hint><b>" + t("foryou") + "</b>" + (L ? q.hn : q.hnh) + "</div>";
+  if (q.t === "one" || q.t === "multi"){
+    const sel = q.t === "multi" ? SEL(q.n) : [String(v)];
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    // A long single-choice list is drawn as a dropdown instead of a column of radio buttons. At 35
+    // options the radio form runs to roughly four phone screens, so picking a state means scrolling
+    // past the question, losing it, and scrolling back, and every later question on the module
+    // screen is pushed down behind it. `dd` is set by the builder from the length of the choice
+    // list, never by hand, so no list can quietly grow past the threshold and stay a radio column.
+    if (q.dd && q.t === "one"){
+      h += "<select class=dd name='q_" + q.n + "'><option value=''>" + (L ? "— select —" : "— चुनें —") + "</option>";
+      opts.forEach(c => {
+        h += "<option value='" + c[0] + "'" + (sel.includes(String(c[0])) ? " selected" : "") + ">" +
+             (L ? c[1] : c[2]) + "</option>";
+      });
+      h += "</select>";
+    } else {
+    opts.forEach(c => {
+      const on = sel.includes(String(c[0]));
+      h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
+           " name='q_" + q.n + "' value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" +
+           (L ? c[1] : c[2]) + "</span></label>";
+    });
+    }
+  } else if (q.t === "text"){
+    h += "<input type=text value=\"" + String(v).replace(/"/g,"&quot;") + "\">";
+  } else {
+    h += "<input type=number inputmode=" + (q.t === "int" ? "numeric" : "decimal") +
+         (q.t === "dec" ? " step=any" : "") + " value='" + v + "'>";
+  }
+  if (q.opt) h += "<div class=opt>" + t("opt") + "</div>";
+  h += "<div class=err></div></div>";
+  return h;
+}
+
+// Clearing answers that a gate has closed is not tidiness, it is correctness. A module shows all its
+// questions at once, so this sequence is ordinary: answer origin = "other state", answer "why did you
+// first come here", then correct origin to "local". The reason question disappears, and used to keep
+// its answer, which then went into the export and broke the skip-logic asserts on a fact the
+// respondent never asserted. Kobo and ODK drop irrelevant answers at submission; this matches them.
+function clearHidden(){
+  let changed = false;
+  CFG.q.forEach(q => {
+    if (!visible(q) && D[q.n] !== undefined && D[q.n] !== ""){ delete D[q.n]; changed = true }
+  });
+  if (changed) save(DKEY, D);
+  return changed;
+}
+
+// Rebuild the option list of a question whose choices depend on another answer. This has to happen
+// as answers land, not only at render: the whole module is on one screen, so `occupation` is answered
+// on the SAME screen as other_activity_types, and a list built once at render still carried the
+// primary occupation through the entire pass. It only ever looked fixed because leaving the module
+// and coming back re-rendered it.
+// Only the dependent question's own card is rewritten, never the one being typed into, so nothing
+// loses focus or the caret.
+// Drop an answer that its own filter has made unavailable, say the enumerator ticks an activity as
+// a second occupation and then names that same activity as the primary one. Done over CFG.q from the
+// DATA, not by walking the DOM: a card for a module the enumerator has not opened does not exist, and
+// pruning that depended on the card existing would leave the stale answer in the export. Same lesson
+// as next() deciding from data rather than from the rendered page.
+function pruneFiltered(){
+  CFG.q.forEach(q => {
+    if (!q.cfx && !q.cfo) return;
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    const avail = opts.map(c => String(c[0]));
+    if (q.t === "multi"){
+      const keep = SEL(q.n).filter(v => avail.includes(v));
+      if (keep.join(" ") !== String(D[q.n] ?? "")){ D[q.n] = keep.join(" "); save(DKEY, D) }
+    } else if (D[q.n] !== undefined && D[q.n] !== "" && !avail.includes(String(D[q.n]))){
+      delete D[q.n]; save(DKEY, D);
+    }
+  });
+}
+
+function refilter(){
+  document.querySelectorAll("#app .card[data-q]").forEach(card => {
+    const q = QBY[card.dataset.q];
+    if (!q || (!q.cfx && !q.cfo)) return;
+    // refilter() works by removing label.ch rows and re-inserting them. A dropdown has none, so it
+    // would strip nothing, insert radio rows beside the select, and leave two controls writing to
+    // one answer. No dropdown question is choice-filtered today; this guard is here so that pairing
+    // the two in future fails visibly rather than by quietly growing a second control.
+    if (q.dd && q.t === "one") return;
+    const key = (q.cfx ? String(D[q.cfx] ?? "") : "") + "|" + (q.cfo ? String(D[q.cfo] ?? "") : "");
+    if (card.dataset.filterKey === key) return;          // source unchanged; leave the DOM alone
+    card.dataset.filterKey = key;
+    const drop = q.cfx ? String(D[q.cfx] ?? "") : "";
+    const only = q.cfo ? SEL(q.cfo) : null;
+    let opts = q.c;
+    if (drop) opts = opts.filter(c => String(c[0]) !== drop);
+    if (only) opts = opts.filter(c => only.includes(String(c[0])));
+    const sel = q.t === "multi" ? SEL(q.n) : [String(D[q.n] ?? "")];
+    let h = "";
+    opts.forEach(c => {
+      const on = sel.includes(String(c[0]));
+      h += "<label class='ch" + (on ? " on" : "") + "'><input type=" + (q.t === "multi" ? "checkbox" : "radio") +
+           " name='q_" + q.n + "' value='" + c[0] + "'" + (on ? " checked" : "") + "><span>" +
+           (L ? c[1] : c[2]) + "</span></label>";
+    });
+    card.querySelectorAll("label.ch").forEach(n => n.remove());
+    const err = card.querySelector(".err");
+    if (err) err.insertAdjacentHTML("beforebegin", h);
+    bindCard(card, q);
+  });
+}
+
+// Attach the write-on-every-change handler. Called from render() and again from refilter() whenever a
+// list is rebuilt, since replacing the inputs drops their listeners with them.
+function bindCard(card, q){
+  if (!q) return;
+  // "input, select" and not just "input": a dropdown question has no <input> at all, so binding
+  // only inputs left the select writing to nothing -- the enumerator picks a state, the form shows
+  // it picked, and the answer never reaches D. Select fires both input and change; one listener on
+  // "input" is enough and keeps the handler below identical for both control types.
+  card.querySelectorAll("input, select").forEach(el => {
+    if (el.dataset.bound) return;
+    el.dataset.bound = "1";
+    el.addEventListener("input", () => {
+      if (q.t === "multi"){
+        D[q.n] = [...card.querySelectorAll("input:checked")].map(x => x.value).sort((a,b)=>a-b).join(" ");
+      } else { D[q.n] = el.value }
+      save(DKEY, D);
+      card.querySelectorAll("label.ch").forEach(lb => lb.classList.toggle("on", lb.querySelector("input").checked));
+      const e = card.querySelector(".err"); if (e) e.textContent = "";
+      applyGates();
+    });
+  });
+}
+
+function applyGates(){
+  calc();
+  clearHidden();
+  pruneFiltered();
+  refilter();
+  let n = 0;
+  document.querySelectorAll("#app .card[data-q]").forEach(el => {
+    const q = QBY[el.dataset.q];
+    const on = visible(q);
+    el.classList.toggle("off", !on);
+    if (on) n++;
+  });
+  const c = document.getElementById("mcount");
+  if (c) c.textContent = n + " " + t("qs");
+}
+
+function render(){
+  const app = document.getElementById("app");
+  const mods = modList();
+  if (!mods.length) return finish();
+  if (curMod === null) curMod = mods[0];
+  screen = "q";
+  const mod = CFG.mods.find(m => m.c === curMod);
+  const qs = CFG.q.filter(q => q.m === curMod);
+  let h = "<h2>" + (L ? mod.en : mod.hi) + " <span id=mcount class=mc></span></h2>";
+  const intro = L ? mod.ien : mod.ihi;
+  if (intro) h += "<div class=intro><span class=lead>" + t("readout") + "</span>" + intro + "</div>";
+  qs.forEach(q => { h += qBlock(q) });
+  app.innerHTML = h;
+  app.scrollTop = 0; window.scrollTo(0,0);
+  document.getElementById("nav").style.display = "flex";
+  document.getElementById("back").disabled = modPos(curMod) === 0;
+  document.getElementById("mprog").textContent =
+    (L ? "Module " : "खंड ") + (modPos(curMod)+1) + " / " + mods.length;
+
+  // write on EVERY change, never only on submit
+  app.querySelectorAll(".card[data-q]").forEach(card => bindCard(card, QBY[card.dataset.q]));
+  applyGates();
+  paint();
+}
+
+function validate(q){
+  const v = D[q.n];
+  const blank = v === undefined || v === null || String(v).trim() === "";
+  if (blank) return q.opt ? null : t("req");
+  if (q.con){
+    const x = +v;                      // numeric constraints read x
+    const SELF = SEL(q.n);             // multi-select constraints read the code list
+    try { if (!eval(q.con)) return L ? q.cmsg_en : q.cmsg_hi } catch(e){}
+  }
+  return null;
+}
+
+// Validate every question the module is currently SHOWING. A hidden question is not the enumerator's
+// problem and must never block the screen, that is how a gated-off required field used to trap the
+// interview with no visible error to fix.
+// The decision is computed from DATA, not by reading the DOM. That keeps next() exercisable by the
+// headless harness in checks/08, which has no real document, and a validation path the tests cannot
+// reach is one that breaks silently.
+function moduleErrors(){
+  return CFG.q.filter(q => q.m === curMod && visible(q))
+              .map(q => [q, validate(q)]).filter(p => p[1]);
+}
+function showErrors(errs){
+  const byName = Object.fromEntries(errs.map(p => [p[0].n, p[1]]));
+  let first = null;
+  document.querySelectorAll("#app .card[data-q]").forEach(card => {
+    const e = byName[card.dataset.q] || "";
+    const slot = card.querySelector(".err");
+    if (slot) slot.textContent = e;
+    card.classList.toggle("bad", !!e);
+    if (e && !first) first = card;
+  });
+  if (first && first.scrollIntoView) first.scrollIntoView({block:"center"});
+}
+function next(){
+  const errs = moduleErrors();
+  showErrors(errs);
+  if (errs.length) return;
+  if (curMod === "P" && String(D.consent) === "0") return finish(true);
+  const mods = modList(), here = modPos(curMod);
+  if (here + 1 >= mods.length) return finish();
+  curMod = mods[here + 1];
+  render();
+}
+function back(){
+  const mods = modList(), here = modPos(curMod);
+  if (here <= 0) return;
+  curMod = mods[here - 1];
+  render();
+}
+
+function finish(refused){
+  // final sweep: a gate can close a question in a module the enumerator has already left, and that
+  // stale answer must not reach the export either.
+  calc(); clearHidden();
+  D.__end = nowIST();
+  D.__exported = false;
+  const rows = all(); rows.push(D); save(KEY, rows);
+  localStorage.removeItem(DKEY);
+  D = {};
+  lastRefused = !!refused;
+  showDone();
+  // Off the interview path on purpose. The enumerator must see the completion screen immediately,
+  // whatever the network is doing; a sync that hung here would look like the form had frozen on
+  // the last question.
+  setTimeout(() => { try { syncPending() } catch(e){} }, 0);
+}
+
+// Kept separate from finish() so the language toggle can redraw this screen without re-saving the
+// interview, switching language must never write a second copy of the same record.
+function showDone(){
+  screen = "done";
+  document.getElementById("nav").style.display = "none";
+  document.getElementById("app").innerHTML =
+    "<div class=mid>" +
+    "<div class=big>" + (lastRefused ? t("stop") : t("done")) + "</div>" +
+    "<p style='color:var(--mut);font-size:14px'><span id=pend2>" + pending() + "</span> " + t("pendbadge") + "</p>" +
+    "<p><button class=p style='width:100%' onclick='menu()'>" + t("start") + "</button></p>" +
+    "<p><button style='width:100%' onclick='exportCsv()'>" + t("exp") + "</button></p>" +
+    "</div>";
+  paint();
+}
+
+// The tablet must know which enumerator and which route it is on before anyone is approached. Both
+// are on every record, including refusals, so an interview cannot start without them.
+function deviceReady(){
+  const dv = deviceCfg();
+  if (!["1","2","3","4"].includes(String(dv.enum || ""))){
+    alert(L ? "Choose the enumerator for this tablet first (on this screen)."
+            : "पहले इस टैबलेट का सर्वेक्षक चुनें (इसी स्क्रीन पर)।");
+    return false;
+  }
+  if (!["1","2"].includes(String(dv.site || ""))){
+    alert(L ? "Choose the route for this tablet first (on this screen)."
+            : "पहले इस टैबलेट का मार्ग चुनें (इसी स्क्रीन पर)।");
+    return false;
+  }
+  return true;
+}
+// Precise location. Asked for as soon as the form opens, not when an interview starts, so the fix
+// is ready by the time anyone is approached. The most accurate fix seen is kept (not the first),
+// to six decimal places, with its accuracy and how long it took. Refreshes for up to two minutes,
+// stopping early at 15 metres or better. Never blocks anything.
+let gpsBest = null, gpsErr = null, gpsT0 = Date.now(), gpsWatch = null, gpsTimer = null;
+function gpsStop(){
+  if (gpsWatch !== null && navigator.geolocation) navigator.geolocation.clearWatch(gpsWatch);
+  gpsWatch = null;
+  clearTimeout(gpsTimer);
+}
+// Copy the best fix onto the record being filled in, if there is one.
+function gpsApply(){
+  if (!D || !D.resp_id) return;
+  if (gpsBest){
+    D.gps_lat = gpsBest.lat; D.gps_lon = gpsBest.lon;
+    D.gps_accuracy_m = String(gpsBest.acc); D.gps_fix_s = String(gpsBest.s);
+    if (gpsBest.acc > 200) D.gps_error = "3"; else delete D.gps_error;
+  } else if (gpsErr){
+    D.gps_error = gpsErr;
+  }
+  save(DKEY, D);
+}
+function gpsOpen(){
+  if (!navigator.geolocation){ gpsErr = "2"; gpsApply(); return }
+  gpsWatch = navigator.geolocation.watchPosition(p => {
+    const acc = Math.round(p.coords.accuracy);
+    if (!gpsBest || acc < gpsBest.acc){
+      gpsBest = { lat: p.coords.latitude.toFixed(6), lon: p.coords.longitude.toFixed(6),
+                  acc: acc, s: Math.round((Date.now() - gpsT0) / 1000) };
+      gpsErr = null;
+      gpsApply();
+    }
+    if (acc <= 15) gpsStop();
+  }, err => {
+    if (!gpsBest){
+      gpsErr = err.code === 1 ? "1" : "2";
+      gpsApply();
+      if (err.code === 1) alert(L
+        ? "Location is blocked for this site. Allow it in the browser's site settings. The interview can go on without it."
+        : "इस साइट के लिए स्थान बंद है। ब्राउज़र की साइट सेटिंग्स में इसे चालू करें। साक्षात्कार उसके बिना भी जारी रह सकता है।");
+    }
+  }, {enableHighAccuracy: true, maximumAge: 0, timeout: 30000});
+  gpsTimer = setTimeout(gpsStop, 120000);
+}
+// A new record gets a fresh fix: the device may have moved since the last interview.
+function gpsRestart(){
+  gpsStop();
+  gpsBest = null; gpsErr = null; gpsT0 = Date.now();
+  gpsOpen();
+}
+function start(){
+  if (!deviceReady()) return;
+  const dv = deviceCfg(), rid = newId();
+  // resp_id is minted HERE, not at export time, because the sheet upserts on it: it has to be on
+  // the record from the first POST, and it has to survive a resend unchanged.
+  D = { __start: nowIST(), resp_id: rid, interview_date: todayIST(), form_build: CFG.build, consent: "1", enum_id: dv.enum };
+  if (dv.site) D.site = dv.site;
+  gpsRestart(); gpsApply();
+  curMod = null; save(DKEY, D); render();
+}
+// "I do not agree". A refusal is recorded, not discarded: the enumerator fills in what they can see
+// and the record goes to the sheet like any other. See the consent script and the selection note.
+function declineConsent(){
+  if (!deviceReady()) return;
+  const dv = deviceCfg(), rid = newId();
+  D = { __start: nowIST(), resp_id: rid, interview_date: todayIST(), form_build: CFG.build, consent: "0", enum_id: dv.enum };
+  if (dv.site) D.site = dv.site;
+  // No location for a refusal: consent has not been given, so no coordinates are taken.
+  gpsStop(); gpsBest = null; gpsErr = null;
+  save(DKEY, D);
+  renderRefusal();
+}
+function renderRefusal(){
+  screen = "refusal";
+  document.getElementById("nav").style.display = "none";
+  const Q = n => { const q = CFG.q.find(x => x.n === n); return q ? (L ? q.en : q.hi) : n };
+  const opts = Object.keys(CFG.labs.obs_environment).map(k =>
+    "<option value=" + k + ">" + (L ? CFG.labs.obs_environment[k].e : CFG.labs.obs_environment[k].h) + "</option>").join("");
+  document.getElementById("app").innerHTML =
+    "<div class=card>" +
+    "<div class=qn>" + (L ? "Consent not given" : "सहमति नहीं मिली") + "</div>" +
+    "<div class=qt>" + (L ? "No interview. Record only the conditions at the time." : "कोई साक्षात्कार नहीं। सिर्फ़ उस वक़्त के हालात लिखें।") + "</div>" +
+    // What the record will carry, shown so the enumerator can see it is there.
+    "<div class=pick><div class=qn>" + (L ? "Recorded automatically" : "अपने-आप दर्ज होता है") + "</div>" +
+    "<div>" + (L ? "Time: " : "समय: ") + (D.__start || "").slice(0,16).replace("T"," ") + "<br>" +
+    (L ? "Enumerator: " : "सर्वेक्षक: ") + (CFG.labs.enum_id[D.enum_id] ? (L ? CFG.labs.enum_id[D.enum_id].e : CFG.labs.enum_id[D.enum_id].h) : "—") + "<br>" +
+    (L ? "Route: " : "मार्ग: ") + (String(D.site) === "1" ? (L ? "Kedarnath" : "केदारनाथ") : String(D.site) === "2" ? (L ? "Hemkund Sahib" : "हेमकुंड साहिब") : "—") +
+    "</div></div>" +
+    "<div class=pick><div class=qn>" + Q("obs_environment") + "</div>" +
+    "<select class=dd id=obs_environment><option value=''>" + (L ? "-- choose --" : "-- चुनें --") + "</option>" + opts + "</select></div>" +
+    "<div style='display:flex;gap:10px;margin-top:18px'>" +
+    "<button class=p style='flex:1' onclick='saveRefusal()'>" + (L ? "Save and close" : "सेव करें और बंद करें") + "</button></div>" +
+    "</div>";
+  paint();
+}
+function saveRefusal(){
+  const env = document.getElementById("obs_environment").value;
+  if (!env){
+    alert(L ? "Please choose the conditions at the time." : "कृपया उस वक़्त के हालात चुनें।");
+    return;
+  }
+  D.obs_environment = env;
+  finish(true);
+}
+
+// ---- export. Two files, one row per interview, same resp_id in both:
+//   LIV_codes_*.csv  the numeric codes, one column per variable, the layout the Stata build reads
+//   LIV_text_*.csv   the same columns as the respondent's own words (option text, verbatim answers)
+// Same column names in both, so either file joins to the other on resp_id.
+function csvCell(s){ s = s === undefined || s === null ? "" : String(s);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s }
+// Code -> the option text that was actually chosen. Multi-selects are stored as space-separated
+// codes, so each one is mapped and the labels rejoined with "; ", a semicolon, not a comma, so a
+// labelled multi-select never needs quoting and can never be mistaken for a column break.
+function labelOf(col, v){
+  const m = CFG.labs[col];
+  if (!m || v === undefined || v === null || String(v).trim() === "") return v;
+  return String(v).trim().split(/\s+/).map(x => (m[x] ? (L ? m[x].e : m[x].h) : x)).join("; ");
+}
+function durMin(r){
+  const a = Date.parse(r.__start || ""), b = Date.parse(r.__end || "");
+  if (!a || !b || b < a) return "";
+  return Math.round((b - a) / 60000);
+}
+function csvText(kind, rows){
+  const header = ["resp_id", "start", "end", "duration_min"].concat(CFG.cols);
+  let out = header.map(csvCell).join(",") + "\n";
+  rows.forEach(r => {
+    const row = [r.resp_id, r.__start || "", r.__end || "", durMin(r)];
+    CFG.cols.forEach(c => row.push(csvCell(kind === "text" ? labelOf(c, r[c]) : (r[c] ?? ""))));
+    out += row.join(",") + "\n";
+  });
+  return out;
+}
+function saveCsv(name, text){
+  const blob = new Blob(["\ufeff" + text], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function exportCsv(){
+  const rows = all();
+  if (!rows.length) return alert(t("nodata"));
+  // Ids are fixed before either file is written, so the two files always agree on resp_id.
+  rows.forEach(r => { r.resp_id = r.resp_id || newId(); r.form_build = r.form_build || CFG.build; });
+  rows.forEach(r => r.__exported = true); save(KEY, rows);
+  const _ts = nowIST().slice(0,19).replace("T","_").replace(/:/g,"-");
+  saveCsv("LIV_codes_" + _ts + ".csv", csvText("codes", rows));
+  // A second download straight after the first can be held by the browser's multiple-download
+  // prompt; the short delay lets the first finish so the prompt is less likely.
+  setTimeout(() => saveCsv("LIV_text_" + _ts + ".csv", csvText("text", rows)), 400);
+  paint();
+}
+function showResume(draft){
+  window._pendingDraft = draft;
+  // Show the menu behind, then float the modal on top
+  menu();
+  const ov = document.createElement("div");
+  ov.id = "resume-modal";
+  ov.innerHTML =
+    "<div id='resume-box'>" +
+    "<div style='font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin-bottom:10px'>" + t("res_title") + "</div>" +
+    "<p style='font-size:15px;margin:0 0 20px;line-height:1.5'>" + t("res_body") + "</p>" +
+    "<button class=p style='width:100%;margin-bottom:10px' onclick='resumeDraft()'>" + t("res_continue") + "</button>" +
+    "<button style='width:100%' onclick='discardDraft()'>" + t("res_fresh") + "</button>" +
+    "</div>";
+  document.body.appendChild(ov);
+}
+function resumeDraft(){
+  const ov = document.getElementById("resume-modal");
+  if (ov) ov.remove();
+  D = window._pendingDraft; curMod = null; render();
+}
+function discardDraft(){
+  const ov = document.getElementById("resume-modal");
+  if (ov) ov.remove();
+  localStorage.removeItem(DKEY); menu();
+}
+
+function menu(){
+  screen = "menu";
+  const rows = all(), u = unsynced();
+  document.getElementById("nav").style.display = "none";
+  const brief = t("brieftext").split("\n\n").map(p => "<p>" + p + "</p>").join("");
+  document.getElementById("app").innerHTML =
+    // ── Consent / briefing card ──
+    "<div class=card>" +
+    "<div class='consent-lbl'>" + t("brieflabel") + "</div>" +
+    "<div class=consent>" + brief + "</div>" +
+    "<div class=contact-block>" +
+    "<div class=contact-lbl>" + t("briefcontact") + "</div>" +
+    "<div class=contact-row>" +
+    "<div class=contact-person>" +
+    "<div class=contact-name>Anuj Nautiyal</div>" +
+    "<div class=contact-role>PhD Scholar</div>" +
+    "<div><a href='mailto:anuj_n@ce.iitr.ac.in'>anuj_n@ce.iitr.ac.in</a></div>" +
+    "<div><a href='tel:+918192832623'>+91 81928 32623</a></div>" +
+    "</div>" +
+    "<div class='contact-person contact-person-r'>" +
+    "<div class=contact-name>Raman Yelgandalkar</div>" +
+    "<div class=contact-role>Research Associate</div>" +
+    "<div><a href='mailto:raman.hs@sric.iitr.ac.in'>raman.hs@sric.iitr.ac.in</a></div>" +
+    "<div><a href='tel:+919588461698'>+91 95884 61698</a></div>" +
+    "</div>" +
+    "</div>" +
+    "</div>" +
+    "<div style='display:flex;gap:10px;margin-top:18px'>" +
+    "<button style='flex:1' onclick='declineConsent()'>" + t("decline") + "</button>" +
+    "<button class=p style='flex:2;font-size:16px' onclick='start()'>" + t("agree") + "</button>" +
+    "</div>" +
+    "</div>" +
+    // ── Stats row (subtle) ──
+    "<div class=card>" +
+    "<div class=menu-row><span class=menu-label>" + t("cnt") + "</span>" +
+      "<span class=menu-act><span class=menu-count>" + rows.length + "</span>" +
+      "</span></div>" +
+    (syncCfg().url ? "" : "<p class=err>" + (L ? "This build is not connected to the sheet. Interviews are kept on this tablet." : "यह बिल्ड शीट से जुड़ा नहीं है। साक्षात्कार इसी टैबलेट पर रहेंगे।") + "</p>") +
+    "</div>" +
+    // Device setup (enumerator and route). Its own card, so the consent card above is unchanged.
+    "<div class=card>" +
+    // Which enumerator this tablet belongs to. Set once, here, and kept on the device. The sheet
+    // accepts only 1-4, so a tablet without one would have every interview refused on sync.
+    "<div class=pick><div class=qn>" + (L ? "Enumerator on this tablet" : "इस टैबलेट का सर्वेक्षक") + "</div>" +
+    "<select class=dd id=enumsel onchange='setEnum(this.value)'><option value=''>" + (L ? "-- choose --" : "-- चुनें --") + "</option>" +
+    [1,2,3,4].map(k => "<option value=" + k + (String(deviceCfg().enum) === String(k) ? " selected" : "") + ">" +
+      (L ? CFG.labs.enum_id[k].e : CFG.labs.enum_id[k].h) + "</option>").join("") +
+    "</select></div>" +
+    // Which route this tablet is pointed at. The Stata build needs it on every row, so it is set
+    // here with the enumerator rather than left to the sync screen where it was easy to miss.
+    "<div class=pick><div class=qn>" + (L ? "Route on this tablet" : "इस टैबलेट का मार्ग") + "</div>" +
+    "<select class=dd id=sitesel onchange='setSite(this.value)'><option value=''>" + (L ? "-- choose --" : "-- चुनें --") + "</option>" +
+    [[1,"Kedarnath (Gaurikund to Kedarnath)","केदारनाथ (गौरीकुंड से केदारनाथ)"],[2,"Hemkund Sahib (Govindghat to Hemkund)","हेमकुंड साहिब (गोविंदघाट से हेमकुंड)"]]
+      .map(o => "<option value=" + o[0] + (String(deviceCfg().site) === String(o[0]) ? " selected" : "") + ">" + (L ? o[1] : o[2]) + "</option>").join("") +
+    "</select></div>" +
+    "</div>" +
+    // ── Action buttons ──
+    "<div style='display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px'>" +
+    "<button onclick='exportCsv()'>" + t("exp") + "</button>" +
+    "<button onclick='clearExported()'>" + t("clr") + "</button>" +
+    "<button class=danger onclick='deleteAll()'>" + t("delall") + "</button>" +
+    "</div>";
+  paint();
+}
+
+
+function deleteAll(){
+  const rows = all();
+  if (!rows.length) return alert(t("nodata"));
+  const n = rows.length;
+  const msg = L
+    ? n + " साक्षात्कार स्थायी रूप से मिटा दिए जाएँगे। यह पूर्ववत नहीं होगा। क्या आप सुनिश्चित हैं?"
+    : n + " interview(s) will be permanently deleted from this device. This cannot be undone. Are you sure?";
+  if (!confirm(msg)) return;
+  save(KEY, []);
+  localStorage.removeItem(DKEY);
+  alert(t("delallok"));
+  menu();
+}
+
+// The address is entered on the tablet rather than only baked into the build, so a sheet can be
+// changed, or a training sheet swapped for the real one, without rebuilding and redeploying the
+// form to four devices over a connection that may not exist.
+// A GET health check, so the address can be proved right at the hotel the night before rather than
+// discovered wrong at the end of a day's interviews.
+function clearExported(){
+  const keep = all().filter(r => !r.__exported);
+  const gone = all().length - keep.length;
+  if (!gone) return alert(t("nodata"));
+  // Deletion is gated on BOTH copies, not just the CSV. The sheet was added as a second safety
+  // net, and a net that can be cut by the button meant to be safe is not one, an interview
+  // exported to a CSV that is still only on the same tablet, then cleared, has one copy left.
+  const risky = all().filter(r => r.__exported && !r.__synced).length;
+  if (risky && syncCfg().url &&
+      !confirm(risky + " of them have NOT reached the Google Sheet yet. Delete anyway?")) return;
+  if (!confirm(gone + " exported interviews will be deleted from this device.")) return;
+  save(KEY, keep); menu();
+}
+document.getElementById("next").onclick = next;
+document.getElementById("back").onclick = back;
+document.getElementById("lang").onclick = () => {
+  L = 1 - L;
+  const modal = document.getElementById("resume-modal");
+  if (modal){ menu(); modal.remove(); showResume(window._pendingDraft); return; }
+  if (screen === "q") render();
+  else if (screen === "done") showDone();
+  else menu();
+};
+window.addEventListener("beforeunload", e => { if (Object.keys(D).length > 2){ e.preventDefault(); e.returnValue = "" } });
+// ---- offline support. Without this the form must be fetched from the network every time it is
+// opened, which on this route means it does not open at all. The worker caches the whole app on
+// first visit; afterwards the tablet needs no connectivity to start an interview.
+//
+// Updates are deliberately NOT applied automatically: swapping the form out mid-interview would be
+// worse than running a version behind. A new build installs and waits, a banner appears, and it
+// takes effect the next time the form is fully closed and reopened.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.addEventListener("updatefound", () => {
+      const nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener("statechange", () => {
+        if (nw.state === "installed" && navigator.serviceWorker.controller) {
+          const b = document.getElementById("upd");
+          b.textContent = L ? "A new version of the form is ready. Close it completely and reopen."
+                             : "फ़ॉर्म का नया रूप तैयार है। इसे पूरी तरह बंद करके दोबारा खोलें।";
+          b.style.display = "block";
+        }
+      });
+    });
+  }).catch(() => {});   // an unsupported browser must still run the form, just without offline
+}
+
+const draft = load(DKEY, null);
+if (draft && Object.keys(draft).length > 2) showResume(draft);
+else menu();
+</script>
+</body></html>
