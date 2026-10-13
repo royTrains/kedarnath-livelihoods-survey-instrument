@@ -329,18 +329,13 @@ Read each question as written. Notes in italics are for you, not for the respond
 
 ## Chapter 14: Common land and forest
 
-*Last, the common land, forest and water that people use around here.*
+*Last, the common land, forest and worksite resources that people use around here.*
 
-> आखिर में, इलाके की साझा ज़मीन, जंगल और पानी के बारे में।
+> आखिर में, इलाके की साझा ज़मीन, जंगल और काम की जगह के संसाधनों के बारे में।
 
-- In this Yatra season or last Yatra season, did you or anyone staying with you here collect firewood or dead wood from common land or forest in the Yatra region or workplace region?
-- In this Yatra season or last Yatra season, did you or anyone staying with you here cut grass or fodder from common land in the Yatra region or workplace region?
-- In this Yatra season or last Yatra season, did you or anyone staying with you here collect herbs, mushrooms or wild fruit from the forest in the Yatra region or workplace region?
-- In this Yatra season or last Yatra season, did any animal of yours or of anyone staying with you here graze on common pasture in the Yatra region or workplace region?
-- In this Yatra season or last Yatra season, has anyone you or someone staying with you here been stopped from using a common forest, pasture or path, or been asked to pay to use it, in the Yatra region or workplace region?
-- In this Yatra season or last Yatra season, has a common place you used to collect from or graze on been closed, because of a landslide, flood, road or bridge damage, or construction work, in the Yatra region or workplace region?
-- On your route or near your worksite, can you use a common water source (spring, tap or stream) without paying?
-- In the Yatra region or workplace region, who decides who may use the common land and forest? Ask and code what they name; do not read the list.
+- At your usual home village — not here on the Yatra route — does your household get fuel wood, fodder or grazing, from your OWN land or from common or forest land, without having to buy it?
+- Along your route or near your worksite, do you or any animal of yours or of anyone staying with you here get grazing or fodder from common land, without paying, in this Yatra season or last Yatra season?
+- In this Yatra season or last Yatra season, has it gotten harder, easier, or stayed the same to use common land, forest or pasture near your worksite without being stopped or asked to pay?
 
 ## Chapter 15: The road ahead
 

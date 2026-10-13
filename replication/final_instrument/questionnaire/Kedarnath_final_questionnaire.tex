@@ -12,7 +12,7 @@
 
 \plainbox{\textbf{What this is.} The final list of questions and variables for the survey of Yatra workers. The main aim is to measure
 \textbf{vulnerability to poverty} (VEP and multidimensional poverty). A short employment-quality block and a short tasks block are added.
-The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{191 asked questions}, 14 recorded automatically or by the enumerator,
+The tasks block only gathers the facts the later paper on job transfer needs. There are \textbf{185 asked questions}, 14 recorded automatically or by the enumerator,
 and 151 variables built afterwards in Stata. The companion file \texttt{variable\_dictionary.csv} lists everything in one table.}
 
 \section*{1. Rules the questions follow}
@@ -49,8 +49,8 @@ I & Food security, shocks and coping & 6 \\
 J & Ropeway & 5 \\
 K & Job quality (Apablaza et al. 2026 questions) & 21 \\
 L & Tasks and skills (short block) & 21 \\
-M & Access to common resources (short block) & 9 \\
- & \textbf{Total} & \textbf{205} \\
+M & Access to common resources (short block) & 3 \\
+ & \textbf{Total} & \textbf{199} \\
 \bottomrule
 \end{longtable}
 }
@@ -466,15 +466,9 @@ L21 & In your work, do you work out prices or costs? & 1 Yes, 0 No & \texttt{cal
 \textbf{No.} & \textbf{Question or instruction} & \textbf{Answers} & \textbf{Variable, skip rule, source} \\
 \midrule
 \endhead
-M1 & Where you work, is it allowed to take firewood, fodder or forest produce from the forest or common land? Ask what they understand the rule to be; do not correct them. & 1 Yes, it is allowed; 0 No, it is not allowed; 2 Allowed only with a permit or a fee; 97 Don't know & \texttt{cpr\_permitted}\newline \textit{Skip: May be left blank}\newline Source: Project design (de jure access, 2026-10-05); Ostrom 1990 on the distinction between rule in form and rule in use \\
-M2 & In this Yatra season or last Yatra season, did you or anyone staying with you here collect firewood or dead wood from common land or forest in the Yatra region or workplace region? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_firewood}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived (definitions list); item wording is ours \\
-M3 & In this Yatra season or last Yatra season, did you or anyone staying with you here cut grass or fodder from common land in the Yatra region or workplace region? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_fodder}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived; item wording is ours \\
-M4 & In this Yatra season or last Yatra season, did you or anyone staying with you here collect herbs, mushrooms or wild fruit from the forest in the Yatra region or workplace region? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_forest\_produce}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital (resource flows from stocks); item wording is ours \\
-M5 & In this Yatra season or last Yatra season, did any animal of yours or of anyone staying with you here graze on common pasture in the Yatra region or workplace region? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_grazing}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived; item wording is ours \\
-M6 & In this Yatra season or last Yatra season, has anyone you or someone staying with you here been stopped from using a common forest, pasture or path, or been asked to pay to use it, in the Yatra region or workplace region? & 0 No; 1 Yes; 97 Don't know & \texttt{cpr\_restricted}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, access ('the opportunity in practice to use a resource') and claims ('demands and appeals'); item wording is ours \\
-M7 & In this Yatra season or last Yatra season, has a common place you used to collect from or graze on been closed, because of a landslide, flood, road or bridge damage, or construction work, in the Yatra region or workplace region? & 0 No; 1 Yes; 97 Don't know & \texttt{cpr\_lost\_access}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, access (as above); the ropeway link is the project's own \\
-M8 & On your route or near your worksite, can you use a common water source (spring, tap or stream) without paying? & 1 Yes, free to use; 2 A source exists but we must pay; 3 No source nearby; 97 Don't know & \texttt{cpr\_water\_route}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital (water) and access ('the opportunity in practice to use a resource'); item wording is ours \\
-M9 & In the Yatra region or workplace region, who decides who may use the common land and forest? Ask and code what they name; do not read the list. & 1 Village head or panchayat; 2 Forest department; 3 Local committee or community group; 4 Nobody decides; it is open to all; 97 Don't know & \texttt{cpr\_governance}\newline \textit{Skip: May be left blank}\newline Source: NO SOURCE ON DISK YET: Krantz does not address governance of common land. To be sourced from Agrawal 2001 or Ostrom 1990 once read on disk \\
+M1 & At your usual home village -- not here on the Yatra route -- does your household get fuel wood, fodder or grazing, from your OWN land or from common or forest land, without having to buy it? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_home\_access}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital as a coping/buffer asset; item wording is ours \\
+M2 & Along your route or near your worksite, do you or any animal of yours or of anyone staying with you here get grazing or fodder from common land, without paying, in this Yatra season or last Yatra season? & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know & \texttt{cpr\_worksite\_use}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived; item wording is ours \\
+M3 & In this Yatra season or last Yatra season, has it gotten harder, easier, or stayed the same to use common land, forest or pasture near your worksite without being stopped or asked to pay? & 1 Harder now; 2 Easier now; 3 Same as before; 97 Don't know & \texttt{cpr\_access\_change}\newline \textit{Skip: May be left blank}\newline Source: Krantz 2001, access and claims; the ropeway link is the project's own \\
 \bottomrule
 \end{longtable}
 }
@@ -787,8 +781,8 @@ Zheng and Ma 2023 (China, CLES) & Ten food groups counted over the reference wee
 \texttt{ropexp} & 1 More work for me; 2 Less work for me; 3 About the same; 97 Don't know \\
 \texttt{ropjobs} & 1 People from these villages; 2 People from outside the area; 3 Nobody will get jobs; 97 Don't know \\
 \texttt{obsenv} & 1 Normal crowd, normal weather; 2 High crowd or peak hours; 3 Rain or extreme weather; 4 Both high crowd and bad weather \\
-\texttt{permdk} & 1 Yes, it is allowed; 0 No, it is not allowed; 2 Allowed only with a permit or a fee; 97 Don't know \\
 \texttt{cpruse} & 0 No; 1 Yes; 2 No, it is not allowed here; 97 Don't know \\
+\texttt{cprchange} & 1 Harder now; 2 Easier now; 3 Same as before; 97 Don't know \\
 \texttt{assets} & 1 Television; 2 Radio; 3 Bicycle; 4 Motorcycle or scooter; 5 Car, jeep or truck; 6 Telephone of any kind (mobile or landline); 7 Computer or laptop; 8 Cart pulled by an animal; 9 Refrigerator \\
 \texttt{livestock} & 1 Cows or buffaloes; 2 Goats or sheep; 3 Ponies or mules \\
 \texttt{offact} & 2 Farming (crops); 3 Livestock (animals); 4 Casual or daily wage labour; 5 Construction work; 6 Own small shop, stall or trade; 7 Salaried job; 96 Some other work; 0 There were no such months \\
@@ -797,8 +791,6 @@ Zheng and Ma 2023 (China, CLES) & Ten food groups counted over the reference wee
 \texttt{earnrange} & 1 Under Rs 5,000; 2 Rs 5,000 to 10,000; 3 Rs 10,000 to 20,000; 4 Rs 20,000 to 35,000; 5 Rs 35,000 to 50,000; 6 Rs 50,000 or more; 97 Don't know \\
 \texttt{instypes} & 1 Health insurance or scheme (incl. government); 2 Life insurance; 3 Crop insurance \\
 \texttt{fies5} & 1 Had to skip a meal; 2 Ate less than you thought you should; 3 Your household ran out of food; 4 Were hungry but did not eat; 5 Went a whole day without eating; 96 None of these happened \\
-\texttt{cprwater} & 1 Yes, free to use; 2 A source exists but we must pay; 3 No source nearby; 97 Don't know \\
-\texttt{cprgov} & 1 Village head or panchayat; 2 Forest department; 3 Local committee or community group; 4 Nobody decides; it is open to all; 97 Don't know \\
 \texttt{sex} & 0 Male; 1 Female \\
 \texttt{enum} & 1 Raman; 2 Rishit; 3 Tanmay; 4 Anuj \\
 \texttt{nativelang} & 1 Garhwali; 2 Kumaoni; 3 Hindi; 4 Nepali; 5 Bhojpuri; 6 Assamese; 7 Bengali; 8 Bodo; 9 Dogri; 10 Gujarati; 11 Kannada; 12 Kashmiri; 13 Konkani; 14 Maithili; 15 Malayalam; 16 Manipuri (Meitei); 17 Marathi; 18 Odia; 19 Punjabi; 20 Sanskrit; 21 Santali; 22 Sindhi; 23 Tamil; 24 Telugu; 25 Urdu; 96 Other Indian language; 97 Other / foreign language \\

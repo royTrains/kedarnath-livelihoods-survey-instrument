@@ -903,17 +903,11 @@ o["posture_repetitive"] = np.where(working, yndk(0.25), np.nan)
 o["phys_noise"] = np.where(working, yndk(0.30), np.nan)
 o["phys_temperature"] = np.where(working, yndk(0.25), np.nan)
 
-o["cpr_permitted"] = pick([1, 0, 2, 97], [.35, .25, .25, .15])
-perm = o["cpr_permitted"].values
-for v in ["cpr_firewood", "cpr_fodder", "cpr_forest_produce", "cpr_grazing"]:
-    use = np.where(rng2.random(n) < 0.5, 1, 0).astype(float)
-    use = np.where(perm == 0, 2.0, use)
-    use = np.where(perm == 97, pick([0, 1, 97], [.6, .3, .1]), use)
-    o[v] = use
-o["cpr_restricted"] = yndk(0.25, 0.05)
-o["cpr_lost_access"] = yndk(0.12, 0.03)
-o["cpr_water_route"] = pick([1, 2, 3, 97], [.60, .20, .15, .05])
-o["cpr_governance"] = pick([1, 2, 3, 4, 97], [.30, .20, .20, .20, .10])
+# Module M trimmed 2026-10-13 to 3 items (cpr_home_access, cpr_worksite_use, cpr_access_change);
+# cpruse codes are 0 No / 1 Yes / 2 Not allowed here / 97 Don't know.
+o["cpr_home_access"] = pick([0, 1, 2, 97], [.30, .55, .05, .10])
+o["cpr_worksite_use"] = pick([0, 1, 2, 97], [.40, .40, .10, .10])
+o["cpr_access_change"] = pick([1, 2, 3, 97], [.20, .10, .60, .10])
 
 # food insecurity experience scale: one latent severity, each item a higher cut-off than the last
 sev = rng2.random(n) + 0.25 * d.poor.values
