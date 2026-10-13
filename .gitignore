@@ -54,3 +54,6 @@ Thumbs.db
 
 # --- downloaded journal article and literature note-extractions ---
 # (the four lines above now cover everything that used to be listed here)
+
+# Sheet address and token for the form build. Private to the build machine; never commit.
+sync_config.json

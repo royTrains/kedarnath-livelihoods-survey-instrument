@@ -19,7 +19,7 @@ rep("Missing counts for always-asked variables (should be empty): " +
     str({c: int(d[c].isna().sum()) for c in [x['name'] for x in ROWS if x['origin'] == 'asked' and not x['skip']] if d[c].isna().sum() > 0}))
 
 rep("Poverty and employment quality: poor %.2f, poor(sensitivity) %.2f, employment-poor (2 of 5) %.2f" % (
-    d.poor.mean(), d.poor_sensitivity_cpi.mean(), d.emp_poor_k2.mean()))
+    d.poor.mean(), d.poor_sensitivity_cpi.mean(), d.emp_poor.mean()))
 rep("Consumption: cons_pc_pm mean %.0f (narrow %.0f, adult-equiv %.0f); income_seasonality_cv mean %.2f" % (
     d.cons_pc_pm.mean(), d.cons_pc_pm_narrow.mean(), d.cons_pc_ae_pm.mean(), d.income_seasonality_cv.mean()))
 
@@ -36,13 +36,14 @@ rep("Remittances: mean annual outward Rs %.0f, inward Rs %.0f; outward Yatra-sea
     d.remittance_outward_annual.mean(), d.remittance_inward_annual.mean(),
     (d.remit_out_yatra_pm * d.yatra_months / d.remittance_outward_annual.replace(0, np.nan)).mean()))
 
-rep("Employment deprivation rates (share): " + str({c: round(float(d[c].mean()), 2) for c in ["emp_dep_access", "emp_dep_comp", "emp_dep_sec", "emp_dep_stab", "emp_dep_cond"]}))
+rep("Employment deprivation rates (share): " + str({c: round(float(d[c].mean()), 2) for c in ["emp_inc_dep", "emp_stab_dep", "emp_unemp_dep", "emp_sec_dep", "emp_occ_dep", "emp_hours_dep", "emp_intens_dep", "emp_posture_dep", "emp_phys_dep"]}))
 
 rep("Food security (VASyR/Lyons et al. 2023-style rCSI): mean rCSI %.1f, food_coping_deprived (rCSI>20) %.2f; "
     "unmet health-care need (3m) %.2f" % (
-    d.rcsi_score.mean(), d.food_coping_deprived.mean(), d.health_access_barrier_3m.mean()))
+    d.fies_raw.mean(), d.food_coping_deprived.mean(), d.health_access_barrier_3m.mean()))
 rep("Education: knows exact years %.2f; mean years_schooling (of those who know) %.1f; education_level_cat used for %d respondents" % (
     d.knows_years_schooling.mean(), d.years_schooling.mean(), int((d.knows_years_schooling==0).sum())))
+d["n_other_activities"] = d.other_activity_types.fillna('').str.split().str.len()
 _has = d.n_other_activities > 0
 rep("Multiple work-holding: %.2f hold at least one other activity; mean count among them %.2f (max %d); mean income Rs %.0f/mo; ticked-vs-stated mismatch %.3f" % (
     _has.mean(), d.loc[_has, "n_other_activities"].mean(), int(d.n_other_activities.max()),
@@ -51,11 +52,12 @@ rep("Ex-ante skill-move direction (Nawakitphaitoon & Ormiston asymmetry): %s; me
     d.skill_move_type.value_counts().sort_index().to_dict(), d.task_cover_best.mean(), d.task_retain_best.mean()))
 rep("Productive assets (mean count of 6, and migration referral distribution): count %.2f; referral %s" % (
     d.productive_assets_count.mean(), d.loc[d.migrant==1,'migration_referral'].value_counts().sort_index().to_dict()))
-rep(f"Employment-poor count distribution: {d.emp_dep_count.value_counts().sort_index().to_dict()}")
+rep(f"Employment-poor count distribution: {d.emp_score.round(3).value_counts().sort_index().to_dict()}")
 
 rep("Interview minutes: not simulated -- measured from Kobo start/end at the pretest")
 rep("Max interviews per enumerator per day: " + str(pd.crosstab(d.enum_id, d.interview_date).values.max()))
-rep(f"Tasks: mean regular {d.tk_regular_n.mean():.1f} of 12, mean done-before {d.tk_prior_n.mean():.1f}; trek_dependent share {d.trek_dependent.mean():.2f}")
+_n_tasks = sum(1 for c in d.columns if c.startswith("tk_"))
+rep(f"Tasks: mean regular {d.tk_regular_n.mean():.1f} of {_n_tasks}, mean done-before {d.tk_prior_n.mean():.1f}; trek_dependent share {d.trek_dependent.mean():.2f}")
 rep("Asked items with a skip rule: %d of %d asked" % (sum(1 for x in ROWS if x['origin'] == 'asked' and x['skip']), sum(1 for x in ROWS if x['origin'] == 'asked')))
 
 open(os.path.join(HERE, "check_report.txt"), "w", encoding="utf-8").write("\n".join(out))

@@ -2,46 +2,55 @@
 * Applies value labels, variable labels, notes and variable order to the final dataset.
 
 label define accomhere 1 "At my own usual home (I live here)" 2 "Rented room or house" 3 "Room or dormitory the employer provides" 4 "Sleeps at the shop, dhaba or workplace" 5 "Tent or temporary shelter" 6 "Lodge, dharamshala or ashram" 7 "In the open, or a verandah" 8 "Somewhere else", replace
-label define activity 1 "Yatra work, or getting ready for the season" 2 "Farming (crops)" 3 "Livestock (animals)" 4 "Casual or daily wage labour" 5 "Construction work" 6 "Own small shop, stall or trade" 7 "Salaried job" 8 "No paid work", replace
+label define activity 1 "Yatra work (working the season)" 9 "Getting ready for the season (not earning from it yet)" 2 "Farming (crops)" 3 "Livestock (animals)" 4 "Casual or daily wage labour" 5 "Construction work" 6 "Own small shop, stall or trade" 7 "Salaried job" 8 "No paid work", replace
+label define assets 1 "Television" 2 "Radio" 3 "Bicycle" 4 "Motorcycle or scooter" 5 "Car, jeep or truck" 6 "Telephone of any kind (mobile or landline)" 7 "Computer or laptop" 8 "Cart pulled by an animal" 9 "Refrigerator", replace
 label define birthattend 1 "Doctor" 2 "Nurse, ANM or LHV" 3 "ASHA or Anganwadi worker only" 4 "Dai (traditional birth attendant)" 5 "Nobody trained; family only", replace
-label define collat 1 "Jewellery or ornaments" 2 "Land" 3 "Animals" 4 "A vehicle" 5 "Shop stock or business goods" 6 "House or building" 7 "Something else", replace
+label define collat 0 "Nothing was given as security" 1 "Jewellery or ornaments" 2 "Land" 3 "Animals" 4 "A vehicle" 5 "Shop stock or business goods" 6 "House or building" 7 "Something else", replace
 label define comereason 1 "No work at home" 2 "Pay is better here" 3 "Family or people from my village were already here" 4 "Land at home is too little to live on" 5 "Debt to repay" 6 "A contractor or agent brought me" 7 "Married into / moved with family" 8 "Some other reason", replace
 label define contract 1 "Yes, signed" 2 "Yes, but not yet signed" 3 "No contract", replace
 label define coping 1 "Used savings" 2 "Borrowed money" 3 "Sold or pawned assets" 4 "Cut consumption" 5 "Help from relatives/community" 6 "Paid it out of normal earnings, nothing given up" 7 "Something else (say what)", replace
+label define cprgov 1 "Village head or panchayat" 2 "Forest department" 3 "Local committee or community group" 4 "Nobody decides; it is open to all" 97 "Don't know", replace
+label define cpruse 0 "No" 1 "Yes" 2 "No, it is not allowed here" 97 "Don't know", replace
+label define cprwater 1 "Yes, free to use" 2 "A source exists but we must pay" 3 "No source nearby" 97 "Don't know", replace
 label define credit 1 "Nationalised or public-sector bank" 2 "Private bank" 3 "Cooperative bank or RRB" 4 "Microfinance institution or SHG" 5 "Moneylender" 6 "Relative or friend" 7 "Employer or contractor (advance)" 8 "Other", replace
 label define distress 9 "Nothing of this kind happened" 1 "Serious illness or death of an earning member" 2 "Crop failure or livestock loss" 3 "Damage from a natural disaster (flood, landslide, fire)" 4 "Loss of business, goods or assets" 5 "Road or bridge blocked, route closed" 6 "Yatra stopped early or badly disrupted" 7 "Sharp fall in customers or prices" 8 "Lost the work or the work stopped", replace
+label define earnrange 1 "Under Rs 5,000" 2 "Rs 5,000 to 10,000" 3 "Rs 10,000 to 20,000" 4 "Rs 20,000 to 35,000" 5 "Rs 35,000 to 50,000" 6 "Rs 50,000 or more" 97 "Don't know", replace
 label define edu2 1 "No formal education" 2 "Some schooling, did not complete primary" 3 "Completed primary but not secondary" 4 "Completed secondary or higher" 98 "Prefer not to say", replace
 label define emptype 1 "Own-account (self-employed, no hired workers)" 2 "Employer/business owner (self-employed)" 3 "Regular wage or salary" 4 "Casual or daily wage labour" 5 "Unpaid family worker", replace
 label define enum 1 "Raman" 2 "Rishit" 3 "Tanmay" 4 "Anuj", replace
-label define famstruct 1 "Nuclear (you, spouse and unmarried children only)" 2 "Joint (living with parents, married siblings or other extended family)" 3 "Single-member household", replace
+label define fies5 1 "Had to skip a meal" 2 "Ate less than you thought you should" 3 "Your household ran out of food" 4 "Were hungry but did not eat" 5 "Went a whole day without eating" 96 "None of these happened", replace
 label define floor 1 "Mud/kaccha" 2 "Cement/mud-cement" 3 "Tile/mosaic/marble", replace
 label define fuel 1 "LPG or cylinder gas" 2 "Piped natural gas" 3 "Electricity" 4 "Biogas (gobar gas plant)" 5 "Kerosene" 6 "Firewood" 7 "Dung cakes (gobar)" 8 "Crop residue, straw or shrubs" 9 "Charcoal" 10 "Coal or lignite", replace
+label define gpserr 1 "Location not allowed in the browser" 2 "No fix obtained" 3 "Coarse fix only, over 200 m -- network or IP location, not GPS", replace
 label define hohrel 1 "Self (respondent is the head)" 2 "Husband" 3 "Wife" 4 "Father" 5 "Mother" 6 "Son" 7 "Daughter" 8 "Brother" 9 "Sister" 10 "Other male relative" 11 "Other female relative" 12 "Other, non-relative (male)" 13 "Other, non-relative (female)", replace
-label define jobperm 1 "Permanent" 2 "Seasonal or temporary" 3 "Occasional or casual" 4 "On probation" 5 "Fixed-term", replace
-label define jobsit 1 "Works for pay full-time" 2 "Works for pay part-time or occasional jobs" 3 "Studies and works" 4 "Only studies" 5 "Being trained for work only" 6 "Retired or pensioned" 7 "Unpaid household tasks or caring for others" 8 "Unemployed, actively seeking work" 9 "Sick or disabled, cannot work" 10 "Neither studying, working nor seeking work" 97 "Does not know", replace
+label define instypes 1 "Health insurance or scheme (incl. government)" 2 "Life insurance" 3 "Crop insurance", replace
 label define landunit 1 "Nali" 2 "Bigha" 3 "Acres" 4 "Hectares" 5 "No land", replace
+label define livestock 1 "Cows or buffaloes" 2 "Goats or sheep" 3 "Ponies or mules", replace
 label define loanpurpose 1 "Medical or hospital costs" 2 "Buying an animal, vehicle or equipment for work" 3 "Shop stock or business" 4 "Food or daily household needs" 5 "A wedding, funeral or ceremony" 6 "House building or repair" 7 "Education" 8 "Repaying another loan" 9 "Something else", replace
 label define marital 1 "Currently married" 2 "Never married" 3 "Widowed/divorced/separated", replace
 label define month 1 "January" 2 "February" 3 "March" 4 "April" 5 "May" 6 "June" 7 "July" 8 "August" 9 "September" 10 "October" 11 "November" 12 "December", replace
 label define movetype 1 "Lateral (little retraining needed)" 2 "Upskilling (destination needs skills the worker lacks)" 3 "Reskilling (skill sets barely overlap)" 4 "Downskilling (worker's skills would go unused)", replace
 label define nativelang 1 "Garhwali" 2 "Kumaoni" 3 "Hindi" 4 "Nepali" 5 "Bhojpuri" 6 "Assamese" 7 "Bengali" 8 "Bodo" 9 "Dogri" 10 "Gujarati" 11 "Kannada" 12 "Kashmiri" 13 "Konkani" 14 "Maithili" 15 "Malayalam" 16 "Manipuri (Meitei)" 17 "Marathi" 18 "Odia" 19 "Punjabi" 20 "Sanskrit" 21 "Santali" 22 "Sindhi" 23 "Tamil" 24 "Telugu" 25 "Urdu" 96 "Other Indian language" 97 "Other / foreign language", replace
+label define obsenv 1 "Normal crowd, normal weather" 2 "High crowd or peak hours" 3 "Rain or extreme weather" 4 "Both high crowd and bad weather", replace
 label define occ 1 "Pony/mule worker (works the animals, does not own them)" 2 "Pony/mule owner (owns the animals)" 3 "Porter (carries on own back/shoulders - goods, luggage, or a person in a kandi)" 4 "Palki / dandi bearer (carries a person on a palanquin, as part of a team)" 5 "Dhaba, tea stall or food stall WORKER (prepared food or tea)" 6 "Dhaba, tea stall or food stall OWNER (prepared food or tea)" 7 "Shop WORKER (goods: prasad, puja items, clothes, general store)" 8 "Shop OWNER (goods, not prepared food)" 9 "Hotel / lodge WORKER" 10 "Hotel / lodge OWNER" 11 "Driver (any motor vehicle)" 12 "Guide" 13 "Wage labourer (construction, loading, odd jobs)" 14 "Other", replace
+label define offact 2 "Farming (crops)" 3 "Livestock (animals)" 4 "Casual or daily wage labour" 5 "Construction work" 6 "Own small shop, stall or trade" 7 "Salaried job" 96 "Some other work" 0 "There were no such months", replace
 label define origin 1 "Local (same district)" 2 "Other Uttarakhand district" 3 "Other Indian state" 4 "Nepal", replace
-label define pension 1 "Yes, employer deducts it" 2 "Yes, contributes voluntarily" 3 "No", replace
-label define portable 1 "Yes, can draw it here" 2 "No, only at the home place" 3 "Has never tried" 4 "We have no ration card" 97 "Does not know", replace
+label define permdk 1 "Yes, it is allowed" 0 "No, it is not allowed" 2 "Allowed only with a permit or a fee" 97 "Don't know", replace
 label define prevreason 1 "Better income" 2 "Lost the previous work" 3 "Work ended with the season" 4 "Family reasons" 5 "Health or injury" 6 "Other", replace
-label define recall 1 "Month by month" 0 "One total for the whole year", replace
 label define referral 1 "A family member already working here" 2 "A friend or someone from the village" 3 "A thekedar or contractor I now work for" 4 "An agent or middleman who placed me (usually for a fee)" 5 "No one; I found it myself" 6 "The employer called me directly" 7 "Someone else", replace
 label define remitmode 1 "From my own phone (UPI or net banking)" 2 "In person at a bank branch or bank mitra / CSP" 3 "Money order or post office" 4 "Sent with someone going home" 5 "Carried it myself" 6 "Through an agent or middleman" 7 "Other", replace
 label define roof 1 "Thatch/wood/mud" 2 "Tin/GI sheet" 3 "Concrete/RCC", replace
+label define ropexp 1 "More work for me" 2 "Less work for me" 3 "About the same" 97 "Don't know", replace
+label define ropjobs 1 "People from these villages" 2 "People from outside the area" 3 "Nobody will get jobs" 97 "Don't know", replace
 label define ruralurban 1 "Village (rural)" 2 "Town or city (urban)", replace
 label define sex 0 "Male" 1 "Female", replace
 label define site 1 "Kedarnath (Gaurikund to Kedarnath)" 2 "Hemkund Sahib (Govindghat to Hemkund)", replace
 label define stance 1 "Support" 2 "Neutral" 3 "Oppose" 98 "Prefer not to say", replace
-label define state 1 "Andhra Pradesh" 2 "Arunachal Pradesh" 3 "Assam" 4 "Bihar" 5 "Chhattisgarh" 6 "Goa" 7 "Gujarat" 8 "Haryana" 9 "Himachal Pradesh" 10 "Jharkhand" 11 "Karnataka" 12 "Kerala" 13 "Madhya Pradesh" 14 "Maharashtra" 15 "Manipur" 16 "Meghalaya" 17 "Mizoram" 18 "Nagaland" 19 "Odisha" 20 "Punjab" 21 "Rajasthan" 22 "Sikkim" 23 "Tamil Nadu" 24 "Telangana" 25 "Tripura" 26 "Uttar Pradesh" 27 "Uttarakhand" 28 "West Bengal" 29 "Andaman and Nicobar Islands" 30 "Chandigarh" 31 "Dadra and Nagar Haveli and Daman and Diu" 32 "Delhi" 33 "Jammu and Kashmir" 34 "Ladakh" 35 "Lakshadweep" 36 "Puducherry" 99 "Outside India", replace
+label define state 1 "Andhra Pradesh" 2 "Arunachal Pradesh" 3 "Assam" 4 "Bihar" 5 "Chhattisgarh" 6 "Goa" 7 "Gujarat" 8 "Haryana" 9 "Himachal Pradesh" 10 "Jharkhand" 11 "Karnataka" 12 "Kerala" 13 "Madhya Pradesh" 14 "Maharashtra" 15 "Manipur" 16 "Meghalaya" 17 "Mizoram" 18 "Nagaland" 19 "Odisha" 20 "Punjab" 21 "Rajasthan" 22 "Sikkim" 23 "Tamil Nadu" 24 "Telangana" 25 "Tripura" 26 "Uttar Pradesh" 28 "West Bengal" 29 "Andaman and Nicobar Islands" 30 "Chandigarh" 31 "Dadra and Nagar Haveli and Daman and Diu" 32 "Delhi" 33 "Jammu and Kashmir" 34 "Ladakh" 35 "Lakshadweep" 36 "Puducherry", replace
 label define task3 1 "Yes, regularly in my main Yatra work" 2 "Not in my main work, but done before elsewhere" 3 "Never done", replace
 label define tier 1 "Poor" 2 "Moderate" 3 "Good", replace
 label define toilet 1 "No toilet / open defecation" 2 "Pit latrine without slab or open pit" 3 "Improved toilet, but shared with other households" 4 "Improved toilet, used only by this household", replace
+label define wageemp 1 "Private company" 2 "Government or public body" 3 "A household (domestic work)" 4 "A contractor or agent" 5 "An individual employer" 97 "Don't know", replace
 label define wall 1 "Mud, thatch, bamboo or other natural material" 2 "Unburnt brick, wood or tin" 3 "Burnt brick, cement, concrete or stone", replace
 label define water 1 "Piped into the house or yard" 2 "Public tap or standpipe" 3 "Handpump, tubewell or borewell" 4 "Protected well or protected spring" 5 "Rainwater collection" 6 "Bottled, packaged or community RO" 7 "Unprotected well or unprotected spring" 8 "River, stream, pond or canal" 9 "Tanker truck or cart with drum", replace
 label define wgdiff 1 "No difficulty" 2 "Some difficulty" 3 "A lot of difficulty" 4 "Cannot do it at all", replace
@@ -60,6 +69,12 @@ label variable gps_lat "GPS latitude of interview"
 label variable gps_lon "GPS longitude of interview"
 label variable consent "Respondent gave informed consent"
 label values consent yn
+label variable obs_environment "Conditions where the person was approached (refusals only)"
+label values obs_environment obsenv
+label variable gps_accuracy_m "GPS accuracy of the location fix (metres)"
+label variable gps_fix_s "Seconds taken to get the location fix"
+label variable gps_error "Location problem, if no fix was obtained"
+label values gps_error gpserr
 label variable interview_duration_min "Interview length (minutes)"
 label variable dur_tasks_min "Time spent on tasks block L (minutes)"
 label variable age "Age in completed years"
@@ -70,6 +85,12 @@ label values hoh_relation hohrel
 label variable native_language "Native language / mother tongue"
 label values native_language nativelang
 label variable native_language_other "Native language, written in (not on the list)"
+label variable origin "Place of permanent home"
+label values origin origin
+label variable home_state "State or union territory of the permanent home"
+label values home_state state
+label variable home_rural_urban "Usual home is in a village (1) or a town/city (2)"
+label values home_rural_urban ruralurban
 label variable marital_status "Marital status"
 label values marital_status marital
 label variable knows_years_schooling "Knows exact years of schooling completed"
@@ -77,105 +98,73 @@ label values knows_years_schooling yn
 label variable years_schooling "Years of schooling completed"
 label variable education_level_cat "Highest level of school completed (bracket, if years not recalled)"
 label values education_level_cat edu2
+label variable training_received "Ever completed a training course or apprenticeship"
+label values training_received yn
 label variable hhsize "Household size (number of members)"
 label variable any_member_6yr_schooling "Any household member aged 10+ has completed 6 years of schooling"
 label values any_member_6yr_schooling yn
-label variable family_structure "Family structure: nuclear, joint or single-member"
-label values family_structure famstruct
+label variable n_children_u6 "Household children under 6"
+label variable n_children_6_14 "Household children aged 6 to 14"
+label variable n_children_in_school "Children aged 6 to 14 attending school"
 label variable n_earners "Number of household members who earn money"
 label variable main_income_earner "Respondent is the main income earner in the household"
 label values main_income_earner yn
-label variable n_children_u6 "Household children under 6"
-label variable n_children_6_14 "Household children aged 6 to 14"
-label variable n_children_out_school "Children aged 6 to 14 not attending school"
 label variable occupation "Main work in the Yatra season (14 groups)"
 label values occupation occ
 label variable occupation_detail "Main work, in the respondent's own words (NCO-coded later)"
 label variable employment_type "Employment status in main work (4 groups)"
 label values employment_type emptype
-label variable n_other_activities "Number of other paid activities besides the main Yatra work"
+label variable wage_employer "Who employs the wage worker"
+label values wage_employer wageemp
 label variable other_activity_types "Which other paid activities (check all that apply)"
 label variable other_activity_income_pm "Usual monthly income from all other paid activities (Rs)"
-label variable years_in_yatra_work "Years worked in Yatra work"
+label variable owns_shop_stall "Owns a shop or stall used for work"
+label values owns_shop_stall yn
+label variable employers_in_season "Different employers or businesses worked in, one Yatra season"
+label variable years_current_job "Years in the current job (one year or more)"
+label variable years_coming_here "Years the respondent has been coming here for Yatra-related work"
+label variable first_job_ever "Current/most recent work was the respondent's first job ever"
+label values first_job_ever yndk
 label variable hours_day_yatra "Hours worked per day in the Yatra season"
 label variable days_week_yatra "Days worked per week in the Yatra season"
 label variable prev_occ_change "Changed main kind of work in the last 10 years"
 label values prev_occ_change yn
 label variable prev_occ "Previous main work (verbatim, NCO-coded later)"
-label variable target_occ "Work the respondent would move to if this work ended (verbatim, NCO-coded later)"
+label variable target_occ "Work the respondent wants to move to in a few years (verbatim, NCO-coded)"
 label variable prev_occ_reason "Main reason for changing work"
 label values prev_occ_reason prevreason
-label variable training_received "Ever completed a training course or apprenticeship"
-label values training_received yn
-label variable status_m5 "Main activity in May"
-label values status_m5 activity
-label variable status_m6 "Main activity in June"
-label values status_m6 activity
-label variable status_m7 "Main activity in July"
-label values status_m7 activity
-label variable status_m8 "Main activity in August"
-label values status_m8 activity
-label variable status_m9 "Main activity in September"
-label values status_m9 activity
-label variable status_m10 "Main activity in October"
-label values status_m10 activity
-label variable status_m11 "Main activity in November"
-label values status_m11 activity
-label variable status_m12 "Main activity in December"
-label values status_m12 activity
-label variable status_m1 "Main activity in January"
-label values status_m1 activity
-label variable status_m2 "Main activity in February"
-label values status_m2 activity
-label variable status_m3 "Main activity in March"
-label values status_m3 activity
-label variable status_m4 "Main activity in April"
-label values status_m4 activity
-label variable knows_monthly_income "Can recall earnings month by month"
-label values knows_monthly_income recall
-label variable income_m5 "Earnings in May (Rs)"
-label variable income_m6 "Earnings in June (Rs)"
-label variable income_m7 "Earnings in July (Rs)"
-label variable income_m8 "Earnings in August (Rs)"
-label variable income_m9 "Earnings in September (Rs)"
-label variable income_m10 "Earnings in October (Rs)"
-label variable income_m11 "Earnings in November (Rs)"
-label variable income_m12 "Earnings in December (Rs)"
-label variable income_m1 "Earnings in January (Rs)"
-label variable income_m2 "Earnings in February (Rs)"
-label variable income_m3 "Earnings in March (Rs)"
-label variable income_m4 "Earnings in April (Rs)"
+label variable months_worked_yatra "Months worked in the Yatra season in the past year"
+label variable months_no_paid_work "Months in the past year with no paid work at all"
+label variable offseason_activity "Main work in the months that are neither Yatra nor idle"
+label values offseason_activity offact
 label variable income_annual_total "Total earnings from all work in the past year (Rs)"
 label variable pct_income_yatra "Share of the year's earnings that came from Yatra work (out of 100)"
+label variable earnings_range "Range of monthly earnings (only where no annual figure was given)"
+label values earnings_range earnrange
+label variable hours_day_offseason "Hours worked per day outside the Yatra season"
+label variable days_week_offseason "Days worked per week outside the Yatra season"
+label variable resp_returns_at_closure "Respondent goes to the home place when the Yatra closes"
+label values resp_returns_at_closure yn
+label variable hh_at_home_place "The rest of the household lives at the home place year-round"
+label values hh_at_home_place yn
+label variable remit_differs_by_season "Amount sent home differs between the seasons"
+label values remit_differs_by_season yn
 label variable remit_out_yatra_pm "Money usually sent home in a month, Yatra season (Rs)"
 label variable remit_out_offseason_pm "Money usually sent home in a month, off-season (Rs)"
 label variable remit_mode "How money is usually sent home"
 label values remit_mode remitmode
 label variable remit_in_yatra_pm "Money usually received in a month, Yatra season (Rs)"
 label variable remit_in_offseason_pm "Money usually received in a month, off-season (Rs)"
-label variable hours_day_offseason "Hours worked per day outside the Yatra season"
-label variable days_week_offseason "Days worked per week outside the Yatra season"
-label variable origin "Place of permanent home"
-label values origin origin
-label variable home_state "State or union territory of the permanent home"
-label values home_state state
-label variable home_rural_urban "Usual home is in a village (1) or a town/city (2)"
-label values home_rural_urban ruralurban
-label variable resp_returns_at_closure "Respondent goes to the home place when the Yatra closes"
-label values resp_returns_at_closure yn
-label variable hh_at_home_place "The rest of the household lives at the home place year-round"
-label values hh_at_home_place yn
-label variable n_here_season "People the respondent's on-site spending covers during the season"
-label variable years_coming_here "Years the respondent has been coming here for the season"
+label variable smartphone_owned "Owns a smartphone"
+label values smartphone_owned yn
+label variable n_can_transact_online "Household members who can pay by phone unaided"
+label variable n_hh_same_business "Household members working in the same business or establishment"
 label variable came_here_reason "Main reason for first coming here to work"
 label values came_here_reason comereason
+label variable came_here_reason_other "Main reason for coming, written in (not on the list)"
 label variable worked_away_in_closure "Worked away from both bases during the last closure"
 label values worked_away_in_closure yn
 label variable closure_work_detail "Where, and what work, during the closure (verbatim, optional)"
-label variable left_here_month "Month the respondent last left the Yatra route"
-label values left_here_month month
-label variable returned_here_month "Month the respondent came back to the Yatra route"
-label values returned_here_month month
 label variable would_move_for_work "Would go away for work in the coming year if this ended"
 label values would_move_for_work yndk
 label variable migration_referral "Who arranged or helped get this work"
@@ -207,7 +196,6 @@ label variable cons_pan_tobacco_yatra_pm "Pan, tobacco and intoxicants, Yatra-se
 label variable cons_pan_tobacco_offseason_pm "Pan, tobacco and intoxicants, off-season month (Rs)"
 label variable cons_clothing_12m "Clothing and footwear spending, last 12 months (Rs)"
 label variable cons_education_12m "Education spending, last 12 months (Rs)"
-label variable cons_medical_hosp_12m "Medical spending, hospital stays, last 12 months (Rs)"
 label variable cons_durables_12m "Durable goods spending, last 12 months (Rs)"
 label variable floor_material "Main floor material at usual home"
 label values floor_material floor
@@ -228,36 +216,12 @@ label values water_on_premises yn
 label variable water_fetch_minutes "Minutes for a round trip to fetch water"
 label variable cooking_fuel "Main cooking fuel at usual home"
 label values cooking_fuel fuel
-label variable owns_tv "Owns a television"
-label values owns_tv yn
-label variable owns_radio "Owns a radio"
-label values owns_radio yn
-label variable owns_bicycle "Owns a bicycle"
-label values owns_bicycle yn
-label variable owns_motorcycle "Owns a motorcycle or scooter"
-label values owns_motorcycle yn
-label variable owns_car "Owns a car, jeep or truck"
-label values owns_car yn
-label variable owns_phone "Household owns any telephone (mobile or landline)"
-label values owns_phone yn
-label variable owns_computer "Owns a computer or laptop"
-label values owns_computer yn
-label variable owns_animal_cart "Owns an animal cart"
-label values owns_animal_cart yn
-label variable owns_fridge "Owns a refrigerator"
-label values owns_fridge yn
 label variable land_unit "Unit the household measures its land in"
 label values land_unit landunit
 label variable land_cultivable_acres "Cultivable land owned or cultivated (in the unit given)"
-label variable owns_cow_buffalo "Owns any cows or buffaloes"
-label values owns_cow_buffalo yn
-label variable owns_goat_sheep "Owns any goats or sheep"
-label values owns_goat_sheep yn
-label variable owns_pony_mule "Owns any ponies or mules"
-label values owns_pony_mule yn
-label variable owns_shop_stall "Owns a shop or stall used for work"
-label values owns_shop_stall yn
-label variable owns_work_vehicle "Owns a vehicle used for work"
+label variable assets_owned "Durable assets the household owns (check all)"
+label variable livestock_owned "Livestock the household owns (check all)"
+label variable owns_work_vehicle "Uses a vehicle to earn money"
 label values owns_work_vehicle yn
 label variable owns_work_equipment "Owns equipment or tools used for work"
 label values owns_work_equipment yn
@@ -275,24 +239,12 @@ label variable loan_amount "Total amount still owed (Rs)"
 label variable pays_interest "Pays interest on the loan"
 label values pays_interest yn
 label variable loan_interest_per100_pm "Interest per Rs 100 borrowed, per month"
-label variable loan_against_asset "Loan is secured against an asset"
-label values loan_against_asset yn
-label variable loan_collateral "What was pledged as security"
+label variable loan_collateral "What was pledged as security, if anything"
 label values loan_collateral collat
-label variable n_health_insured "Household members covered by health insurance or a scheme"
-label variable n_life_insured "Household members with life insurance"
-label variable has_crop_insurance "Household has crop insurance"
-label values has_crop_insurance yn
+label variable insurance_held "Types of insurance or scheme cover the household holds"
 label variable govt_any_benefit "Household received from any government scheme, last 12 months"
 label values govt_any_benefit yn
 label variable govt_schemes_detail "Which schemes, in the respondent's words (coded in the office)"
-label variable ration_portable_here "Can draw the ration entitlement at the worksite"
-label values ration_portable_here portable
-label variable smartphone_owned "Owns a smartphone"
-label values smartphone_owned yn
-label variable uses_digital_payment "Uses UPI or another digital payment"
-label values uses_digital_payment yn
-label variable n_can_transact_online "Household members who can pay by phone unaided"
 label variable morbidity_15d "Anyone ill in the last 15 days"
 label values morbidity_15d yn
 label variable morbidity_coping_15d "How the household coped with the cost of this illness"
@@ -302,6 +254,7 @@ label variable func_limitation "Difficulty walking or climbing steps (Washington
 label values func_limitation wgdiff
 label variable hospitalization_365d "Anyone admitted to hospital in the last 12 months"
 label values hospitalization_365d yn
+label variable cons_medical_hosp_12m "Medical spending, hospital stays, last 12 months (Rs)"
 label variable health_access_barrier_3m "Unable to get needed medical care, last 3 months"
 label values health_access_barrier_3m yn
 label variable child_death_5y "A child or adolescent under 18 died in the household, last 5 years"
@@ -318,46 +271,67 @@ label variable shock_money_spent "Money the household had to spend because of th
 label variable shock_month "Month the worst shock happened"
 label values shock_month month
 label variable shock_coping "How the household coped (check all that apply)"
-label variable cope_less_pref_food_yatra_wk "Days relied on less expensive/preferred food, usual week in Yatra season"
-label variable cope_less_pref_food_offseason_wk "Days relied on less expensive/preferred food, usual week off-season"
-label variable cope_borrow_food_yatra_wk "Days borrowed food/relied on help from others, usual week in Yatra season"
-label variable cope_borrow_food_offseason_wk "Days borrowed food/relied on help from others, usual week off-season"
-label variable cope_reduce_meals_yatra_wk "Days reduced number of meals eaten per day, usual week in Yatra season"
-label variable cope_reduce_meals_offseason_wk "Days reduced number of meals eaten per day, usual week off-season"
-label variable cope_reduce_portion_yatra_wk "Days reduced portion size of meals, usual week in Yatra season"
-label variable cope_reduce_portion_offseason_wk "Days reduced portion size of meals, usual week off-season"
-label variable cope_restrict_adult_yatra_wk "Days restricted adult consumption for children, usual week in Yatra season"
-label variable cope_restrict_adult_offseason_wk "Days restricted adult consumption for children, usual week off-season"
-label variable ropeway_stance "View on the proposed Kedarnath ropeway"
+label variable fies_items "Which FIES behavioural items happened, last 12 months (check-all)"
+label variable ropeway_stance "View on the proposed ropeway for this route"
 label values ropeway_stance stance
+label variable ropeway_expect_work "Expected effect of the ropeway on your own work"
+label values ropeway_expect_work ropexp
+label variable ropeway_expect_jobs "Who will get the ropeway jobs"
+label values ropeway_expect_jobs ropjobs
+label variable ropeway_trust "Do you think the ropeway will improve local livelihoods"
+label values ropeway_trust yndk
 label variable trek_dependent "Main work is carrying or guiding on the trek"
 label values trek_dependent yn
-label variable job_situation "Work situation during the last month"
-label values job_situation jobsit
-label variable job_permanence "Type of job: permanent, seasonal, casual, probationary or fixed-term"
-label values job_permanence jobperm
 label variable contract_status "Has a signed contract"
 label values contract_status contract
 label variable workplace_registered "Workplace or business is registered"
 label values workplace_registered yn
-label variable pension_contrib "Contributes to a pension system"
-label values pension_contrib pension
+label variable pension_any "Contributes to any pension system"
+label values pension_any yn
 label variable work_health_ins "Has health insurance through work"
 label values work_health_ins workins
 label variable leave_rights "Has right to paid leave (holiday, sick or maternity)"
 label values leave_rights yndk
 label variable injured_ever "Ever physically injured at work"
 label values injured_ever yndk
-label variable workplace_injury_12m "Anyone injured or killed at your workplace, last 12 months"
+label variable workplace_injury_12m "Anyone injured at your workplace, last 12 months"
 label values workplace_injury_12m yndk
+label variable workplace_death_12m "Anyone killed at your workplace, last 12 months"
+label values workplace_death_12m yndk
 label variable wants_more_work "Would like to work more"
 label values wants_more_work yndk
 label variable more_hours_day "Additional hours per DAY wanted"
 label variable months_looked_for_work "Months spent looking for work"
-label variable first_job_ever "Current/most recent work was the respondent's first job ever"
-label values first_job_ever yndk
+label variable higher_ed "Completed a college, diploma or university course"
+label values higher_ed yndk
+label variable social_security_any "Enrolled in any social-security scheme"
+label values social_security_any yndk
+label variable intens_speed "Works at very high speed for over half the day"
+label values intens_speed yndk
+label variable intens_deadline "Works to tight deadlines for over half the day"
+label values intens_deadline yndk
+label variable intens_time "Not enough time to finish tasks for over half the day"
+label values intens_time yndk
+label variable posture_position "Tiring or painful position for over half the day"
+label values posture_position yndk
+label variable posture_loads "Carries or moves heavy loads for over half the day"
+label values posture_loads yndk
+label variable posture_repetitive "Repetitive movements for over half the day"
+label values posture_repetitive yndk
+label variable phys_noise "Exposed to loud noise for over half the day"
+label values phys_noise yndk
+label variable phys_temperature "Exposed to extreme heat or cold for over half the day"
+label values phys_temperature yndk
+label variable tk_carry "Carry loads or luggage on foot (task grid)"
+label values tk_carry task3
+label variable tk_passenger "Carry a passenger (palki, dandi or kandi) (task grid)"
+label values tk_passenger task3
 label variable tk_load "Load, unload, stack or count goods (task grid)"
 label values tk_load task3
+label variable tk_lead_animals "Lead, load or control pack animals such as ponies or mules (task grid)"
+label values tk_lead_animals task3
+label variable tk_animal_care "Feed, groom or care for animals (task grid)"
+label values tk_animal_care task3
 label variable tk_drive "Drive a motor vehicle (task grid)"
 label values tk_drive task3
 label variable tk_engine "Operate an engine or machine (task grid)"
@@ -390,6 +364,24 @@ label variable read_at_work "Reads anything at work"
 label values read_at_work yn
 label variable calc_at_work "Works out prices or costs at work"
 label values calc_at_work yn
+label variable cpr_permitted "Collection from the forest or common land is allowed here"
+label values cpr_permitted permdk
+label variable cpr_firewood "Collected firewood or dead wood from common land or forest"
+label values cpr_firewood cpruse
+label variable cpr_fodder "Collected grass or fodder from common land"
+label values cpr_fodder cpruse
+label variable cpr_forest_produce "Collected herbs, mushrooms or wild fruit from the forest"
+label values cpr_forest_produce cpruse
+label variable cpr_grazing "Animals grazed on common pasture"
+label values cpr_grazing cpruse
+label variable cpr_restricted "Stopped, or asked to pay, for using a common resource"
+label values cpr_restricted yndk
+label variable cpr_lost_access "Lost a common place used before, because of building or road work"
+label values cpr_lost_access yndk
+label variable cpr_water_route "Common water source on the route or near the worksite"
+label values cpr_water_route cprwater
+label variable cpr_governance "Who decides who may use the common land here"
+label values cpr_governance cprgov
 label variable education_years "Years of schooling completed"
 label variable hoh_female "Sex of the household head"
 label values hoh_female sex
@@ -411,17 +403,12 @@ label variable health_access_tier "Health-access tier of the site"
 label values health_access_tier tier
 label variable health_access_deprived "Health-access deprived (project measure, NOT an MPI indicator)"
 label values health_access_deprived yn
-label variable yatra_months "Months of Yatra work in the past year"
-label variable yatra_start_month "First month of Yatra work"
-label values yatra_start_month month
-label variable yatra_end_month "Last month of Yatra work"
-label values yatra_end_month month
+label variable yatra_months "Months of Yatra EARNINGS in the past year"
+label variable yatra_months_liv "Months of Yatra LIVELIHOOD (work plus preparation)"
 label variable offseason_months_worked "Months of paid work outside the Yatra work"
 label variable months_no_work "Months in the year without any paid work"
 label variable offseason_primary "Main activity outside the Yatra season"
 label values offseason_primary activity
-label variable income_from_fallback "Earnings came from the annual-total fallback, not the monthly calendar"
-label values income_from_fallback yn
 label variable yatra_income "Annual work income from Yatra months (Rs)"
 label variable non_yatra_income "Annual work income from other months (Rs)"
 label variable income_pm_yatra_eq "Earnings per Yatra-season month, fallback path (Rs)"
@@ -467,8 +454,6 @@ label values cooking_fuel_deprived yn
 label variable mpi_asset_count "Number of the eight NITI small assets owned (0-8)"
 label variable mpi_asset_deprived "MPI: deprived on assets"
 label values mpi_asset_deprived yn
-label variable child_school_dep "MPI: school-age child not attending"
-label values child_school_dep yn
 label variable shock_1 "Shock: Serious illness or death of an earning member"
 label values shock_1 yn
 label variable shock_2 "Shock: Crop failure or livestock loss"
@@ -531,13 +516,51 @@ label values mpi_bank_dep yn
 label variable mpi_score "MPI deprivation score (11 of NITI's 12 indicators, reweighted)"
 label variable mpi_poor "MPI-poor (deprivation score at or above 1/3)"
 label values mpi_poor yn
-label variable rcsi_yatra_wk "rCSI, Yatra-season usual week"
-label variable rcsi_offseason_wk "rCSI, off-season usual week"
-label variable rcsi_score "Reduced Coping Strategy Index (rCSI), annual average"
-label variable food_coping_deprived "Food-coping deprived (rCSI above 20)"
-label values food_coping_deprived yn
 label variable shock_earnings_lost "Earnings lost to the worst shock, at measured wages (Rs)"
 label variable shock_loss_total "Total cost of the worst shock: earnings lost plus money spent (Rs)"
+label variable health_insured_any "Household has any health insurance or scheme"
+label values health_insured_any yn
+label variable life_insured_any "Household has any life insurance"
+label values life_insured_any yn
+label variable has_crop_insurance "Household has crop insurance"
+label values has_crop_insurance yn
+label variable fies_skipped_meal "FIES: had to skip a meal, last 12 months"
+label values fies_skipped_meal yn
+label variable fies_ate_less "FIES: ate less than you thought you should, last 12 months"
+label values fies_ate_less yn
+label variable fies_ran_out "FIES: the household ran out of food, last 12 months"
+label values fies_ran_out yn
+label variable fies_hungry "FIES: was hungry but did not eat, last 12 months"
+label values fies_hungry yn
+label variable fies_whole_day "FIES: went a whole day without eating, last 12 months"
+label values fies_whole_day yn
+label variable owns_tv "Owns a television"
+label values owns_tv yn
+label variable owns_radio "Owns a radio"
+label values owns_radio yn
+label variable owns_bicycle "Owns a bicycle"
+label values owns_bicycle yn
+label variable owns_motorcycle "Owns a motorcycle or scooter"
+label values owns_motorcycle yn
+label variable owns_car "Owns a car, jeep or truck"
+label values owns_car yn
+label variable owns_phone "Household owns any telephone (mobile or landline)"
+label values owns_phone yn
+label variable owns_computer "Owns a computer or laptop"
+label values owns_computer yn
+label variable owns_animal_cart "Owns an animal cart"
+label values owns_animal_cart yn
+label variable owns_fridge "Owns a refrigerator"
+label values owns_fridge yn
+label variable owns_cow_buffalo "Owns any cows or buffaloes"
+label values owns_cow_buffalo yn
+label variable owns_goat_sheep "Owns any goats or sheep"
+label values owns_goat_sheep yn
+label variable owns_pony_mule "Owns any ponies or mules"
+label values owns_pony_mule yn
+label variable fies_raw "FIES raw score, 0 to 5 behavioural items"
+label variable fies_mod_sev "Food insecure, moderate or severe (FIES 2 or more)"
+label values fies_mod_sev yn
 label variable mpi_nutrition_proxy_dep "MPI nutrition SUBSTITUTE: food-coping deprived (not anthropometry)"
 label values mpi_nutrition_proxy_dep yn
 label variable mpi_score_lyons "MPI deprivation score, 12 of 12 with the Lyons food-coping substitute"
@@ -547,20 +570,27 @@ label variable hours_week_yatra "Hours worked per week in the Yatra season"
 label variable hours_week_offseason "Hours worked per week outside the Yatra season"
 label variable hours_week_annual "Average weekly hours across the months actually worked"
 label variable work_income_pm "Average monthly work income over the year (Rs)"
-label variable emp_dep_access "Employment deprivation: access"
-label values emp_dep_access yn
-label variable emp_dep_comp "Employment deprivation: compensation"
-label values emp_dep_comp yn
-label variable emp_dep_sec "Employment deprivation: security"
-label values emp_dep_sec yn
-label variable emp_dep_stab "Employment deprivation: stability"
-label values emp_dep_stab yn
-label variable emp_dep_cond "Employment deprivation: working conditions"
-label values emp_dep_cond yn
-label variable emp_dep_count "Employment deprivations (count of 5)"
-label variable emp_dep_score "Employment deprivation score (equal weights, 0-1)"
-label variable emp_poor_k2 "Employment-poor: deprived in 2 or more of 5"
-label values emp_poor_k2 yn
+label variable emp_inc_dep "Employment deprivation: low earnings"
+label values emp_inc_dep yn
+label variable emp_stab_dep "Employment deprivation: tenure"
+label values emp_stab_dep yn
+label variable emp_unemp_dep "Employment deprivation: unemployment risk"
+label values emp_unemp_dep yn
+label variable emp_sec_dep "Employment deprivation: social security"
+label values emp_sec_dep yn
+label variable emp_occ_dep "Employment deprivation: occupational status"
+label values emp_occ_dep yn
+label variable emp_hours_dep "Employment deprivation: excessive hours"
+label values emp_hours_dep yn
+label variable emp_intens_dep "Employment deprivation: work intensity"
+label values emp_intens_dep yn
+label variable emp_posture_dep "Employment deprivation: posture-related risk"
+label values emp_posture_dep yn
+label variable emp_phys_dep "Employment deprivation: physical risk"
+label values emp_phys_dep yn
+label variable emp_score "Employment vulnerability score (modified index, 0-1)"
+label variable emp_poor "Employment-poor: modified score at or above 1/3"
+label values emp_poor yn
 label variable tk_regular_n "Number of the 12 tasks done regularly"
 label variable tk_prior_n "Number of the 12 tasks done before elsewhere"
 label variable other_act_1 "Other activity: Pony/mule worker (works the animals, does not own them)"
@@ -591,9 +621,6 @@ label variable other_act_13 "Other activity: Wage labourer (construction, loadin
 label values other_act_13 yn
 label variable other_act_14 "Other activity: Other"
 label values other_act_14 yn
-label variable n_other_act_checked "Number of other activities actually ticked"
-label variable other_act_mismatch "Ticked count differs from the stated count"
-label values other_act_mismatch yn
 label variable best_alt_occupation "Closest alternative occupation in task space"
 label values best_alt_occupation occ
 label variable task_cover_best "Share of the closest alternative's tasks the worker already does"
@@ -613,17 +640,17 @@ notes resp_id: Module P - Cover page, consent and paradata; origin: paradata
 notes resp_id: Meaning: Unique respondent number.
 notes resp_id: Source: Design
 notes enum_id: Module P - Cover page, consent and paradata; origin: paradata
-notes enum_id: Meaning: Which of the four enumerators did the interview. Asked as the FIRST question on the form, ahead of consent, so it is recorded even when consent is refused -- a refusal is data, and which enumerator collected it is part of that
+notes enum_id: Meaning: Which of the four enumerators did the interview. Asked as the FIRST question on the form, ahead of consent, so it is recorded even when consent is refused — a refusal is data, and which enumerator collected it is part of that
 notes enum_id: Meaning (cont.): data. Kept alongside Kobo's own '_submitted_by' rather than replaced by it: '_submitted_by' only separates the four if every enumerator has their own login and always uses it, while this item also works under a shared login. Where
-notes enum_id: Meaning (cont.): they disagree (wrong name tapped, or a device signed in as someone else) that is a data-quality flag neither could raise alone -- check it on the real export.
+notes enum_id: Meaning (cont.): they disagree (wrong name tapped, or a device signed in as someone else) that is a data-quality flag neither could raise alone — check it on the real export.
 notes enum_id: Source: Design
 notes site: Module P - Cover page, consent and paradata; origin: paradata
 notes site: Meaning: Set by the enumerator before approaching anyone, alongside enum_id and ahead of consent, so it is recorded even when consent is refused. The study covers two routes now; GPS fixes the position within a route, so this one question
-notes site: Meaning (cont.): is all that is needed to separate them. Enters the analysis as a stratifier and a fixed effect -- the two routes differ in season length, altitude, employer mix, and in whether the ropeway proposal applies at all.
+notes site: Meaning (cont.): is all that is needed to separate them. Enters the analysis as a stratifier and a fixed effect — the two routes differ in season length, altitude, employer mix, and in whether the ropeway proposal applies at all.
 notes site: Source: Project design (two-route stratification)
 notes form_build: Module P - Cover page, consent and paradata; origin: paradata
 notes form_build: Meaning: Which build of the form collected this interview: the date plus a short hash of the question set. A service worker can serve a stale copy of the page indefinitely, and a stale build is indistinguishable from the current one once
-notes form_build: Meaning (cont.): it is on a tablet -- three issues in one field review had already been fixed and the reviewer had no way to know. Stamped into every exported row so a report can be matched to a build.
+notes form_build: Meaning (cont.): it is on a tablet — three issues in one field review had already been fixed and the reviewer had no way to know. Stamped into every exported row so a report can be matched to a build.
 notes form_build: Source: Project design (build provenance)
 notes interview_date: Module P - Cover page, consent and paradata; origin: paradata
 notes interview_date: Meaning: Date of interview.
@@ -637,8 +664,22 @@ notes gps_lon: Source: Design
 notes consent: Module P - Cover page, consent and paradata; origin: paradata
 notes consent: Meaning: Consent given after the script was read.
 notes consent: Source: Design
+notes obs_environment: Module P - Cover page, consent and paradata; origin: paradata
+notes obs_environment: Meaning: Recorded by the enumerator when consent is refused, with the timestamp, the enumerator and the route. Only the conditions at the time are recorded (crowding, weather). No personal characteristics and no location of the person are
+notes obs_environment: Meaning (cont.): recorded for a refusal.
+notes obs_environment: Skip rule: Ask only if consent = 0
+notes obs_environment: Source: Design: refusal record, limited to environmental conditions
+notes gps_accuracy_m: Module P - Cover page, consent and paradata; origin: paradata
+notes gps_accuracy_m: Meaning: The accuracy the device reports for the fix that was kept. The form keeps refining the fix for up to 90 seconds and stops at 15 metres. A fix of 50 metres or worse is flagged in the export so it can be checked.
+notes gps_accuracy_m: Source: Design
+notes gps_fix_s: Module P - Cover page, consent and paradata; origin: paradata
+notes gps_fix_s: Meaning: How long the device took to produce the fix that was kept. A long fix is a sign of a weak signal.
+notes gps_fix_s: Source: Design
+notes gps_error: Module P - Cover page, consent and paradata; origin: paradata
+notes gps_error: Meaning: 1 = the browser was not allowed to use location; 2 = no fix was obtained. Blank when a fix was obtained.
+notes gps_error: Source: Design
 notes interview_duration_min: Module P - Cover page, consent and paradata; origin: paradata
-notes interview_duration_min: Meaning: Total interview time; the target is 45 minutes or less.
+notes interview_duration_min: Meaning: Total interview time, from the tablet's own start and end timestamps. Recorded for analysis; no time limit is set.
 notes interview_duration_min: Source: Design
 notes dur_tasks_min: Module P - Cover page, consent and paradata; origin: paradata
 notes dur_tasks_min: Meaning: Time for the short task and papers block; tracks the burden of the transferability add-on.
@@ -653,9 +694,9 @@ notes female: Question: Record sex; ask if unsure: are you male or female?
 notes female: Source: Standard household-survey item
 notes hoh_relation: Module A - Respondent and household; origin: asked
 notes hoh_relation: Meaning: Who the head of household is, relative to the respondent. The categories are GENDERED (husband/wife, son/daughter, father/mother, brother/sister), so the head's sex falls out of this answer and no separate male/female question is
-notes hoh_relation: Meaning (cont.): asked -- one question instead of two, and it matches how people actually answer: nobody says 'my parent', they say 'my father'. Hindi kinship terms are gendered too, so the Hindi wording needs no adjustment. Asked openly and coded
+notes hoh_relation: Meaning (cont.): asked — one question instead of two, and it matches how people actually answer: nobody says 'my parent', they say 'my father'. Hindi kinship terms are gendered too, so the Hindi wording needs no adjustment. Asked openly and coded
 notes hoh_relation: Meaning (cont.): from the answer, not read off a list.
-notes hoh_relation: Question: Who is the head of your household -- is it you, or someone else? If someone else, how are they related to you?
+notes hoh_relation: Question: Who is the head of your household — is it you, or someone else? If someone else, how are they related to you?
 notes hoh_relation: Source: Standard household-survey item
 notes native_language: Module A - Respondent and household; origin: asked
 notes native_language: Meaning: Mother tongue, used in place of a caste/social-group question: caste is sensitive to ask directly and does not classify non-Indian migrants (Nepali workers) in any comparable way. Language instead captures regional origin, which
@@ -663,11 +704,28 @@ notes native_language: Meaning (cont.): correlates with the class variation cast
 notes native_language: Question: What is your native language, the language you first learned at home?
 notes native_language: Source: Project design (language proxy for regional/socioeconomic origin; avoids a sensitive caste question and covers out-of-country migrants)
 notes native_language_other: Module A - Respondent and household; origin: asked
-notes native_language_other: Meaning: Free-text catch-all for the two 'other' codes. IMPORTANT ITEM: this is the only proxy the instrument has for regional and social origin -- it replaced the caste question -- so an answer left as bare 'other' loses that information
+notes native_language_other: Meaning: Free-text catch-all for the two 'other' codes. IMPORTANT ITEM: this is the only proxy the instrument has for regional and social origin — it replaced the caste question — so an answer left as bare 'other' loses that information
 notes native_language_other: Meaning (cont.): for that respondent. The list is long but India is longer; enumerators must type the actual language rather than settle for the catch-all code.
 notes native_language_other: Question: Which language is it? Write down exactly what they say.
 notes native_language_other: Skip rule: Ask only if native_language is 96 (other Indian language) or 97 (other / foreign language)
 notes native_language_other: Source: Project design (the language item stands in for caste; an uncoded 'other' is a real loss)
+notes origin: Module A - Respondent and household; origin: asked
+notes origin: Meaning: Origin of the respondent, as four buckets. Note what it does NOT measure: the pilot found 11 of 20 seasonal movers inside this same district, so this is a distance variable, not a mobility one. closure_base and the Module C
+notes origin: Meaning (cont.): location row carry mobility.
+notes origin: Question: Where is your permanent home?
+notes origin: Source: Project design (distance bucket); NOT an NSS classification — the earlier citation to one was withdrawn 2026-09-28, no NSS schedule is held by this project
+notes home_state: Module A - Respondent and household; origin: asked
+notes home_state: Meaning: State/UT of the permanent home, asked of EVERYONE as of 2026-10-05 and placed next to the native-language question. It was gated on origin = 3 and filled in Stata for the other three codes, on the reasoning that local, other-
+notes home_state: Meaning (cont.): Uttarakhand and Nepal each entail their own answer. They do, but the gate also made home_state missing for 178 of 200 rows while it sat in a covariate vector, and the enumerator was being asked to infer a state from a language,
+notes home_state: Meaning (cont.): which Hindi and Garhwali do not settle. Asked directly it is one tap and it is measured. The state is the level at which India sets its rural and urban poverty lines, which is why it is here at all.
+notes home_state: Question: Which state or union territory is your permanent home in?
+notes home_state: Source: Standard state/UT classification; needed to apply the right poverty line per respondent
+notes home_rural_urban: Module A - Respondent and household; origin: asked
+notes home_rural_urban: Meaning: Rural/urban status of the permanent home, asked directly as the binary the poverty line actually needs. Replaces home_admin_level, a three-way village/town/city item that asked the respondent to perform a Census classification
+notes home_rural_urban: Meaning (cont.): they have no way of making, and then selected a Rs 2,515 or Rs 3,639 line off the answer. Also stops being a constructed variable: it was derived from home_admin_level, which meant a 45% swing in the threshold rested on a
+notes home_rural_urban: Meaning (cont.): derivation from a subjective tier.
+notes home_rural_urban: Question: Is that home in a village, or in a town or city?
+notes home_rural_urban: Source: Rural and urban poverty lines (Sethu et al. 2024)
 notes marital_status: Module A - Respondent and household; origin: asked
 notes marital_status: Meaning: Marital status of the respondent.
 notes marital_status: Question: Are you currently married, never married, or widowed/divorced/separated?
@@ -686,31 +744,23 @@ notes education_level_cat: Meaning: Fallback bracket, asked only when the respon
 notes education_level_cat: Question: Which is closest: no formal education; some schooling but did not finish primary; finished primary but not secondary; or finished secondary or higher?
 notes education_level_cat: Skip rule: Ask only if knows_years_schooling = 0
 notes education_level_cat: Source: NITI Aayog National MPI (years of schooling); Chaudhuri et al. 2002 covariate
+notes training_received: Module A - Respondent and household; origin: asked
+notes training_received: Meaning: Vocational or on-the-job training, explicitly EXCLUDING school AND college. The old wording said only 'not counting school', which left it ambiguous whether a degree counted — some respondents would have reported a BA here. Formal
+notes training_received: Meaning (cont.): education is already measured in years by years_schooling (a graduate reports about 15), so counting it again here would double-count it.
+notes training_received: Question: Apart from school and college, have you ever completed any training course or apprenticeship?
+notes training_received: Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate
 notes hhsize: Module A - Respondent and household; origin: asked
 notes hhsize: Meaning: Household size in the usual place of living. Aggregate count; no household roster.
 notes hhsize: Question: How many members live in your household, including you?
 notes hhsize: Source: Chaudhuri et al. 2002; used to get per-capita consumption
 notes any_member_6yr_schooling: Module A - Respondent and household; origin: asked
-notes any_member_6yr_schooling: Meaning: NITI's Years of Schooling indicator is defined on the HOUSEHOLD -- 'not even one member aged 10 years or older has completed six years of schooling' -- not on the respondent. Using the respondent's own education_years in its
-notes any_member_6yr_schooling: Meaning (cont.): place, as this instrument previously did, measures a different thing and is not comparable to any published National MPI figure. NOT ASKED where the respondent's own schooling already settles it: the respondent is himself a member
-notes any_member_6yr_schooling: Meaning (cont.): aged 10 or over, so six years or more of his own is a Yes by entailment and Stata fills it. The bracket route can only settle it at 'completed secondary or higher' -- 'completed primary but not secondary' spans 5 to 9 years and
+notes any_member_6yr_schooling: Meaning: NITI's Years of Schooling indicator is defined on the HOUSEHOLD — 'not even one member aged 10 years or older has completed six years of schooling' — not on the respondent. Using the respondent's own education_years in its place,
+notes any_member_6yr_schooling: Meaning (cont.): as this instrument previously did, measures a different thing and is not comparable to any published National MPI figure. NOT ASKED where the respondent's own schooling already settles it: the respondent is himself a member aged
+notes any_member_6yr_schooling: Meaning (cont.): 10 or over, so six years or more of his own is a Yes by entailment and Stata fills it. The bracket route can only settle it at 'completed secondary or higher' — 'completed primary but not secondary' spans 5 to 9 years and
 notes any_member_6yr_schooling: Meaning (cont.): straddles the threshold, so it does not, and the question is asked.
 notes any_member_6yr_schooling: Question: Counting everyone in your household aged 10 or above, has at least one of them finished six years of schooling or more?
 notes any_member_6yr_schooling: Skip rule: Ask only if the respondent's own schooling does not already settle it: years_schooling < 6, or the bracket is not 'completed secondary or higher'
 notes any_member_6yr_schooling: Source: NITI Aayog National MPI, Years of Schooling (weight 1/6)
-notes family_structure: Module A - Respondent and household; origin: asked
-notes family_structure: Meaning: Household composition type.
-notes family_structure: Question: Is your family nuclear -- just you, your spouse and unmarried children -- or joint, living with parents, married siblings or other extended family? (Say single-member if you live alone.)
-notes family_structure: Source: Standard household-survey item
-notes n_earners: Module A - Respondent and household; origin: asked
-notes n_earners: Meaning: Earners in the household, including the respondent.
-notes n_earners: Question: How many of them, including you, earn money?
-notes n_earners: Source: Dependency measure used in VEP studies (Azeem et al. 2016)
-notes main_income_earner: Module A - Respondent and household; origin: asked
-notes main_income_earner: Meaning: Whether the respondent is the household's main earner.
-notes main_income_earner: Question: Among those who earn money, are you the main income earner in your household?
-notes main_income_earner: Skip rule: Ask only if n_earners > 1 (if the respondent is the only earner, this is automatic)
-notes main_income_earner: Source: Apablaza et al. 2026, Appendix 2 Q4 (adapted to a single-respondent report: 'who is the main contributor' becomes 'are you the main contributor')
 notes n_children_u6: Module A - Respondent and household; origin: asked
 notes n_children_u6: Meaning: Count of children under 6. With n_children_6_14 this partitions the under-15s into two disjoint bands, so neither question asks the respondent to subtract one from the other. Also the age band NITI's Nutrition indicator covers
 notes n_children_u6: Meaning (cont.): (0-59 months), which is why the band is drawn at 6 rather than 5.
@@ -720,13 +770,24 @@ notes n_children_6_14: Module A - Respondent and household; origin: asked
 notes n_children_6_14: Meaning: Count of school-age children. Disjoint from n_children_u6 above, so the two add to the under-15 count rather than overlapping it.
 notes n_children_6_14: Question: And how many are aged 6 to 14?
 notes n_children_6_14: Source: NITI Aayog National MPI school-attendance indicator
-notes n_children_out_school: Module A - Respondent and household; origin: asked
-notes n_children_out_school: Meaning: Count of school-age children not attending.
-notes n_children_out_school: Question: How many of these children do not go to school now?
-notes n_children_out_school: Skip rule: Ask only if n_children_6_14 > 0
-notes n_children_out_school: Source: NITI Aayog National MPI school-attendance indicator
+notes n_children_in_school: Module A - Respondent and household; origin: asked
+notes n_children_in_school: Meaning: Count of school-age children who DO attend. Asked as the positive, replacing n_children_out_school (retired 2026-10-05) which asked how many do NOT: a negative count is the harder of the two to answer and the easier to mis-hear,
+notes n_children_in_school: Meaning (cont.): and a respondent who says 'all of them go' has to be talked into reporting a zero. mpi_attendance_dep is built from the complement, n_children_6_14 - n_children_in_school, so the NITI indicator is unchanged. The name is new
+notes n_children_in_school: Meaning (cont.): BECAUSE the quantity is inverted -- the 2026-10-05 field rows hold the old variable and must not be read as this one.
+notes n_children_in_school: Question: How many of these children go to school now?
+notes n_children_in_school: Skip rule: Ask only if n_children_6_14 > 0
+notes n_children_in_school: Source: NITI Aayog National MPI school-attendance indicator
+notes n_earners: Module A - Respondent and household; origin: asked
+notes n_earners: Meaning: Earners in the household, including the respondent.
+notes n_earners: Question: How many of them, including you, earn money?
+notes n_earners: Source: Dependency measure used in VEP studies (Azeem et al. 2016)
+notes main_income_earner: Module A - Respondent and household; origin: asked
+notes main_income_earner: Meaning: Whether the respondent is the household's main earner.
+notes main_income_earner: Question: Among those who earn money, are you the main income earner in your household?
+notes main_income_earner: Skip rule: Ask only if n_earners > 1 (if the respondent is the only earner, this is automatic)
+notes main_income_earner: Source: Apablaza et al. 2026, Appendix 2 Q4 (adapted to a single-respondent report: 'who is the main contributor' becomes 'are you the main contributor')
 notes occupation: Module B - Work and work history; origin: asked
-notes occupation: Meaning: Quota variable: 14 occupation groups, rebuilt against NCO-2015 (see the occ list). Deliberately a COARSE grouping -- it exists to manage sampling quotas and to be stable across the fieldwork, not to describe the job. The precise
+notes occupation: Meaning: Quota variable: 14 occupation groups, rebuilt against NCO-2015 (see the occ list). Deliberately a COARSE grouping — it exists to manage sampling quotas and to be stable across the fieldwork, not to describe the job. The precise
 notes occupation: Meaning (cont.): occupation is captured verbatim in occupation_detail below and coded to NCO afterwards, so nothing is lost by this list being broad.
 notes occupation: Question: What is your main work during the Yatra season? Ask what they do and code the closest group; do not read the list aloud unless needed.
 notes occupation: Source: Project quota design, mapped to NCO-2015 families
@@ -734,34 +795,59 @@ notes occupation_detail: Module B - Work and work history; origin: asked
 notes occupation_detail: Meaning: Verbatim description of the primary livelihood, office-coded to NCO-2015. IMPORTANT ITEM: the 14 groups above are deliberately coarse, so this is the ONLY place the real occupation is recorded, and it is what the task-distance and
 notes occupation_detail: Meaning (cont.): structural-displacement analysis is coded from. 'Shop owner' could be a man selling prasad from a plank or a family running a three-storey general store; only this field tells them apart. Same treatment as prev_occ and target_occ,
 notes occupation_detail: Meaning (cont.): so all three code into one classification.
-notes occupation_detail: Question: In your own words, what exactly is your main work here? Write down what they say -- what they actually do, and who for. Do not tick a box for this one.
+notes occupation_detail: Question: In your own words, what exactly is your main work here? Write down what they say — what they actually do, and who for. Do not tick a box for this one.
 notes occupation_detail: Source: Project design (coarse quota group + verbatim detail, coded to NCO-2015 in the office)
 notes employment_type: Module B - Work and work history; origin: asked
 notes employment_type: Meaning: PLFS-style status: own-account, employer, regular wage, casual wage.
 notes employment_type: Question: In this main work, are you: working on your own account without hired workers; running a business with hired workers; a regular monthly wage-earner; or a daily/casual wage-earner?
 notes employment_type: Source: PLFS / NSS employment status classification [source not held by this project; citation unverified as of 2026-09-28]
-notes n_other_activities: Module B - Work and work history; origin: asked
-notes n_other_activities: Meaning: Count of additional income-generating activities. Multiple work-holding, asked as a count first and then as a check-all list. The previous version allowed ONE other activity, which undercounts by construction: a shop owner who
-notes n_other_activities: Meaning (cont.): also rents out a pony and drives in the off-season has three, and only one was recorded. The count is asked before the list so it can be checked against the number of boxes ticked -- a mismatch is a data-quality flag, not a silent
-notes n_other_activities: Meaning (cont.): loss.
-notes n_other_activities: Question: Besides your main work, how many OTHER paid activities or income-generating activities do you have? (0 if none. For example, a shop owner who also rents out a pony and drives in the off-season would say 2.)
-notes n_other_activities: Source: Project design (multiple job-holding, common in the Yatra economy)
+notes wage_employer: Module B - Work and work history; origin: asked
+notes wage_employer: Meaning: Employer type for wage workers only, kept in case the sample needs it. Replaces the full Apablaza Q8 list, which crosses status with sector. Enumerator definitions are in HINTS.
+notes wage_employer: Question: Who employs you? A private company; a government or public body; a household (domestic work); a contractor or agent; or an individual employer?
+notes wage_employer: Skip rule: Ask only if employment_type is 3 or 4 (regular or casual wage worker)
+notes wage_employer: Source: Apablaza et al. 2026, Appendix 2 Q8 (shortened to wage workers); categories ours
 notes other_activity_types: Module B - Work and work history; origin: asked
 notes other_activity_types: Meaning: Check-all list of the other activities. Multiple work-holding, asked as a count first and then as a check-all list. The previous version allowed ONE other activity, which undercounts by construction: a shop owner who also rents
-notes other_activity_types: Meaning (cont.): out a pony and drives in the off-season has three, and only one was recorded. The count is asked before the list so it can be checked against the number of boxes ticked -- a mismatch is a data-quality flag, not a silent loss.
+notes other_activity_types: Meaning (cont.): out a pony and drives in the off-season has three, and only one was recorded. The count is asked before the list so it can be checked against the number of boxes ticked — a mismatch is a data-quality flag, not a silent loss.
 notes other_activity_types: Meaning (cont.): Exported by Kobo as a space-separated string plus one binary column per choice; Stata splits it into other_act_1 to other_act_13.
-notes other_activity_types: Question: Which ones are they? Check every one that applies. Ask and code the closest group for each; do not read the list aloud unless needed.
-notes other_activity_types: Skip rule: Ask only if n_other_activities > 0
+notes other_activity_types: Question: Besides your main work, what other paid work do you do during the Yatra season? Check every one that applies; leave blank if there is none. Ask and code the closest group for each; do not read the list aloud unless needed.
+notes other_activity_types: Skip rule: May be left blank
 notes other_activity_types: Source: Project design (multiple job-holding, common in the Yatra economy)
 notes other_activity_income_pm: Module B - Work and work history; origin: asked
 notes other_activity_income_pm: Meaning: Combined monthly income from all the other activities. Asked as one combined figure rather than per activity: per-activity amounts would multiply the question count for a quantity that enters the analysis only as a total.
-notes other_activity_income_pm: Question: Taking all of that other work together, about how much do you usually earn from it in a month? (Rs)
-notes other_activity_income_pm: Skip rule: Ask only if n_other_activities > 0
+notes other_activity_income_pm: Question: Taking all of that other work together, about how much do you usually earn from it in a month? (Rs; leave blank if there is no other work)
+notes other_activity_income_pm: Skip rule: May be left blank
 notes other_activity_income_pm: Source: Project design (multiple job-holding)
-notes years_in_yatra_work: Module B - Work and work history; origin: asked
-notes years_in_yatra_work: Meaning: Experience in the Yatra economy.
-notes years_in_yatra_work: Question: How many Yatra seasons have you worked in this kind of work?
-notes years_in_yatra_work: Source: Chaudhuri et al. 2002 sensitivity covariate; Apablaza et al. 2026 Q10 (tenure in this job)
+notes owns_shop_stall: Module B - Work and work history; origin: asked
+notes owns_shop_stall: Meaning: Productive asset. Moved from Module F to Module B on 2026-10-05: asked here, beside the other-activities list, it tells the enumerator early what kind of secondary activity the respondent has, which is exactly the coding decision
+notes owns_shop_stall: Meaning (cont.): the other-activities list needs and which arriving 100 questions later could not inform.
+notes owns_shop_stall: Question: Does your household own a shop or stall that you use to earn?
+notes owns_shop_stall: Source: Chaudhuri et al. 2002 asset covariate
+notes employers_in_season: Module B - Work and work history; origin: asked
+notes employers_in_season: Meaning: Within-season churn, asked as a count of employers or businesses rather than as a job TYPE. Replaces job_permanence (retired 2026-10-05), Apablaza's permanent/seasonal/casual/probation/fixed-term item, which could not work here:
+notes employers_in_season: Meaning (cont.): every job on this route is seasonal in the ordinary sense because the Yatra closes, so both enumerator and respondent reached for 'seasonal' regardless, and the distinction the indicator needed -- one employer for a stretch versus
+notes employers_in_season: Meaning (cont.): work taken day by day -- was lost. It also had no sensible answer for own-account workers, who are most of the sample. A count of employers answers the same question factually and for both: 1 means a stretch, several means day-to-
+notes employers_in_season: Meaning (cont.): day. Asked here, beside the occupation block, rather than in Module K.
+notes employers_in_season: Question: During one Yatra season, how many different employers or businesses do you work in? (1 if you stay with the same one, or run the same one, all season)
+notes employers_in_season: Source: Apablaza et al. 2026 Appendix 2 Q7 (concept: job stability within the engagement); asked as a count per this project's no-scale rule
+notes years_current_job: Module B - Work and work history; origin: asked
+notes years_current_job: Meaning: Tenure in the current job in years, as Apablaza et al. (2026) Q10 asks. Asked only when the respondent is NOT under one year (tenure_under_1 = 0). Decimals allowed, so the Table 3 thresholds apply directly to values of one year or
+notes years_current_job: Meaning (cont.): more. Placed next to years_coming_here (2026-10-07) so the two tenure questions, which read as the same question to most respondents, sit together with a shared note instead of fourteen rows apart.
+notes years_current_job: Question: How many years have you been in this current job? Write it as a decimal if needed, for example 1.5 for one year and six months, or 0.5 for six months.
+notes years_current_job: Source: Apablaza et al. 2026, Appendix 2 Q10; Table 3 (stability)
+notes years_coming_here: Module B - Work and work history; origin: asked
+notes years_coming_here: Meaning: Duration of the relationship with this worksite, which years_current_job does not give on its own: that counts seasons in the CURRENT kind of work, so a porter who spent six years portering and then four running a stall reads as
+notes years_coming_here: Meaning (cont.): four, while this counts all ten. For a respondent who never changed trade at this site the two answers are the same number, which is why they are asked right after each other with a shared enumerator note rather than apart, as
+notes years_coming_here: Meaning (cont.): they were through 2026-10-06 (then Module D, gated on resp_returns_at_closure). The gate is dropped along with the move: it excluded a worker who stays at the worksite all year, who has a years-here answer just as real as a
+notes years_coming_here: Meaning (cont.): seasonal worker's. A first-year worker has neither the network nor the savings of a fifteen-year one, and that is an exposure term the VEP model wants.
+notes years_coming_here: Question: And in total, how many years have you been coming here for Yatra-related work?
+notes years_coming_here: Skip rule: May be left blank -- most respondents will give the same number as years_current_job just above; the enumerator does not need to re-ask if the respondent already said so
+notes years_coming_here: Source: Project design (duration of the seasonal relationship)
+notes first_job_ever: Module B - Work and work history; origin: asked
+notes first_job_ever: Meaning: Ever had a prior job at all — a coarse mobility/entry marker. Moved next to the two tenure questions (2026-10-07): it is a work-history bio item asked of everyone, like them, not a job-quality item, so it belongs with
+notes first_job_ever: Meaning (cont.): years_current_job and years_coming_here rather than in the job-quality block.
+notes first_job_ever: Question: Was your current work the first paid job you ever had?
+notes first_job_ever: Source: Apablaza et al. 2026, Appendix 2 Q24
 notes hours_day_yatra: Module B - Work and work history; origin: asked
 notes hours_day_yatra: Meaning: Usual daily hours, all jobs. Asked as hours/day and days/week separately (not as one 'hours a week' figure) and multiplied in Stata: a normal day is easier to picture than a whole week at once.
 notes hours_day_yatra: Question: In the Yatra season, on a normal working day, how many hours do you work in total, across all your work?
@@ -775,278 +861,177 @@ notes prev_occ_change: Meaning: Occupational change flag.
 notes prev_occ_change: Question: In the last ten years, did you change your main kind of work?
 notes prev_occ_change: Source: Occupational mobility check; job-history item
 notes prev_occ: Module B - Work and work history; origin: asked
-notes prev_occ: Meaning: Occupation before the change. Recorded as free text in the respondent's own words, NOT coded to a list in the field. The 13-group Yatra occupation list cannot hold work done outside this economy -- farming in Bihar, driving in
-notes prev_occ: Meaning (cont.): Dehradun -- and those are exactly the moves the analysis needs to see. Office-coded to NCO-2015 afterwards, which also puts these answers in the same classification as the regional employment weights. Enumerator writes what the
+notes prev_occ: Meaning: Occupation before the change. Recorded as free text in the respondent's own words, NOT coded to a list in the field. The 13-group Yatra occupation list cannot hold work done outside this economy — farming in Bihar, driving in
+notes prev_occ: Meaning (cont.): Dehradun — and those are exactly the moves the analysis needs to see. Office-coded to NCO-2015 afterwards, which also puts these answers in the same classification as the regional employment weights. Enumerator writes what the
 notes prev_occ: Meaning (cont.): respondent says, including the industry if given (e.g. 'drove a tempo for a hotel', not just 'driver'). Gives the observed occupational moves that validate the task-distance measure against the random-mobility benchmark.
-notes prev_occ: Question: What was your previous main work? Write down exactly what they say, in their words -- do not pick from a list.
+notes prev_occ: Question: What was your previous main work? Write down exactly what they say, in their words — do not pick from a list.
 notes prev_occ: Skip rule: Ask only if prev_occ_change = 1
-notes prev_occ: Source: Gathmann and Schonberg 2010 (observed moves are systematically shorter than random moves -- the validation test for a task-distance measure); coded to NCO-2015 in the office
+notes prev_occ: Source: Gathmann and Schonberg 2010 (observed moves are systematically shorter than random moves — the validation test for a task-distance measure); coded to NCO-2015 in the office
 notes target_occ: Module B - Work and work history; origin: asked
-notes target_occ: Meaning: Stated destination occupation. Recorded as free text in the respondent's own words, NOT coded to a list in the field. The 13-group Yatra occupation list cannot hold work done outside this economy -- farming in Bihar, driving in
-notes target_occ: Meaning (cont.): Dehradun -- and those are exactly the moves the analysis needs to see. Office-coded to NCO-2015 afterwards, which also puts these answers in the same classification as the regional employment weights. Enumerator writes what the
-notes target_occ: Meaning (cont.): respondent says, including the industry if given (e.g. 'drove a tempo for a hotel', not just 'driver'). Two uses: it is the respondent's own target, which no external classification can supply; and comparing it with the task-
-notes target_occ: Meaning (cont.): nearest feasible destination gives an aspiration-versus-capability gap that the occupational-commonality literature has no worker-stated benchmark for. 'Don't know' and 'nothing / I would have no work' are both substantive answers
-notes target_occ: Meaning (cont.): -- record them as said.
-notes target_occ: Question: If you could not continue this work at all, what work would you move to instead? Write down exactly what they say, in their words -- do not pick from a list, and do not prompt with examples.
+notes target_occ: Meaning: Stated ASPIRATION occupation. Recorded as free text in the respondent's own words, NOT coded to a list in the field. The 13-group Yatra occupation list cannot hold work done outside this economy — farming in Bihar, driving in
+notes target_occ: Meaning (cont.): Dehradun — and those are exactly the moves the analysis needs to see. Office-coded to NCO-2015 afterwards, which also puts these answers in the same classification as the regional employment weights. Enumerator writes what the
+notes target_occ: Meaning (cont.): respondent says, including the industry if given (e.g. 'drove a tempo for a hotel', not just 'driver'). Reworded 2026-10-05 from a counterfactual ('if you could not continue this work, what would you move to') to a forward-looking
+notes target_occ: Meaning (cont.): intention. The counterfactual was answered with the off-season occupation the respondent already has, which Module C records anyway, so it measured nothing new; and a hypothetical about losing one's livelihood, put to someone
+notes target_occ: Meaning (cont.): whose livelihood a ropeway may end, is a question people answer defensively. WRITE-UP CONSEQUENCE: this is now stated intent, not a revealed alternative, so the task-distance comparison is an aspiration-versus-capability gap and
+notes target_occ: Meaning (cont.): must be labelled that way -- it is no longer a displacement destination. 'Don't know' and 'carry on as I am' are both substantive answers; record them as said.
+notes target_occ: Question: Looking ahead a few years, what work would you like to be doing? Write down exactly what they say, in their words — do not pick from a list, and do not prompt with examples. If they want to carry on exactly as they are, write
+notes target_occ: Question (cont.): that.
 notes target_occ: Source: Project design (stated destination, for the structural-displacement analysis); coded to NCO-2015 in the office
 notes prev_occ_reason: Module B - Work and work history; origin: asked
 notes prev_occ_reason: Meaning: Reason for the last change.
 notes prev_occ_reason: Question: What was the main reason you changed?
 notes prev_occ_reason: Skip rule: Ask only if prev_occ_change = 1
 notes prev_occ_reason: Source: Job-history item
-notes training_received: Module B - Work and work history; origin: asked
-notes training_received: Meaning: Vocational or on-the-job training, explicitly EXCLUDING school AND college. The old wording said only 'not counting school', which left it ambiguous whether a degree counted -- some respondents would have reported a BA here.
-notes training_received: Meaning (cont.): Formal education is already measured in years by years_schooling (a graduate reports about 15), so counting it again here would double-count it.
-notes training_received: Question: Apart from school and college, have you ever completed any training course or apprenticeship?
-notes training_received: Source: STEP module 2; Chaudhuri et al. 2002 adaptive-capacity covariate
-notes status_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m5: Meaning: Main activity in May of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m5: Question: In May, what was your main work or activity?
-notes status_m5: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m6: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m6: Meaning: Main activity in June of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m6: Question: In June, what was your main work or activity?
-notes status_m6: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m7: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m7: Meaning: Main activity in July of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m7: Question: In July, what was your main work or activity?
-notes status_m7: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m8: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m8: Meaning: Main activity in August of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m8: Question: In August, what was your main work or activity?
-notes status_m8: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m9: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m9: Meaning: Main activity in September of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m9: Question: In September, what was your main work or activity?
-notes status_m9: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m10: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m10: Meaning: Main activity in October of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m10: Question: In October, what was your main work or activity?
-notes status_m10: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m11: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m11: Meaning: Main activity in November of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m11: Question: In November, what was your main work or activity?
-notes status_m11: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m12: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m12: Meaning: Main activity in December of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m12: Question: In December, what was your main work or activity?
-notes status_m12: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m1: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m1: Meaning: Main activity in January of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m1: Question: In January, what was your main work or activity?
-notes status_m1: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m2: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m2: Meaning: Main activity in February of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m2: Question: In February, what was your main work or activity?
-notes status_m2: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m3: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m3: Meaning: Main activity in March of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m3: Question: In March, what was your main work or activity?
-notes status_m3: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes status_m4: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes status_m4: Meaning: Main activity in April of the past year; code 1 is the Yatra work named in B1. Asked in season-first order (May through April), not January first.
-notes status_m4: Question: In April, what was your main work or activity?
-notes status_m4: Source: Monthly work calendar; seasonality of consumption and poverty per Dercon and Krishnan 2000 (their design is a three-round panel, not a monthly recall calendar -- the calendar format is project design)
-notes knows_monthly_income: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes knows_monthly_income: Meaning: Gate: routes to the twelve monthly figures or to the annual-total fallback below. LEFT BLANK IF THE RESPONDENT DECLINES TO DISCUSS EARNINGS AT ALL: both routes then stay shut and the interview continues. Earnings are a control in
-notes knows_monthly_income: Meaning (cont.): the vulnerability models, not an identifying variable, so refusing them costs a covariate rather than the case -- and a required earnings question would have ended interviews. Worded as a genuine choice between two ways of
-notes knows_monthly_income: Meaning (cont.): answering, not as a test the respondent can fail -- and ANSWERED as a choice too: it was previously a yes/no, so the options read 'No / Yes' against a question asking which of two things is easier.
-notes knows_monthly_income: Question: Can you tell me roughly what you earned in each month of the past year, or would it be easier to give one total for the whole year?
-notes knows_monthly_income: Skip rule: Ask everyone; may be left blank if the respondent declines to discuss earnings, and both earnings routes then stay shut
-notes knows_monthly_income: Source: Apablaza et al. 2026 Q14/Q15 (the 'does not know' route out of monthly earnings)
-notes income_m5: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m5: Meaning: Net earnings in May. Filled by the tablet as 0 when status_m5 is No paid work.
-notes income_m5: Question: How much did you earn from all your work in May, after costs? (Rs)
-notes income_m5: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m5 = 8 (no paid work); may be left blank
-notes income_m5: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m6: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m6: Meaning: Net earnings in June. Filled by the tablet as 0 when status_m6 is No paid work.
-notes income_m6: Question: How much did you earn from all your work in June, after costs? (Rs)
-notes income_m6: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m6 = 8 (no paid work); may be left blank
-notes income_m6: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m7: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m7: Meaning: Net earnings in July. Filled by the tablet as 0 when status_m7 is No paid work.
-notes income_m7: Question: How much did you earn from all your work in July, after costs? (Rs)
-notes income_m7: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m7 = 8 (no paid work); may be left blank
-notes income_m7: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m8: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m8: Meaning: Net earnings in August. Filled by the tablet as 0 when status_m8 is No paid work.
-notes income_m8: Question: How much did you earn from all your work in August, after costs? (Rs)
-notes income_m8: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m8 = 8 (no paid work); may be left blank
-notes income_m8: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m9: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m9: Meaning: Net earnings in September. Filled by the tablet as 0 when status_m9 is No paid work.
-notes income_m9: Question: How much did you earn from all your work in September, after costs? (Rs)
-notes income_m9: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m9 = 8 (no paid work); may be left blank
-notes income_m9: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m10: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m10: Meaning: Net earnings in October. Filled by the tablet as 0 when status_m10 is No paid work.
-notes income_m10: Question: How much did you earn from all your work in October, after costs? (Rs)
-notes income_m10: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m10 = 8 (no paid work); may be left blank
-notes income_m10: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m11: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m11: Meaning: Net earnings in November. Filled by the tablet as 0 when status_m11 is No paid work.
-notes income_m11: Question: How much did you earn from all your work in November, after costs? (Rs)
-notes income_m11: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m11 = 8 (no paid work); may be left blank
-notes income_m11: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m12: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m12: Meaning: Net earnings in December. Filled by the tablet as 0 when status_m12 is No paid work.
-notes income_m12: Question: How much did you earn from all your work in December, after costs? (Rs)
-notes income_m12: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m12 = 8 (no paid work); may be left blank
-notes income_m12: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m1: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m1: Meaning: Net earnings in January. Filled by the tablet as 0 when status_m1 is No paid work.
-notes income_m1: Question: How much did you earn from all your work in January, after costs? (Rs)
-notes income_m1: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m1 = 8 (no paid work); may be left blank
-notes income_m1: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m2: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m2: Meaning: Net earnings in February. Filled by the tablet as 0 when status_m2 is No paid work.
-notes income_m2: Question: How much did you earn from all your work in February, after costs? (Rs)
-notes income_m2: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m2 = 8 (no paid work); may be left blank
-notes income_m2: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m3: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m3: Meaning: Net earnings in March. Filled by the tablet as 0 when status_m3 is No paid work.
-notes income_m3: Question: How much did you earn from all your work in March, after costs? (Rs)
-notes income_m3: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m3 = 8 (no paid work); may be left blank
-notes income_m3: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_m4: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_m4: Meaning: Net earnings in April. Filled by the tablet as 0 when status_m4 is No paid work.
-notes income_m4: Question: How much did you earn from all your work in April, after costs? (Rs)
-notes income_m4: Skip rule: Ask only if knows_monthly_income = 1; automatic 0 if status_m4 = 8 (no paid work); may be left blank
-notes income_m4: Source: Apablaza et al. 2026 Q14 (monthly earnings), asked month by month to avoid heaping on one typical figure
-notes income_annual_total: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes income_annual_total: Meaning: Annual total, asked only of respondents who could not give month-by-month figures. Combined with pct_income_yatra and the work calendar to rebuild monthly earnings in Stata.
+notes months_worked_yatra: Module C - Monthly calendar of work and income; origin: asked
+notes months_worked_yatra: Meaning: Length of the respondent's OWN season, asked rather than counted off a twelve-cell calendar. Preparation months are deliberately INSIDE this count: buying stock, repairing tack and bringing animals up is the trade, the old
+notes months_worked_yatra: Meaning (cont.): calendar gave it its own code 9, and separating it bought one constructed variable (yatra_prep_months) that no analysis read. This is the season weight -- it carries every consumption and income figure in the study -- so it is
+notes months_worked_yatra: Meaning (cont.): asked first and asked plainly.
+notes months_worked_yatra: Question: In the past year, how many months did you work here in the Yatra season? Count the months you spent getting ready for it as well.
+notes months_worked_yatra: Source: Project design (replaces the twelve-cell status calendar, 2026-10-05)
+notes months_no_paid_work: Module C - Monthly calendar of work and income; origin: asked
+notes months_no_paid_work: Meaning: Idle months, asked directly. Was counted as the number of calendar cells coded 8. Feeds months_no_work, which gates the job-search question and is the Apablaza unemployment limb.
+notes months_no_paid_work: Question: And in the past year, how many months did you have no paid work at all?
+notes months_no_paid_work: Source: Project design (replaces the twelve-cell status calendar, 2026-10-05)
+notes offseason_activity: Module C - Monthly calendar of work and income; origin: asked
+notes offseason_activity: Meaning: Principal off-season activity, asked rather than taken as the mode of the non-Yatra calendar cells. Replaces the constructed offseason_primary, which is now this variable. Code 0 is the genuine none: a respondent whose Yatra
+notes offseason_activity: Meaning (cont.): months and idle months already account for all twelve.
+notes offseason_activity: Question: In the remaining months — not the Yatra season, and not the months with no work — what was your main work? Code the closest one.
+notes offseason_activity: Skip rule: May be left blank if the Yatra months and the idle months already account for all twelve
+notes offseason_activity: Source: Project design (replaces the modal non-Yatra calendar cell, 2026-10-05)
+notes income_annual_total: Module C - Monthly calendar of work and income; origin: asked
+notes income_annual_total: Meaning: The single earnings question. Was the fallback route behind the knows_monthly_income gate, taken by three of seven respondents in the first field test; it is now the only route, because the twelve-month version was not answerable
+notes income_annual_total: Meaning (cont.): in the time available and a partly-filled calendar is not recoverable. MAY BE LEFT BLANK: earnings are a covariate in the vulnerability models, not an identifying variable, so a refusal costs a control rather than the case, and a
+notes income_annual_total: Meaning (cont.): required earnings question would have ended interviews.
 notes income_annual_total: Question: Thinking of the whole past year, about how much did you earn in total from all your work, after costs? (Rs)
-notes income_annual_total: Skip rule: Ask only if knows_monthly_income = 0; may be left blank
-notes income_annual_total: Source: Apablaza et al. 2026 Q15 (fallback when monthly earnings are not known), adapted to an annual total for a seasonal workforce
-notes pct_income_yatra: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes pct_income_yatra: Meaning: Yatra / non-Yatra split of the annual total, used to reweight it onto the calendar. Asked as 'out of every 100 rupees' rather than as a percentage: the same number, in a form that does not ask the respondent to hold an abstract
-notes pct_income_yatra: Meaning (cont.): percentage scale. This is a quantity being divided, not a rating scale.
-notes pct_income_yatra: Question: Out of every 100 rupees you earned in the whole year, how many came from your Yatra work? (The rest is counted as coming from your other work.)
-notes pct_income_yatra: Skip rule: Ask only if knows_monthly_income = 0; may be left blank
-notes pct_income_yatra: Source: Project design (the Yatra / non-Yatra split needed to reweight an annual total onto the work calendar)
-notes remit_out_yatra_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes income_annual_total: Skip rule: May be left blank if the respondent declines to discuss earnings
+notes income_annual_total: Source: Apablaza et al. 2026 Q15 (annual-total fallback), adapted to a seasonal workforce and now the only earnings route
+notes pct_income_yatra: Module C - Monthly calendar of work and income; origin: asked
+notes pct_income_yatra: Meaning: Yatra / non-Yatra split of the annual total. Asked as 'out of every 100 rupees of that' rather than as a percentage: the same number, in a form that does not ask the respondent to hold an abstract scale, and worded to refer back
+notes pct_income_yatra: Meaning (cont.): to the total just given. Together with months_worked_yatra this is what rebuilds a monthly earnings profile, and it is also what makes income_seasonality_cv computable without a calendar -- the CV of the implied two-level series
+notes pct_income_yatra: Meaning (cont.): is a closed form in this share and the season length, with the rupee amount cancelling out.
+notes pct_income_yatra: Question: Out of every 100 rupees of that, how many came from your Yatra work? (The rest is counted as coming from your other work.)
+notes pct_income_yatra: Skip rule: Ask only if income_annual_total was given; may be left blank
+notes pct_income_yatra: Source: Project design (the Yatra / non-Yatra split needed to reweight an annual total onto the season)
+notes earnings_range: Module C - Monthly calendar of work and income; origin: asked
+notes earnings_range: Meaning: Apablaza et al. (2026) Q15 range, now gated on the annual total being left blank -- it is the last resort for a respondent who will not give a figure but will accept a band. Two bands added 2026-10-07: the open top band flattened
+notes earnings_range: Meaning (cont.): a shop or lodge owner's earnings against a porter's, which lost real variation and mattered more once this item became the refusal fallback.
+notes earnings_range: Question: Which range is closest to what you usually earn in a month from work? Under Rs 5,000; Rs 5,000 to 10,000; Rs 10,000 to 20,000; Rs 20,000 to 35,000; Rs 35,000 to 50,000; Rs 50,000 or more; or don't know?
+notes earnings_range: Skip rule: Ask only if income_annual_total was left blank; may be left blank
+notes earnings_range: Source: Apablaza et al. 2026, Appendix 2 Q15; bands to check
+notes hours_day_offseason: Module C - Monthly calendar of work and income; origin: asked
+notes hours_day_offseason: Meaning: Apablaza's access-deprivation test has an under-20-hours-a-week limb, but asking hours only for the Yatra season made that limb unfireable: in season this workforce runs 60-90 hours a week, so nobody ever cleared it and the whole
+notes hours_day_offseason: Meaning (cont.): indicator collapsed onto the months-without-work limb. Off-season hours are where marginal, part-week work actually shows up for a seasonal workforce.
+notes hours_day_offseason: Question: In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total?
+notes hours_day_offseason: Skip rule: Ask only if there are months that are neither Yatra nor idle (12 - months_worked_yatra - months_no_paid_work > 0)
+notes hours_day_offseason: Source: Apablaza et al. 2026 Q13, asked a second time for the off-season (decomposed as hours/day x days/week, as in the Yatra-season pair)
+notes days_week_offseason: Module C - Monthly calendar of work and income; origin: asked
+notes days_week_offseason: Meaning: Apablaza's access-deprivation test has an under-20-hours-a-week limb, but asking hours only for the Yatra season made that limb unfireable: in season this workforce runs 60-90 hours a week, so nobody ever cleared it and the whole
+notes days_week_offseason: Meaning (cont.): indicator collapsed onto the months-without-work limb. Off-season hours are where marginal, part-week work actually shows up for a seasonal workforce.
+notes days_week_offseason: Question: In those months, how many days a week do you usually work?
+notes days_week_offseason: Skip rule: Ask only if there are months that are neither Yatra nor idle (12 - months_worked_yatra - months_no_paid_work > 0)
+notes days_week_offseason: Source: Apablaza et al. 2026 Q13, asked a second time for the off-season
+notes resp_returns_at_closure: Module D - Migration, home place and remittances; origin: asked
+notes resp_returns_at_closure: Meaning: Whether the RESPONDENT moves. This is the assumption the whole two-season design rests on: every consumption, remittance and coping item in Modules C, E and I is asked twice on the premise that he is somewhere else once the Yatra
+notes resp_returns_at_closure: Meaning (cont.): shuts. The pilot suggests it is false for a large minority — 23 of 46 respondents lived here year-round.
+notes resp_returns_at_closure: Question: When the Yatra closes for the season, do YOU go to your home place?
+notes resp_returns_at_closure: Source: Project design; categories from the pilot's own residency_pattern distribution (n=46)
+notes hh_at_home_place: Module D - Migration, home place and remittances; origin: asked
+notes hh_at_home_place: Meaning: Whether the household normally lives at the home place or away from it. The wording used to be 'do they live at your home place all year, or are they here with you during the season', which forces a binary between two options that
+notes hh_at_home_place: Meaning (cont.): neither exhaust the cases nor oppose each other — a household can be at the home place for most of the year and at neither pole of that question. Asked now as the plain fact the design needs: is the rest of the household usually
+notes hh_at_home_place: Meaning (cont.): at the hometown. Everything else (here with him, a third place, split between two) falls into No and is picked up by n_here_season. Module E's Yatra-season wording ('you and anyone staying with you here') is written for exactly
+notes hh_at_home_place: Meaning (cont.): the split case and until now had nothing to key off; the pilot found 3 of 46 working here with family elsewhere. Also fixes a real error in the consumption aggregate — see n_here_season.
+notes hh_at_home_place: Question: For most of the year, do the rest of your household live in your home village or town?
+notes hh_at_home_place: Source: Project design (split-household measurement, underpinning Module E)
+notes remit_differs_by_season: Module D - Migration, home place and remittances; origin: asked
+notes remit_differs_by_season: Meaning: Gate for the off-season remittance figure, on the pattern already used for consumption (spend_differs_by_season). An obligation to a household at home does not usually move with the season -- it is a fixed claim on whatever is
+notes remit_differs_by_season: Meaning (cont.): earned -- so asking the same amount twice spent a question to collect a repeat of the first answer in most interviews. Where it does differ the second figure is asked, and where it does not Stata carries the Yatra-season figure
+notes remit_differs_by_season: Meaning (cont.): across. Replaces the old gate on resp_returns_at_closure, which was the wrong test twice over: it asked the off-season figure only of respondents who do NOT go home, although a man who goes home may still send money to a wife
+notes remit_differs_by_season: Meaning (cont.): elsewhere, and it hid the figure from everyone who does.
+notes remit_differs_by_season: Question: Is the money you send home different in the Yatra season from when the Yatra is closed?
+notes remit_differs_by_season: Source: Project design (mirrors spend_differs_by_season, Module E)
+notes remit_out_yatra_pm: Module D - Migration, home place and remittances; origin: asked
 notes remit_out_yatra_pm: Meaning: Outward remittances, Yatra-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_out_yatra_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_out_yatra_pm: Question: In a normal month during the Yatra season, how much money do you usually send to family or others living elsewhere? (Rs, 0 if none)
 notes remit_out_yatra_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
-notes remit_out_offseason_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes remit_out_offseason_pm: Meaning: Outward remittances, off-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
-notes remit_out_offseason_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
+notes remit_out_offseason_pm: Module D - Migration, home place and remittances; origin: asked
+notes remit_out_offseason_pm: Meaning: Outward remittances, off-season month. GATED from 2026-10-03 on the respondent still being away: someone who goes home when the Yatra closes is living with the people he would be sending to, so “how much do you send home in a
+notes remit_out_offseason_pm: Meaning (cont.): normal closed-season month” has no referent and the honest answer, 0, is indistinguishable in the data from a migrant who sends nothing. Most workers here are migrants, so a single recent-recall figure would describe only the
+notes remit_out_offseason_pm: Meaning (cont.): season in which the interview happens to fall. Asked as a usual monthly amount for each of the two seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_out_offseason_pm: Question: In a normal month when the Yatra is closed, how much do you usually send? (Rs, 0 if none)
+notes remit_out_offseason_pm: Skip rule: Ask only if remit_differs_by_season = 1
 notes remit_out_offseason_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
-notes remit_mode: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes remit_mode: Module D - Migration, home place and remittances; origin: asked
 notes remit_mode: Meaning: Channel, not just amount. Bank and UPI transfers are near-costless and traceable; money orders and hand-carrying cost a fee, a trip, or both, and hand-carrying ties the transfer to someone physically travelling. Two households
 notes remit_mode: Meaning (cont.): sending the same rupees are not equally well served.
 notes remit_mode: Question: How do you usually send it?
 notes remit_mode: Skip rule: Ask only if remit_out_yatra_pm > 0 or remit_out_offseason_pm > 0
 notes remit_mode: Source: Project design (remittance channel as a financial-inclusion and cost measure)
-notes remit_in_yatra_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
+notes remit_in_yatra_pm: Module D - Migration, home place and remittances; origin: asked
 notes remit_in_yatra_pm: Meaning: Inward remittances, Yatra-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
 notes remit_in_yatra_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_in_yatra_pm: Question: In a normal month during the Yatra season, how much money do you usually receive from family or others? (Rs, 0 if none)
 notes remit_in_yatra_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
-notes remit_in_offseason_pm: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes remit_in_offseason_pm: Meaning: Inward remittances, off-season month. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two
-notes remit_in_offseason_pm: Meaning (cont.): seasons instead, matched to the Yatra-season/off-season split already used for the work calendar.
+notes remit_in_offseason_pm: Module D - Migration, home place and remittances; origin: asked
+notes remit_in_offseason_pm: Meaning: Inward remittances, off-season month. NOT gated, unlike its outward twin: money can arrive from a son or brother working elsewhere whether or not the respondent himself has gone home, so there is no case in which the question
+notes remit_in_offseason_pm: Meaning (cont.): stops making sense. Most workers here are migrants, so a single recent-recall figure would describe only the season in which the interview happens to fall. Asked as a usual monthly amount for each of the two seasons instead,
+notes remit_in_offseason_pm: Meaning (cont.): matched to the Yatra-season/off-season split already used for the work calendar.
 notes remit_in_offseason_pm: Question: In a normal month when the Yatra is closed, how much do you usually receive? (Rs, 0 if none)
+notes remit_in_offseason_pm: Skip rule: Ask only if remit_differs_by_season = 1
 notes remit_in_offseason_pm: Source: Project design (amount only; frequency dropped for length). A previous citation to NSS 64th Round practice was withdrawn 2026-09-28: no NSS schedule is held by this project and it could not be checked
-notes hours_day_offseason: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes hours_day_offseason: Meaning: Apablaza's access-deprivation test has an under-20-hours-a-week limb, but asking hours only for the Yatra season made that limb unfireable: in season this workforce runs 60-90 hours a week, so nobody ever cleared it and the whole
-notes hours_day_offseason: Meaning (cont.): indicator collapsed onto the months-without-work limb. Off-season hours are where marginal, part-week work actually shows up for a seasonal workforce.
-notes hours_day_offseason: Question: In the months when the Yatra is closed and you are doing other work, on a normal working day, how many hours do you work in total?
-notes hours_day_offseason: Skip rule: Ask only if any month in the calendar is other paid work (status 2 to 7)
-notes hours_day_offseason: Source: Apablaza et al. 2026 Q13, asked a second time for the off-season (decomposed as hours/day x days/week, as in the Yatra-season pair)
-notes days_week_offseason: Module C - Monthly calendar of work and income; remittances; origin: asked
-notes days_week_offseason: Meaning: Apablaza's access-deprivation test has an under-20-hours-a-week limb, but asking hours only for the Yatra season made that limb unfireable: in season this workforce runs 60-90 hours a week, so nobody ever cleared it and the whole
-notes days_week_offseason: Meaning (cont.): indicator collapsed onto the months-without-work limb. Off-season hours are where marginal, part-week work actually shows up for a seasonal workforce.
-notes days_week_offseason: Question: In those months, how many days a week do you usually work?
-notes days_week_offseason: Skip rule: Ask only if any month in the calendar is other paid work (status 2 to 7)
-notes days_week_offseason: Source: Apablaza et al. 2026 Q13, asked a second time for the off-season
-notes origin: Module D - Migration; origin: asked
-notes origin: Meaning: Origin of the respondent, as four buckets. Note what it does NOT measure: the pilot found 11 of 20 seasonal movers inside this same district, so this is a distance variable, not a mobility one. closure_base and the Module C
-notes origin: Meaning (cont.): location row carry mobility.
-notes origin: Question: Where is your permanent home?
-notes origin: Source: Project design (distance bucket); NOT an NSS classification -- the earlier citation to one was withdrawn 2026-09-28, no NSS schedule is held by this project
-notes home_state: Module D - Migration; origin: asked
-notes home_state: Meaning: State/UT of the permanent home, asked ONLY when the origin is another Indian state. The other three origin codes already give the answer: local and other-Uttarakhand-district are both Uttarakhand, and Nepal is Nepal. Asking it of
-notes home_state: Meaning (cont.): everyone meant a respondent from the next valley was asked which state he lived in, and a Nepali worker had to hunt for an outside-India code in a 37-item list one question after saying Nepal. Stata fills the three known cases.
-notes home_state: Meaning (cont.): The state is the level at which India sets its rural and urban poverty lines, which is why it is asked at all.
-notes home_state: Question: Which state is your permanent home in?
-notes home_state: Skip rule: Ask only if origin = 3 (another Indian state)
-notes home_state: Source: Standard state/UT classification; needed to apply the right poverty line per respondent
-notes home_rural_urban: Module D - Migration; origin: asked
-notes home_rural_urban: Meaning: Rural/urban status of the permanent home, asked directly as the binary the poverty line actually needs. Replaces home_admin_level, a three-way village/town/city item that asked the respondent to perform a Census classification
-notes home_rural_urban: Meaning (cont.): they have no way of making, and then selected a Rs 2,515 or Rs 3,639 line off the answer. Also stops being a constructed variable: it was derived from home_admin_level, which meant a 45% swing in the threshold rested on a
-notes home_rural_urban: Meaning (cont.): derivation from a subjective tier.
-notes home_rural_urban: Question: Is that home in a village, or in a town or city?
-notes home_rural_urban: Source: Rural and urban poverty lines (Sethu et al. 2024)
-notes resp_returns_at_closure: Module D - Migration; origin: asked
-notes resp_returns_at_closure: Meaning: Whether the RESPONDENT moves. This is the assumption the whole two-season design rests on: every consumption, remittance and coping item in Modules C, E and I is asked twice on the premise that he is somewhere else once the Yatra
-notes resp_returns_at_closure: Meaning (cont.): shuts. The pilot suggests it is false for a large minority -- 23 of 46 respondents lived here year-round.
-notes resp_returns_at_closure: Question: When the Yatra closes for the season, do YOU go to your home place?
-notes resp_returns_at_closure: Source: Project design; categories from the pilot's own residency_pattern distribution (n=46)
-notes hh_at_home_place: Module D - Migration; origin: asked
-notes hh_at_home_place: Meaning: Whether the HOUSEHOLD is split. Module E's Yatra-season wording ('you and anyone staying with you here') is written for exactly the split case and until now had nothing to key off; the pilot found 3 of 46 working here with family
-notes hh_at_home_place: Meaning (cont.): elsewhere. Also fixes a real error in the consumption aggregate -- see n_here_season.
-notes hh_at_home_place: Question: And do the rest of your household live at your home place all year, or are they here with you during the season?
-notes hh_at_home_place: Source: Project design (split-household measurement, underpinning Module E)
-notes n_here_season: Module D - Migration; origin: asked
-notes n_here_season: Meaning: The denominator the Yatra-season consumption figures actually belong to. Until this existed, per-capita consumption divided an on-site figure covering 'you and anyone staying with you here' by the FULL household size, so a man
-notes n_here_season: Meaning (cont.): supporting himself here for six months while his family of five lived at the home place was recorded at a fifth of his real per-capita consumption and pushed below the poverty line by arithmetic. Asked only of split households,
-notes n_here_season: Meaning (cont.): because for everyone else it is hhsize.
-notes n_here_season: Question: During the Yatra season, how many people are you feeding and spending on here, counting yourself?
-notes n_here_season: Skip rule: Ask only if hh_at_home_place = 1
-notes n_here_season: Source: Project design (season-specific denominator for per-capita consumption)
-notes years_coming_here: Module D - Migration; origin: asked
-notes years_coming_here: Meaning: Duration of the relationship with this worksite, which years_in_yatra_work does not give: that counts seasons in the CURRENT kind of work, so a porter who spent six years portering and then four running a stall reads as four. A
-notes years_coming_here: Meaning (cont.): first-year worker has neither the network nor the savings of a fifteen-year one, and that is an exposure term the VEP model wants.
-notes years_coming_here: Question: How many years have you been coming here for the Yatra season?
-notes years_coming_here: Skip rule: Ask only if resp_returns_at_closure = 1
-notes years_coming_here: Source: Project design (duration of the seasonal relationship)
-notes came_here_reason: Module D - Migration; origin: asked
-notes came_here_reason: Meaning: Push or pull, kept separate from prev_occ_reason, which is about changing WORK -- the old combined item gave a migrant who took a new job on arrival two true answers. Someone driven here by debt or by land too small to live on is
+notes smartphone_owned: Module D - Migration, home place and remittances; origin: asked
+notes smartphone_owned: Meaning: Smartphone ownership. Moved next to remittances (2026-10-07): this is the first place money-movement comes up in the interview, which is where a digital-capability question reads most naturally.
+notes smartphone_owned: Question: Do you own a smartphone?
+notes smartphone_owned: Source: VEP adaptive-capacity covariate; STEP digital items
+notes n_can_transact_online: Module D - Migration, home place and remittances; origin: asked
+notes n_can_transact_online: Meaning: Household digital capability rather than the respondent's own use: it says who in the household can actually move money, and therefore something about who controls it. Moved next to remittances and smartphone ownership
+notes n_can_transact_online: Meaning (cont.): (2026-10-07) for the same reason.
+notes n_can_transact_online: Question: How many people in your household can make a payment by phone themselves, without help? (0 if none)
+notes n_can_transact_online: Source: Project design (intra-household financial capability)
+notes n_hh_same_business: Module D - Migration, home place and remittances; origin: asked
+notes n_hh_same_business: Meaning: Household labour concentrated in one enterprise, which is the exposure that matters for a ropeway: a household with four members on one dhaba loses four incomes to one shock, and a household with four in four trades loses one.
+notes n_hh_same_business: Meaning (cont.): Replaces n_here_season (retired 2026-10-05), which asked how many people the respondent feeds here and served as the per-capita denominator for in-season consumption. That denominator is now hhsize for both seasons, matching the
+notes n_hh_same_business: Meaning (cont.): household-level wording Module E moved to on the same date -- one reference unit on both limbs instead of a split one. n_here_season also drew a 58 against a household of 4 in the first field test, being unconstrained.
+notes n_hh_same_business: Question: How many people from your household work in the same business or establishment as you, counting yourself?
+notes n_hh_same_business: Source: Project design (enterprise concentration of household labour, 2026-10-05)
+notes came_here_reason: Module D - Migration, home place and remittances; origin: asked
+notes came_here_reason: Meaning: Push or pull, kept separate from prev_occ_reason, which is about changing WORK — the old combined item gave a migrant who took a new job on arrival two true answers. Someone driven here by debt or by land too small to live on is
 notes came_here_reason: Meaning (cont.): in a different position from someone drawn by better pay, at identical current earnings.
 notes came_here_reason: Question: What was the main reason you first came here to work?
 notes came_here_reason: Skip rule: Ask only if origin is not Local (same district)
 notes came_here_reason: Source: Project design (push/pull as a vulnerability covariate)
-notes worked_away_in_closure: Module D - Migration; origin: asked
+notes came_here_reason_other: Module D - Migration, home place and remittances; origin: asked
+notes came_here_reason_other: Meaning: Free text behind code 8, “some other reason”. OPTIONAL: left blank it codes as missing, and a blank is not an error. The eight coded reasons were written from the pilot and will not cover everyone — the point of this box is that
+notes came_here_reason_other: Meaning (cont.): the ninth reason gets recorded in the respondent’s words instead of disappearing into a catch-all, not that the enumerator is made to fill something in. Same treatment as native_language_other.
+notes came_here_reason_other: Question: What was that reason? Write down what they say.
+notes came_here_reason_other: Skip rule: Ask only if came_here_reason = 8 (some other reason). May be left blank.
+notes came_here_reason_other: Source: Project design (catch-all codes lose the case they catch)
+notes worked_away_in_closure: Module D - Migration, home place and remittances; origin: asked
 notes worked_away_in_closure: Meaning: Off-season labour migration, asked of everyone. Revealed rather than stated mobility, and the ONLY thing in the instrument that says so: the work calendar (status_m1-m12) records the ACTIVITY in each month and not the place, and
 notes worked_away_in_closure: Meaning (cont.): the absence spell (left_here_month, returned_here_month) says the respondent went to the home place, not past it. Without this item a winter spent labouring in Dehradun and a winter spent idle at home are the same twelve rows.
 notes worked_away_in_closure: Meaning (cont.): Reworded 2026-10-01: 'did you go somewhere else for work' left 'somewhere else' than WHAT ambiguous when it followed the spell questions, which are about coming and going from HERE. Carries closure_labour_migrant, which is in the
 notes worked_away_in_closure: Meaning (cont.): VEP exposure vector.
 notes worked_away_in_closure: Question: Last year, in the months when the Yatra was closed, did you work away from your home place?
 notes worked_away_in_closure: Source: Project design (off-season labour migration)
-notes closure_work_detail: Module D - Migration; origin: asked
+notes closure_work_detail: Module D - Migration, home place and remittances; origin: asked
 notes closure_work_detail: Meaning: Free text, NOT required. Office-coded to NCO-2015 alongside prev_occ, occupation_detail and target_occ, so the off-season destination occupation enters the same classification as everything else and can be given a task vector.
 notes closure_work_detail: Question: Where did you go, and what work did you do there? Write what they say.
 notes closure_work_detail: Skip rule: Ask only if worked_away_in_closure = 1; may be left blank
 notes closure_work_detail: Source: Project design; coded to NCO-2015 in the office
-notes left_here_month: Module D - Migration; origin: asked
-notes left_here_month: Meaning: Start of the absence. Together with returned_here_month this gives the months spent at the home place, and by subtraction the months spent here -- which is the measured season length, and therefore also the answer to the mid-month
-notes left_here_month: Meaning (cont.): season-boundary problem: each respondent's boundary is their own reported month, not a constant we impose.
-notes left_here_month: Question: In the past year, which month did you last leave here and go to your home place?
-notes left_here_month: Skip rule: Ask only if resp_returns_at_closure = 1
-notes left_here_month: Source: Project design (measured seasonal base, asked as a spell)
-notes returned_here_month: Module D - Migration; origin: asked
-notes returned_here_month: Meaning: End of the absence. A returned month EARLIER in the calendar than the left month is the normal case, not an error -- the absence straddles the new year, because the Yatra closes in November and reopens in April or May.
-notes returned_here_month: Question: And which month did you come back here?
-notes returned_here_month: Skip rule: Ask only if resp_returns_at_closure = 1
-notes returned_here_month: Source: Project design (measured seasonal base, asked as a spell)
-notes would_move_for_work: Module D - Migration; origin: asked
-notes would_move_for_work: Meaning: Stated mobility, which is the constraint the task-distance measure cannot see: a worker whose skills fit a destination perfectly but who will not leave is structurally displaced just the same. Pairs with target_occ -- that asks
-notes would_move_for_work: Meaning (cont.): WHAT they would do, this asks whether they would move to do it -- and is read against worked_away_in_closure, the revealed version. Given a concrete horizon ('in the coming year') rather than left as an open hypothetical,
-notes would_move_for_work: Meaning (cont.): following the VASyR 2025 practice of horizoning intention items; an unbounded 'would you ever' is answered on disposition rather than on circumstance.
+notes would_move_for_work: Module D - Migration, home place and remittances; origin: asked
+notes would_move_for_work: Meaning: Stated mobility, which is the constraint the task-distance measure cannot see: a worker whose skills fit a destination perfectly but who will not leave is structurally displaced just the same. Pairs with target_occ — that asks
+notes would_move_for_work: Meaning (cont.): WHAT they would do, this asks whether they would move to do it — and is read against worked_away_in_closure, the revealed version. Given a concrete horizon ('in the coming year') rather than left as an open hypothetical, following
+notes would_move_for_work: Meaning (cont.): the VASyR 2025 practice of horizoning intention items; an unbounded 'would you ever' is answered on disposition rather than on circumstance.
 notes would_move_for_work: Question: If this work here ended, would you go away from your home place to look for work in the coming year?
 notes would_move_for_work: Source: Project design; horizoned intention item after VASyR 2025 (move_accom_yesno, asked over a stated 6-month horizon)
-notes migration_referral: Module D - Migration; origin: asked
-notes migration_referral: Meaning: The old list mixed two different things -- who TOLD you about the work and who EMPLOYS or places you -- and put a thekedar and an agent in one box although they are different relationships: a thekedar is who you work for, an agent
+notes migration_referral: Module D - Migration, home place and remittances; origin: asked
+notes migration_referral: Meaning: The old list mixed two different things — who TOLD you about the work and who EMPLOYS or places you — and put a thekedar and an agent in one box although they are different relationships: a thekedar is who you work for, an agent
 notes migration_referral: Meaning (cont.): is a middleman who places you and is usually paid for it. Splitting them is the point: an agent-placed worker has a debt or fee relationship an informally referred worker does not. 'Political or community leader' is dropped; it
 notes migration_referral: Meaning (cont.): was an analyst's category, not one a respondent would recognise as describing how they got their job. Ungated as of 2026-09-28: it used to be asked only of non-local respondents, but who placed you is a question about the
-notes migration_referral: Meaning (cont.): employment relationship, not about migration -- a local worker placed by an agent carries the same fee or debt relationship a Nepali one does, and gating it on a district boundary meant we could never see that.
+notes migration_referral: Meaning (cont.): employment relationship, not about migration — a local worker placed by an agent carries the same fee or debt relationship a Nepali one does, and gating it on a district boundary meant we could never see that.
 notes migration_referral: Question: Who mainly helped you get this work, or arranged it for you?
 notes migration_referral: Source: Project design (referral channel as a proxy for social capital and for placement debt)
-notes migration_referral_other: Module D - Migration; origin: asked
+notes migration_referral_other: Module D - Migration, home place and remittances; origin: asked
 notes migration_referral_other: Meaning: Free text, NOT required, for referral channels the seven codes do not hold. The item is a proxy for social and political capital in getting access to work here, so a channel we failed to anticipate is exactly the one worth
 notes migration_referral_other: Meaning (cont.): recording.
 notes migration_referral_other: Question: Who was it? Write what they say.
@@ -1055,17 +1040,18 @@ notes migration_referral_other: Source: Standard household-survey item
 notes spend_differs_by_season: Module E - Household consumption; origin: asked
 notes spend_differs_by_season: Meaning: Gate for the off-season half of every seasonal pair. Where a household says spending is the same, the off-season figures are not asked and Stata copies the Yatra-season figure across, halving this module for those respondents.
 notes spend_differs_by_season: Meaning (cont.): NOTE the risk this carries: a gate that saves nine questions is an invitation to answer 'same', and the short branch is more attractive to a tired respondent and a hurrying enumerator. If a large share take it, check that share
-notes spend_differs_by_season: Meaning (cont.): against the pilot before trusting the consumption aggregate -- an over-used gate would bias measured consumption toward the Yatra-season level, which is about a third higher.
-notes spend_differs_by_season: Question: Leaving aside money you send home -- is what your household spends in a normal month during the Yatra season different from what it spends when the Yatra is closed?
+notes spend_differs_by_season: Meaning (cont.): against the pilot before trusting the consumption aggregate — an over-used gate would bias measured consumption toward the Yatra-season level, which is about a third higher.
+notes spend_differs_by_season: Question: Leaving aside money you send home — is what your household spends in a normal month during the Yatra season different from what it spends when the Yatra is closed?
 notes spend_differs_by_season: Source: Project design (respondent-gated seasonal recall); the underlying two-season design follows Beegle et al. 2012 and Deaton and Grosh 2000 on usual-period recall
 notes cons_staples_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_staples_yatra_pm: Meaning: Staple foods bought less often. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra
 notes cons_staples_yatra_pm: Meaning (cont.): season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual
-notes cons_staples_yatra_pm: Meaning (cont.): recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household
-notes cons_staples_yatra_pm: Meaning (cont.): itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the
-notes cons_staples_yatra_pm: Meaning (cont.): respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at
-notes cons_staples_yatra_pm: Meaning (cont.): the usual home by then.
-notes cons_staples_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on cereals (rice, wheat, other grains), pulses, sugar and salt, bought or from your own stock? (Rs)
+notes cons_staples_yatra_pm: Meaning (cont.): recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05:
+notes cons_staples_yatra_pm: Meaning (cont.): both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem
+notes cons_staples_yatra_pm: Meaning (cont.): — but it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator.
+notes cons_staples_yatra_pm: Meaning (cont.): The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to
+notes cons_staples_yatra_pm: Meaning (cont.): carry in the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_staples_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on cereals (rice, wheat, other grains), pulses, sugar and salt, bought or from your own stock? (Rs)
 notes cons_staples_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Sections 5.1-5.3 (30-day); IHDS-II Income and Social Capital Questionnaire, Q14 14.1-14.6 (30-day, same items)
 notes cons_staples_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_staples_offseason_pm: Meaning: Staple foods bought less often. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra
@@ -1077,12 +1063,12 @@ notes cons_staples_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Section
 notes cons_perishables_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_perishables_yatra_pm: Meaning: Perishables bought often. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season.
 notes cons_perishables_yatra_pm: Meaning (cont.): So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall
-notes cons_perishables_yatra_pm: Meaning (cont.): with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself
-notes cons_perishables_yatra_pm: Meaning (cont.): may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can
-notes cons_perishables_yatra_pm: Meaning (cont.): actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home
-notes cons_perishables_yatra_pm: Meaning (cont.): by then.
-notes cons_perishables_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on milk and milk products, vegetables, fruit, egg/fish/meat, cooking oil, spices, and tea or coffee, bought or from your own
-notes cons_perishables_yatra_pm: Question (cont.): stock? (Rs)
+notes cons_perishables_yatra_pm: Meaning (cont.): with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both
+notes cons_perishables_yatra_pm: Meaning (cont.): limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem — but
+notes cons_perishables_yatra_pm: Meaning (cont.): it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The
+notes cons_perishables_yatra_pm: Meaning (cont.): denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in
+notes cons_perishables_yatra_pm: Meaning (cont.): the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_perishables_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on milk and milk products, vegetables, fruit, egg/fish/meat, cooking oil, spices, and tea or coffee, bought or from your own stock? (Rs)
 notes cons_perishables_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Sections 6.1-6.8 (7-day actual recall in HCES; asked here as a usual monthly figure instead, for the reason above)
 notes cons_perishables_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_perishables_offseason_pm: Meaning: Perishables bought often. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season.
@@ -1096,10 +1082,12 @@ notes cons_food_own_yatra_pm: Meaning: Non-purchased food, one aggregate figure 
 notes cons_food_own_yatra_pm: Meaning (cont.): precision (knowing the exact market worth of one's own produce) most respondents would not have; asking what it would have cost to buy is the same imputation, in a question an actual person can answer. Workers here are migrants:
 notes cons_food_own_yatra_pm: Meaning (cont.): the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is asked as a usual monthly amount for
 notes cons_food_own_yatra_pm: Meaning (cont.): each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual month' figures, following the
-notes cons_food_own_yatra_pm: Meaning (cont.): usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself may be split (the respondent here, some
-notes cons_food_own_yatra_pm: Meaning (cont.): family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can actually observe -- rather than 'your
-notes cons_food_own_yatra_pm: Meaning (cont.): household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home by then.
-notes cons_food_own_yatra_pm: Question: If you (and anyone staying with you here) had not grown, raised or been given any of your food, about how much would it have cost to buy in a normal month during the Yatra season? (Rs, 0 if you buy everything)
+notes cons_food_own_yatra_pm: Meaning (cont.): usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both limbs now ask about 'your household'. The Yatra-
+notes cons_food_own_yatra_pm: Meaning (cont.): season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem — but it made the two halves of one pair measure two
+notes cons_food_own_yatra_pm: Meaning (cont.): different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The denominator is now hhsize on both sides and the
+notes cons_food_own_yatra_pm: Meaning (cont.): unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in the write-up, not a reason to measure a
+notes cons_food_own_yatra_pm: Meaning (cont.): different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_food_own_yatra_pm: Question: If your household had not grown, raised or been given any of your food, about how much would it have cost to buy in a normal month during the Yatra season? (Rs, 0 if you buy everything)
 notes cons_food_own_yatra_pm: Source: Calvo and Dercon 2007; Eze and Iheonu 2025 (non-purchased food, aggregate approach)
 notes cons_food_own_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_food_own_offseason_pm: Meaning: Non-purchased food, one aggregate figure (HCES/IHDS record the source per item, too long for this interview). Framed as 'if you had to buy it' rather than telling the respondent to value it 'at market price': that phrase assumes a
@@ -1113,11 +1101,12 @@ notes cons_food_own_offseason_pm: Source: Calvo and Dercon 2007; Eze and Iheonu 
 notes cons_food_out_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_food_out_yatra_pm: Meaning: Meals outside the home. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So
 notes cons_food_out_yatra_pm: Meaning (cont.): each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall
-notes cons_food_out_yatra_pm: Meaning (cont.): with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself
-notes cons_food_out_yatra_pm: Meaning (cont.): may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can
-notes cons_food_out_yatra_pm: Meaning (cont.): actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home
-notes cons_food_out_yatra_pm: Meaning (cont.): by then.
-notes cons_food_out_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on meals, tea and snacks eaten outside the home, including any an employer gave free, at their market value? (Rs)
+notes cons_food_out_yatra_pm: Meaning (cont.): with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both
+notes cons_food_out_yatra_pm: Meaning (cont.): limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem — but
+notes cons_food_out_yatra_pm: Meaning (cont.): it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The
+notes cons_food_out_yatra_pm: Meaning (cont.): denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in
+notes cons_food_out_yatra_pm: Meaning (cont.): the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_food_out_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on meals, tea and snacks eaten outside the home, including any an employer gave free, at their market value? (Rs)
 notes cons_food_out_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 7.1 'served processed food' (7-day in HCES; usual monthly here)
 notes cons_food_out_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_food_out_offseason_pm: Meaning: Meals outside the home. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So
@@ -1129,11 +1118,12 @@ notes cons_food_out_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Sectio
 notes cons_fuel_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_fuel_yatra_pm: Meaning: Household fuel and light spending. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra
 notes cons_fuel_yatra_pm: Meaning (cont.): season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual
-notes cons_fuel_yatra_pm: Meaning (cont.): recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household
-notes cons_fuel_yatra_pm: Meaning (cont.): itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the
-notes cons_fuel_yatra_pm: Meaning (cont.): respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at
-notes cons_fuel_yatra_pm: Meaning (cont.): the usual home by then.
-notes cons_fuel_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on fuel and light: cooking fuel, firewood, electricity, kerosene, candles? (Rs)
+notes cons_fuel_yatra_pm: Meaning (cont.): recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05:
+notes cons_fuel_yatra_pm: Meaning (cont.): both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem
+notes cons_fuel_yatra_pm: Meaning (cont.): — but it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator.
+notes cons_fuel_yatra_pm: Meaning (cont.): The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to
+notes cons_fuel_yatra_pm: Meaning (cont.): carry in the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_fuel_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on fuel and light: cooking fuel, firewood, electricity, kerosene, candles? (Rs)
 notes cons_fuel_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 8.1 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.21-14.22. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier)
 notes cons_fuel_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_fuel_offseason_pm: Meaning: Household fuel and light spending. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra
@@ -1146,10 +1136,12 @@ notes cons_routine_misc_yatra_pm: Module E - Household consumption; origin: aske
 notes cons_routine_misc_yatra_pm: Meaning: Routine consumables (transport and communication asked separately). Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss
 notes cons_routine_misc_yatra_pm: Meaning (cont.): on-site spending during the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a
 notes cons_routine_misc_yatra_pm: Meaning (cont.): single-point 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000).
-notes cons_routine_misc_yatra_pm: Meaning (cont.): During the Yatra season the household itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone
-notes cons_routine_misc_yatra_pm: Meaning (cont.): staying with you here' -- what the respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household',
-notes cons_routine_misc_yatra_pm: Meaning (cont.): since the family is assumed reunited at the usual home by then.
-notes cons_routine_misc_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on soap, toiletries, cleaning goods and other small household items? (Rs)
+notes cons_routine_misc_yatra_pm: Meaning (cont.): REFERENCE UNIT, changed 2026-10-05: both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true
+notes cons_routine_misc_yatra_pm: Meaning (cont.): and was a real fix for a real problem — but it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and
+notes cons_routine_misc_yatra_pm: Meaning (cont.): divided by a single per-capita denominator. The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those
+notes cons_routine_misc_yatra_pm: Meaning (cont.): members, which is a recall limitation to carry in the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they
+notes cons_routine_misc_yatra_pm: Meaning (cont.): were.
+notes cons_routine_misc_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on soap, toiletries, cleaning goods and other small household items? (Rs)
 notes cons_routine_misc_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Sections 9.1-9.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.25-14.27. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier)
 notes cons_routine_misc_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_routine_misc_offseason_pm: Meaning: Routine consumables (transport and communication asked separately). Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss
@@ -1161,11 +1153,12 @@ notes cons_routine_misc_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Se
 notes cons_transport_comm_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_transport_comm_yatra_pm: Meaning: Transport fares and communication charges. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during
 notes cons_transport_comm_yatra_pm: Meaning (cont.): the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or
-notes cons_transport_comm_yatra_pm: Meaning (cont.): 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season
-notes cons_transport_comm_yatra_pm: Meaning (cont.): the household itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' --
-notes cons_transport_comm_yatra_pm: Meaning (cont.): what the respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed
-notes cons_transport_comm_yatra_pm: Meaning (cont.): reunited at the usual home by then.
-notes cons_transport_comm_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on local transport (bus, shared jeep, auto) and phone or internet charges? (Rs)
+notes cons_transport_comm_yatra_pm: Meaning (cont.): 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed
+notes cons_transport_comm_yatra_pm: Meaning (cont.): 2026-10-05: both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a
+notes cons_transport_comm_yatra_pm: Meaning (cont.): real problem — but it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita
+notes cons_transport_comm_yatra_pm: Meaning (cont.): denominator. The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall
+notes cons_transport_comm_yatra_pm: Meaning (cont.): limitation to carry in the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_transport_comm_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on local transport (bus, shared jeep, auto) and phone or internet charges? (Rs)
 notes cons_transport_comm_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Sections 11.1-11.2 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.24/14.28. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier)
 notes cons_transport_comm_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_transport_comm_offseason_pm: Meaning: Transport fares and communication charges. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during
@@ -1178,10 +1171,12 @@ notes cons_rent_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_rent_yatra_pm: Meaning: Household rent. May differ sharply by season for a migrant worker (paid lodging at the Yatra site, an owned or rent-free home elsewhere). Workers here are migrants: the on-site figure at the time of interview would not represent a
 notes cons_rent_yatra_pm: Meaning (cont.): whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season
 notes cons_rent_yatra_pm: Meaning (cont.): split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal
-notes cons_rent_yatra_pm: Meaning (cont.): change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C),
-notes cons_rent_yatra_pm: Meaning (cont.): so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of
-notes cons_rent_yatra_pm: Meaning (cont.): it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home by then.
-notes cons_rent_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on rent for the home (0 if owned, and 0 for any period spent living for free)? (Rs)
+notes cons_rent_yatra_pm: Meaning (cont.): change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you
+notes cons_rent_yatra_pm: Meaning (cont.): here' because the household is often split during the season, which is true and was a real fix for a real problem — but it made the two halves of one pair measure two different units, the on-site group in one and the whole
+notes cons_rent_yatra_pm: Meaning (cont.): household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the
+notes cons_rent_yatra_pm: Meaning (cont.): household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in the write-up, not a reason to measure a different population in each season. Enumerators in the
+notes cons_rent_yatra_pm: Meaning (cont.): first field test also read the two stems as two different questions, which they were.
+notes cons_rent_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on rent for the home (0 if owned, and 0 for any period spent living for free)? (Rs)
 notes cons_rent_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 11.4 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.30. Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (30-day tier)
 notes cons_rent_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_rent_offseason_pm: Meaning: Household rent. May differ sharply by season for a migrant worker (paid lodging at the Yatra site, an owned or rent-free home elsewhere). Workers here are migrants: the on-site figure at the time of interview would not represent a
@@ -1194,11 +1189,12 @@ notes cons_rent_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 11
 notes cons_med_nonhosp_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_med_nonhosp_yatra_pm: Meaning: Routine, non-hospitalisation medical spending. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending
 notes cons_med_nonhosp_yatra_pm: Meaning (cont.): during the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point
-notes cons_med_nonhosp_yatra_pm: Meaning (cont.): 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the
-notes cons_med_nonhosp_yatra_pm: Meaning (cont.): Yatra season the household itself may be split (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you
-notes cons_med_nonhosp_yatra_pm: Meaning (cont.): here' -- what the respondent can actually observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is
-notes cons_med_nonhosp_yatra_pm: Meaning (cont.): assumed reunited at the usual home by then.
-notes cons_med_nonhosp_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on medicine, doctor's or clinic fees and tests, not counting a hospital stay? (Rs)
+notes cons_med_nonhosp_yatra_pm: Meaning (cont.): 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE
+notes cons_med_nonhosp_yatra_pm: Meaning (cont.): UNIT, changed 2026-10-05: both limbs now ask about 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a
+notes cons_med_nonhosp_yatra_pm: Meaning (cont.): real fix for a real problem — but it made the two halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a
+notes cons_med_nonhosp_yatra_pm: Meaning (cont.): single per-capita denominator. The denominator is now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which
+notes cons_med_nonhosp_yatra_pm: Meaning (cont.): is a recall limitation to carry in the write-up, not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_med_nonhosp_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on medicine, doctor's or clinic fees and tests, not counting a hospital stay? (Rs)
 notes cons_med_nonhosp_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 10.3 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.33 (30-day, out-patient)
 notes cons_med_nonhosp_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_med_nonhosp_offseason_pm: Meaning: Routine, non-hospitalisation medical spending. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending
@@ -1208,17 +1204,19 @@ notes cons_med_nonhosp_offseason_pm: Question: In a normal month when the Yatra 
 notes cons_med_nonhosp_offseason_pm: Skip rule: Ask only if spend_differs_by_season = 1
 notes cons_med_nonhosp_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 10.3 (30-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.33 (30-day, out-patient)
 notes cons_packaged_food_yatra_pm: Module E - Household consumption; origin: asked
-notes cons_packaged_food_yatra_pm: Meaning: HCES Section 7.2, packaged processed food -- the other half of Section 7. cons_food_out covers 7.1, SERVED processed food (a meal or tea bought and eaten out); this covers packaged items bought and eaten anywhere, which on a trek
+notes cons_packaged_food_yatra_pm: Meaning: HCES Section 7.2, packaged processed food — the other half of Section 7. cons_food_out covers 7.1, SERVED processed food (a meal or tea bought and eaten out); this covers packaged items bought and eaten anywhere, which on a trek
 notes cons_packaged_food_yatra_pm: Meaning (cont.): route is a real and separate category. Omitting it put our consumption aggregate below the total-MPCE concept the poverty line is calibrated against, which biased poverty UPWARD. Workers here are migrants: the on-site figure at
 notes cons_packaged_food_yatra_pm: Meaning (cont.): the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons,
 notes cons_packaged_food_yatra_pm: Meaning (cont.): matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach
-notes cons_packaged_food_yatra_pm: Meaning (cont.): used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself may be split (the respondent here, some family elsewhere, linked by the
-notes cons_packaged_food_yatra_pm: Meaning (cont.): remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can actually observe -- rather than 'your household', which they may not
-notes cons_packaged_food_yatra_pm: Meaning (cont.): fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home by then.
-notes cons_packaged_food_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on biscuits, namkeen, chips, packaged snacks, cold drinks or bottled water? (Rs)
+notes cons_packaged_food_yatra_pm: Meaning (cont.): used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both limbs now ask about 'your household'. The Yatra-season limb used to ask about
+notes cons_packaged_food_yatra_pm: Meaning (cont.): 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem — but it made the two halves of one pair measure two different units, the on-site
+notes cons_packaged_food_yatra_pm: Meaning (cont.): group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The denominator is now hhsize on both sides and the unit is the same on both
+notes cons_packaged_food_yatra_pm: Meaning (cont.): sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in the write-up, not a reason to measure a different population in each
+notes cons_packaged_food_yatra_pm: Meaning (cont.): season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_packaged_food_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on biscuits, namkeen, chips, packaged snacks, cold drinks or bottled water? (Rs)
 notes cons_packaged_food_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 7.2 (7-day in HCES; usual monthly here, as for every other seasonal item)
 notes cons_packaged_food_offseason_pm: Module E - Household consumption; origin: asked
-notes cons_packaged_food_offseason_pm: Meaning: HCES Section 7.2, packaged processed food -- the other half of Section 7. cons_food_out covers 7.1, SERVED processed food (a meal or tea bought and eaten out); this covers packaged items bought and eaten anywhere, which on a trek
+notes cons_packaged_food_offseason_pm: Meaning: HCES Section 7.2, packaged processed food — the other half of Section 7. cons_food_out covers 7.1, SERVED processed food (a meal or tea bought and eaten out); this covers packaged items bought and eaten anywhere, which on a trek
 notes cons_packaged_food_offseason_pm: Meaning (cont.): route is a real and separate category. Omitting it put our consumption aggregate below the total-MPCE concept the poverty line is calibrated against, which biased poverty UPWARD. Workers here are migrants: the on-site figure at
 notes cons_packaged_food_offseason_pm: Meaning (cont.): the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is asked as a usual monthly amount for each of the two seasons,
 notes cons_packaged_food_offseason_pm: Meaning (cont.): matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual month' figures, following the usual/typical recall approach
@@ -1228,17 +1226,19 @@ notes cons_packaged_food_offseason_pm: Skip rule: Ask only if spend_differs_by_s
 notes cons_packaged_food_offseason_pm: Source: HCES 2022-23, MoSPI Appendix A, Section 7.2 (7-day in HCES; usual monthly here, as for every other seasonal item)
 notes cons_pan_tobacco_yatra_pm: Module E - Household consumption; origin: asked
 notes cons_pan_tobacco_yatra_pm: Meaning: HCES Section 12 (12.1 pan, 12.2 tobacco, 12.3 intoxicants), asked here as ONE item rather than three: the three-way split serves HCES's item-code detail, not a poverty aggregate, and one figure is easier to answer and harder to
-notes cons_pan_tobacco_yatra_pm: Meaning (cont.): double-count. NOT counted as food -- HCES keeps pan/tobacco/intoxicants as its own MPCE category, so it enters total_cons_pm directly and not cons_food_pm. A sensitive item: the enumerator records what is offered and does not
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): double-count. NOT counted as food — HCES keeps pan/tobacco/intoxicants as its own MPCE category, so it enters total_cons_pm directly and not cons_food_pm. A sensitive item: the enumerator records what is offered and does not
 notes cons_pan_tobacco_yatra_pm: Meaning (cont.): press. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is
 notes cons_pan_tobacco_yatra_pm: Meaning (cont.): asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual
-notes cons_pan_tobacco_yatra_pm: Meaning (cont.): month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). During the Yatra season the household itself may be split
-notes cons_pan_tobacco_yatra_pm: Meaning (cont.): (the respondent here, some family elsewhere, linked by the remittances already asked in Module C), so the Yatra-season question asks about spending by 'you and anyone staying with you here' -- what the respondent can actually
-notes cons_pan_tobacco_yatra_pm: Meaning (cont.): observe -- rather than 'your household', which they may not fully know during the season when part of it is elsewhere. The off-season question keeps 'your household', since the family is assumed reunited at the usual home by then.
-notes cons_pan_tobacco_yatra_pm: Question: In a normal month during the Yatra season, how much do you (and anyone staying with you here) spend on pan, gutka, bidi, cigarettes, tobacco or alcohol? (Rs)
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000). REFERENCE UNIT, changed 2026-10-05: both limbs now ask about
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): 'your household'. The Yatra-season limb used to ask about 'you and anyone staying with you here' because the household is often split during the season, which is true and was a real fix for a real problem — but it made the two
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): halves of one pair measure two different units, the on-site group in one and the whole household in the other, which the annual weighting then averaged together and divided by a single per-capita denominator. The denominator is
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): now hhsize on both sides and the unit is the same on both sides. Where part of the household is elsewhere the respondent is reporting with less certainty about those members, which is a recall limitation to carry in the write-up,
+notes cons_pan_tobacco_yatra_pm: Meaning (cont.): not a reason to measure a different population in each season. Enumerators in the first field test also read the two stems as two different questions, which they were.
+notes cons_pan_tobacco_yatra_pm: Question: In a normal month during the Yatra season, how much does your household spend on pan, gutka, bidi, cigarettes, tobacco or alcohol? (Rs)
 notes cons_pan_tobacco_yatra_pm: Source: HCES 2022-23, MoSPI Appendix A, Sections 12.1-12.3 (7-day in HCES; usual monthly here, and combined into one figure)
 notes cons_pan_tobacco_offseason_pm: Module E - Household consumption; origin: asked
 notes cons_pan_tobacco_offseason_pm: Meaning: HCES Section 12 (12.1 pan, 12.2 tobacco, 12.3 intoxicants), asked here as ONE item rather than three: the three-way split serves HCES's item-code detail, not a poverty aggregate, and one figure is easier to answer and harder to
-notes cons_pan_tobacco_offseason_pm: Meaning (cont.): double-count. NOT counted as food -- HCES keeps pan/tobacco/intoxicants as its own MPCE category, so it enters total_cons_pm directly and not cons_food_pm. A sensitive item: the enumerator records what is offered and does not
+notes cons_pan_tobacco_offseason_pm: Meaning (cont.): double-count. NOT counted as food — HCES keeps pan/tobacco/intoxicants as its own MPCE category, so it enters total_cons_pm directly and not cons_food_pm. A sensitive item: the enumerator records what is offered and does not
 notes cons_pan_tobacco_offseason_pm: Meaning (cont.): press. Workers here are migrants: the on-site figure at the time of interview would not represent a whole year, and asking about the 'usual homeplace' alone would miss on-site spending during the Yatra season. So each item is
 notes cons_pan_tobacco_offseason_pm: Meaning (cont.): asked as a usual monthly amount for each of the two seasons, matched to the Yatra-season/off-season split already used for the work calendar (Module B/C). This replaces a single-point 30-day or 7-day actual recall with two 'usual
 notes cons_pan_tobacco_offseason_pm: Meaning (cont.): month' figures, following the usual/typical recall approach used where recall decay or seasonal change is the bigger concern (Beegle et al. 2012; Deaton and Grosh 2000).
@@ -1255,17 +1255,12 @@ notes cons_education_12m: Meaning: Annual education spending; already spans both
 notes cons_education_12m: Question: In the last 12 months, how much on education: fees, books, uniforms, tuition? (Rs)
 notes cons_education_12m: Source: HCES 2022-23, MoSPI Appendix A, Section 10.1 (365-day). IHDS-II Income and Social Capital Questionnaire, Q14 14.35-14.37 (365-day, same items). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 asks school fees
 notes cons_education_12m: Source (cont.): inside its education/roster module, per child, not as a household total, so it is not directly comparable
-notes cons_medical_hosp_12m: Module E - Household consumption; origin: asked
-notes cons_medical_hosp_12m: Meaning: Hospitalisation spending; the lumpy, infrequent part of medical spending, at a 12-month recall that already spans both seasons. Together with the non-hospitalisation item above, this is the out-of-pocket health measure.
-notes cons_medical_hosp_12m: Question: In the last 12 months, how much did your household pay for any hospital admission or stay? (Rs, 0 if none)
-notes cons_medical_hosp_12m: Source: HCES 2022-23, MoSPI Appendix A, Section 10.2 (365-day, hospitalisation). IHDS-II Income and Social Capital Questionnaire, Q14 14.34 (365-day, in-patient). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 instead
-notes cons_medical_hosp_12m: Source (cont.): uses one combined 6-month medical item (less detail); we follow the matching HCES/IHDS split
 notes cons_durables_12m: Module E - Household consumption; origin: asked
 notes cons_durables_12m: Meaning: Annual durables spending; already spans both seasons, so asked once.
 notes cons_durables_12m: Question: In the last 12 months, how much on durable goods: furniture, utensils, cooking appliances, phone, jewellery or ornaments, bicycle or vehicle parts? (Rs)
 notes cons_durables_12m: Source: HCES 2022-23, MoSPI Appendix A, Section 14 (365-day, 10 sub-groups). IHDS-II Income and Social Capital Questionnaire, Q14 14.40-14.48 (365-day). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 (12-month tier:
 notes cons_durables_12m: Source (cont.): durables, appliances, building materials). All three agree on the 12-month recall; insurance premiums, which IHDS (14.50) and the Nigeria survey (items 510-513) count here, are excluded, following HCES and standard national-
-notes cons_durables_12m: Source (cont.): accounts practice (insurance is a financial item, not consumption) -- premiums are covered instead by the insurance items in Module G
+notes cons_durables_12m: Source (cont.): accounts practice (insurance is a financial item, not consumption) — premiums are covered instead by the insurance items in Module G
 notes floor_material: Module F - Housing, amenities and assets; origin: asked
 notes floor_material: Meaning: Self-reported, not enumerator-observed: by design the interview happens away from the respondent's usual home (Kedarnath route sites, not their native place), so the enumerator cannot see it.
 notes floor_material: Question: What is the main material of the floor at your usual home?
@@ -1280,9 +1275,8 @@ notes wall_material: Meaning (cont.): if the FLOOR is natural material OR the RO
 notes wall_material: Question: What are the walls of your usual home mainly made of?
 notes wall_material: Source: NITI Aayog National MPI housing indicator (wall limb)
 notes accom_type_here: Module F - Housing, amenities and assets; origin: asked
-notes accom_type_here: Meaning: Accommodation at the WORKSITE, which nothing else in this module describes -- floor_material, roof_material and the rest are about the usual home, and for a seasonal migrant that is not where he spends six months of the year.
-notes accom_type_here: Meaning (cont.): Feeds the security and social inclusion dimension of the Lyons et al. (2023) MLI, whose settlement-conditions indicator exists for exactly this case. Deprived at codes 4, 5 and 7: sleeping at the workplace, under canvas, or in the
-notes accom_type_here: Meaning (cont.): open.
+notes accom_type_here: Meaning: Accommodation at the WORKSITE, which nothing else in this module describes — floor_material, roof_material and the rest are about the usual home, and for a seasonal migrant that is not where he spends six months of the year. Feeds
+notes accom_type_here: Meaning (cont.): the security and social inclusion dimension of the Lyons et al. (2023) MLI, whose settlement-conditions indicator exists for exactly this case. Deprived at codes 4, 5 and 7: sleeping at the workplace, under canvas, or in the open.
 notes accom_type_here: Question: While you are here for the season, where do you sleep?
 notes accom_type_here: Source: Lyons et al. 2023, Table 2 (area/settlement conditions), adapted to a labour-migrant setting
 notes electricity: Module F - Housing, amenities and assets; origin: asked
@@ -1301,7 +1295,7 @@ notes drinking_water: Meaning (cont.): unimproved, following the JMP/NFHS taxono
 notes drinking_water: Question: What is your main source of drinking water at your usual home?
 notes drinking_water: Source: NITI Aayog National MPI drinking-water indicator (JMP improved/unimproved taxonomy)
 notes water_on_premises: Module F - Housing, amenities and assets; origin: asked
-notes water_on_premises: Meaning: On-premises vs. fetched. NITI counts even an IMPROVED source as deprived when it is more than a 30-minute round trip away, so source alone cannot decide the indicator -- this and the next item supply the missing limb.
+notes water_on_premises: Meaning: On-premises vs. fetched. NITI counts even an IMPROVED source as deprived when it is more than a 30-minute round trip away, so source alone cannot decide the indicator — this and the next item supply the missing limb.
 notes water_on_premises: Question: Is the drinking water available at the house itself?
 notes water_on_premises: Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)
 notes water_fetch_minutes: Module F - Housing, amenities and assets; origin: asked
@@ -1311,76 +1305,34 @@ notes water_fetch_minutes: Skip rule: Ask only if water_on_premises = 0
 notes water_fetch_minutes: Source: NITI Aayog National MPI drinking-water indicator (30-minute round-trip rule)
 notes cooking_fuel: Module F - Housing, amenities and assets; origin: asked
 notes cooking_fuel: Meaning: Self-reported, not enumerator-observed: by design the interview happens away from the respondent's usual home (Kedarnath route sites, not their native place), so the enumerator cannot see it. Replaces a yes/no LPG question. NITI
-notes cooking_fuel: Meaning (cont.): Aayog's indicator names the dirty fuels explicitly -- dung, agricultural crops, shrubs, wood, charcoal or coal -- so a fuel LIST is required to apply it; a binary cannot. NOTE on kerosene: NITI's list does not name it, so it is
-notes cooking_fuel: Meaning (cont.): NOT counted as deprived here, although the global MPI does count it. Recorded separately so either rule can be applied later.
+notes cooking_fuel: Meaning (cont.): Aayog's indicator names the dirty fuels explicitly — dung, agricultural crops, shrubs, wood, charcoal or coal — so a fuel LIST is required to apply it; a binary cannot. NOTE on kerosene: NITI's list does not name it, so it is NOT
+notes cooking_fuel: Meaning (cont.): counted as deprived here, although the global MPI does count it. Recorded separately so either rule can be applied later.
 notes cooking_fuel: Question: What does your household mainly use to cook at your usual home?
 notes cooking_fuel: Source: NITI Aayog National MPI cooking-fuel indicator (its own list of dirty fuels)
-notes owns_tv: Module F - Housing, amenities and assets; origin: asked
-notes owns_tv: Meaning: Durable asset.
-notes owns_tv: Question: Does your household own: a television?
-notes owns_tv: Source: NITI Aayog National MPI assets indicator
-notes owns_radio: Module F - Housing, amenities and assets; origin: asked
-notes owns_radio: Meaning: Durable asset.
-notes owns_radio: Question: ... a radio?
-notes owns_radio: Source: NITI Aayog National MPI assets indicator
-notes owns_bicycle: Module F - Housing, amenities and assets; origin: asked
-notes owns_bicycle: Meaning: Durable asset.
-notes owns_bicycle: Question: ... a bicycle?
-notes owns_bicycle: Source: NITI Aayog National MPI assets indicator
-notes owns_motorcycle: Module F - Housing, amenities and assets; origin: asked
-notes owns_motorcycle: Meaning: Durable asset.
-notes owns_motorcycle: Question: ... a motorcycle or scooter?
-notes owns_motorcycle: Source: NITI Aayog National MPI assets indicator
-notes owns_car: Module F - Housing, amenities and assets; origin: asked
-notes owns_car: Meaning: Any car, jeep or truck, whether used for work or not. NITI treats car-or-truck ownership as its own limb, separate from the small-asset count, so it must cover work vehicles too -- owns_work_vehicle in the productive-asset block
-notes owns_car: Meaning (cont.): may overlap with this by design.
-notes owns_car: Question: ... a car, jeep or truck?
-notes owns_car: Source: NITI Aayog National MPI assets indicator (car or truck limb)
-notes owns_phone: Module F - Housing, amenities and assets; origin: asked
-notes owns_phone: Meaning: Any phone in the household. On NITI's asset list and previously not asked: smartphone_owned in Module G is the respondent's own smartphone, a digital-inclusion measure, which is a different thing from whether the household owns a
-notes owns_phone: Meaning (cont.): telephone at all.
-notes owns_phone: Question: ... a telephone of any kind, mobile or landline?
-notes owns_phone: Source: NITI Aayog National MPI assets indicator
-notes owns_computer: Module F - Housing, amenities and assets; origin: asked
-notes owns_computer: Meaning: On NITI's asset list and previously not asked. Expected to be near-zero in this population, which is itself the finding.
-notes owns_computer: Question: ... a computer or laptop?
-notes owns_computer: Source: NITI Aayog National MPI assets indicator
-notes owns_animal_cart: Module F - Housing, amenities and assets; origin: asked
-notes owns_animal_cart: Meaning: On NITI's asset list and previously not asked.
-notes owns_animal_cart: Question: ... a cart pulled by an animal?
-notes owns_animal_cart: Source: NITI Aayog National MPI assets indicator
-notes owns_fridge: Module F - Housing, amenities and assets; origin: asked
-notes owns_fridge: Meaning: Durable asset.
-notes owns_fridge: Question: ... a refrigerator?
-notes owns_fridge: Source: NITI Aayog National MPI assets indicator
 notes land_unit: Module F - Housing, amenities and assets; origin: asked
 notes land_unit: Meaning: Asked before the amount because a hill household thinks in nali and converting to acres in their head is an error the instrument should absorb, not create. Stata converts to acres for the asset index.
-notes land_unit: Question: In what unit do you count your land -- nali, bigha, acres or hectares?
+notes land_unit: Question: In what unit do you count your land — nali, bigha, acres or hectares?
 notes land_unit: Source: Project design (local land units, Uttarakhand)
 notes land_cultivable_acres: Module F - Housing, amenities and assets; origin: asked
-notes land_cultivable_acres: Meaning: Cultivable land only. The old wording said 'agricultural land' without excluding the homestead, so a landless household with a house on a tenth of an acre could report land it cannot farm -- and this variable now gates the crop-
+notes land_cultivable_acres: Meaning: Cultivable land only. The old wording said 'agricultural land' without excluding the homestead, so a landless household with a house on a tenth of an acre could report land it cannot farm — and this variable now gates the crop-
 notes land_cultivable_acres: Meaning (cont.): insurance question and stands in for productive capacity.
 notes land_cultivable_acres: Question: And how much CULTIVABLE land is that? Do not count the land the house stands on.
 notes land_cultivable_acres: Source: Chaudhuri et al. 2002 asset covariate
-notes owns_cow_buffalo: Module F - Housing, amenities and assets; origin: asked
-notes owns_cow_buffalo: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
-notes owns_cow_buffalo: Question: Does your household own any cows or buffaloes?
-notes owns_cow_buffalo: Source: Chaudhuri et al. 2002 asset covariate
-notes owns_goat_sheep: Module F - Housing, amenities and assets; origin: asked
-notes owns_goat_sheep: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
-notes owns_goat_sheep: Question: Does your household own any goats or sheep?
-notes owns_goat_sheep: Source: Chaudhuri et al. 2002 asset covariate
-notes owns_pony_mule: Module F - Housing, amenities and assets; origin: asked
-notes owns_pony_mule: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
-notes owns_pony_mule: Question: Does your household own any ponies or mules?
-notes owns_pony_mule: Source: Project design (pilot livelihood survey)
-notes owns_shop_stall: Module F - Housing, amenities and assets; origin: asked
-notes owns_shop_stall: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
-notes owns_shop_stall: Question: Does your household own a shop or stall that you use to earn?
-notes owns_shop_stall: Source: Chaudhuri et al. 2002 asset covariate
+notes assets_owned: Module F - Housing, amenities and assets; origin: asked
+notes assets_owned: Meaning: The nine assets NITI's Assets indicator is defined on, asked as one check-all instead of nine yes/no screens (changed 2026-10-05). Split back into owns_tv, owns_radio, owns_bicycle, owns_motorcycle, owns_car, owns_phone,
+notes assets_owned: Meaning (cont.): owns_computer, owns_animal_cart and owns_fridge in Stata, so mpi_asset_count and mpi_asset_deprived are computed on exactly the same items as before and the rows already collected as nine separate columns remain readable.
+notes assets_owned: Question: Which of these does your household own? Read the list out and check every one they say: television, radio, bicycle, motorcycle or scooter, car/jeep/truck, telephone of any kind, computer or laptop, animal cart, refrigerator.
+notes assets_owned: Skip rule: May be left blank if the household owns none of them
+notes assets_owned: Source: NITI Aayog National MPI, Assets (weight 1/21)
+notes livestock_owned: Module F - Housing, amenities and assets; origin: asked
+notes livestock_owned: Meaning: Three livestock classes as one check-all (changed 2026-10-05), split back into owns_cow_buffalo, owns_goat_sheep and owns_pony_mule in Stata. Kept as three CLASSES and not as head counts: a count treats a goat and a buffalo as the
+notes livestock_owned: Meaning (cont.): same unit of wealth, which they are not, and the pony class is the one that matters here because it is the asset a ropeway devalues.
+notes livestock_owned: Question: And which of these animals does your household own? Cows or buffaloes, goats or sheep, ponies or mules.
+notes livestock_owned: Skip rule: May be left blank if the household owns no animals
+notes livestock_owned: Source: Chaudhuri et al. 2002 asset covariate; pony/mule class is this project's exposure variable
 notes owns_work_vehicle: Module F - Housing, amenities and assets; origin: asked
 notes owns_work_vehicle: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
-notes owns_work_vehicle: Question: Does your household own a vehicle you use to earn (for example a jeep, truck or taxi)?
+notes owns_work_vehicle: Question: Do you use a vehicle to earn money — for example hauling goods, transporting people, or running a taxi? It does not have to be yours.
 notes owns_work_vehicle: Source: Chaudhuri et al. 2002 asset covariate
 notes owns_work_equipment: Module F - Housing, amenities and assets; origin: asked
 notes owns_work_equipment: Meaning: A count would treat a goat and a buffalo, or a jeep and a hand-cart, as equally valuable productive assets, which they are not; a list of binaries at least separates asset types, even without a value weight.
@@ -1406,8 +1358,8 @@ notes credit_source: Question: Who was the main lender?
 notes credit_source: Skip rule: Ask only if took_loan_12m = 1
 notes credit_source: Source: VEP adaptive-capacity covariate (lender type)
 notes loan_purpose: Module G - Finance, insurance and schemes; origin: asked
-notes loan_purpose: Meaning: Purpose separates a loan that buys a pony -- an investment in the livelihood -- from one that covers a hospital bill or a wedding, which is distress borrowing. The same outstanding balance means opposite things in the two cases,
-notes loan_purpose: Meaning (cont.): and nothing in the instrument could tell them apart.
+notes loan_purpose: Meaning: Purpose separates a loan that buys a pony — an investment in the livelihood — from one that covers a hospital bill or a wedding, which is distress borrowing. The same outstanding balance means opposite things in the two cases, and
+notes loan_purpose: Meaning (cont.): nothing in the instrument could tell them apart.
 notes loan_purpose: Question: What did you take it for?
 notes loan_purpose: Skip rule: Ask only if took_loan_12m = 1
 notes loan_purpose: Source: Project design (investment against distress borrowing)
@@ -1417,12 +1369,12 @@ notes loan_amount_borrowed: Question: How much did you borrow in total? (Rs)
 notes loan_amount_borrowed: Skip rule: Ask only if took_loan_12m = 1
 notes loan_amount_borrowed: Source: Project design (loan size, for the debt-burden measures)
 notes loan_amount: Module G - Finance, insurance and schemes; origin: asked
-notes loan_amount: Meaning: Outstanding DEBT STOCK, not the amount borrowed. The instrument previously recorded who lent but never how much is owed -- which is the quantity that decides whether a shock turns into poverty.
+notes loan_amount: Meaning: Outstanding DEBT STOCK, not the amount borrowed. The instrument previously recorded who lent but never how much is owed — which is the quantity that decides whether a shock turns into poverty.
 notes loan_amount: Question: How much of that loan is still left to repay? (Rs)
 notes loan_amount: Skip rule: Ask only if took_loan_12m = 1
 notes loan_amount: Source: Islam and Chowdhury 2025 (financial distress and household vulnerability to poverty)
 notes pays_interest: Module G - Finance, insurance and schemes; origin: asked
-notes pays_interest: Meaning: Gate for the rate question. The rate item previously read '0 if none, leave blank if not known' -- two different 'if not' branches in one instruction -- which is unanswerable. Interest-free borrowing from relatives is common, so
+notes pays_interest: Meaning: Gate for the rate question. The rate item previously read '0 if none, leave blank if not known' — two different 'if not' branches in one instruction — which is unanswerable. Interest-free borrowing from relatives is common, so
 notes pays_interest: Meaning (cont.): this is a real branch, not a formality.
 notes pays_interest: Question: Do you pay interest on it?
 notes pays_interest: Skip rule: Ask only if took_loan_12m = 1
@@ -1434,132 +1386,112 @@ notes loan_interest_per100_pm: Meaning (cont.): percentage rate is not asked dir
 notes loan_interest_per100_pm: Question: On every 100 rupees you borrowed, about how much interest do you pay in a month? (Rs; 0 if none, leave blank if not known)
 notes loan_interest_per100_pm: Skip rule: Ask only if took_loan_12m = 1; may be left blank
 notes loan_interest_per100_pm: Source: Project design (informal-credit pricing as locally quoted)
-notes loan_against_asset: Module G - Finance, insurance and schemes; origin: asked
-notes loan_against_asset: Meaning: Secured vs. unsecured. A secured loan turns a productive asset into collateral, so one shock can cost the household both the repayment AND its means of earning -- the asset-smoothing mechanism the instrument could not otherwise
-notes loan_against_asset: Meaning (cont.): see.
-notes loan_against_asset: Question: Did you have to give something as security for it -- an animal, a vehicle, jewellery, land or your business?
-notes loan_against_asset: Skip rule: Ask only if took_loan_12m = 1
-notes loan_against_asset: Source: Carter and Zimmerman 2000; Chiwaula et al. 2011 (asset-based vulnerability)
 notes loan_collateral: Module G - Finance, insurance and schemes; origin: asked
-notes loan_collateral: Meaning: WHAT was pledged, not merely whether something was. A binary cannot tell a shop pledging its stock -- ordinary commerce -- from a household pledging its jewellery or its only buffalo, which is distress. The type is the signal; the
+notes loan_collateral: Meaning: WHAT was pledged, not merely whether something was. A binary cannot tell a shop pledging its stock — ordinary commerce — from a household pledging its jewellery or its only buffalo, which is distress. The type is the signal; the
 notes loan_collateral: Meaning (cont.): fact of collateral is not.
-notes loan_collateral: Question: What did you have to give as security?
-notes loan_collateral: Skip rule: Ask only if loan_against_asset = 1
+notes loan_collateral: Question: Did you have to give anything as security for it? If so, what — jewellery, land, animals, a vehicle, shop stock, a house, or something else?
+notes loan_collateral: Skip rule: Ask only if took_loan_12m = 1
 notes loan_collateral: Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003 (asset-based coping)
-notes n_health_insured: Module G - Finance, insurance and schemes; origin: asked
-notes n_health_insured: Meaning: A COUNT, not a category. Health, life and crop cover are not alternatives -- a household can hold all three -- yet the old single categorical forced a choice and dumped any household with two into an uninformative 'more than one'.
-notes n_health_insured: Meaning (cont.): A count also shows PARTIAL coverage, which no binary can.
-notes n_health_insured: Question: How many people in your household are covered by any health insurance or health scheme, including government ones? (0 if none)
-notes n_health_insured: Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023
-notes n_life_insured: Module G - Finance, insurance and schemes; origin: asked
-notes n_life_insured: Meaning: Count of life-insured members, asked separately from health cover for the reason above.
-notes n_life_insured: Question: How many people in your household have life insurance? (0 if none)
-notes n_life_insured: Source: Standard household-survey item
-notes has_crop_insurance: Module G - Finance, insurance and schemes; origin: asked
-notes has_crop_insurance: Meaning: Asked only of households with cultivable land -- it is meaningless for the rest, and the old categorical offered it to everyone.
-notes has_crop_insurance: Question: Is your crop insured?
-notes has_crop_insurance: Skip rule: Ask only if land_cultivable_acres > 0
-notes has_crop_insurance: Source: Standard household-survey item
+notes insurance_held: Module G - Finance, insurance and schemes; origin: asked
+notes insurance_held: Meaning: Check-all 2026-10-07, replacing three near-identical screens (count of health-insured members, count of life-insured members, yes/no on crop insurance). Trades the per-member headcount for one simpler screen; health_insured_any
+notes insurance_held: Meaning (cont.): and life_insured_any below are now household-level binaries, not counts. Crop insurance needs no land gate here: a household with no land simply does not tick it.
+notes insurance_held: Question: Which of these does anyone in your household have? Health insurance or scheme (including government ones); life insurance; crop insurance. Check every one that applies.
+notes insurance_held: Skip rule: May be left blank if the household holds none of these
+notes insurance_held: Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023
 notes govt_any_benefit: Module G - Finance, insurance and schemes; origin: asked
 notes govt_any_benefit: Meaning: Whether the household touched the public safety net at all. The enumerator hint carries the eight-scheme probe list that is read out; the names themselves go in the free-text item below. A No here, AFTER the list has been read, is
-notes govt_any_benefit: Meaning (cont.): a real No -- which is the job the old code 10 was doing.
+notes govt_any_benefit: Meaning (cont.): a real No — which is the job the old code 10 was doing.
 notes govt_any_benefit: Question: In the last 12 months, did your household get anything from any government scheme? Read the list out before you take an answer.
 notes govt_any_benefit: Source: Project design; scheme names as administered in Uttarakhand
 notes govt_schemes_detail: Module G - Finance, insurance and schemes; origin: asked
 notes govt_schemes_detail: Meaning: Verbatim scheme names, office-coded afterwards against the Uttarakhand scheme list. IMPORTANT ITEM: this is now the ONLY place the identity of a benefit is recorded, so an answer left at 'a government scheme' loses the distinction
-notes govt_schemes_detail: Meaning (cont.): between a ration card, a widow pension and MGNREGA wages -- which protect against entirely different things. Required when govt_any_benefit = 1, unlike the other verbatim fields, for that reason.
+notes govt_schemes_detail: Meaning (cont.): between a ration card, a widow pension and MGNREGA wages — which protect against entirely different things. Required when govt_any_benefit = 1, unlike the other verbatim fields, for that reason.
 notes govt_schemes_detail: Question: Which ones? Write down every scheme they name, in their own words.
 notes govt_schemes_detail: Skip rule: Ask only if govt_any_benefit = 1
 notes govt_schemes_detail: Source: Project design; coded in the office against the Uttarakhand scheme list
-notes ration_portable_here: Module G - Finance, insurance and schemes; origin: asked
-notes ration_portable_here: Meaning: Portability of the food entitlement under One Nation One Ration Card, and the closest real analogue to the legal-residency indicator in Lyons et al. (2023): a migrant whose entitlement works only at his home place is outside the
-notes ration_portable_here: Meaning (cont.): food safety net for the half of the year he is earning, which is exactly when a shock would bite. UNGATED as of 2026-10-01: it was gated on the ration-card code in the scheme check-all, and that code no longer exists as a code --
-notes ration_portable_here: Meaning (cont.): so 'no ration card' is an OPTION here instead of a gate. One question in place of a question plus a gate, and the non-cardholder is now recorded explicitly rather than by absence.
-notes ration_portable_here: Question: Can you draw your ration here, or only at your home place?
-notes ration_portable_here: Source: Lyons et al. 2023, Table 2 (legal residency), adapted; One Nation One Ration Card
-notes smartphone_owned: Module G - Finance, insurance and schemes; origin: asked
-notes smartphone_owned: Meaning: Smartphone ownership.
-notes smartphone_owned: Question: Do you own a smartphone?
-notes smartphone_owned: Source: VEP adaptive-capacity covariate; STEP digital items
-notes uses_digital_payment: Module G - Finance, insurance and schemes; origin: asked
-notes uses_digital_payment: Meaning: Binary. The old never/sometimes/often scale asked respondents to rate their own frequency on an undefined scale; 'sometimes' and 'often' are not comparable between two people and carry nothing a binary does not.
-notes uses_digital_payment: Question: Do you ever use UPI or another way of paying by phone?
-notes uses_digital_payment: Source: VEP adaptive-capacity covariate; STEP digital items
-notes n_can_transact_online: Module G - Finance, insurance and schemes; origin: asked
-notes n_can_transact_online: Meaning: Household digital capability rather than the respondent's own use: it says who in the household can actually move money, and therefore something about who controls it.
-notes n_can_transact_online: Question: How many people in your household can make a payment by phone themselves, without help? (0 if none)
-notes n_can_transact_online: Source: Project design (intra-household financial capability)
 notes morbidity_15d: Module H - Health; origin: asked
 notes morbidity_15d: Meaning: Illness in the last 15 days.
 notes morbidity_15d: Question: In the last 15 days, was anyone in your household ill?
+notes morbidity_15d: Skip rule: May be left blank
 notes morbidity_15d: Source: NSS health module (15-day recall) [source not held by this project; citation unverified as of 2026-09-28]
 notes morbidity_coping_15d: Module H - Health; origin: asked
 notes morbidity_coping_15d: Meaning: Coping response to the illness reported above; same coping list as the Module I shock question.
 notes morbidity_coping_15d: Question: How did the household mainly cope with the cost of this: used savings; borrowed money; sold or pawned assets; cut other consumption; got help from relatives or community; or something else?
-notes morbidity_coping_15d: Skip rule: Ask only if morbidity_15d = 1
+notes morbidity_coping_15d: Skip rule: Ask only if morbidity_15d = 1. May be left blank
 notes morbidity_coping_15d: Source: Project design (a reported illness with no cost/coping follow-up said nothing about its burden)
 notes morbidity_cost_15d: Module H - Health; origin: asked
 notes morbidity_cost_15d: Meaning: Out-of-pocket cost of the illness reported above.
 notes morbidity_cost_15d: Question: About how much did the household spend on this in the last 15 days (medicine, doctor or clinic fees, travel for care)? (Rs)
-notes morbidity_cost_15d: Skip rule: Ask only if morbidity_15d = 1
+notes morbidity_cost_15d: Skip rule: Ask only if morbidity_15d = 1. May be left blank
 notes morbidity_cost_15d: Source: Project design
 notes func_limitation: Module H - Health; origin: asked
 notes func_limitation: Meaning: Washington Group Short Set item 3, asked verbatim with its own four-point scale and deprived at the standard cutoff of a lot of difficulty or cannot do it at all. One item rather than the full six, and the mobility one on purpose:
 notes func_limitation: Meaning (cont.): this workforce carries loads and people up a 16-kilometre climb, so walking and climbing is both the function that matters most to the livelihood and the one most likely to be lost. Gives the Lyons et al. health dimension a
 notes func_limitation: Meaning (cont.): disability indicator, which the NITI MPI has none of, and enters the VEP models as a sensitivity covariate. State the limit in the write-up: one item is not the WG-SS and cannot carry its prevalence estimate.
 notes func_limitation: Question: Do you have difficulty walking or climbing steps?
+notes func_limitation: Skip rule: May be left blank
 notes func_limitation: Source: Washington Group on Disability Statistics, Short Set item 3 (mobility), verbatim; Lyons et al. 2023 health dimension
 notes hospitalization_365d: Module H - Health; origin: asked
 notes hospitalization_365d: Meaning: Hospital admission.
 notes hospitalization_365d: Question: In the last 12 months, was anyone in your household admitted to hospital overnight?
+notes hospitalization_365d: Skip rule: May be left blank
 notes hospitalization_365d: Source: NSS health module (365-day recall) [source not held by this project; citation unverified as of 2026-09-28]
+notes cons_medical_hosp_12m: Module H - Health; origin: asked
+notes cons_medical_hosp_12m: Meaning: Hospitalisation spending; the lumpy, infrequent part of medical spending, at a 12-month recall that already spans both seasons. Together with the non-hospitalisation item in Module E, this is the out-of-pocket health measure.
+notes cons_medical_hosp_12m: Meaning (cont.): Moved next to hospitalization_365d (2026-10-07), which it belongs with on the interview screen; the consumption total it feeds is unchanged, since that total reads from the dictionary's formulas, not from module order.
+notes cons_medical_hosp_12m: Question: In the last 12 months, how much did your household pay for any hospital admission or stay? (Rs, 0 if none)
+notes cons_medical_hosp_12m: Source: HCES 2022-23, MoSPI Appendix A, Section 10.2 (365-day, hospitalisation). IHDS-II Income and Social Capital Questionnaire, Q14 14.34 (365-day, in-patient). Nigeria GHS-Panel Wave 3, Household Questionnaire, Sections 10B/11 instead
+notes cons_medical_hosp_12m: Source (cont.): uses one combined 6-month medical item (less detail); we follow the matching HCES/IHDS split
 notes health_access_barrier_3m: Module H - Health; origin: asked
 notes health_access_barrier_3m: Meaning: Healthcare-access barrier (unmet need), distinct from having insurance cover.
 notes health_access_barrier_3m: Question: In the last 3 months, was there a time when someone in your household needed medical care but could not get it?
+notes health_access_barrier_3m: Skip rule: May be left blank
 notes health_access_barrier_3m: Source: VASyR 2025 barriers_health_case_access_phc_m (primary-care access barriers); Lyons et al. 2023 Table 2 indicator 2 'healthcare access'
 notes child_death_5y: Module H - Health; origin: asked
-notes child_death_5y: Meaning: NITI's Child and Adolescent Mortality indicator, verbatim in its own terms. One question, no roster needed. NITI Aayog's Health dimension is three indicators -- Nutrition (1/6), Child and Adolescent Mortality (1/12) and Maternal
-notes child_death_5y: Meaning (cont.): Health (1/12) -- and this instrument previously had NONE of them, substituting a project-built health-access measure. Two of the three need no household roster and are added here. NUTRITION CANNOT BE COLLECTED: NITI defines it on
+notes child_death_5y: Meaning: NITI's Child and Adolescent Mortality indicator, verbatim in its own terms. One question, no roster needed. NITI Aayog's Health dimension is three indicators — Nutrition (1/6), Child and Adolescent Mortality (1/12) and Maternal
+notes child_death_5y: Meaning (cont.): Health (1/12) — and this instrument previously had NONE of them, substituting a project-built health-access measure. Two of the three need no household roster and are added here. NUTRITION CANNOT BE COLLECTED: NITI defines it on
 notes child_death_5y: Meaning (cont.): anthropometry (measured height, weight, BMI) and a read-aloud interview at a worksite cannot produce that, so the MPI built from this instrument is a TEN-of-twelve-indicator index and must be reported as such, never as the
 notes child_death_5y: Meaning (cont.): National MPI.
 notes child_death_5y: Question: In the last five years, has any child or young person under 18 in your household died?
+notes child_death_5y: Skip rule: May be left blank
 notes child_death_5y: Source: NITI Aayog National MPI, Child and Adolescent Mortality (weight 1/12)
 notes birth_last_5y: Module H - Health; origin: asked
-notes birth_last_5y: Meaning: Gate for the two maternal-health questions. NITI Aayog's Health dimension is three indicators -- Nutrition (1/6), Child and Adolescent Mortality (1/12) and Maternal Health (1/12) -- and this instrument previously had NONE of them,
+notes birth_last_5y: Meaning: Gate for the two maternal-health questions. NITI Aayog's Health dimension is three indicators — Nutrition (1/6), Child and Adolescent Mortality (1/12) and Maternal Health (1/12) — and this instrument previously had NONE of them,
 notes birth_last_5y: Meaning (cont.): substituting a project-built health-access measure. Two of the three need no household roster and are added here. NUTRITION CANNOT BE COLLECTED: NITI defines it on anthropometry (measured height, weight, BMI) and a read-aloud
 notes birth_last_5y: Meaning (cont.): interview at a worksite cannot produce that, so the MPI built from this instrument is a TEN-of-twelve-indicator index and must be reported as such, never as the National MPI.
 notes birth_last_5y: Question: In the last five years, did any woman in your household give birth?
+notes birth_last_5y: Skip rule: May be left blank
 notes birth_last_5y: Source: NITI Aayog National MPI, Maternal Health (weight 1/12)
 notes anc_4_visits: Module H - Health; origin: asked
-notes anc_4_visits: Meaning: First limb of NITI's Maternal Health indicator. 'Don't know' was REMOVED 2026-10-01. The old reasoning was that a don't-know is conservative because the indicator tests anc != 1, so it counts as deprived -- but that is exactly the
+notes anc_4_visits: Meaning: First limb of NITI's Maternal Health indicator. 'Don't know' was REMOVED 2026-10-01. The old reasoning was that a don't-know is conservative because the indicator tests anc != 1, so it counts as deprived — but that is exactly the
 notes anc_4_visits: Meaning (cont.): danger: a male respondent who cannot recall is then recorded as a deprived household, and a sample with many such respondents reports a maternal-health deprivation rate built out of ignorance rather than out of care not received.
 notes anc_4_visits: Meaning (cont.): The item is now a plain yes/no and the burden moves to the probe (see the hint): ask the mother if she is there, and otherwise ask how many times she went and code four or more.
 notes anc_4_visits: Question: For the most recent birth, did she have at least four check-ups before the delivery?
-notes anc_4_visits: Skip rule: Ask only if birth_last_5y = 1
+notes anc_4_visits: Skip rule: Ask only if birth_last_5y = 1. May be left blank
 notes anc_4_visits: Source: NITI Aayog National MPI, Maternal Health (antenatal care limb)
 notes skilled_birth_attendant: Module H - Health; origin: asked
 notes skilled_birth_attendant: Meaning: Second limb of NITI's Maternal Health indicator; NITI counts the household deprived if EITHER limb fails. Asked as the CADRE rather than as yes/no: 'a doctor, nurse or trained midwife' named no cadre anybody here uses, and an ASHA
-notes skilled_birth_attendant: Meaning (cont.): or Anganwadi worker -- who commonly does accompany a birth in these districts -- would have been heard as a yes. NFHS and NITI count only a doctor, nurse, ANM, LHV or qualified midwife as skilled; an ASHA, an Anganwadi worker and
-notes skilled_birth_attendant: Meaning (cont.): a dai are explicitly NOT, so putting them in the list as their own codes is what keeps the indicator correct. Deprived unless code 1 or 2.
-notes skilled_birth_attendant: Question: Who conducted that delivery -- a doctor, a nurse or ANM, an ASHA or Anganwadi worker, a dai, or nobody trained?
-notes skilled_birth_attendant: Skip rule: Ask only if birth_last_5y = 1
+notes skilled_birth_attendant: Meaning (cont.): or Anganwadi worker — who commonly does accompany a birth in these districts — would have been heard as a yes. NFHS and NITI count only a doctor, nurse, ANM, LHV or qualified midwife as skilled; an ASHA, an Anganwadi worker and a
+notes skilled_birth_attendant: Meaning (cont.): dai are explicitly NOT, so putting them in the list as their own codes is what keeps the indicator correct. Deprived unless code 1 or 2.
+notes skilled_birth_attendant: Question: Who conducted that delivery — a doctor, a nurse or ANM, an ASHA or Anganwadi worker, a dai, or nobody trained?
+notes skilled_birth_attendant: Skip rule: Ask only if birth_last_5y = 1. May be left blank
 notes skilled_birth_attendant: Source: NITI Aayog National MPI, Maternal Health (assisted delivery limb); skilled-provider definition per NFHS
 notes distress_event_last365d: Module I - Food security, shocks and coping; origin: asked
 notes distress_event_last365d: Meaning: Check-all, replacing 'record the most serious one'. That instruction asked the enumerator to rank another household's misfortunes against each other, which they are in no position to do and which threw away every shock but one.
 notes distress_event_last365d: Meaning (cont.): The list also gains four COVARIATE shocks (codes 5-8) that hit the whole route at once; every code in the old list was household-idiosyncratic, so the covariate-versus-idiosyncratic decomposition could not be identified from this
 notes distress_event_last365d: Meaning (cont.): data at all.
-notes distress_event_last365d: Question: In the last 12 months, did any of these happen -- to your household, or to the Yatra route you work on? Check every one that applies.
+notes distress_event_last365d: Question: In the last 12 months, did any of these happen — to your household, or to the Yatra route you work on? Check every one that applies.
 notes distress_event_last365d: Source: VEP exposure covariate (Azeem et al. 2016); shock inventory following Gunther and Harttgen 2009, via Fujii 2016 section 4
 notes shock_work_lost_weeks: Module I - Food security, shocks and coping; origin: asked
 notes shock_work_lost_weeks: Meaning: The TIME limb of the shock. Asked in weeks rather than months because this is a six-month earning season: three weeks lost at the peak is a large shock and would round to zero months, while weeks divide cleanly into the monthly
 notes shock_work_lost_weeks: Meaning (cont.): calendar afterwards. Valued at the respondent's own measured earnings in shock_loss_total rather than at his estimate of them.
-notes shock_work_lost_weeks: Question: Thinking of whichever of those hit you hardest -- about how many weeks of work did you lose because of it? (0 if none)
+notes shock_work_lost_weeks: Question: Thinking of whichever of those hit you hardest — about how many weeks of work did you lose because of it? (0 if none)
 notes shock_work_lost_weeks: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
 notes shock_work_lost_weeks: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)
 notes shock_money_spent: Module I - Food security, shocks and coping; origin: asked
-notes shock_money_spent: Meaning: The CASH limb of the shock: money that actually left the household, separate from earnings it never received. A rough figure is expected -- the quantity of interest is the order of magnitude against household consumption, not the
+notes shock_money_spent: Meaning: The CASH limb of the shock: money that actually left the household, separate from earnings it never received. A rough figure is expected — the quantity of interest is the order of magnitude against household consumption, not the
 notes shock_money_spent: Meaning (cont.): rupee.
-notes shock_money_spent: Question: And about how much money did your household have to spend because of it -- treatment, repairs, replacing what was lost? (Rs, 0 if nothing)
+notes shock_money_spent: Question: And about how much money did your household have to spend because of it — treatment, repairs, replacing what was lost? (Rs, 0 if nothing)
 notes shock_money_spent: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
 notes shock_money_spent: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000 (VER needs shock magnitude, not only incidence)
 notes shock_month: Module I - Food security, shocks and coping; origin: asked
@@ -1569,191 +1501,157 @@ notes shock_month: Question: And in which month did that one happen?
 notes shock_month: Skip rule: Ask only if distress_event_last365d names a real shock (not code 9, nothing happened)
 notes shock_month: Source: Dercon and Krishnan 2000 (seasonal timing of shocks); project design
 notes shock_coping: Module I - Food security, shocks and coping; origin: asked
-notes shock_coping: Meaning: Check-all. The single-answer version forced a choice between 'sold or pawned assets' and 'cut consumption' -- which are precisely the two responses asset-smoothing theory (Carter and Zimmerman) says to compare, since a household
+notes shock_coping: Meaning: Check-all. The single-answer version forced a choice between 'sold or pawned assets' and 'cut consumption' — which are precisely the two responses asset-smoothing theory (Carter and Zimmerman) says to compare, since a household
 notes shock_coping: Meaning (cont.): facing a survival constraint may cut consumption specifically to defend its assets. Made mutually exclusive, the test was impossible.
 notes shock_coping: Question: How did your household manage? Check every one they used.
 notes shock_coping: Skip rule: Ask only if any shock was reported
 notes shock_coping: Source: Coping strategies in VEP studies; Carter and Zimmerman 2000 on asset versus consumption smoothing
-notes cope_less_pref_food_yatra_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_less_pref_food_yatra_wk: Meaning: rCSI Yatra-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_less_pref_food_yatra_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_less_pref_food_yatra_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_less_pref_food_yatra_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_less_pref_food_yatra_wk: Question: In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
-notes cope_less_pref_food_yatra_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_less_pref_food_yatra_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_less_pref_food_yatra_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_less_pref_food_yatra_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_less_pref_food_offseason_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_less_pref_food_offseason_wk: Meaning: rCSI off-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_less_pref_food_offseason_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_less_pref_food_offseason_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_less_pref_food_offseason_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_less_pref_food_offseason_wk: Question: In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household rely on less expensive/less preferred food? (0-7 days)
-notes cope_less_pref_food_offseason_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_less_pref_food_offseason_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_less_pref_food_offseason_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_less_pref_food_offseason_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_borrow_food_yatra_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_borrow_food_yatra_wk: Meaning: rCSI Yatra-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_borrow_food_yatra_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_borrow_food_yatra_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_borrow_food_yatra_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_borrow_food_yatra_wk: Question: In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
-notes cope_borrow_food_yatra_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_borrow_food_yatra_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_borrow_food_yatra_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_borrow_food_yatra_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_borrow_food_offseason_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_borrow_food_offseason_wk: Meaning: rCSI off-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_borrow_food_offseason_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_borrow_food_offseason_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_borrow_food_offseason_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_borrow_food_offseason_wk: Question: In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household borrow food and/or rely on help from friends/relatives? (0-7 days)
-notes cope_borrow_food_offseason_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_borrow_food_offseason_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_borrow_food_offseason_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_borrow_food_offseason_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_reduce_meals_yatra_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_reduce_meals_yatra_wk: Meaning: rCSI Yatra-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_reduce_meals_yatra_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_reduce_meals_yatra_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_reduce_meals_yatra_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_reduce_meals_yatra_wk: Question: In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
-notes cope_reduce_meals_yatra_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_reduce_meals_yatra_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_reduce_meals_yatra_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_reduce_meals_yatra_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_reduce_meals_offseason_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_reduce_meals_offseason_wk: Meaning: rCSI off-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_reduce_meals_offseason_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_reduce_meals_offseason_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_reduce_meals_offseason_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_reduce_meals_offseason_wk: Question: In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce the number of meals eaten per day? (0-7 days)
-notes cope_reduce_meals_offseason_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_reduce_meals_offseason_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_reduce_meals_offseason_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_reduce_meals_offseason_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_reduce_portion_yatra_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_reduce_portion_yatra_wk: Meaning: rCSI Yatra-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_reduce_portion_yatra_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_reduce_portion_yatra_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_reduce_portion_yatra_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_reduce_portion_yatra_wk: Question: In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
-notes cope_reduce_portion_yatra_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_reduce_portion_yatra_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_reduce_portion_yatra_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_reduce_portion_yatra_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_reduce_portion_offseason_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_reduce_portion_offseason_wk: Meaning: rCSI off-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_reduce_portion_offseason_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_reduce_portion_offseason_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_reduce_portion_offseason_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_reduce_portion_offseason_wk: Question: In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household reduce portion size of meals? (0-7 days)
-notes cope_reduce_portion_offseason_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_reduce_portion_offseason_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_reduce_portion_offseason_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_reduce_portion_offseason_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_restrict_adult_yatra_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_restrict_adult_yatra_wk: Meaning: rCSI Yatra-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_restrict_adult_yatra_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_restrict_adult_yatra_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_restrict_adult_yatra_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_restrict_adult_yatra_wk: Question: In a normal week during the Yatra season, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
-notes cope_restrict_adult_yatra_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_restrict_adult_yatra_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_restrict_adult_yatra_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_restrict_adult_yatra_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
-notes cope_restrict_adult_offseason_wk: Module I - Food security, shocks and coping; origin: asked
-notes cope_restrict_adult_offseason_wk: Meaning: rCSI off-season item. Worded to match VASyR's own item text exactly (its stem: 'Strategy to cope with a lack of food or money to buy it: ...'), not a paraphrase for this project -- only the recall framing (a normal week per
-notes cope_restrict_adult_offseason_wk: Meaning (cont.): season, instead of VASyR's literal 'last 7 days') is adapted, for the migrant-seasonality reason below; the coping behaviour itself is worded exactly as VASyR asks it. Workers here are migrants, interviewed during the Yatra
-notes cope_restrict_adult_offseason_wk: Meaning (cont.): season: a single 'last 7 days' recall would describe only their on-site coping at the work site, not their household's usual pattern, which may look very different in the off-season (different household members present, different
-notes cope_restrict_adult_offseason_wk: Meaning (cont.): food access). So each item is asked as a usual-week day-count for each season, the same Yatra-season/off-season split already used for the calendar (Module B/C) and consumption (Module E).
-notes cope_restrict_adult_offseason_wk: Question: In a normal week when the Yatra is closed, to cope with a lack of food or money to buy it, how many days did your household restrict consumption of adults/mothers in order for young children to eat? (0-7 days)
-notes cope_restrict_adult_offseason_wk: Source: VASyR 2025 (exact item wording); WFP rCSI; The reduced Coping Strategy Index (rCSI): five food-coping questions, standard WFP weights (1, 2, 1, 1, 3) applied when the index is built. The Kedarnath instrument otherwise has no food-
-notes cope_restrict_adult_offseason_wk: Source (cont.): security module, which is a gap for a poverty-vulnerability survey; these five short questions close it at low cost instead of a full dietary-diversity module, left out to stay inside the 45-minute limit. Kept as day-counts (0-7),
-notes cope_restrict_adult_offseason_wk: Source (cont.): not collapsed to yes/no: this is the standard, validated WFP/FAO specification (frequency x severity), and no comparably-standard binary version was found on checking; a day-count also takes about as long to answer as a yes/no in
-notes cope_restrict_adult_offseason_wk: Source (cont.): practice, so little interview time is saved by simplifying it.
+notes fies_items: Module I - Food security, shocks and coping; origin: asked
+notes fies_items: Meaning: One check-all screen 2026-10-07, replacing five separately-worded yes/no questions that read as the same question five times. 'None of these' (code 96) is a real answer, ticked by the enumerator, and is what tells
+notes fies_items: Meaning (cont.): fies_skipped_meal etc. below to read as 0 rather than missing -- an empty answer (nothing ticked, screen skipped) stays missing on all five. Food Insecurity Experience Scale (FIES), the five behavioural items, asked over a
+notes fies_items: Meaning (cont.): 12-month reference period as FAO specifies. Replaces the ten rCSI day-counts retired 2026-10-05 (see the note above this block for why). Scored as a raw 0-5 count; fies_mod_sev marks 2 or more, the conventional moderate-or-severe
+notes fies_items: Meaning (cont.): line on the behavioural items. Do NOT apply the rCSI's > 20 cutoff or any weighting to these -- FIES is an unweighted count with an ordered severity structure, which is the point of using it.
+notes fies_items: Question: In the last 12 months, was there a time when, because of a lack of money or other resources, any of the following happened to you or your household? Read out each one and check every one that applies, or check 'none of these' if
+notes fies_items: Question (cont.): none did.
+notes fies_items: Skip rule: May be left blank
+notes fies_items: Source: FAO Food Insecurity Experience Scale (FIES), SDG indicator 2.1.2; behavioural items only
 notes ropeway_stance: Module J - Ropeway; origin: asked
 notes ropeway_stance: Meaning: Stated stance; no rating scale. Asked only on the Kedarnath route (site = 1): the question names a specific proposal, and reading it to a Hemkund respondent asks him about a project that is not his.
-notes ropeway_stance: Question: A ropeway is proposed between Gaurikund and Kedarnath. Are you in favour, neutral, or against?
+notes ropeway_stance: Question: A ropeway is proposed for this route. Are you in favour, neutral, or against?
 notes ropeway_stance: Source: Project design
+notes ropeway_expect_work: Module J - Ropeway; origin: asked
+notes ropeway_expect_work: Meaning: Anticipated effect on own work, parsimonious and factual. Asked on the Kedarnath route only, with the stance question. Wording is ours; the concept (perceived effect on livelihoods of a nearby large project) is from Pelz et al.
+notes ropeway_expect_work: Meaning (cont.): 2024, which measures perceived benefits and trust in the coal company's effect on local livelihoods (their Fig. 4B) and perceived importance of the sector (Fig. 3).
+notes ropeway_expect_work: Question: If the ropeway is built, what do you think will happen to your own work? More work for you; less work; about the same; or don't know?
+notes ropeway_expect_work: Source: Pelz et al. 2024, Energy Policy 186:113973 (concept: perceived effect on livelihoods; wording ours)
+notes ropeway_expect_jobs: Module J - Ropeway; origin: asked
+notes ropeway_expect_jobs: Meaning: Expected distribution of new jobs, which is what decides whether the ropeway helps the people in this sample. Concept from Pelz et al. 2024 (perceived benefits of the coal sector limited to those nearby, their Fig. 4 and the
+notes ropeway_expect_jobs: Meaning (cont.): conclusion); wording ours.
+notes ropeway_expect_jobs: Question: Who do you think will get most of the jobs the ropeway creates? People from these villages; people from outside the area; nobody will get jobs; or don't know?
+notes ropeway_expect_jobs: Source: Pelz et al. 2024, Energy Policy 186:113973 (concept: local vs outside benefit; wording ours)
+notes ropeway_trust: Module J - Ropeway; origin: asked
+notes ropeway_trust: Meaning: Trust in the project to improve local livelihoods, yes/no, no scale (the population is not used to rating scales). Pelz et al. 2024 measure trust in the coal company to improve local livelihoods (their Fig. 4B) and find it far
+notes ropeway_trust: Meaning (cont.): below trust in the state.
+notes ropeway_trust: Question: Do you think the ropeway will improve the livelihoods of people here? Yes; no; or don't know?
+notes ropeway_trust: Source: Pelz et al. 2024, Energy Policy 186:113973 (Fig. 4B, trust in the company; wording ours)
 notes trek_dependent: Module J - Ropeway; origin: asked
 notes trek_dependent: Meaning: Direct exposure flag (factual); not inferred from job title.
 notes trek_dependent: Question: Is your main work carrying, transporting or guiding people or goods on foot along the pilgrimage trek?
 notes trek_dependent: Source: Project design (see tasks_module W4: exposure must be asked directly)
-notes job_situation: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes job_situation: Meaning: Screening item, Apablaza's full eleven-category set (Q5), coded from the answer rather than read aloud. The categories are kept apart because Apablaza routes them to three different places (see the gate comment above); collapsing
-notes job_situation: Meaning (cont.): them would lose the routing. In practice codes 4-6 almost never fire, since the sample is recruited at the Yatra worksite.
-notes job_situation: Question: Which best describes your situation during the last month: you work for pay full-time; you work for pay part-time or do occasional jobs; you study and work; you only study; you are only being trained for work; you are retired or
-notes job_situation: Question (cont.): pensioned; you do unpaid household tasks or care for others; you are unemployed and actively looking for work; you are sick or disabled and cannot work; or none of these?
-notes job_situation: Source: Apablaza et al. 2026, Appendix 2 Q5 (all eleven categories, with its own three-way routing)
-notes job_permanence: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes job_permanence: Meaning: Job permanence, Apablaza's five categories kept separate rather than merging probation with fixed-term.
-notes job_permanence: Question: Is your job: permanent; seasonal or temporary; occasional or casual; on probation; or fixed-term?
-notes job_permanence: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
-notes job_permanence: Source: Apablaza et al. 2026, Appendix 2 Q9
 notes contract_status: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes contract_status: Meaning: Contract status, wage workers only.
 notes contract_status: Question: Do you have a signed contract? Yes, signed; yes but not yet signed; no contract.
-notes contract_status: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working); and employment_type is 3 or 4 (wage workers) -- self-employed skip to the next question
+notes contract_status: Skip rule: Ask only if employment_type is 3 or 4 (wage workers) — self-employed skip to the next question
 notes contract_status: Source: Apablaza et al. 2026, Appendix 2 Q11
 notes workplace_registered: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes workplace_registered: Meaning: Registered enterprise (Apablaza asks about a taxpayer number).
 notes workplace_registered: Question: Is your workplace or business registered, for example with a taxpayer or GST number, a shop or trade licence, the Yatra registration, or a union?
-notes workplace_registered: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
 notes workplace_registered: Source: Apablaza et al. 2026, Appendix 2 Q12 (widened to local registrations)
-notes pension_contrib: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes pension_contrib: Meaning: Pension contribution.
-notes pension_contrib: Question: Do you contribute to any pension system? Yes, the employer deducts it; yes, voluntarily; no.
-notes pension_contrib: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
-notes pension_contrib: Source: Apablaza et al. 2026, Appendix 2 Q16
+notes pension_any: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes pension_any: Meaning: Pension contribution, collapsed to a binary 2026-10-07 (was a 3-way employer-deducts/voluntary/no split): most of this population is informally employed and the three-way split rarely separated anything beyond 'no'. Employer-
+notes pension_any: Meaning (cont.): deducted and voluntary contribution are no longer distinguished.
+notes pension_any: Question: Do you contribute to any pension system, through your work or on your own?
+notes pension_any: Source: Apablaza et al. 2026, Appendix 2 Q16
 notes work_health_ins: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes work_health_ins: Meaning: Work-related health insurance.
 notes work_health_ins: Question: Do you have health insurance through your work? Yes; only private or other insurance; none; don't know.
-notes work_health_ins: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
 notes work_health_ins: Source: Apablaza et al. 2026, Appendix 2 Q17
 notes leave_rights: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes leave_rights: Meaning: Leave rights. Apablaza asks this of everyone still in the block, not only wage workers (a self-employed respondent can simply answer no), so the wage-worker-only skip used earlier is dropped to match.
 notes leave_rights: Question: Do you have the right to paid holiday, sick or maternity leave?
-notes leave_rights: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
 notes leave_rights: Source: Apablaza et al. 2026, Appendix 2 Q18
 notes injured_ever: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes injured_ever: Meaning: Injury history.
 notes injured_ever: Question: Have you ever been physically injured at your workplace?
-notes injured_ever: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
 notes injured_ever: Source: Apablaza et al. 2026, Appendix 2 Q19
 notes workplace_injury_12m: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes workplace_injury_12m: Meaning: Recent workplace injury or death (hazard evidence).
-notes workplace_injury_12m: Question: In the last 12 months, was anyone physically injured or killed at your workplace because of work?
-notes workplace_injury_12m: Skip rule: Ask only if job_situation is 1, 2 or 3 (currently working)
-notes workplace_injury_12m: Source: Apablaza et al. 2026, Appendix 2 Q20
+notes workplace_injury_12m: Meaning: Recent workplace injury. SPLIT from a single “injured or killed” item on 2026-10-03. The two cannot share one yes/no: a Yes could mean a cut hand or a death, which are not the same hazard and are not the same answer, and a
+notes workplace_injury_12m: Meaning (cont.): respondent whose colleague died has to answer a question that also asks about sprains. On this route the distinction is live — falls and rockfall on the Gaurikund–Kedarnath path kill people most seasons — so collapsing it loses
+notes workplace_injury_12m: Meaning (cont.): the severe tail precisely where it matters. Asked first because it is the common case and the easier question; the death item follows it.
+notes workplace_injury_12m: Question: In the last 12 months, was anyone physically injured at your workplace because of work?
+notes workplace_injury_12m: Source: Apablaza et al. 2026, Appendix 2 Q20 (split into injury and death)
+notes workplace_death_12m: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes workplace_death_12m: Meaning: Recent workplace death. The severe limb of the old combined item. Kept as its own yes/no rather than as a severity follow-up to the injury question, because a death can occur in a year with no injury the respondent counts as one,
+notes workplace_death_12m: Meaning (cont.): and gating it on workplace_injury_12m would then never ask it.
+notes workplace_death_12m: Question: And in the last 12 months, did anyone die at your workplace because of work?
+notes workplace_death_12m: Source: Apablaza et al. 2026, Appendix 2 Q20 (split into injury and death)
 notes wants_more_work: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes wants_more_work: Meaning: Involuntary underemployment. Gated at codes 1-7, not 1-3: Apablaza routes the studying, in-training, retired and unpaid-care categories (4-7) directly to this question, so gating it on 'currently working' would drop exactly the
 notes wants_more_work: Meaning (cont.): respondents it is meant to reach.
 notes wants_more_work: Question: Would you like to work more hours than you do?
-notes wants_more_work: Skip rule: Ask if job_situation is 1 to 7 (Apablaza routes codes 4-7 straight to this question)
 notes wants_more_work: Source: Apablaza et al. 2026, Appendix 2 Q21
 notes more_hours_day: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
 notes more_hours_day: Meaning: Extra hours wanted.
 notes more_hours_day: Question: On a working day, how many MORE hours would you like to work?
-notes more_hours_day: Skip rule: Ask if wants_more_work = 1, or if job_situation = 8 (Apablaza routes the unemployed-and-seeking category here directly)
+notes more_hours_day: Skip rule: Ask only if wants_more_work = 1
 notes more_hours_day: Source: Apablaza et al. 2026, Appendix 2 Q22
 notes months_looked_for_work: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes months_looked_for_work: Meaning: Job-search duration in weeks -- Apablaza's own unit (Q23) -- rather than a plain yes/no, tied to the idle months already identified in the work calendar (Module C) rather than to a single point in time. Fires on the calendar OR on
+notes months_looked_for_work: Meaning: Job-search duration in weeks — Apablaza's own unit (Q23) — rather than a plain yes/no, tied to the idle months already identified in the work calendar (Module C) rather than to a single point in time. Fires on the calendar OR on
 notes months_looked_for_work: Meaning (cont.): job_situation = 8: the calendar gate is this project's own improvement (it anchors the recall to months the respondent has already named), but on its own it would miss a respondent who is unemployed and seeking right now, which is
 notes months_looked_for_work: Meaning (cont.): the case Apablaza routes here.
 notes months_looked_for_work: Question: Across the months when you had no paid work, about how many MONTHS in total were you looking for work?
-notes months_looked_for_work: Skip rule: Ask if any month in the calendar is 'No paid work', or if job_situation = 8
+notes months_looked_for_work: Skip rule: Ask only if months_no_paid_work > 0
 notes months_looked_for_work: Source: Apablaza et al. 2026, Appendix 2 Q23 (duration in weeks, tied to the calendar instead of a single point in time)
-notes first_job_ever: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
-notes first_job_ever: Meaning: Ever had a prior job at all -- a coarse mobility/entry marker.
-notes first_job_ever: Question: Was your current work the first paid job you ever had?
-notes first_job_ever: Source: Apablaza et al. 2026, Appendix 2 Q24
+notes higher_ed: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes higher_ed: Meaning: Higher education, for the occupational-status limb of the employment table (self-employed without higher education). Asked of every working respondent, because the limb applies to the self-employed too.
+notes higher_ed: Question: Have you completed any college, diploma or university course?
+notes higher_ed: Source: Apablaza et al. 2026, Appendix 2 employment table, occupational status (1/8)
+notes social_security_any: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes social_security_any: Meaning: Social-security affiliation for EVERY worker. The pension and health-insurance items above are gated to wage workers because they ask about an employer; this one asks about the person, so the self-employed are measured too.
+notes social_security_any: Question: Are you enrolled in any pension, insurance or social-security scheme? For example, EPFO or PM-SYM pension, or Ayushman Bharat health cover.
+notes social_security_any: Source: Apablaza et al. 2026, Appendix 2 employment table, employment security (1/8)
+notes intens_speed: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes intens_speed: Meaning: Work intensity, demand 1 of 3. Two of the three demands together count as high intensity.
+notes intens_speed: Question: For more than half of your working day, do you work at very high speed?
+notes intens_speed: Source: Apablaza et al. 2026, Appendix 2 employment table, work intensity (1/16)
+notes intens_deadline: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes intens_deadline: Meaning: Work intensity, demand 2 of 3.
+notes intens_deadline: Question: For more than half of your working day, do you work to tight deadlines?
+notes intens_deadline: Source: Apablaza et al. 2026, Appendix 2 employment table, work intensity (1/16)
+notes intens_time: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes intens_time: Meaning: Work intensity, demand 3 of 3.
+notes intens_time: Question: For more than half of your working day, do you not have enough time to finish your tasks?
+notes intens_time: Source: Apablaza et al. 2026, Appendix 2 employment table, work intensity (1/16)
+notes posture_position: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes posture_position: Meaning: Posture-related risk, demand 1 of 3. Two of three together count as high posture risk.
+notes posture_position: Question: For more than half of your working day, do you work in a tiring or painful position?
+notes posture_position: Source: Apablaza et al. 2026, Appendix 2 employment table, posture risk (1/16)
+notes posture_loads: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes posture_loads: Meaning: Posture-related risk, demand 2 of 3.
+notes posture_loads: Question: For more than half of your working day, do you carry or move heavy loads?
+notes posture_loads: Source: Apablaza et al. 2026, Appendix 2 employment table, posture risk (1/16)
+notes posture_repetitive: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes posture_repetitive: Meaning: Posture-related risk, demand 3 of 3.
+notes posture_repetitive: Question: For more than half of your working day, do you make the same movements again and again?
+notes posture_repetitive: Source: Apablaza et al. 2026, Appendix 2 employment table, posture risk (1/16)
+notes phys_noise: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes phys_noise: Meaning: Physical risk from the working environment. EITHER this OR the temperature item counts as high physical risk.
+notes phys_noise: Question: For more than half of your working day, are you exposed to loud noise?
+notes phys_noise: Source: Apablaza et al. 2026, Appendix 2 employment table, physical risk (1/16)
+notes phys_temperature: Module K - Job quality (Apablaza et al. 2026 questions); origin: asked
+notes phys_temperature: Meaning: Physical risk from the working environment, second item.
+notes phys_temperature: Question: For more than half of your working day, are you exposed to extreme heat or cold?
+notes phys_temperature: Source: Apablaza et al. 2026, Appendix 2 employment table, physical risk (1/16)
+notes tk_carry: Module L - Tasks and skills (short block); origin: asked
+notes tk_carry: Meaning: Task 1 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
+notes tk_carry: Question: Do you carry loads or luggage on foot?
+notes tk_carry: Source: GS 2010 'pack, ship or transport'; NCO 9621.9900 / 9621.0500 porters
+notes tk_passenger: Module L - Tasks and skills (short block); origin: asked
+notes tk_passenger: Meaning: Task 2 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
+notes tk_passenger: Question: Do you carry a passenger (palki, dandi or kandi)?
+notes tk_passenger: Source: No NCO-2015 code for palki/dandi bearers; nearest NCO 9331.0100
 notes tk_load: Module L - Tasks and skills (short block); origin: asked
 notes tk_load: Meaning: Task 3 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
 notes tk_load: Question: Do you load, unload, stack or count goods?
 notes tk_load: Source: Gathmann and Schonberg 2010; NCO 9333.0100 loader
+notes tk_lead_animals: Module L - Tasks and skills (short block); origin: asked
+notes tk_lead_animals: Meaning: Task 5 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
+notes tk_lead_animals: Question: Do you lead, load or control pack animals such as ponies or mules?
+notes tk_lead_animals: Source: NCO 9332.0400 pack animal driver
+notes tk_animal_care: Module L - Tasks and skills (short block); origin: asked
+notes tk_animal_care: Meaning: Task 6 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
+notes tk_animal_care: Question: Do you feed, groom or care for animals?
+notes tk_animal_care: Source: NCO 9332.0400 (feeds animals, cleans stables)
 notes tk_drive: Module L - Tasks and skills (short block); origin: asked
 notes tk_drive: Meaning: Task 7 of the full 27-task list (tasks_module). Three answers: regular now / done before / never; not a rating.
 notes tk_drive: Question: Do you drive a motor vehicle?
@@ -1821,6 +1719,54 @@ notes calc_at_work: Module L - Tasks and skills (short block); origin: asked
 notes calc_at_work: Meaning: Arithmetic used at work (factual).
 notes calc_at_work: Question: In your work, do you work out prices or costs?
 notes calc_at_work: Source: STEP module 6A
+notes cpr_permitted: Module M - Access to common resources (short block); origin: asked
+notes cpr_permitted: Meaning: The DE JURE baseline, asked separately from use because the two are different quantities and this route spans both. On the Govindghat-Hemkund side the Forest Department prohibits collection; on the Gaurikund-Kedarnath side grazing
+notes cpr_permitted: Meaning (cont.): is visibly tolerated. Without this, a No on the use items is uninterpretable -- it could be a household with no need for the forest or a household barred from it, and those are opposite findings for a livelihood-vulnerability
+notes cpr_permitted: Meaning (cont.): study. Asked as what the respondent UNDERSTANDS the rule to be, not what the rule is: a prohibition nobody knows about does not constrain behaviour, and a believed prohibition does even where none exists. Pairs with
+notes cpr_permitted: Meaning (cont.): cpr_governance, which asks who decides.
+notes cpr_permitted: Question: Where you work, is it allowed to take firewood, fodder or forest produce from the forest or common land? Ask what they understand the rule to be; do not correct them.
+notes cpr_permitted: Skip rule: May be left blank
+notes cpr_permitted: Source: Project design (de jure access, 2026-10-05); Ostrom 1990 on the distinction between rule in form and rule in use
+notes cpr_firewood: Module M - Access to common resources (short block); origin: asked
+notes cpr_firewood: Meaning: Natural-capital use, the first of four factual use items.
+notes cpr_firewood: Question: In this Yatra season or last Yatra season, did you or anyone staying with you here collect firewood or dead wood from common land or forest in the Yatra region or workplace region?
+notes cpr_firewood: Skip rule: May be left blank
+notes cpr_firewood: Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived (definitions list); item wording is ours
+notes cpr_fodder: Module M - Access to common resources (short block); origin: asked
+notes cpr_fodder: Meaning: Natural-capital use, fodder.
+notes cpr_fodder: Question: In this Yatra season or last Yatra season, did you or anyone staying with you here cut grass or fodder from common land in the Yatra region or workplace region?
+notes cpr_fodder: Skip rule: May be left blank
+notes cpr_fodder: Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived; item wording is ours
+notes cpr_forest_produce: Module M - Access to common resources (short block); origin: asked
+notes cpr_forest_produce: Meaning: Natural-capital use, non-timber forest produce.
+notes cpr_forest_produce: Question: In this Yatra season or last Yatra season, did you or anyone staying with you here collect herbs, mushrooms or wild fruit from the forest in the Yatra region or workplace region?
+notes cpr_forest_produce: Skip rule: May be left blank
+notes cpr_forest_produce: Source: Krantz 2001, natural capital (resource flows from stocks); item wording is ours
+notes cpr_grazing: Module M - Access to common resources (short block); origin: asked
+notes cpr_grazing: Meaning: Asked of all. A respondent with no animals answers No; that is an answer, not a skip.
+notes cpr_grazing: Question: In this Yatra season or last Yatra season, did any animal of yours or of anyone staying with you here graze on common pasture in the Yatra region or workplace region?
+notes cpr_grazing: Skip rule: May be left blank
+notes cpr_grazing: Source: Krantz 2001, natural capital: resource stocks from which resource flows are derived; item wording is ours
+notes cpr_restricted: Module M - Access to common resources (short block); origin: asked
+notes cpr_restricted: Meaning: Access restriction, the claims side of the common-resource asset. Asked as one event question rather than a list, so the enumerator does not have to name the authority.
+notes cpr_restricted: Question: In this Yatra season or last Yatra season, has anyone you or someone staying with you here been stopped from using a common forest, pasture or path, or been asked to pay to use it, in the Yatra region or workplace region?
+notes cpr_restricted: Skip rule: May be left blank
+notes cpr_restricted: Source: Krantz 2001, access ('the opportunity in practice to use a resource') and claims ('demands and appeals'); item wording is ours
+notes cpr_lost_access: Module M - Access to common resources (short block); origin: asked
+notes cpr_lost_access: Meaning: Access lost to construction. Tied to the ropeway question in Module J but asked on every route, because road and bridge works also close common land.
+notes cpr_lost_access: Question: In this Yatra season or last Yatra season, has a common place you used to collect from or graze on been closed, because of a landslide, flood, road or bridge damage, or construction work, in the Yatra region or workplace region?
+notes cpr_lost_access: Skip rule: May be left blank
+notes cpr_lost_access: Source: Krantz 2001, access (as above); the ropeway link is the project's own
+notes cpr_water_route: Module M - Access to common resources (short block); origin: asked
+notes cpr_water_route: Meaning: Shared water access on the route. Three answers, because no source and a source you must pay for are different situations.
+notes cpr_water_route: Question: On your route or near your worksite, can you use a common water source (spring, tap or stream) without paying?
+notes cpr_water_route: Skip rule: May be left blank
+notes cpr_water_route: Source: Krantz 2001, natural capital (water) and access ('the opportunity in practice to use a resource'); item wording is ours
+notes cpr_governance: Module M - Access to common resources (short block); origin: asked
+notes cpr_governance: Meaning: Governance of the common resource. ENUMERATOR NOTE: a village head or panchayat is code 1; code 3 only for a formal local committee or community group.
+notes cpr_governance: Question: In the Yatra region or workplace region, who decides who may use the common land and forest? Ask and code what they name; do not read the list.
+notes cpr_governance: Skip rule: May be left blank
+notes cpr_governance: Source: NO SOURCE ON DISK YET: Krantz does not address governance of common land. To be sourced from Agrawal 2001 or Ostrom 1990 once read on disk
 notes education_years: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes education_years: Meaning: The direct year count (years_schooling) when the respondent knew it; otherwise the midpoint of the fallback bracket (education_level_cat: 0/2/7/11 for no-formal/some-primary/primary-complete/secondary-plus); missing if the
 notes education_years: Meaning (cont.): respondent preferred not to say.
@@ -1833,20 +1779,20 @@ notes hoh_female: Formula: from hoh_relation; = female if hoh_relation==1
 notes hoh_female: Source: Constructed
 notes months_here: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes months_here: Meaning: Derived from the absence spell: 12 minus the months between left_here_month and returned_here_month, or 12 for a respondent who never leaves. This is the measured length of the respondent OWN season, in place of a constant applied
-notes months_here: Meaning (cont.): to everyone, and it is what the mid-month Yatra-start problem resolves to -- the boundary is the month they reported, not one we chose. Built straight from the spell as of 2026-10-01; it used to be 12 minus months_home_base minus
-notes months_here: Meaning (cont.): months_third_place, which routed the season weight -- the weight on every consumption and income figure in the study -- through the months_away_for_work answer. It no longer depends on it.
+notes months_here: Meaning (cont.): to everyone, and it is what the mid-month Yatra-start problem resolves to — the boundary is the month they reported, not one we chose. Built straight from the spell as of 2026-10-01; it used to be 12 minus months_home_base minus
+notes months_here: Meaning (cont.): months_third_place, which routed the season weight — the weight on every consumption and income figure in the study — through the months_away_for_work answer. It no longer depends on it.
 notes months_here: Formula: 12 - months_away_total
 notes months_here: Source: Project design (measured from the absence spell, Module C)
 notes closure_labour_migrant: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes closure_labour_migrant: Meaning: 1 if the respondent reported working away during the closure. Type B in the closure-regime typology and the mobility variable that actually carries information in this population, in place of a migrant dummy built on district
-notes closure_labour_migrant: Meaning (cont.): boundaries -- which the pilot shows would classify 11 of 20 seasonal movers as non-movers.
+notes closure_labour_migrant: Meaning (cont.): boundaries — which the pilot shows would classify 11 of 20 seasonal movers as non-movers.
 notes closure_labour_migrant: Formula: worked_away_in_closure==1
 notes closure_labour_migrant: Source: Project design (off-season labour migration)
 notes cons_pc_denom_season: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes cons_pc_denom_season: Meaning: n_here_season for a split household, hhsize for everyone else. This is the fix for a real error in the poverty headcount: per-capita consumption divided the Yatra-season figure -- which covers only 'you and anyone staying with you
-notes cons_pc_denom_season: Meaning (cont.): here' -- by the FULL household size, so a man supporting himself here for six months while a family of five lived at the home place was recorded at a fraction of his true per-capita consumption and counted as poor by arithmetic.
+notes cons_pc_denom_season: Meaning: n_here_season for a split household, hhsize for everyone else. This is the fix for a real error in the poverty headcount: per-capita consumption divided the Yatra-season figure — which covers only 'you and anyone staying with you
+notes cons_pc_denom_season: Meaning (cont.): here' — by the FULL household size, so a man supporting himself here for six months while a family of five lived at the home place was recorded at a fraction of his true per-capita consumption and counted as poor by arithmetic.
 notes cons_pc_denom_season: Meaning (cont.): The off-season half keeps hhsize, because by then the household is reunited.
-notes cons_pc_denom_season: Formula: n_here_season if split_household==1, else hhsize
+notes cons_pc_denom_season: Formula: hhsize
 notes cons_pc_denom_season: Source: Project design (season-specific denominator)
 notes stays_all_year: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes stays_all_year: Meaning: 1 if the respondent does not go to the home place at closure. The case the two-season design of this instrument does NOT fit: for these respondents the Yatra-season and off-season questions describe the same place, and the pair
@@ -1878,47 +1824,40 @@ notes health_access_tier: Meaning (cont.): named site.
 notes health_access_tier: Formula: from gps_lat: 3 if <30.58; 2 if 30.58-30.66; 1 if >=30.66
 notes health_access_tier: Source: Project design; VEP exposure covariate
 notes health_access_deprived: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes health_access_deprived: Meaning: 1 if the site tier is Poor, or Moderate and nobody in the household has health cover. health_insurance_covered was REMOVED: it asked whether 'your household' is covered, which for a split migrant household -- the worker here, the
-notes health_access_deprived: Meaning (cont.): family elsewhere -- does not name a group the respondent can answer for. n_health_insured, a count of covered members, replaces it and is strictly more informative. This variable is also no longer part of the MPI: the health
+notes health_access_deprived: Meaning: 1 if the site tier is Poor, or Moderate and nobody in the household has health cover. health_insurance_covered was REMOVED: it asked whether 'your household' is covered, which for a split migrant household — the worker here, the
+notes health_access_deprived: Meaning (cont.): family elsewhere — does not name a group the respondent can answer for. n_health_insured, a count of covered members, replaces it and is strictly more informative. This variable is also no longer part of the MPI: the health
 notes health_access_deprived: Meaning (cont.): dimension now uses NITI's own mortality and maternal indicators, so this is kept only as a VEP exposure covariate.
 notes health_access_deprived: Formula: tier==1 | (tier==2 & n_health_insured==0)
 notes health_access_deprived: Source: Project design (health-access exposure covariate; not a NITI indicator)
 notes yatra_months: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes yatra_months: Meaning: Count of calendar months with status 1 (Yatra work).
-notes yatra_months: Formula: count of status_m1-status_m12 == 1
+notes yatra_months: Meaning: Count of calendar months coded 1, Yatra work proper. Preparation months (status 9) are NOT counted: this is the denominator for earnings per Yatra month, and a month spent buying stock and repairing tack is not a month that
+notes yatra_months: Meaning (cont.): produced the income being divided.
+notes yatra_months: Formula: months_worked_yatra, asked directly
 notes yatra_months: Source: Constructed
-notes yatra_start_month: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes yatra_start_month: Meaning: First calendar month coded Yatra work.
-notes yatra_start_month: Formula: first m with status_m == 1
-notes yatra_start_month: Source: Constructed
-notes yatra_end_month: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes yatra_end_month: Meaning: Last calendar month coded Yatra work.
-notes yatra_end_month: Formula: last m with status_m == 1
-notes yatra_end_month: Source: Constructed
+notes yatra_months_liv: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes yatra_months_liv: Meaning: yatra_months + yatra_prep_months, i.e. exactly what yatra_months counted before the 2026-10-03 split. Every season-weighted annual figure below uses THIS, not yatra_months, so those figures are numerically unchanged by the split:
+notes yatra_months_liv: Meaning (cont.): the respondent is tied to the route during preparation as much as during the season, and it is that, not whether he was earning, that decides which spending and coping regime he is in.
+notes yatra_months_liv: Formula: yatra_months + yatra_prep_months
+notes yatra_months_liv: Source: Constructed
 notes offseason_months_worked: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes offseason_months_worked: Meaning: Months coded 2 to 7 (any paid activity other than Yatra work).
-notes offseason_months_worked: Formula: count of status_m in 2..7
+notes offseason_months_worked: Formula: 12 - months_worked_yatra - months_no_paid_work, floored at 0
 notes offseason_months_worked: Source: Constructed
 notes months_no_work: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes months_no_work: Meaning: Months coded 8.
-notes months_no_work: Formula: count of status_m == 8
+notes months_no_work: Formula: months_no_paid_work, asked directly
 notes months_no_work: Source: Constructed
 notes offseason_primary: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes offseason_primary: Meaning: The activity that fills most of the non-Yatra months (ties go to the lower code; all months idle gives 8).
-notes offseason_primary: Formula: modal status_m among months where status_m != 1
+notes offseason_primary: Formula: offseason_activity, asked directly
 notes offseason_primary: Source: Constructed
-notes income_from_fallback: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes income_from_fallback: Meaning: 1 if the respondent could not give month-by-month earnings and was routed to income_annual_total + pct_income_yatra instead. Carry this into every VEP regression as a robustness split: fallback respondents have a flatter within-
-notes income_from_fallback: Meaning (cont.): season earnings profile by construction (see income_seasonality_cv), so their estimated variance is not measured the same way as everyone else's.
-notes income_from_fallback: Formula: knows_monthly_income == 0
-notes income_from_fallback: Source: Project design (measurement-mode flag for the Apablaza Q15-style fallback)
 notes yatra_income: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes yatra_income: Meaning: Calendar path: sum of monthly earnings in the months coded Yatra work. Fallback path: the annual total times the respondent's own Yatra share.
-notes yatra_income: Formula: knows_monthly_income==1: sum income_m if status_m==1; else income_annual_total * pct_income_yatra/100
+notes yatra_income: Formula: income_annual_total * pct_income_yatra/100
 notes yatra_income: Source: Constructed
 notes non_yatra_income: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes non_yatra_income: Meaning: Calendar path: sum of monthly earnings in the other months. Fallback path: the annual total times the remaining share.
-notes non_yatra_income: Formula: knows_monthly_income==1: sum income_m if status_m!=1; else income_annual_total * (100-pct_income_yatra)/100
+notes non_yatra_income: Formula: income_annual_total * (100-pct_income_yatra)/100
 notes non_yatra_income: Source: Constructed
 notes income_pm_yatra_eq: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes income_pm_yatra_eq: Meaning: Yatra earnings spread evenly across the months the calendar codes as Yatra work. Defined for fallback respondents only; for calendar respondents the actual monthly figures are used instead.
@@ -1926,15 +1865,15 @@ notes income_pm_yatra_eq: Formula: yatra_income / yatra_months if income_from_fa
 notes income_pm_yatra_eq: Source: Constructed
 notes income_pm_other_eq: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes income_pm_other_eq: Meaning: Non-Yatra earnings spread evenly across the remaining months. Defined for fallback respondents only.
-notes income_pm_other_eq: Formula: non_yatra_income / (12 - yatra_months) if income_from_fallback==1
+notes income_pm_other_eq: Formula: non_yatra_income / (12 - yatra_months_liv) if income_from_fallback==1
 notes income_pm_other_eq: Source: Constructed
 notes remittance_outward_annual: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes remittance_outward_annual: Meaning: Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount.
-notes remittance_outward_annual: Formula: yatra_months*remit_out_yatra_pm + (12-yatra_months)*remit_out_offseason_pm
+notes remittance_outward_annual: Formula: yatra_months_liv*remit_out_yatra_pm + (12-yatra_months_liv)*remit_out_offseason_pm
 notes remittance_outward_annual: Source: NSS 64th Round practice, applied to the calendar [source not held by this project; citation unverified as of 2026-09-28]
 notes remittance_inward_annual: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes remittance_inward_annual: Meaning: Yatra-season months at the Yatra-season usual amount, other months at the off-season usual amount.
-notes remittance_inward_annual: Formula: yatra_months*remit_in_yatra_pm + (12-yatra_months)*remit_in_offseason_pm
+notes remittance_inward_annual: Formula: yatra_months_liv*remit_in_yatra_pm + (12-yatra_months_liv)*remit_in_offseason_pm
 notes remittance_inward_annual: Source: NSS 64th Round practice, applied to the calendar [source not held by this project; citation unverified as of 2026-09-28]
 notes total_annual_income: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes total_annual_income: Meaning: Work income plus inward remittances. Outward remittances are not subtracted.
@@ -1945,66 +1884,66 @@ notes yatra_income_share: Meaning: Yatra income divided by total annual income (
 notes yatra_income_share: Formula: yatra_income / total_annual_income
 notes yatra_income_share: Source: Constructed
 notes income_seasonality_cv: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes income_seasonality_cv: Meaning: Calendar path: coefficient of variation across the twelve reported monthly earnings (n-1 divisor). Fallback path: the same CV computed on a two-level series -- income_pm_yatra_eq in each Yatra month, income_pm_other_eq in each
-notes income_seasonality_cv: Meaning (cont.): other month -- so the variable is never missing and no respondent silently drops out of the FGLS for want of it. IMPORTANT: the fallback series has no within-season variation by construction, so its CV captures only the between-
+notes income_seasonality_cv: Meaning: Calendar path: coefficient of variation across the twelve reported monthly earnings (n-1 divisor). Fallback path: the same CV computed on a two-level series — income_pm_yatra_eq in each Yatra month, income_pm_other_eq in each
+notes income_seasonality_cv: Meaning (cont.): other month — so the variable is never missing and no respondent silently drops out of the FGLS for want of it. IMPORTANT: the fallback series has no within-season variation by construction, so its CV captures only the between-
 notes income_seasonality_cv: Meaning (cont.): season swing and is a LOWER BOUND on true seasonality. Always run the VEP arms with income_from_fallback interacted or split; do not treat the two paths as the same measurement.
 notes income_seasonality_cv: Formula: calendar: rowsd(income_m1..12)/rowmean(income_m1..12); fallback: CV of the two-level series built from income_pm_yatra_eq and income_pm_other_eq over yatra_months and 12-yatra_months
 notes income_seasonality_cv: Source: Azeem et al. 2016; Khandker 2012; Dercon and Krishnan 2000
 notes cons_staples_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_staples_pm: Meaning: Staples spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_staples_pm: Formula: (yatra_months*cons_staples_yatra_pm + (12-yatra_months)*cons_staples_offseason_pm)/12
+notes cons_staples_pm: Formula: (yatra_months_liv*cons_staples_yatra_pm + (12-yatra_months_liv)*cons_staples_offseason_pm)/12
 notes cons_staples_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_staples_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_staples_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_perishables_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_perishables_pm: Meaning: Perishables spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_perishables_pm: Formula: (yatra_months*cons_perishables_yatra_pm + (12-yatra_months)*cons_perishables_offseason_pm)/12
+notes cons_perishables_pm: Formula: (yatra_months_liv*cons_perishables_yatra_pm + (12-yatra_months_liv)*cons_perishables_offseason_pm)/12
 notes cons_perishables_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_perishables_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_perishables_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_food_own_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_food_own_pm: Meaning: Home-grown/gifted food spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_food_own_pm: Formula: (yatra_months*cons_food_own_yatra_pm + (12-yatra_months)*cons_food_own_offseason_pm)/12
+notes cons_food_own_pm: Formula: (yatra_months_liv*cons_food_own_yatra_pm + (12-yatra_months_liv)*cons_food_own_offseason_pm)/12
 notes cons_food_own_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_food_own_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_food_own_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_food_out_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_food_out_pm: Meaning: Food eaten outside spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_food_out_pm: Formula: (yatra_months*cons_food_out_yatra_pm + (12-yatra_months)*cons_food_out_offseason_pm)/12
+notes cons_food_out_pm: Formula: (yatra_months_liv*cons_food_out_yatra_pm + (12-yatra_months_liv)*cons_food_out_offseason_pm)/12
 notes cons_food_out_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_food_out_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_food_out_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_fuel_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_fuel_pm: Meaning: Fuel and light spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_fuel_pm: Formula: (yatra_months*cons_fuel_yatra_pm + (12-yatra_months)*cons_fuel_offseason_pm)/12
+notes cons_fuel_pm: Formula: (yatra_months_liv*cons_fuel_yatra_pm + (12-yatra_months_liv)*cons_fuel_offseason_pm)/12
 notes cons_fuel_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_fuel_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_fuel_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_routine_misc_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_routine_misc_pm: Meaning: Toiletries/consumables spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_routine_misc_pm: Formula: (yatra_months*cons_routine_misc_yatra_pm + (12-yatra_months)*cons_routine_misc_offseason_pm)/12
+notes cons_routine_misc_pm: Formula: (yatra_months_liv*cons_routine_misc_yatra_pm + (12-yatra_months_liv)*cons_routine_misc_offseason_pm)/12
 notes cons_routine_misc_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_routine_misc_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_routine_misc_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_transport_comm_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_transport_comm_pm: Meaning: Transport/communication spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_transport_comm_pm: Formula: (yatra_months*cons_transport_comm_yatra_pm + (12-yatra_months)*cons_transport_comm_offseason_pm)/12
+notes cons_transport_comm_pm: Formula: (yatra_months_liv*cons_transport_comm_yatra_pm + (12-yatra_months_liv)*cons_transport_comm_offseason_pm)/12
 notes cons_transport_comm_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_transport_comm_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_transport_comm_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_rent_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_rent_pm: Meaning: Rent spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_rent_pm: Formula: (yatra_months*cons_rent_yatra_pm + (12-yatra_months)*cons_rent_offseason_pm)/12
+notes cons_rent_pm: Formula: (yatra_months_liv*cons_rent_yatra_pm + (12-yatra_months_liv)*cons_rent_offseason_pm)/12
 notes cons_rent_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_rent_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_rent_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_med_nonhosp_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_med_nonhosp_pm: Meaning: Medical, non-hospital spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_med_nonhosp_pm: Formula: (yatra_months*cons_med_nonhosp_yatra_pm + (12-yatra_months)*cons_med_nonhosp_offseason_pm)/12
+notes cons_med_nonhosp_pm: Formula: (yatra_months_liv*cons_med_nonhosp_yatra_pm + (12-yatra_months_liv)*cons_med_nonhosp_offseason_pm)/12
 notes cons_med_nonhosp_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_med_nonhosp_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_med_nonhosp_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_packaged_food_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_packaged_food_pm: Meaning: Packaged snacks and drinks spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_packaged_food_pm: Formula: (yatra_months*cons_packaged_food_yatra_pm + (12-yatra_months)*cons_packaged_food_offseason_pm)/12
+notes cons_packaged_food_pm: Formula: (yatra_months_liv*cons_packaged_food_yatra_pm + (12-yatra_months_liv)*cons_packaged_food_offseason_pm)/12
 notes cons_packaged_food_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_packaged_food_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_packaged_food_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_pan_tobacco_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_pan_tobacco_pm: Meaning: Pan, tobacco and intoxicants spending, weighted by the length of the Yatra season and the rest of the year.
-notes cons_pan_tobacco_pm: Formula: (yatra_months*cons_pan_tobacco_yatra_pm + (12-yatra_months)*cons_pan_tobacco_offseason_pm)/12
+notes cons_pan_tobacco_pm: Formula: (yatra_months_liv*cons_pan_tobacco_yatra_pm + (12-yatra_months_liv)*cons_pan_tobacco_offseason_pm)/12
 notes cons_pan_tobacco_pm: Source: Workers are migrants, so a consumption module fielded during the Yatra season cannot be treated as representative of the whole year. Every seasonal item (module E, 9 pairs) is combined the same way: Yatra-season months at the
-notes cons_pan_tobacco_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure -- the same weighting already used for income.
+notes cons_pan_tobacco_pm: Source (cont.): Yatra-season usual amount, other months at the off-season usual amount, then divided by 12 for a monthly-equivalent figure — the same weighting already used for income.
 notes cons_food_pm: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes cons_food_pm: Meaning: Staples + perishables + home-grown/gifted + eaten outside + packaged snacks and drinks, each already weighted by season. Packaged food is inside HCES's own food block (Section 7), so it belongs here; pan, tobacco and intoxicants
 notes cons_food_pm: Meaning (cont.): are a separate MPCE category in HCES and are added to total_cons_pm instead.
@@ -2044,7 +1983,7 @@ notes cons_pc_pm_narrow: Meaning (cont.): robustness of the variance model; not 
 notes cons_pc_pm_narrow: Formula: (food_pm + pan_tobacco_pm + fuel_pm + routine_misc_pm + transport_comm_pm + rent_pm) / hhsize
 notes cons_pc_pm_narrow: Source: Dercon and Krishnan 2000 (narrow non-food to avoid seasonal lumps)
 notes n_children_u15: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes n_children_u15: Meaning: The two asked bands added: children under 6 plus children aged 6 to 14. Asked directly until 2026-10-01, alongside the 6-to-14 count that is a subset of it -- which made the respondent subtract one from the other and let the two
+notes n_children_u15: Meaning: The two asked bands added: children under 6 plus children aged 6 to 14. Asked directly until 2026-10-01, alongside the 6-to-14 count that is a subset of it — which made the respondent subtract one from the other and let the two
 notes n_children_u15: Meaning (cont.): contradict. Two disjoint bands partition it exactly, so this is now arithmetic and the contradiction cannot arise.
 notes n_children_u15: Formula: n_children_u6 + n_children_6_14
 notes n_children_u15: Source: Adult-equivalent scales (Claro et al. 2010; Awuni et al. 2023)
@@ -2053,7 +1992,7 @@ notes cons_pc_ae_pm: Meaning: Household consumption divided by (adults + 0.5 x c
 notes cons_pc_ae_pm: Formula: total_cons_pm / (hhsize - n_children_u15 + 0.5*n_children_u15)
 notes cons_pc_ae_pm: Source: Adult-equivalent practice (Awuni et al. 2023; Claro et al. 2010 on per-capita versus adult-equivalent)
 notes poverty_line: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes poverty_line: Meaning: Sethu, Surya and Ruthu (2024) construct TWO lines for 2022-23 by the Rangarajan method: Rs 2,515 per capita per month rural and Rs 3,639 urban. Which applies is decided by home_rural_urban -- the respondent's USUAL place of
+notes poverty_line: Meaning: Sethu, Surya and Ruthu (2024) construct TWO lines for 2022-23 by the Rangarajan method: Rs 2,515 per capita per month rural and Rs 3,639 urban. Which applies is decided by home_rural_urban — the respondent's USUAL place of
 notes poverty_line: Meaning (cont.): residence, not the Yatra worksite. Until this variable existed the build applied the rural line to everyone, which measured urban-resident workers against a line 31 percent too low and understated their poverty.
 notes poverty_line: Formula: 2515 if home_rural_urban==1, else 3639
 notes poverty_line: Source: Sethu, Surya and Ruthu 2024 (Rangarajan method on HCES 2022-23), both lines
@@ -2084,7 +2023,7 @@ notes cooking_fuel_deprived: Meaning (cont.): documented departure and the raw f
 notes cooking_fuel_deprived: Formula: inlist(cooking_fuel,6,7,8,9,10)
 notes cooking_fuel_deprived: Source: NITI Aayog National MPI cooking-fuel indicator
 notes mpi_asset_count: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes mpi_asset_count: Meaning: Radio, TV, telephone, computer, animal cart, bicycle, motorbike, refrigerator -- NITI's own list. Car or truck is NOT in this count; it is a separate limb of the indicator.
+notes mpi_asset_count: Meaning: Radio, TV, telephone, computer, animal cart, bicycle, motorbike, refrigerator — NITI's own list. Car or truck is NOT in this count; it is a separate limb of the indicator.
 notes mpi_asset_count: Formula: owns_radio + owns_tv + owns_phone + owns_computer + owns_animal_cart + owns_bicycle + owns_motorcycle + owns_fridge
 notes mpi_asset_count: Source: NITI Aayog National MPI assets indicator
 notes mpi_asset_deprived: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
@@ -2092,10 +2031,6 @@ notes mpi_asset_deprived: Meaning: NITI rule exactly: deprived if the household 
 notes mpi_asset_deprived: Meaning (cont.): comparable to any published National MPI figure.
 notes mpi_asset_deprived: Formula: mpi_asset_count <= 1 & owns_car == 0
 notes mpi_asset_deprived: Source: NITI Aayog National MPI assets indicator
-notes child_school_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes child_school_dep: Meaning: 1 if any child aged 6 to 14 is not attending school; missing if no such child.
-notes child_school_dep: Formula: n_children_out_school > 0 if n_children_6_14 > 0
-notes child_school_dep: Source: NITI Aayog National MPI
 notes shock_1: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes shock_1: Meaning: 1 if 'Serious illness or death of an earning member' was ticked.
 notes shock_1: Formula: distress_event_last365d contains 1
@@ -2169,7 +2104,7 @@ notes shock_any: Meaning: 1 if any shock was ticked.
 notes shock_any: Formula: shock_count > 0
 notes shock_any: Source: Constructed
 notes shock_covariate: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes shock_covariate: Meaning: 1 if any of: natural disaster, road or bridge blocked, Yatra stopped or disrupted, sharp fall in customers or prices (codes 3, 5, 6, 7). These hit the whole route at once, so they are the shocks a ropeway -- or a flood year --
+notes shock_covariate: Meaning: 1 if any of: natural disaster, road or bridge blocked, Yatra stopped or disrupted, sharp fall in customers or prices (codes 3, 5, 6, 7). These hit the whole route at once, so they are the shocks a ropeway — or a flood year —
 notes shock_covariate: Meaning (cont.): delivers to everyone simultaneously. Separating them from idiosyncratic shocks is what makes the covariate/idiosyncratic variance decomposition identifiable.
 notes shock_covariate: Formula: any of shock_3 shock_5 shock_6 shock_7
 notes shock_covariate: Source: Gunther and Harttgen 2009, via Fujii 2016 section 2.2
@@ -2182,7 +2117,7 @@ notes coped_sold_assets: Meaning: 1 if selling or pawning assets was among the r
 notes coped_sold_assets: Formula: cope_3
 notes coped_sold_assets: Source: Carter and Zimmerman 2000
 notes coped_cut_consumption: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes coped_cut_consumption: Meaning: 1 if cutting consumption was among the responses. See coped_sold_assets -- a household doing BOTH, or cutting consumption precisely in order to avoid selling, is the case the single-answer item could not represent.
+notes coped_cut_consumption: Meaning: 1 if cutting consumption was among the responses. See coped_sold_assets — a household doing BOTH, or cutting consumption precisely in order to avoid selling, is the case the single-answer item could not represent.
 notes coped_cut_consumption: Formula: cope_4
 notes coped_cut_consumption: Source: Carter and Zimmerman 2000; Zimmerman and Carter 2003
 notes mpi_mortality_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
@@ -2192,7 +2127,7 @@ notes mpi_mortality_dep: Source: NITI Aayog National MPI (1/12)
 notes mpi_maternal_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes mpi_maternal_dep: Meaning: NITI: a woman who gave birth in the last five years did not have at least four antenatal visits for the most recent birth, OR was not assisted by trained personnel at that birth. Households with no birth in the window are NOT
 notes mpi_maternal_dep: Meaning (cont.): deprived, per NITI's own treatment.
-notes mpi_maternal_dep: Formula: birth_last_5y==1 & (anc_4_visits!=1 | skilled_birth_attendant!=1)
+notes mpi_maternal_dep: Formula: birth_last_5y==1 & (anc_4_visits!=1 | !inlist(skilled_birth_attendant,1,2))
 notes mpi_maternal_dep: Source: NITI Aayog National MPI (1/12)
 notes mpi_schooling_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes mpi_schooling_dep: Meaning: NITI: not even one household member aged 10 or older has completed six years of schooling.
@@ -2200,7 +2135,7 @@ notes mpi_schooling_dep: Formula: any_member_6yr_schooling == 0
 notes mpi_schooling_dep: Source: NITI Aayog National MPI (1/6)
 notes mpi_attendance_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes mpi_attendance_dep: Meaning: NITI: any school-aged child is not attending school up to the age at which they would complete class 8. Not deprived where the household has no child in that range.
-notes mpi_attendance_dep: Formula: n_children_out_school > 0 if n_children_6_14 > 0
+notes mpi_attendance_dep: Formula: (n_children_6_14 - n_children_in_school) > 0 if n_children_6_14 > 0
 notes mpi_attendance_dep: Source: NITI Aayog National MPI (1/6)
 notes mpi_housing_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes mpi_housing_dep: Meaning: NITI: the floor is natural material, OR the roof OR the wall is rudimentary. All three limbs are now collected; the wall limb was previously missing entirely.
@@ -2219,7 +2154,7 @@ notes mpi_bank_dep: Meaning: NITI: no household member has a bank account or a p
 notes mpi_bank_dep: Formula: has_bank_account == 0
 notes mpi_bank_dep: Source: NITI Aayog National MPI (1/21)
 notes mpi_score: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes mpi_score: Meaning: Weighted sum of the eleven collected indicators -- mortality, maternal health, years of schooling, school attendance, cooking fuel, sanitation, drinking water, electricity, housing, assets and bank account. Nutrition (1/6) cannot
+notes mpi_score: Meaning: Weighted sum of the eleven collected indicators — mortality, maternal health, years of schooling, school attendance, cooking fuel, sanitation, drinking water, electricity, housing, assets and bank account. Nutrition (1/6) cannot
 notes mpi_score: Meaning (cont.): be collected without anthropometry, so the remaining weights are scaled up proportionally to sum to 1. REPORT THIS AS AN ADAPTATION, never as the National MPI, and name the absent indicator. mpi_score_lyons is the companion that
 notes mpi_score: Meaning (cont.): substitutes rather than omits. (The label said TEN until 2026-10-01; eleven of the twelve are collected, and the formula always summed eleven.)
 notes mpi_score: Formula: (1/12*mortality + 1/12*maternal + 1/6*schooling + 1/6*attendance + 1/21*(fuel+sanitation+water+electricity+housing+assets+bank)) / (1 - 1/6)
@@ -2228,36 +2163,111 @@ notes mpi_poor: Module X - Constructed variables (built in Stata from the asked 
 notes mpi_poor: Meaning: Alkire-Foster identification at the standard k = 33.3 percent cutoff.
 notes mpi_poor: Formula: mpi_score >= 1/3
 notes mpi_poor: Source: Alkire and Foster 2011; NITI Aayog National MPI
-notes rcsi_yatra_wk: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes rcsi_yatra_wk: Meaning: Weighted sum of the five Yatra-season food-coping day-counts, standard WFP weights (1,2,1,1,3).
-notes rcsi_yatra_wk: Formula: cope_less_pref_food_yatra_wk + 2*cope_borrow_food_yatra_wk + cope_reduce_meals_yatra_wk + cope_reduce_portion_yatra_wk + 3*cope_restrict_adult_yatra_wk
-notes rcsi_yatra_wk: Source: WFP reduced Coping Strategy Index
-notes rcsi_offseason_wk: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes rcsi_offseason_wk: Meaning: Weighted sum of the five off-season food-coping day-counts, standard WFP weights (1,2,1,1,3).
-notes rcsi_offseason_wk: Formula: cope_less_pref_food_offseason_wk + 2*cope_borrow_food_offseason_wk + cope_reduce_meals_offseason_wk + cope_reduce_portion_offseason_wk + 3*cope_restrict_adult_offseason_wk
-notes rcsi_offseason_wk: Source: WFP reduced Coping Strategy Index
-notes rcsi_score: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes rcsi_score: Meaning: Yatra-season and off-season weekly rCSI, weighted by the length of each season from the work calendar -- the same weighting already used for income and consumption.
-notes rcsi_score: Formula: (yatra_months*rcsi_yatra_wk + (12-yatra_months)*rcsi_offseason_wk)/12
-notes rcsi_score: Source: WFP reduced Coping Strategy Index; season-weighting as in Module E/C
-notes food_coping_deprived: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes food_coping_deprived: Meaning: 1 if annual-average rCSI exceeds 20, the cutoff used by Lyons et al. 2023 (from VASyR).
-notes food_coping_deprived: Formula: rcsi_score > 20
-notes food_coping_deprived: Source: Lyons et al. 2023 Table 2 indicator 3 cutoff
 notes shock_earnings_lost: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes shock_earnings_lost: Meaning: Weeks of work lost times the respondent's own weekly earnings in the season the shock fell in -- Yatra-season weekly earnings if shock_month is inside the measured season, off-season weekly earnings otherwise. The respondent is
+notes shock_earnings_lost: Meaning: Weeks of work lost times the respondent's own weekly earnings in the season the shock fell in — Yatra-season weekly earnings if shock_month is inside the measured season, off-season weekly earnings otherwise. The respondent is
 notes shock_earnings_lost: Meaning (cont.): never asked to value his own forgone work: he reports the weeks, and the wage is the one this instrument already measured from him.
 notes shock_earnings_lost: Formula: shock_work_lost_weeks * (season-matched weekly earnings)
 notes shock_earnings_lost: Source: Project design (the time limb of shock magnitude, valued at measured earnings)
 notes shock_loss_total: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes shock_loss_total: Meaning: The two limbs added. This is what shock_loss_amount used to ask the respondent to add up in his head -- including valuing his own lost work -- and it replaces it everywhere, including in shock_loss_share. Report the limbs
-notes shock_loss_total: Meaning (cont.): separately too: a shock that costs only time and a shock that costs only cash are different events for a household with no savings.
+notes shock_loss_total: Meaning: The two limbs added. This is what shock_loss_amount used to ask the respondent to add up in his head — including valuing his own lost work — and it replaces it everywhere, including in shock_loss_share. Report the limbs separately
+notes shock_loss_total: Meaning (cont.): too: a shock that costs only time and a shock that costs only cash are different events for a household with no savings.
 notes shock_loss_total: Formula: shock_earnings_lost + shock_money_spent
 notes shock_loss_total: Source: Ligon and Schechter 2003; Dercon and Krishnan 2000
+notes health_insured_any: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes health_insured_any: Meaning: Replaces n_health_insured (a count). Split out of insurance_held.
+notes health_insured_any: Formula: insurance_held contains 1
+notes health_insured_any: Source: NITI Aayog National MPI health-insurance indicator; Lyons et al. 2023
+notes life_insured_any: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes life_insured_any: Meaning: Replaces n_life_insured (a count). Split out of insurance_held.
+notes life_insured_any: Formula: insurance_held contains 2
+notes life_insured_any: Source: Constructed
+notes has_crop_insurance: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes has_crop_insurance: Meaning: Was asked directly through 2026-10-06 (gated on land); now split out of insurance_held, which needs no land gate since a landless household will not tick it.
+notes has_crop_insurance: Formula: insurance_held contains 3
+notes has_crop_insurance: Source: Constructed
+notes fies_skipped_meal: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_skipped_meal: Meaning: FIES item 4, the least severe of the five. Split out of fies_items; missing only if fies_items itself was left entirely blank.
+notes fies_skipped_meal: Formula: fies_items contains 1
+notes fies_skipped_meal: Source: Constructed
+notes fies_ate_less: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_ate_less: Meaning: FIES item 5. Split out of fies_items.
+notes fies_ate_less: Formula: fies_items contains 2
+notes fies_ate_less: Source: Constructed
+notes fies_ran_out: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_ran_out: Meaning: FIES item 6, the one household-referenced item of the five. Split out of fies_items.
+notes fies_ran_out: Formula: fies_items contains 3
+notes fies_ran_out: Source: Constructed
+notes fies_hungry: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_hungry: Meaning: FIES item 7. Split out of fies_items.
+notes fies_hungry: Formula: fies_items contains 4
+notes fies_hungry: Source: Constructed
+notes fies_whole_day: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_whole_day: Meaning: FIES item 8, the most severe. Split out of fies_items.
+notes fies_whole_day: Formula: fies_items contains 5
+notes fies_whole_day: Source: Constructed
+notes owns_tv: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_tv: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_tv: Formula: assets_owned contains 1
+notes owns_tv: Source: NITI Aayog National MPI, Assets
+notes owns_radio: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_radio: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_radio: Formula: assets_owned contains 2
+notes owns_radio: Source: NITI Aayog National MPI, Assets
+notes owns_bicycle: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_bicycle: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_bicycle: Formula: assets_owned contains 3
+notes owns_bicycle: Source: NITI Aayog National MPI, Assets
+notes owns_motorcycle: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_motorcycle: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_motorcycle: Formula: assets_owned contains 4
+notes owns_motorcycle: Source: NITI Aayog National MPI, Assets
+notes owns_car: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_car: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_car: Formula: assets_owned contains 5
+notes owns_car: Source: NITI Aayog National MPI, Assets
+notes owns_phone: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_phone: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_phone: Formula: assets_owned contains 6
+notes owns_phone: Source: NITI Aayog National MPI, Assets
+notes owns_computer: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_computer: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_computer: Formula: assets_owned contains 7
+notes owns_computer: Source: NITI Aayog National MPI, Assets
+notes owns_animal_cart: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_animal_cart: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_animal_cart: Formula: assets_owned contains 8
+notes owns_animal_cart: Source: NITI Aayog National MPI, Assets
+notes owns_fridge: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_fridge: Meaning: Split out of assets_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_fridge: Formula: assets_owned contains 9
+notes owns_fridge: Source: NITI Aayog National MPI, Assets
+notes owns_cow_buffalo: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_cow_buffalo: Meaning: Split out of livestock_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_cow_buffalo: Formula: livestock_owned contains 1
+notes owns_cow_buffalo: Source: Chaudhuri et al. 2002 asset covariate
+notes owns_goat_sheep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_goat_sheep: Meaning: Split out of livestock_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_goat_sheep: Formula: livestock_owned contains 2
+notes owns_goat_sheep: Source: Chaudhuri et al. 2002 asset covariate
+notes owns_pony_mule: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes owns_pony_mule: Meaning: Split out of livestock_owned; falls back to the asked column on records collected before 2026-10-05.
+notes owns_pony_mule: Formula: livestock_owned contains 3
+notes owns_pony_mule: Source: Chaudhuri et al. 2002 asset covariate
+notes fies_raw: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_raw: Meaning: Count of yes answers across the five FIES behavioural items. Unweighted, by design: FIES is an ordered severity scale, not a frequency-by-severity index like the rCSI it replaces, so applying weights to it would be a category
+notes fies_raw: Meaning (cont.): error. Missing only where all five were left blank.
+notes fies_raw: Formula: fies_skipped_meal + fies_ate_less + fies_ran_out + fies_hungry + fies_whole_day
+notes fies_raw: Source: FAO Food Insecurity Experience Scale (SDG 2.1.2), behavioural items
+notes fies_mod_sev: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes fies_mod_sev: Meaning: 1 if two or more of the five behavioural items were answered yes. Replaces food_coping_deprived (rCSI > 20), whose threshold was Lyons et al.'s, calibrated on Lebanese refugee households answering the original 7-day rCSI -- a
+notes fies_mod_sev: Meaning (cont.): cutoff on a quantity this instrument was not measuring. Two or more behavioural items is the conventional moderate-or-severe line.
+notes fies_mod_sev: Formula: fies_raw >= 2
+notes fies_mod_sev: Source: FAO FIES; moderate-or-severe on the behavioural items
 notes mpi_nutrition_proxy_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes mpi_nutrition_proxy_dep: Meaning: food_coping_deprived, standing in for NITI's Nutrition indicator in mpi_score_lyons only. NOT a measure of undernourishment and must never be labelled as one: it is the Lyons et al. (2023) food-coping indicator, rCSI above 20,
-notes mpi_nutrition_proxy_dep: Meaning (cont.): occupying the 1/6 weight NITI gives to a measurement this instrument cannot take.
-notes mpi_nutrition_proxy_dep: Formula: food_coping_deprived == 1
+notes mpi_nutrition_proxy_dep: Meaning: fies_mod_sev, standing in for NITI's Nutrition indicator in mpi_score_lyons only. NOT a measure of undernourishment and must never be labelled as one: it is moderate-or-severe food insecurity on the FAO FIES behavioural items,
+notes mpi_nutrition_proxy_dep: Meaning (cont.): occupying the 1/6 weight NITI gives to a measurement this instrument cannot take (anthropometry). Rewired from food_coping_deprived (rCSI > 20) on 2026-10-05 with the rest of the food-security block. FIES is the better occupant of
+notes mpi_nutrition_proxy_dep: Meaning (cont.): the slot on its own terms -- it measures experience of insufficient food, which is one step from undernourishment, where the rCSI measured coping acts, which is two -- but it is still a substitution and must be reported as one.
+notes mpi_nutrition_proxy_dep: Formula: fies_mod_sev == 1
 notes mpi_nutrition_proxy_dep: Source: Lyons et al. 2023 Table 2 indicator 3, substituted for NITI Aayog Nutrition (1/6); Alkire and Foster 2011 on indicator substitution
 notes mpi_score_lyons: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes mpi_score_lyons: Meaning: All twelve NITI weights filled, with the food-coping indicator in the Nutrition slot at 1/6 and no reweighting. Report alongside mpi_score, never instead of it, and state the substitution.
@@ -2276,7 +2286,7 @@ notes hours_week_offseason: Meaning: Hours per day times days per week, off-seas
 notes hours_week_offseason: Formula: hours_day_offseason * days_week_offseason
 notes hours_week_offseason: Source: Apablaza et al. 2026 Q13
 notes hours_week_annual: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes hours_week_annual: Meaning: Yatra-season and off-season weekly hours, weighted by how many months of each the calendar records. Averaged over WORKED months only, so idle months do not drag the figure to zero -- idleness is measured by months_no_work, and
+notes hours_week_annual: Meaning: Yatra-season and off-season weekly hours, weighted by how many months of each the calendar records. Averaged over WORKED months only, so idle months do not drag the figure to zero — idleness is measured by months_no_work, and
 notes hours_week_annual: Meaning (cont.): counting it here too would penalise it twice.
 notes hours_week_annual: Formula: (yatra_months*hours_week_yatra + offseason_months_worked*hours_week_offseason) / (yatra_months + offseason_months_worked)
 notes hours_week_annual: Source: Apablaza et al. 2026 Q13, weighted onto the work calendar
@@ -2284,42 +2294,50 @@ notes work_income_pm: Module X - Constructed variables (built in Stata from the 
 notes work_income_pm: Meaning: (Yatra income + other work income) divided by 12.
 notes work_income_pm: Formula: (yatra_income + non_yatra_income)/12
 notes work_income_pm: Source: Apablaza et al. 2026 Q14
-notes emp_dep_access: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_access: Meaning: 1 if idle more than 6 months and spent any weeks looking for work, or wants more work while working under 20 hours a week in EITHER season. The under-20 limb previously tested Yatra-season hours only, where this workforce runs
-notes emp_dep_access: Meaning (cont.): 60-90 hours a week, so it could never fire and the indicator collapsed onto its other limb.
-notes emp_dep_access: Formula: (months_no_work>6 & weeks_looked_for_work>0) | (wants_more_work==1 & (hours_week_yatra<20 | hours_week_offseason<20))
-notes emp_dep_access: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2): unemployed >6 months OR <20 h/week involuntary
-notes emp_dep_comp: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_comp: Meaning: 1 if average monthly work income is below 67 percent of the sample median (the fallback threshold in Table 3).
-notes emp_dep_comp: Formula: work_income_pm < 0.67 * median(work_income_pm)
-notes emp_dep_comp: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2): fallback <67% of median; the PPP-line version needs a checked conversion factor
-notes emp_dep_sec: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_sec: Meaning: 1 if a wage worker has no signed contract, or a self-employed worker's business is not registered.
-notes emp_dep_sec: Formula: wage: contract_status != 1; self-employed: workplace_registered == 0
-notes emp_dep_sec: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2): no written contract (registration for the self-employed)
-notes emp_dep_stab: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_stab: Meaning: Apablaza Table 3 sets TWO tenure thresholds -- wage workers deprived under 6 months, self-employed under 12 months -- where this file previously applied a single under-1-year rule to everyone, which marked wage workers with 6 to
-notes emp_dep_stab: Meaning (cont.): 12 months of tenure as deprived when Table 3 would not. Tenure here is counted in Yatra SEASONS, and one season is roughly six months of work, so the two thresholds map cleanly onto under 1 season for wage workers and under 2 for
-notes emp_dep_stab: Meaning (cont.): the self-employed. The casual-job limb is an ADDITION to Table 3, whose fallback (temporary/casual) is meant for use only when tenure is unavailable; it is kept because occasional work is a real instability here, but note it
-notes emp_dep_stab: Meaning (cont.): covers code 3 only -- code 2 (seasonal) would mark almost this entire sample deprived and would measure the season, not the job.
-notes emp_dep_stab: Formula: wage (employment_type 3/4): years_in_yatra_work < 1; self-employed (1/2): < 2; OR job_permanence == 3
-notes emp_dep_stab: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2): tenure, wage <6mo and self-employed <12mo; casual limb is a project addition
-notes emp_dep_cond: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_cond: Meaning: 1 if someone was injured or killed at the workplace in the last 12 months, or the worker has neither work health insurance nor a pension.
-notes emp_dep_cond: Formula: workplace_injury_12m==1 | (work_health_ins==3 & pension_contrib==3)
-notes emp_dep_cond: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2): hazards OR (no health insurance AND no pension); injury is the hazard evidence in Appendix 2
-notes emp_dep_count: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_count: Meaning: Number of the five employment indicators in which the worker is deprived.
-notes emp_dep_count: Formula: sum of the five emp_dep_ indicators
-notes emp_dep_count: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2)
-notes emp_dep_score: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_dep_score: Meaning: Count divided by 5.
-notes emp_dep_score: Formula: emp_dep_count / 5
-notes emp_dep_score: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2)
-notes emp_poor_k2: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes emp_poor_k2: Meaning: 1 if two or more indicators; k = 2 of 5 is the project's choice, to be varied in robustness.
-notes emp_poor_k2: Formula: emp_dep_count >= 2
-notes emp_poor_k2: Source: Apablaza et al. 2026, Table 3 (five-domain core; thresholds from the table, inputs from Appendix 2); cut-off is the project's choice
+notes emp_inc_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_inc_dep: Meaning: 1 if average monthly work income is below six times the national basic food basket (EMP_BASKET_PM). Until that is set, the fallback is 67 percent of the median work income of working respondents, the Apablaza fallback.
+notes emp_inc_dep: Formula: work_income_pm < 6*EMP_BASKET_PM
+notes emp_inc_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): labour income, weight 1/4
+notes emp_stab_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_stab_dep: Meaning: 1 if under 36 months (3 years) in the current job, from the years question.
+notes emp_stab_dep: Formula: years_current_job < 3
+notes emp_stab_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): tenure (36 months), weight 1/8
+notes emp_unemp_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_unemp_dep: Meaning: 1 if the respondent looked for work at least once in the last 12 months. Set to 0 where the question was not asked, because it is asked only where there were idle months.
+notes emp_unemp_dep: Formula: months_looked_for_work > 0 (0 where not asked)
+notes emp_unemp_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): unemployed at least once in 12 months, weight 1/8
+notes emp_sec_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_sec_dep: Meaning: 1 if not enrolled in any social-security scheme.
+notes emp_sec_dep: Formula: social_security_any == 0
+notes emp_sec_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): no affiliation to social security, weight 1/8
+notes emp_occ_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_occ_dep: Meaning: 1 if self-employed without higher education, or wage-employed without a contract (contract code 3 only).
+notes emp_occ_dep: Formula: (inlist(employment_type,1,2) & higher_ed==0) | (inlist(employment_type,3,4) & contract_status==3)
+notes emp_occ_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): occupational status, weight 1/8
+notes emp_hours_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_hours_dep: Meaning: 1 if the average weekly hours across worked months exceed 48.
+notes emp_hours_dep: Formula: hours_week_annual > 48
+notes emp_hours_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): excessive working hours, weight 1/16
+notes emp_intens_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_intens_dep: Meaning: 1 if at least two of the three intensity demands hold for more than half the working day.
+notes emp_intens_dep: Formula: (intens_speed==1) + (intens_deadline==1) + (intens_time==1) >= 2
+notes emp_intens_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): high work intensity, weight 1/16
+notes emp_posture_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_posture_dep: Meaning: 1 if at least two of the three posture demands hold for more than half the working day.
+notes emp_posture_dep: Formula: (posture_position==1) + (posture_loads==1) + (posture_repetitive==1) >= 2
+notes emp_posture_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): high posture-related risk, weight 1/16
+notes emp_phys_dep: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_phys_dep: Meaning: 1 if exposed to loud noise OR extreme heat or cold for more than half the working day.
+notes emp_phys_dep: Formula: phys_noise==1 | phys_temperature==1
+notes emp_phys_dep: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03): high physical risk, weight 1/16
+notes emp_score: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_score: Meaning: Apablaza weights: low earnings 1/4; tenure, unemployment risk, social security and occupational status 1/8 each; the four conditions items 1/16 each. Blank while EMP_BASKET_PM is unset.
+notes emp_score: Formula: (1/4)*emp_inc_dep + (1/8)*(emp_stab_dep+emp_unemp_dep+emp_sec_dep+emp_occ_dep) + (1/16)*(emp_hours_dep+emp_intens_dep+emp_posture_dep+emp_phys_dep)
+notes emp_score: Source: Apablaza et al. 2026, employment table (weights as supplied 2026-10-03)
+notes emp_poor: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
+notes emp_poor: Meaning: The cut-off of 1/3 is a convention carried over from the MPI, not a figure in the employment table. Check it against Apablaza's own cut-off before reporting.
+notes emp_poor: Formula: emp_score >= 1/3
+notes emp_poor: Source: Project choice (cut-off not in the table)
 notes tk_regular_n: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes tk_regular_n: Meaning: Count of task answers equal to 1.
 notes tk_regular_n: Formula: count of tk_* == 1
@@ -2384,31 +2402,23 @@ notes other_act_14: Module X - Constructed variables (built in Stata from the as
 notes other_act_14: Meaning: 1 if 'Other' was ticked in the check-all list of other paid activities.
 notes other_act_14: Formula: other_activity_types contains 14
 notes other_act_14: Source: Split from the select_multiple export
-notes n_other_act_checked: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes n_other_act_checked: Meaning: Count of the boxes ticked in the check-all list. Compared against the respondent's own count (n_other_activities); a mismatch is a data-quality flag, not a silent loss.
-notes n_other_act_checked: Formula: sum of other_act_1..13
-notes n_other_act_checked: Source: Constructed
-notes other_act_mismatch: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes other_act_mismatch: Meaning: 1 if the number of activities ticked does not equal the number the respondent said they had. Expected to be small; if it is not, the item needs rewording before scale-up.
-notes other_act_mismatch: Formula: n_other_act_checked != n_other_activities
-notes other_act_mismatch: Source: Constructed
 notes best_alt_occupation: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes best_alt_occupation: Meaning: Of the 13 occupations, the one (other than the respondent's own) whose task profile is closest to the respondent's. Worker's own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) -- prior capability
+notes best_alt_occupation: Meaning: Of the 13 occupations, the one (other than the respondent's own) whose task profile is closest to the respondent's. Worker's own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) — prior capability
 notes best_alt_occupation: Meaning (cont.): outside the current job is exactly what a transfer question is about. Destination profiles are the occupation-level share of workers doing each task (Gathmann and Schonberg's q_oj).
 notes best_alt_occupation: Formula: argmax over j != own occupation of cosine(worker profile, q_j)
 notes best_alt_occupation: Source: Gathmann and Schonberg 2010
 notes task_cover_best: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes task_cover_best: Meaning: Coverage: of the tasks that alternative occupation requires, the share this worker can already perform. Ormiston's t_ji direction -- can the worker step in?
+notes task_cover_best: Meaning: Coverage: of the tasks that alternative occupation requires, the share this worker can already perform. Ormiston's t_ji direction — can the worker step in?
 notes task_cover_best: Formula: sum(q_best * worker) / sum(q_best)
 notes task_cover_best: Source: Nawakitphaitoon and Ormiston 2016 (Ormiston 2014 transferability)
 notes task_retain_best: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
-notes task_retain_best: Meaning: Retention: of the tasks this worker can perform, the share that alternative occupation would actually use. Ormiston's t_ij direction -- how much of their skill survives the move?
+notes task_retain_best: Meaning: Retention: of the tasks this worker can perform, the share that alternative occupation would actually use. Ormiston's t_ij direction — how much of their skill survives the move?
 notes task_retain_best: Formula: sum(q_best * worker) / sum(worker)
 notes task_retain_best: Source: Nawakitphaitoon and Ormiston 2016 (Ormiston 2014 transferability)
 notes skill_move_type: Module X - Constructed variables (built in Stata from the asked variables); origin: constructed
 notes skill_move_type: Meaning: Direction of the move implied by the coverage/retention pair, both split at 0.5: high-high lateral (move needs little retraining); low coverage but high retention means the destination needs skills the worker lacks while their own
 notes skill_move_type: Meaning (cont.): still count, i.e. UPSKILLING; high coverage but low retention means the worker has more than the destination uses and much of it goes idle, i.e. DOWNSKILLING; low-low means the skill sets barely overlap, i.e. RESKILLING. Worker's
-notes skill_move_type: Meaning (cont.): own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) -- prior capability outside the current job is exactly what a transfer question is about. Destination profiles are the occupation-level share of
+notes skill_move_type: Meaning (cont.): own task profile uses codes 1 AND 2 (does it now, or has done it before elsewhere) — prior capability outside the current job is exactly what a transfer question is about. Destination profiles are the occupation-level share of
 notes skill_move_type: Meaning (cont.): workers doing each task (Gathmann and Schonberg's q_oj).
 notes skill_move_type: Formula: from (task_cover_best, task_retain_best), each split at 0.5
 notes skill_move_type: Source: Nawakitphaitoon and Ormiston 2016, section 2.2 (asymmetry of T_ij read as direction)
@@ -2428,7 +2438,7 @@ capture notes retained: Module Z - Synthetic-design variables (not collected); o
 capture notes retained: Meaning: 1 if the synthetic respondent stayed in the fielded sample.
 capture notes retained: Source: Synthetic design
 
-order resp_id enum_id site form_build interview_date gps_lat gps_lon consent interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other marital_status knows_years_schooling years_schooling education_level_cat hhsize any_member_6yr_schooling family_structure n_earners main_income_earner n_children_u6 n_children_6_14 n_children_out_school occupation occupation_detail employment_type n_other_activities other_activity_types other_activity_income_pm years_in_yatra_work hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason training_received status_m5 status_m6 status_m7 status_m8 status_m9 status_m10 status_m11 status_m12 status_m1 status_m2 status_m3 status_m4 knows_monthly_income income_m5 income_m6 income_m7 income_m8 income_m9 income_m10 income_m11 income_m12 income_m1 income_m2 income_m3 income_m4 income_annual_total pct_income_yatra remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm hours_day_offseason days_week_offseason origin home_state home_rural_urban resp_returns_at_closure hh_at_home_place n_here_season years_coming_here came_here_reason worked_away_in_closure closure_work_detail left_here_month returned_here_month would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_medical_hosp_12m cons_durables_12m floor_material roof_material wall_material accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes cooking_fuel owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge land_unit land_cultivable_acres owns_cow_buffalo owns_goat_sheep owns_pony_mule owns_shop_stall owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account took_loan_12m credit_source loan_purpose loan_amount_borrowed loan_amount pays_interest loan_interest_per100_pm loan_against_asset loan_collateral n_health_insured n_life_insured has_crop_insurance govt_any_benefit govt_schemes_detail ration_portable_here smartphone_owned uses_digital_payment n_can_transact_online morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_work_lost_weeks shock_money_spent shock_month shock_coping cope_less_pref_food_yatra_wk cope_less_pref_food_offseason_wk cope_borrow_food_yatra_wk cope_borrow_food_offseason_wk cope_reduce_meals_yatra_wk cope_reduce_meals_offseason_wk cope_reduce_portion_yatra_wk cope_reduce_portion_offseason_wk cope_restrict_adult_yatra_wk cope_restrict_adult_offseason_wk ropeway_stance trek_dependent job_situation job_permanence contract_status workplace_registered pension_contrib work_health_ins leave_rights injured_ever workplace_injury_12m wants_more_work more_hours_day months_looked_for_work first_job_ever tk_load tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work education_years hoh_female months_here closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_start_month yatra_end_month offseason_months_worked months_no_work offseason_primary income_from_fallback yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow n_children_u15 cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived child_school_dep shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 no_shock_reported cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 cope_7 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor rcsi_yatra_wk rcsi_offseason_wk rcsi_score food_coping_deprived shock_earnings_lost shock_loss_total mpi_nutrition_proxy_dep mpi_score_lyons mpi_poor_lyons hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_dep_access emp_dep_comp emp_dep_sec emp_dep_stab emp_dep_cond emp_dep_count emp_dep_score emp_poor_k2 tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 n_other_act_checked other_act_mismatch best_alt_occupation task_cover_best task_retain_best skill_move_type
+order resp_id enum_id site form_build interview_date gps_lat gps_lon consent obs_environment gps_accuracy_m gps_fix_s gps_error interview_duration_min dur_tasks_min age female hoh_relation native_language native_language_other origin home_state home_rural_urban marital_status knows_years_schooling years_schooling education_level_cat training_received hhsize any_member_6yr_schooling n_children_u6 n_children_6_14 n_children_in_school n_earners main_income_earner occupation occupation_detail employment_type wage_employer other_activity_types other_activity_income_pm owns_shop_stall employers_in_season years_current_job years_coming_here first_job_ever hours_day_yatra days_week_yatra prev_occ_change prev_occ target_occ prev_occ_reason months_worked_yatra months_no_paid_work offseason_activity income_annual_total pct_income_yatra earnings_range hours_day_offseason days_week_offseason resp_returns_at_closure hh_at_home_place remit_differs_by_season remit_out_yatra_pm remit_out_offseason_pm remit_mode remit_in_yatra_pm remit_in_offseason_pm smartphone_owned n_can_transact_online n_hh_same_business came_here_reason came_here_reason_other worked_away_in_closure closure_work_detail would_move_for_work migration_referral migration_referral_other spend_differs_by_season cons_staples_yatra_pm cons_staples_offseason_pm cons_perishables_yatra_pm cons_perishables_offseason_pm cons_food_own_yatra_pm cons_food_own_offseason_pm cons_food_out_yatra_pm cons_food_out_offseason_pm cons_fuel_yatra_pm cons_fuel_offseason_pm cons_routine_misc_yatra_pm cons_routine_misc_offseason_pm cons_transport_comm_yatra_pm cons_transport_comm_offseason_pm cons_rent_yatra_pm cons_rent_offseason_pm cons_med_nonhosp_yatra_pm cons_med_nonhosp_offseason_pm cons_packaged_food_yatra_pm cons_packaged_food_offseason_pm cons_pan_tobacco_yatra_pm cons_pan_tobacco_offseason_pm cons_clothing_12m cons_education_12m cons_durables_12m floor_material roof_material wall_material accom_type_here electricity toilet_type drinking_water water_on_premises water_fetch_minutes cooking_fuel land_unit land_cultivable_acres assets_owned livestock_owned owns_work_vehicle owns_work_equipment work_equipment_detail has_bank_account took_loan_12m credit_source loan_purpose loan_amount_borrowed loan_amount pays_interest loan_interest_per100_pm loan_collateral insurance_held govt_any_benefit govt_schemes_detail morbidity_15d morbidity_coping_15d morbidity_cost_15d func_limitation hospitalization_365d cons_medical_hosp_12m health_access_barrier_3m child_death_5y birth_last_5y anc_4_visits skilled_birth_attendant distress_event_last365d shock_work_lost_weeks shock_money_spent shock_month shock_coping fies_items ropeway_stance ropeway_expect_work ropeway_expect_jobs ropeway_trust trek_dependent contract_status workplace_registered pension_any work_health_ins leave_rights injured_ever workplace_injury_12m workplace_death_12m wants_more_work more_hours_day months_looked_for_work higher_ed social_security_any intens_speed intens_deadline intens_time posture_position posture_loads posture_repetitive phys_noise phys_temperature tk_carry tk_passenger tk_load tk_lead_animals tk_animal_care tk_drive tk_engine tk_electric tk_safety tk_sell tk_cash tk_cook tk_serve tk_clean tk_guide tk_coord drove_twowheeler drove_car drove_heavy read_at_work calc_at_work cpr_permitted cpr_firewood cpr_fodder cpr_forest_produce cpr_grazing cpr_restricted cpr_lost_access cpr_water_route cpr_governance education_years hoh_female months_here closure_labour_migrant cons_pc_denom_season stays_all_year split_household credit_institutional credit_informal migrant health_access_tier health_access_deprived yatra_months yatra_months_liv offseason_months_worked months_no_work offseason_primary yatra_income non_yatra_income income_pm_yatra_eq income_pm_other_eq remittance_outward_annual remittance_inward_annual total_annual_income yatra_income_share income_seasonality_cv cons_staples_pm cons_perishables_pm cons_food_own_pm cons_food_out_pm cons_fuel_pm cons_routine_misc_pm cons_transport_comm_pm cons_rent_pm cons_med_nonhosp_pm cons_packaged_food_pm cons_pan_tobacco_pm cons_food_pm cons_clothing_12m_pm cons_education_12m_pm cons_medical_12m cons_medical_12m_pm cons_durables_12m_pm total_cons_pm cons_pc_pm cons_pc_pm_narrow n_children_u15 cons_pc_ae_pm poverty_line poor poor_sensitivity_cpi durables_count productive_assets_count water_deprived cooking_fuel_deprived mpi_asset_count mpi_asset_deprived shock_1 shock_2 shock_3 shock_4 shock_5 shock_6 shock_7 shock_8 no_shock_reported cope_1 cope_2 cope_3 cope_4 cope_5 cope_6 cope_7 shock_count shock_any shock_covariate shock_idiosyncratic coped_sold_assets coped_cut_consumption mpi_mortality_dep mpi_maternal_dep mpi_schooling_dep mpi_attendance_dep mpi_housing_dep mpi_sanitation_dep mpi_electricity_dep mpi_bank_dep mpi_score mpi_poor shock_earnings_lost shock_loss_total health_insured_any life_insured_any has_crop_insurance fies_skipped_meal fies_ate_less fies_ran_out fies_hungry fies_whole_day owns_tv owns_radio owns_bicycle owns_motorcycle owns_car owns_phone owns_computer owns_animal_cart owns_fridge owns_cow_buffalo owns_goat_sheep owns_pony_mule fies_raw fies_mod_sev mpi_nutrition_proxy_dep mpi_score_lyons mpi_poor_lyons hours_week_yatra hours_week_offseason hours_week_annual work_income_pm emp_inc_dep emp_stab_dep emp_unemp_dep emp_sec_dep emp_occ_dep emp_hours_dep emp_intens_dep emp_posture_dep emp_phys_dep emp_score emp_poor tk_regular_n tk_prior_n other_act_1 other_act_2 other_act_3 other_act_4 other_act_5 other_act_6 other_act_7 other_act_8 other_act_9 other_act_10 other_act_11 other_act_12 other_act_13 other_act_14 best_alt_occupation task_cover_best task_retain_best skill_move_type
 capture order dropout_prob, last
 capture order dropout_score, last
 capture order flagged_contradiction, last

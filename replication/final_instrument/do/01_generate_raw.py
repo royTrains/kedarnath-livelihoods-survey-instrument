@@ -157,7 +157,11 @@ OCC_TEXT = {1: ["doosre ka ghoda chalata hoon", "ghoda hankta hoon, malik ka hai
 o["occupation_detail"] = [str(rng.choice(OCC_TEXT[int(k)])) for k in occ]
 o["employment_type"] = code(d.employment_type, {"Self-employed - own": 1, "Self-employed - employer": 2, "Regular": 3, "Casual": 4})
 et = o.employment_type.values.astype(int)
-o["years_in_yatra_work"] = d.years_in_yatra_work
+# Tenure in the current job is not in the pool (it only has years in Yatra work). Drawn from its own
+# generator so the draws below keep their values: at most the Yatra years, in half-year steps, at least half a year.
+rng_tenure = np.random.default_rng(20261006)
+o["years_current_job"] = np.clip(np.round(d.years_in_yatra_work.values * rng_tenure.uniform(0.3, 1.0, n) * 2) / 2,
+                                 0.5, d.years_in_yatra_work.values)
 # hours asked as hours/day x days/week (decomposed, easier to recall than one weekly figure);
 # hours_week_yatra is built from these two in Stata
 HRS = {1: 11, 2: 11, 3: 10, 4: 10, 5: 12, 6: 13, 7: 12, 8: 13, 9: 11, 10: 13, 11: 10, 12: 9, 13: 9, 14: 10}
@@ -258,8 +262,6 @@ for i in range(n):
             status[i, m] = 1
         elif status[i, m] == 1:            # pool said Yatra outside this worker's own season
             status[i, m] = int(rng.choice(_offdist, p=_offp))
-for m in range(12):
-    o[f"status_m{m+1}"] = status[:, m]
 inc = d[[f"income_m{m}" for m in range(1, 13)]].values.astype(float)
 months_no_work = (status == 8).sum(1)
 yatra_months_v = (status == 1).sum(1)
@@ -289,7 +291,6 @@ knows_monthly = (rng.random(n) < _p_knows).astype(int)
 # is a guess -- replace it with the real refusal rate once the pretest gives one. It is here so the
 # pipeline is exercised on the declined path rather than meeting it first in the field.
 _declined = rng.random(n) < 0.06
-o["knows_monthly_income"] = np.where(_declined, np.nan, knows_monthly).astype(float)
 knows_monthly = np.where(_declined, -1, knows_monthly)   # -1: neither route, so nothing is filled
 
 # the true underlying annual figures, used both to fill the calendar and to build the fallback
@@ -297,21 +298,14 @@ _yatra_true = np.where(status == 1, inc, 0).sum(1)
 _other_true = np.where(status != 1, inc, 0).sum(1)
 _total_true = _yatra_true + _other_true
 
-for m in range(12):
-    # Blank on BOTH skip routes, because that is what Kobo actually returns: the form hides this
-    # question when the respondent took the annual-total route (knows_monthly_income = 0) AND when
-    # the month was idle (status = 8). A hidden question exports an empty cell, never a zero, so the
-    # raw file must be empty in both cases too. Stata fills the idle months with 0 during the build.
-    o[f"income_m{m+1}"] = np.where((knows_monthly == 1) & (status[:, m] != 8), inc[:, m], np.nan)
-
 # the fallback pair. Respondents who take it report a rounded total (people answer round numbers to
 # a whole-year question) and a Yatra share rounded to the nearest 5 out of 100, with a little noise
 # -- so the reconstruction is close to, but not identical with, the calendar truth.
 _annual_rep = np.where(_total_true > 0, np.round(_total_true * rng.normal(1.0, 0.07, n) / 500) * 500, 0)
 _share_true = np.divide(_yatra_true, _total_true, out=np.full(n, 0.5), where=_total_true > 0)
 _share_rep = np.clip(np.round((_share_true * 100 + rng.normal(0, 4, n)) / 5) * 5, 0, 100)
-o["income_annual_total"] = np.where(knows_monthly == 0, _annual_rep, np.nan)
-o["pct_income_yatra"] = np.where(knows_monthly == 0, _share_rep, np.nan)
+o["income_annual_total"] = np.where(_declined, np.nan, _annual_rep)
+o["pct_income_yatra"] = np.where(_declined, np.nan, _share_rep)
 # off-season dominant activity, for building plausible on/off-season splits below (mirrors the
 # Stata-built offseason_primary, computed here in python since it is not yet available at this stage)
 off_counts = np.stack([(status == k).sum(1) for k in range(2, 9)], axis=1)
@@ -363,9 +357,13 @@ o["returned_here_month"] = _back
 _span = np.where(_moves, np.mod(_back - _left, 12), 0)
 _away = np.where(_moves, (rng.random(n) < .34).astype(int), (rng.random(n) < .06).astype(int))
 o["worked_away_in_closure"] = _away
-o["years_coming_here"] = np.where(
-    _moves, np.minimum(d.years_in_yatra_work.values + rng.poisson(2.0, n),
-                       (d.age.values - 14).clip(1)), np.nan)
+# Asked of everyone from 2026-10-07 (moved next to years_current_job, gate dropped), not only
+# those who leave at closure: someone who stays all year still has a real years-here answer.
+# A separate draw, so the existing _moves-dependent draws above keep their values.
+rng_ych = np.random.default_rng(20261007)
+_ych_val = np.minimum(d.years_in_yatra_work.values + rng.poisson(2.0, n), (d.age.values - 14).clip(1))
+_ych_blank = rng_ych.random(n) < 0.15   # optional item; a share leave it blank, as the hint invites
+o["years_coming_here"] = np.where(_ych_blank, np.nan, _ych_val)
 o["came_here_reason"] = np.where(orig > 1, rng.choice([1, 2, 3, 4, 5, 6, 7, 8], n,
                                  p=[.34, .22, .15, .11, .06, .07, .03, .02]), np.nan)
 AWAY_PLACES = ["Delhi mein construction", "Dehradun mein hotel ka kaam", "Punjab mein kheti",
@@ -556,22 +554,27 @@ o["loan_interest_per100_pm"] = np.where((np.nan_to_num(_pays) == 1) & _knows_rat
 _secured = np.where(_old_cred > 0, (rng.random(n) < np.where(_old_cred == 2, .38, .52)).astype(float), np.nan)
 o["loan_against_asset"] = _secured
 # what was pledged: jewellery and animals dominate for informal lenders, business stock for formal
-o["loan_collateral"] = [int(rng.choice([1,2,3,4,5,6,7], p=[.34,.14,.20,.10,.14,.04,.04])) if v == 1 else np.nan for v in np.nan_to_num(_secured)]
+o["loan_collateral"] = [int(rng.choice([1,2,3,4,5,6,7], p=[.34,.14,.20,.10,.14,.04,.04])) if v == 1 else (0 if t == 1 else np.nan)
+                      for v, t in zip(np.nan_to_num(_secured), o["took_loan_12m"].values)]
 
 # ---- insurance as COUNTS, not a single categorical ---------------------------------------------
 _ins_old = code(d.insurance_coverage, {"None": 0, "Health": 1, "Life": 2, "Crop": 3, "Multiple": 4})
 _hh = d.hhsize.values
 _health_any = np.isin(_ins_old, [1, 4])
-o["n_health_insured"] = np.where(_health_any,
-                                 np.minimum(_hh, 1 + rng.poisson(1.6, n)), 0).astype(float)
 _life_any = np.isin(_ins_old, [2, 4])
-o["n_life_insured"] = np.where(_life_any, np.minimum(_hh, 1 + rng.poisson(0.4, n)), 0).astype(float)
-# Must follow the FORM's gate, which is land_cultivable_acres > 0 -- and that is now missing, not
-# zero, for a household that reported no land at all (land_unit = 5).
+# Check-all 2026-10-07: health (1), life (2), crop (3) ticked from the same underlying draws as
+# before. No land gate needed -- a landless household simply never ticks crop.
 _land_amt = o["land_cultivable_acres"].values.astype(float)
 _has_land = (~np.isnan(_land_amt)) & (_land_amt > 0)
-o["has_crop_insurance"] = np.where(_has_land,
-                                   ((np.isin(_ins_old, [3, 4])) & (rng.random(n) < .7)).astype(float), np.nan)
+_crop_any = _has_land & (np.isin(_ins_old, [3, 4])) & (rng.random(n) < .7)
+_ins_codes = []
+for i in range(n):
+    picks = []
+    if _health_any[i]: picks.append(1)
+    if _life_any[i]: picks.append(2)
+    if _crop_any[i]: picks.append(3)
+    _ins_codes.append(" ".join(str(c) for c in picks))
+o["insurance_held"] = _ins_codes
 
 # named schemes, as a check-all. The old pool carried only a yes/no, so the named pattern is drawn
 # here: ration is near-universal among those receiving anything, the rest taper. Code 10 (None of
@@ -749,7 +752,8 @@ o["contract_status"] = [rng.choice([1, 2, 3], p=CON[e]) if (e in (3, 4) and w) e
 regp = np.where(et == 1, np.where(TREK, .85, .60), np.where(et == 2, .55, np.where(et == 3, .60, .25)))
 o["workplace_registered"] = np.where(working, (rng.random(n) < regp).astype(float), np.nan)
 _wage = working & np.isin(emp_t if "emp_t" in dir() else o["employment_type"].values, [3, 4])
-o["pension_contrib"] = np.where(_wage, [rng.choice([1, 2, 3], p=[.10, .05, .85]) if e == 3 else rng.choice([2, 3], p=[.04, .96]) for e in et], np.nan)
+_pension3 = [rng.choice([1, 2, 3], p=[.10, .05, .85]) if e == 3 else rng.choice([2, 3], p=[.04, .96]) for e in et]
+o["pension_any"] = np.where(_wage, (np.isin(_pension3, [1, 2])).astype(float), np.nan)
 wi = []
 for i in range(n):
     pw = {3: .25, 4: .02}.get(et[i], .03)
@@ -849,6 +853,92 @@ o["shock_money_spent"] = np.where(
 o["shock_month"] = np.where(
     _any_shock, rng.choice(range(1, 13), n,
                            p=[.04, .03, .04, .09, .13, .13, .12, .11, .10, .08, .07, .06]), np.nan)
+
+# ---- items added or revised 2026-10-05: calendar summaries, job quality, CPR, food insecurity, ropeway --
+# Drawn from their own generator so that the draws above keep their values.
+rng2 = np.random.default_rng(20261006 + 2)
+def pick(codes, p, size=n):
+    return rng2.choice(codes, size=size, p=p).astype(float)
+def yndk(p_yes, p_dk=0.02):
+    return pick([0, 1, 97], [1 - p_yes - p_dk, p_yes, p_dk])
+
+o["months_worked_yatra"] = (status == 1).sum(1)
+o["months_no_paid_work"] = (status == 8).sum(1)
+off_cnt = np.stack([(status == k).sum(1) for k in range(2, 8)], axis=1)
+o["offseason_activity"] = np.where(off_cnt.max(1) > 0, 2 + off_cnt.argmax(1), np.nan)
+o["earnings_range"] = np.where(_declined, pick([1, 2, 3, 4, 97], [.2, .3, .3, .1, .1]), np.nan)
+
+o["obs_environment"] = np.nan
+o["gps_accuracy_m"] = rng2.integers(4, 26, n).astype(float)
+o["gps_fix_s"] = rng2.integers(2, 31, n).astype(float)
+o["gps_error"] = np.nan
+o["n_children_in_school"] = np.where(n_6_14 > 0, n_6_14 - np.nan_to_num(o["n_children_out_school"].values), np.nan)
+o["wage_employer"] = np.where(np.isin(et, [3, 4]), pick([1, 2, 3, 4, 5, 97], [.30, .08, .07, .30, .20, .05]), np.nan)
+o["employers_in_season"] = np.where(np.isin(et, [3, 4]), 1 + rng2.poisson(0.5, n), 0).astype(float)
+o["n_hh_same_business"] = np.where(owner, 1 + rng2.poisson(1.5, n), rng2.poisson(0.3, n)).astype(float)
+o["remit_differs_by_season"] = (rng2.random(n) < 0.45).astype(float)
+REF_HERE = ["ek rishtedaar ke saath aaya", "ghar par karz tha", "naye kaam ki talash mein"]
+o["came_here_reason_other"] = [str(rng2.choice(REF_HERE)) if v == 8 else "" for v in np.nan_to_num(o["came_here_reason"].values)]
+
+def join_codes(flags):
+    return [" ".join(str(c) for c, f in zip(range(1, len(flags) + 1), row) if f) for row in flags]
+o["assets_owned"] = join_codes(np.stack([o[k].values for k in ["owns_tv", "owns_radio", "owns_bicycle",
+    "owns_motorcycle", "owns_car", "owns_phone", "owns_computer", "owns_animal_cart", "owns_fridge"]], axis=1))
+o["livestock_owned"] = join_codes(np.stack([o[k].values for k in ["owns_cow_buffalo", "owns_goat_sheep",
+    "owns_pony_mule"]], axis=1))
+
+edu = np.nan_to_num(d.education_years.values.astype(float))
+o["higher_ed"] = np.where(working, np.where(rng2.random(n) < np.where(edu >= 12, 0.6, 0.02), 1, 0).astype(float), np.nan)
+o["higher_ed"] = np.where(working & (rng2.random(n) < 0.02), 97, o["higher_ed"])
+formal = np.isin(et, [3, 4]).astype(float)
+ss_p = np.clip(0.15 + 0.35 * formal + 0.25 * (o["higher_ed"] == 1), 0, 0.95)
+o["social_security_any"] = np.where(working, (rng2.random(n) < ss_p).astype(float), np.nan)
+o["workplace_death_12m"] = np.where(working, yndk(0.005, 0.02), np.nan)
+o["intens_speed"] = np.where(working, yndk(0.45), np.nan)
+o["intens_deadline"] = np.where(working, yndk(0.35), np.nan)
+o["intens_time"] = np.where(working, yndk(0.30), np.nan)
+o["posture_position"] = np.where(working, yndk(0.50), np.nan)
+o["posture_loads"] = np.where(working, yndk(0.30), np.nan)
+o["posture_repetitive"] = np.where(working, yndk(0.25), np.nan)
+o["phys_noise"] = np.where(working, yndk(0.30), np.nan)
+o["phys_temperature"] = np.where(working, yndk(0.25), np.nan)
+
+o["cpr_permitted"] = pick([1, 0, 2, 97], [.35, .25, .25, .15])
+perm = o["cpr_permitted"].values
+for v in ["cpr_firewood", "cpr_fodder", "cpr_forest_produce", "cpr_grazing"]:
+    use = np.where(rng2.random(n) < 0.5, 1, 0).astype(float)
+    use = np.where(perm == 0, 2.0, use)
+    use = np.where(perm == 97, pick([0, 1, 97], [.6, .3, .1]), use)
+    o[v] = use
+o["cpr_restricted"] = yndk(0.25, 0.05)
+o["cpr_lost_access"] = yndk(0.12, 0.03)
+o["cpr_water_route"] = pick([1, 2, 3, 97], [.60, .20, .15, .05])
+o["cpr_governance"] = pick([1, 2, 3, 4, 97], [.30, .20, .20, .20, .10])
+
+# food insecurity experience scale: one latent severity, each item a higher cut-off than the last
+sev = rng2.random(n) + 0.25 * d.poor.values
+# One check-all (fies_items) now, codes matching dictionary.py's "fies5" set: 1 skipped_meal,
+# 2 ate_less, 3 ran_out, 4 hungry, 5 whole_day, 96 none of these. ~5% leave the screen entirely
+# blank (genuinely unasked/declined); everyone else gets a real answer, "96" if none applied --
+# that is what lets Stata tell "blank" apart from "answered, nothing happened".
+_fo_blank = rng2.random(n) < 0.05
+_fies_codes = []
+for i in range(n):
+    if _fo_blank[i]:
+        _fies_codes.append("")
+        continue
+    picks = []
+    if sev[i] > 0.60: picks.append("1")
+    if sev[i] > 0.50: picks.append("2")
+    if sev[i] > 0.70: picks.append("3")
+    if sev[i] > 0.85: picks.append("4")
+    if sev[i] > 0.95: picks.append("5")
+    _fies_codes.append(" ".join(picks) if picks else "96")
+o["fies_items"] = _fies_codes
+
+o["ropeway_expect_work"] = pick([1, 2, 3, 97], [.45, .12, .30, .13])
+o["ropeway_expect_jobs"] = pick([1, 2, 3, 97], [.40, .25, .15, .20])
+o["ropeway_trust"] = yndk(0.50, 0.15)
 
 keep = [r["name"] for r in ROWS if r["origin"] != "constructed"]
 missing = [k for k in keep if k not in o.columns]

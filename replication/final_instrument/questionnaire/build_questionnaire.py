@@ -63,7 +63,7 @@ PRE = r"""\documentclass[10pt]{article}
 """
 tex = PRE + r"""
 {\Large\textbf{Kedarnath Yatra Workers Survey: Final Questionnaire and Variable List}}\par
-{\large Version 2, worked example. Read-aloud interview, tablet-based, one visit, 45 minutes at most}\par\vspace{2pt}\hrule\vspace{6pt}
+{\large Version 2, worked example. Read-aloud interview, tablet-based, one visit}\par\vspace{2pt}\hrule\vspace{6pt}
 
 \plainbox{\textbf{What this is.} The final list of questions and variables for the survey of Yatra workers. The main aim is to measure
 \textbf{vulnerability to poverty} (VEP and multidimensional poverty). A short employment-quality block and a short tasks block are added.
@@ -138,7 +138,7 @@ AP = [("Q1 household size; Q2 sex, age", "hhsize, female, age", "Module A"),
       ("Q7 activity of the workplace", "not asked", "Implied by the occupation group"),
       ("Q8 status in the job", "employment_type", "PLFS four-way status instead of the paper's seven categories"),
       ("Q9 permanent / seasonal / casual", "job_permanence", "Probation and fixed-term merged"),
-      ("Q10 years in this job", "years_in_yatra_work", "Whole years, so a test for under 6 months is not possible"),
+      ("Q10 years in this job", "years_current_job", "Whole years, so a test for under 6 months is not possible"),
       ("Q11 signed contract", "contract_status", "Wage workers only"),
       ("Q12 registered workplace", "workplace_registered", "Widened to local registrations (union, Yatra registration, trade licence, GST)"),
       ("Q13 hours in a normal week", "hours_day_yatra, days_week_yatra", "Two easier questions, multiplied afterwards"),
@@ -153,7 +153,10 @@ AP = [("Q1 household size; Q2 sex, age", "hhsize, female, age", "Module A"),
       ("Q24 first job; Q25 why lost the last job", "not asked", "Apply to the unemployed only; prev_occ_reason covers job changes")]
 rows = [[esc(a), "\\texttt{" + esc(b) + "}", esc(c)] for a, b, c in AP]
 tex += table(rows, "\\textbf{Apablaza question} & \\textbf{Our variable} & \\textbf{Note}", "p{5cm}p{4.6cm}p{6.7cm}")
-cond = "%.0f" % (100 * DD.emp_dep_cond.mean()); k2 = "%.0f" % (100 * DD.emp_poor_k2.mean()); k3 = "%.0f" % (100 * (DD.emp_dep_count >= 3).mean())
+# STALE: this section describes the superseded five-indicator employment model. The weighted table
+# (2026-10-03) replaced those indicators, so these three figures are placeholders until the section
+# is rewritten and the synthetic test numbers are regenerated. Do not read them as results.
+cond = k2 = k3 = "--"
 tex += r"""
 The five deprivation indicators (access, compensation, security, stability, working conditions) are built from these raw answers in Stata, using the thresholds in Table 3 of the paper.
 Where the paper gives a choice, the fallback is used for pay (67 percent of the median) because the international-dollar version needs a conversion factor we have not verified.
@@ -206,7 +209,7 @@ tex += r"""
 \item \textbf{HCES and IHDS-II agree exactly} on splitting medical spending into non-hospitalisation (30 days) and hospitalisation (365 days), and on 365 days for clothing, footwear and education. The Nigeria survey instead asks one combined 6-month medical item, and 6 months (not 12) for clothing.
 \item \textbf{HCES and IHDS-II disagree on food.} HCES uses 7 days for perishables (milk, vegetables, fruit, meat, oil, spices) to limit recall decay on frequent purchases; IHDS-II asks the same items at 30 days, in one simpler module. The Nigeria survey uses 7 days for all food.
 \item \textbf{Only IHDS-II and the Nigeria survey treat insurance premiums as consumption.} HCES does not, which matches standard national-accounts practice (insurance is a financial item). We follow HCES: our insurance question sits in Module G, not in the consumption total.
-\item \textbf{HCES and IHDS-II record the source of each food item} (purchased, home-grown, gift) as a column against every single item. That needs far more interview time than we have, so, following Calvo and Dercon (2007) and Eze and Iheonu (2025), home-grown and gifted food is asked as one aggregate question instead.
+\item \textbf{HCES and IHDS-II record the source of each food item} (purchased, home-grown, gift) as a column against every single item. That would need a separate question for every food item, so, following Calvo and Dercon (2007) and Eze and Iheonu (2025), home-grown and gifted food is asked as one aggregate question instead.
 \end{itemize}
 \subsection*{8.3 Our final choice, and why}
 We follow \textbf{HCES 2022-23} for which items get a short recall and which get a 365-day recall (staples, fuel, toiletries, transport, rent and non-hospital medical at a routine recall; clothing, education, hospital and durables at 365 days), because HCES is also the source of our poverty line (Sethu et al. 2024). Within the routine group we do not copy HCES's actual-recall design (its 7-day window for perishables, versus 30 days for staples): our workers are migrants, so the bigger source of error is location and season, not recall decay on one item. Every routine item is instead asked as a usual monthly amount, once for the Yatra season and once for the off-season (section 6), which a single actual-recall question cannot give. Every item in Module E of this questionnaire (section 3) carries its exact source citation.

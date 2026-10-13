@@ -89,7 +89,7 @@ RELEVANT = {
     # Gated to WAGE WORKERS as of 2026-10-01, the same way contract_status already was. All three ask
     # about something an employer provides -- a pension deduction, insurance through work, paid leave --
     # and an own-account pony owner has no employer. He was being asked all three.
-    "pension_contrib": "${employment_type} = 3 or ${employment_type} = 4",
+    "pension_any": "${employment_type} = 3 or ${employment_type} = 4",
     "work_health_ins": "${employment_type} = 3 or ${employment_type} = 4",
     "leave_rights": "${employment_type} = 3 or ${employment_type} = 4",
     # Added 2026-10-03 for the weighted employment table. All are asked of working respondents only,
@@ -106,7 +106,6 @@ RELEVANT = {
     # Module D. NOT gated on origin: the pilot found 11 of 20 seasonal movers inside this district,
     # so an origin gate would skip most of the people who move. Only the two genuinely
     # origin-specific items (why you first came) and the two verbatim follow-ups are gated.
-    "years_coming_here": "${resp_returns_at_closure} = 1",
     "came_here_reason": "${origin} != 1",
     "closure_work_detail": "${worked_away_in_closure} = 1",
     "native_language_other": "${native_language} = 96 or ${native_language} = 97",
@@ -117,7 +116,6 @@ RELEVANT = {
     "loan_interest_per100_pm": "${pays_interest} = 1",
     "pays_interest": "${took_loan_12m} = 1",
     "loan_collateral": "${took_loan_12m} = 1",
-    "has_crop_insurance": "${land_cultivable_acres} > 0",
     "govt_schemes_detail": "${govt_any_benefit} = 1",
     "shock_work_lost_weeks": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
     "shock_money_spent": "not(selected(${distress_event_last365d}, '9')) and count-selected(${distress_event_last365d}) > 0",
@@ -196,8 +194,6 @@ CONSTRAINT = {
     # Cross-field constraints. These were previously asserted only in the Stata build, which meant
     # the build HALTED on data the form was perfectly happy to accept. Enforcing them at entry, where
     # the enumerator can still ask again, is the right place.
-    "n_health_insured": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
-    "n_life_insured": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
     "n_can_transact_online": (". >= 0 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
     "n_earners": (". >= 1 and . <= ${hhsize}", "Cannot be more than the number of people in the household."),
     # Two disjoint bands now, so the pair is constrained against the HOUSEHOLD rather than against
@@ -229,8 +225,6 @@ CMSG_HI = {
     "pct_income_yatra": "हर 100 रुपये में से 0 से 100 के बीच होना चाहिए।",
     "n_other_activities": "0 से 6 के बीच होना चाहिए।",
     "water_fetch_minutes": "मिनट 0 से 300 के बीच होने चाहिए।",
-    "n_health_insured": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
-    "n_life_insured": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
     "n_can_transact_online": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
     "n_earners": "घर के लोगों की संख्या से ज़्यादा नहीं हो सकता।",
     "n_children_u6": "घर के लोगों में से आपको छोड़कर, उससे ज़्यादा नहीं हो सकता।",
@@ -319,16 +313,13 @@ CMSG_HI["years_coming_here"] = "उम्र के हिसाब से इ�
 CONSTRAINT["months_looked_for_work"] = (". >= 0 and . <= 12", "Must be between 0 and 12 months.")
 CMSG_HI["months_looked_for_work"] = "0 से 12 महीने के बीच होना चाहिए।"
 
-# 18 hours a day was the old ceiling and the field test used all of it -- one respondent at 18 x 7
-# gives 126 hours a week, which then drives Apablaza's excessive-hours limb off the ceiling rather
-# than off the work. 16 still admits a dhaba open from dawn to midnight.
-CONSTRAINT["hours_day_yatra"] = (". >= 1 and . <= 16", "Hours a day must be between 1 and 16.")
-CONSTRAINT["hours_day_offseason"] = (". >= 1 and . <= 16", "Hours a day must be between 1 and 16.")
-CMSG_HI["hours_day_yatra"] = "दिन के घंटे 1 से 16 के बीच होने चाहिए।"
-CMSG_HI["hours_day_offseason"] = "दिन के घंटे 1 से 16 के बीच होने चाहिए।"
-CONSTRAINT["more_hours_day"] = (". >= 0 and . + ${hours_day_yatra} <= 16",
+# 18 hours a day was the old ceiling; a 2026-10-06 change lowered it to 16 to tame a downstream
+# index (one respondent at 18 x 7 = 126 hours/week drove Apablaza's excessive-hours limb off the
+# ceiling). That capped a real, field-tested answer to make an index behave -- backwards: fixed
+# 2026-10-07 by restoring 18 here and handling the index limb's own threshold in Stata instead.
+CONSTRAINT["more_hours_day"] = (". >= 0 and . + ${hours_day_yatra} <= 18",
     "Hours wanted plus hours already worked cannot exceed 16 in a day.")
-CMSG_HI["more_hours_day"] = "जो घंटे वे चाहते हैं और जो पहले से काम करते हैं, मिलाकर दिन में 16 से ज़्यादा नहीं हो सकते।"
+CMSG_HI["more_hours_day"] = "जो घंटे वे चाहते हैं और जो पहले से काम करते हैं, मिलाकर दिन में 18 से ज़्यादा नहीं हो सकते।"
 
 # choice_filter: drop options from a list depending on an earlier answer. Only one list needs it --
 # other_activity_types shares the 14-option occupation list with `occupation`, so without this a pony
